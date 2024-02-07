@@ -203,16 +203,16 @@ body {margin:0;font-family:Arial}
         <div style="background-color:rgba(255, 255, 255, 0.373);align-items:center;width:60%;padding:3%;border-radius:10px;margin-left:15%;">
          <h2>Add New Content</h2><br>
          <table>
-         <form action="{% url 'intern1' %}" method="POST" enctype="multipart/form-data">
-             {% csrf_token %}
+          <form action="{% url 'intern1' %}" method="POST" enctype="multipart/form-data" onsubmit="return myFunction2()">
+            {% csrf_token %}
              <tr>
                <td><label for="tit">Enter Title : </label></td>
-               <td><input type="text" class="a" placeholder="Title" name="tit" class="ab"></td>
+               <td><input type="text" class="a" placeholder="Title" name="tit" class="ab" required></td>
              </tr>
             
              <tr>
                <td><label for="cap">Enter Description : </label></td>
-               <td><input type="text" class="a" placeholder="caption" name="cap" class="ab"></td>
+               <td><input type="text" class="a" placeholder="caption" name="cap" class="ab"required></td>
              </tr>
              
              <tr>
@@ -227,7 +227,7 @@ body {margin:0;font-family:Arial}
              </tr> 
              
                <td><label for="pp" style="background-color: rgb(35, 157, 214);height:20%;padding:1.5%;border-radius:5px;float:left;padding:5%;"> Add Cover Image</label>
-               <input type="file"  accept="image/png, image/jpeg" name="p" id="pp" hidden></td>
+               <input type="file"  accept="image/png, image/jpeg" name="p" id="pp" required hidden></td>
 
                
             
@@ -235,7 +235,7 @@ body {margin:0;font-family:Arial}
                 <label for="pdf" style="background-color: rgb(35, 157, 214); height: 20%; padding: 1.5%; border-radius: 5px; float: left; padding: 5%;">
                     Add PDF File
                 </label>
-                <input type="file" accept="application/pdf" name="pdf" id="pdf" hidden>
+                <input type="file" accept="application/pdf" name="pdf" id="pdf" required hidden>
             </td>
 
             
@@ -304,6 +304,66 @@ function DateCheck()
       
       
     </script>
+    <script>
+      function validateForm() {
+          // Check if Title is empty
+          var title = document.getElementById("tit").value.trim();
+          if (title === "") {
+              alert("Please enter a title.");
+              return false;
+          }
+  
+          // Check if Description is empty
+          var description = document.getElementById("cap").value.trim();
+          if (description === "") {
+              alert("Please enter a description.");
+              return false;
+          }
+  
+          // Check if About is empty
+          var about = document.getElementById("about").value.trim();
+          if (about === "") {
+              alert("Please provide some information in 'About' field.");
+              return false;
+          }
+  
+          // Check if Date is today
+          var currentDate = new Date().toISOString().slice(0, 10);
+          var selectedDate = document.getElementById("startdate").value;
+          if (selectedDate !== currentDate) {
+              alert("Uploaded date must be today.");
+              return false;
+          }
+  
+          // Check if Image is selected
+          var image = document.getElementById("pp").value;
+          if (image === "") {
+              alert("Please select a cover image.");
+              return false;
+          }
+  
+          // Check if PDF is selected
+          var pdf = document.getElementById("pdf").value;
+          if (pdf === "") {
+              alert("Please select a PDF file.");
+              return false;
+          }
+  
+          return true; // Form is valid
+      }
+  
+      // Function to be called on form submission
+      function myFunction2() {
+          if (validateForm()) {
+              // Form is valid, proceed with submission
+              return true;
+          } else {
+              // Form is not valid, prevent submission
+              return false;
+          }
+      }
+  </script>
+  
 </body>
 {% endblock %}
 </html>

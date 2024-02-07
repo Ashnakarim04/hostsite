@@ -253,10 +253,10 @@ body {margin:0;font-family:Arial}
                         </div> 
                     </div>
                     <div  style="text-align: left;">
-                        <p class="card-text"><b>Title :</b> {{ adcont.title }}</p>
-                        <p class="card-text"><b>Caption :</b> {{ adcont.caption }}</p>
-                        <p class="card-text"><b>About :</b> {{ adcont.moreinfo }}</p>
-                        <p class="card-text"><b>Uploaded date :</b> {{ adcont.stdate }}</p>
+                        <p class="card-text"><b></b> {{ adcont.title }}</p>
+                        <p class="card-text"><b></b> {{ adcont.caption }}</p>
+                        <p class="card-text"><b></b> {{ adcont.moreinfo }}</p>
+                        <p class="card-text"><b>Uploaded by </b> {{ adcont.stdate }}</p>
                         {% if adcont.pdf %}
                         <p class="card-text"><b></b> <a href="{{ adcont.pdf.url }}" target="_blank">PDF</a></p>
                         {% endif %}
