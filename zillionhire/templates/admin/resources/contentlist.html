@@ -162,7 +162,7 @@ body {margin:0;font-family:Arial}
         {% comment %} <li>
                         <a href="{% url 'admin_poststudent' %}"><i class="fa-solid fa-user-graduate"></i> <span>Students</span></a>
                     </li> {% endcomment %}
-                    <li class="active">
+                    <li>
                         <a href="{% url 'ad_studentlist' %}"><i class="fa-solid fa-award"></i> <span> Students List</span></a>
                     </li>
                     <li>
@@ -189,7 +189,7 @@ body {margin:0;font-family:Arial}
                     <li class="submenu">
                         <a href="#"><i class="fas fa-user-tie"></i> <span> Study Resources </span> <span id="menuarrow"class="menu-arrow"></span></a>
                         <ul style="display: none;">
-                            <li><a href="{% url 'contentlist' %}">Content</a></li>
+                            <li  class="active"><a href="{% url 'contentlist' %}">Content</a></li>
                             <li><a id="videolist" href="{% url 'videolist' %}">Video Library</a></li>
                             <li><a href="{% url 'content2list' %}">Content2</a></li>
                             <li><a href="{% url 'videolist' %}">Aptitude Tests</a></li>
