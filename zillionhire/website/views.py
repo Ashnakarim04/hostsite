@@ -2273,8 +2273,24 @@ def display_blog_content(request, alumni_id):
         messages.error(request, 'Alumni profile not found.')
         return redirect(reverse('admin_index'))
 
+def alumni_blog(request,studentprofile_id):
+    # Fetch data from BlogContent and StudentProfile models
+    blog_contents = BlogContent.objects.all()
+    # student_profiles = StudentProfile.objects.filter(is_alumni=True)  # Assuming you want only alumni profiles
+    studentprofile = get_object_or_404(StudentProfile, id=studentprofile_id)
+    context = {
+        'blog_contents': blog_contents,
+        'studentprofile': studentprofile,
+    }
+
+    return render(request, 'admin/alumni/alumni_blog.html', context)
 
 
+# def scontent2list(request, studentprofile_id):
+#     studentprofile = get_object_or_404(StudentProfile, id=studentprofile_id)
+#     adcon=ccontent.objects.all()
+#     liked_content_ids = LikedContent.objects.filter(user=request.user).values_list('adcon__id', flat=True)
+#     return render(request, 'admin/resources/scontent2list.html', {'studentprofile': studentprofile, 'adcon': adcon, 'liked_content_ids':liked_content_ids})
 
 def payconfirm(request, content_id, studentprofile_id=None):
     # Your existing code to retrieve studentprofile and content_instance

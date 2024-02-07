@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+{% load static %} 
+<html lang="en">
+
+
+<!-- doctors23:12-->
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'assets2/img/logo.png' %}">
+    <title>ZillionHire - Company Dashboard</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'assets2/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets2/css/font-awesome.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets2/css/select2.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets2/css/bootstrap-datetimepicker.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets2/css/style.css' %}">
+   
+        <script src="{% static 'assets2/js/html5shiv.min.js' %}"></script>
+        <script src="{% static 'assets2/js/respond.min.js' %}"></script>
+       
+    <style>
+        .approved {
+          font-weight: bold;
+          color: green;
+        }
+      
+        .not-approved {
+          font-weight: bold;
+          color: red;
+        }
+        .custom-card {
+            margin-left: 250px; /* Adjust the value as needed */
+        }
+      </style>
+</head> 
+
+<body>
+    <header class="">
+        <nav class="navbar navbar-expand-lg">
+          <div class="container">
+            {% comment %} <a class="navbar-brand" href="{% url 'index' %}"><h2>ZillionHire <em> Website</em></h2></a> {% endcomment %}
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+              <ul class="navbar-nav ml-auto">
+                <li class="nav-item ">
+                  <a class="nav-link" href="{% url 'cindex' %}">Home
+                    {% comment %} <span class="sr-only">(current)</span> {% endcomment %}
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'aboutuser' %}">About Us</a>
+                </li>
+                {% comment %} <li>
+                  <a class="dropdown-toggle nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Others</a>
+                
+                    <div class="dropdown-menu">
+                      <a class="dropdown-item" href="{% url 'cprofile' %}">Profile</a>
+                      <a class="dropdown-item" href="{% url 'loginn' %}">Jobs</a>
+                      <a class="dropdown-item" href="{% url 'loginn' %}">Candidate List</a>
+                      
+                  </div>
+                </li> {% endcomment %}
+                <li class="nav-item dropdown">
+                  {% if user.is_authenticated %}
+                    <a class="nav-link" href="{% url 'loggout' %}">Log Out</a>
+                  {% else %}
+                    <a class="dropdown-toggle nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Login</a>
+                
+                    <div class="dropdown-menu">
+                      <a class="dropdown-item" href="{% url 'loginn' %}">Student</a>
+                      <a class="dropdown-item" href="{% url 'loginn' %}">Company</a>
+                      {% comment %} <a class="dropdown-item" href="{% url 'loginn' %}">College Officer</a> {% endcomment %}
+                      {% comment %} <a class="dropdown-item" href="{% url 'blog' %}">Blog</a>
+                      <a class="dropdown-item" href="testimonials.html">Testimonials</a>
+                      <a class="dropdown-item" href="terms.html">Terms</a> {% endcomment %}
+                  </div>
+                  {% endif %}
+                </li> 
+                
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'contactuser' %}">Contact Us</a>
+                </li>
+                <li class="nav-item active">
+                  <a class="nav-link" href="{% url 'postjob' %}">Post Job</a>
+                  <span class="sr-only">(current)</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </header>
+      <div class="sidebar" id="sidebar">
+        <div class="sidebar-inner slimscroll">
+            <div id="sidebar-menu" class="sidebar-menu">
+                <ul>
+                    <li class="menu-title">Student Dashboard</li>
+                    {% comment %} <li>
+                        <a href="{% url 'index-2' %}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
+                    </li> {% endcomment %}
+                    <li class>
+                      <a href="{% url 'sprofile' studentprofile_id=studentprofile.id %}">
+    
+                          <i class="fas fa-id-card"></i>
+                          <span>PROFILE</span>
+                      </a> 
+                  </li>
+                  
+                    <li class>
+                        <a href="{%url 'job_approve' studentprofile_id=studentprofile.id %}"><i class="fa-solid fa-desktop"></i> <span>JOBS</span></a>
+                        
+                      </li>
+                      <li>
+                      <a href="{%url 'sappliedjobs' studentprofile_id=studentprofile.id%}"><i class="fa-solid fa-clipboard-check"></i></i> <span>APPLIED JOBS</span></a>
+                    </li>
+                    <li class>
+                      <a href="{% url 's_shortlist' studentprofile_id=studentprofile.id %}">
+                        <i class="fas fa-user-check"></i> <span>SHORT LISTED JOBS</span></a>
+                    </li>
+                    <li  class="submenu" >
+                        <a href="#" onclick="toggleSubMenu('studySubMenu')">
+                            <i class="fas fa-user-check"></i>
+                            <span>STUDY RESOURCE</span>
+                            <span id="studyMenuArrow" class="menu-arrow">&#9658;</span>
+                        </a>
+                        <ul style="display: none;" id="studySubMenu">
+                            <li>
+                                <a href="{% url 'scontent1list' studentprofile_id=studentprofile.id %}">
+                                    <i class="t"></i> Content 1
+                                </a>
+                                <a href="{% url 'svideolist' studentprofile_id=studentprofile.id %}">
+                                  <i class=""></i> Video Library
+                              </a>
+                              <a href="{% url 'scontent2list' studentprofile_id=studentprofile.id %}">
+                                <i class=""></i> Content2
+                            </a>
+                            </li>
+                            <!-- Add more submenu items as needed -->
+                        </ul>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+    </div><br>
+                    <div class="page-wrapper">
+                        <div class="content"> 
+                            <div class="row">
+                                <div class="col-sm-4 col-3">
+                                    <h4 class="page-title">ALUMNI NOTES</h4>
+                                    
+                                </div>
+                                     
+                            </div>
+                            {% comment %} <div class="row">
+                              <form method="get" action="{% url 'scontent1list' studentprofile_id=studentprofile.id %}">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <label>Filter by Programming Language:</label>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="cpp" value="cpp" id="cppCheckbox">
+                                            <label class="form-check-label" for="cppCheckbox">C++</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="java" value="java" id="javaCheckbox">
+                                            <label class="form-check-label" for="javaCheckbox">Java</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="python" value="python" id="pythonCheckbox">
+                                            <label class="form-check-label" for="pythonCheckbox">Python</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="php" value="php" id="phpCheckbox">
+                                            <label class="form-check-label" for="phpCheckbox">PHP</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Apply Filter</button>
+                            </form>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            
+                            <div class="row">
+                              <div> {% endcomment %}
+                                {% comment %} <form method="GET" action="{% url 'search_content1' studentprofile_id=studentprofile.id %}">
+                                      <div class="input-group">
+                                          <input type="text" class="form-control" placeholder="Search.." name="search" value="{{ search_query }}">
+                                          <div class="input-group-append">
+                                              <button class="btn btn-primary" type="submit">Search</button>
+                                          </div>
+                                      </div>
+                                  </form> {% endcomment %}
+                                {% comment %} </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <div>
+                                  <a href="{% url 'likedcontent2' studentprofile_id=studentprofile.id%}">
+                                      <button class="btn btn-primary">Liked Contents</button>
+                                  </a>
+                              </div>
+                              </div>
+                          </div><br><br> {% endcomment %}
+                            
+                            <div class="row">
+                                {% for content in adcont %}
+                                    <div class="col-md-4 col-sm-4 col-lg-3">
+                                        <div class="profile-widget box-effect d-flex flex-column">
+                                            <div class="doctor-img">
+                                                <img class="avatar" src="{% if content.img %}{{ content.img.url }}{% else %}path_to_default_image{% endif %}" alt="Cover Image" name="cover_image" id="cover_image" width="100" height="80">
+                                                <i class="fas fa-heart like-icon" style="color: {% if content.id in liked_content_ids %}red{% else %}blue{% endif %}" data-adcon-id="{{ content.id }}" data-status="{{ content.status }}"></i>
+                                            </div>
+                                            
+                                            <div style="text-align: left;">
+                                                <p class="card-text"><b> {{ content.title }}</b></p>
+                                                <p class="card-text"> {{ content.moreinfo }}</p>
+                                                <p class="card-text"> {{ content.caption }}</p>
+                                                <p class="card-text"><b>Uploaded by:</b> {{ content.stdate }}</p>
+                                                
+                                                {% if content.pdf %}
+                                                    <p class="card-text"><b></b> <a href="{{ content.pdf.url }}" target="_blank">PDF</a></p>     
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            
+                            
+                            
+                            
+                        </div>
+                    </div>
+    </div>
+
+
+
+
+
+</div>
+<div class="sidebar-overlay" data-reff=""></div>
+<script src="{% static 'assets/js/jquery-3.2.1.min.js' %}"></script>
+<script src="{% static 'assets/js/popper.min.js' %}"></script>
+<script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'assets/js/jquery.slimscroll.js' %}"></script>
+<script src="{% static 'assets/js/select2.min.js' %}"></script>
+<script src="{% static 'assets/js/moment.min.js' %}"></script>
+<script src="{% static 'assets/js/bootstrap-datetimepicker.min.js' %}"></script>
+<script src="{% static 'assets/js/app.js' %}"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  {% comment %} <script>
+     
+
+
+      
+
+
+
+
+
+
+
+
+    $(document).ready(function () {
+      function toggleLike(adconId) {
+          $.ajax({
+              type: 'POST',
+              url: '/toggle_like/',  // Replace with your actual endpoint
+              data: {
+                  'adcon_id': adconId,
+                  'csrfmiddlewaretoken': '{{ csrf_token }}'
+              },
+              success: function (response) {
+                  console.log('Toggle like status successfully:', response);
+                  // You can update the UI or take further actions if needed
+              },
+              error: function (error) {
+                  console.error('Error toggling like status:', error);
+              }
+          });
+      }
+
+      $('.like-icon').on('click', function () {
+          var adconId = $(this).data('adcon-id');
+
+          // Toggle the like icon color
+          if ($(this).css('color') === 'rgb(255, 0, 0)') {
+              $(this).css('color', 'blue');
+          } else {
+              $(this).css('color', 'red');
+          }
+
+          // Call the function to toggle the like status
+          toggleLike(adconId);
+      });
+  });
+</script> {% endcomment %}
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<script>
+  $(document).ready(function () {
+    $('.like-icon').on('click', function () {
+        var adconId = $(this).data('adcon-id');
+
+        // Toggle the like icon color
+        $(this).css('color', $(this).css('color') === 'rgb(255, 0, 0)' ? 'blue' : 'red');
+
+        // Send AJAX request to save liked content
+        $.ajax({
+            type: 'POST',
+            url: '/save_liked_content1/',  // Replace with your actual endpoint
+            data: {
+                'adcon_id': adconId,
+                'csrfmiddlewaretoken': '{{ csrf_token }}'
+            },
+            success: function (response) {
+                console.log('Liked content saved successfully:', response);
+                // You can update the UI or take further actions if needed
+            },
+            error: function (error) {
+                console.error('Error saving liked content:', error);
+            }
+        });
+    });
+});
+<script>
+    function toggleSubMenu(subMenuId) {
+        var submenu = document.getElementById(subMenuId);
+        submenu.style.display = (submenu.style.display === "none" || submenu.style.display === "") ? "block" : "none";
+        var menuarrow = document.getElementById(subMenuId === 'resumeSubMenu' ? 'resumeMenuArrow' : 'studyMenuArrow');
+        menuarrow.innerHTML = (submenu.style.display === "none" || submenu.style.display === "") ? "&#9658;" : "&#9660;";
+    }
+  </script>
+  <script>
+    function toggleSubMenu(subMenuId) {
+        var submenu = document.getElementById(subMenuId);
+        submenu.style.display = (submenu.style.display === "none" || submenu.style.display === "") ? "block" : "none";
+        var menuarrow = document.getElementById('studyMenuArrow');
+        menuarrow.innerHTML = (submenu.style.display === "none" || submenu.style.display === "") ? "&#9658;" : "&#9660;";
+    }
+</script>
+
+<script>
+  function applyFilter() {
+      // Get selected checkboxes and perform actions (e.g., redirect to the filtered URL)
+      var selectedLanguages = document.querySelectorAll('input[name="language"]:checked');
+      var selectedValues = Array.from(selectedLanguages).map(checkbox => checkbox.value);
+
+      // Perform actions with selected values (e.g., redirect to a URL with filters)
+      console.log("Selected languages:", selectedValues);
+  }
+</script>
+
+
+
+
+                  </body>
+</html>
