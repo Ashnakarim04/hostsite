@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student List</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body> 
+    <h1>Student List</h1>
+    <table id="studentTable">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Username</th>
+                <th>Password</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for student in students %}
+                <tr>
+                    <td>{{ student.id }}</td>
+                    <td>{{ student.username }}</td>
+                    <td>{{ student.password }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <script>
+        function updateStudentData() {
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    // Parse the response (assuming it's in JSON format)
+                    var newData = JSON.parse(xhr.responseText);
+        
+                    // Update the HTML table with the new data
+                    var tableBody = document.querySelector('#studentTable tbody');
+                    tableBody.innerHTML = '';  // Clear existing data
+        
+                    for (var i = 0; i < newData.length; i++) {
+                        var row = tableBody.insertRow(-1);
+                        var cell1 = row.insertCell(0);
+                        var cell2 = row.insertCell(1);
+                        cell1.innerHTML = newData[i].username;
+                        cell2.innerHTML = newData[i].password;
+                    }
+                }
+            };
+        
+            xhr.open("GET", "/api/get_student_data/", true);  // Adjust the API endpoint accordingly
+            xhr.send();
+        }
+        
+    </script>
+</body>
+</html>
+
+{% comment %} <!DOCTYPE html>
+<html>
+<head>
+    <title>Student List</title>
+</head>
+<body>
+    <h1>Student List</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Username</th>
+                <th>Password</th>
+            </tr>
+        </thead>
+        <tbody id="studentData">
+            <!-- Data will be populated here -->
+        </tbody>
+    </table>
+
+    <h2>Add Student</h2>
+    <form id="studentForm">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username"><br><br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password"><br><br>
+        <button type="submit">Add Student</button>
+    </form>
+
+    <script>
+        function updateStudentTable() {
+            fetch('/get_student_data/')  // Endpoint to get updated student data
+                .then(response => response.json())
+                .then(data => {
+                    const tableBody = document.getElementById('studentData');
+                    tableBody.innerHTML = '';  // Clear existing rows
+
+                    data.forEach(student => {
+                        const row = tableBody.insertRow();
+                        const cell0 = row.insertCell(0);
+                        const cell1 = row.insertCell(1);
+                        const cell2 = row.insertCell(2);
+
+                        cell0.innerHTML = student.id;
+                        cell1.innerHTML = student.username;
+                        cell2.innerHTML = student.password;
+                    });
+                });
+        }
+
+        // Update the table every 5 seconds (adjust as needed)
+        setInterval(updateStudentTable, 5000);
+        updateStudentTable();  // Initial update
+
+        document.getElementById('studentForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const formData = new FormData(document.getElementById('studentForm'));
+
+            fetch('/add_student/', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Handle the response (if needed)
+                console.log('Student added:', data);
+
+                // Update the table after adding a student
+                updateStudentTable();
+            });
+        });
+    </script>
+</body>
+</html> {% endcomment %}

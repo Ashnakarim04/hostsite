@@ -1,0 +1,252 @@
+{% load static%}
+<!DOCTYPE html>
+<html lang="en">
+
+
+<!-- patients23:17-->
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'assets_admin/img/favicon.ico' %}">
+    <title>ZillionHire - </title>
+    <link rel="stylesheet" type="text/css" href="{% static 'assets_admin/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets_admin/css/font-awesome.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets_admin/css/select2.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets_admin/css/dataTables.bootstrap4.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets_admin/css/bootstrap-datetimepicker.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets_admin/css/style.css' %}">
+    <!--[if lt IE 9]>
+		<script src="assets/js/html5shiv.min.js"></script>
+		<script src="assets/js/respond.min.js"></script>
+	<![endif]-->
+</head>
+
+<body>
+    <div class="main-wrapper">
+        <div class="header">
+			<div class="header-left">
+				<a href="index-2.html" class="logo">
+					<img src="{% static 'assets_admin/img/logo.png' %}" width="35" height="35" alt=""> <span>ZillionHire</span>
+				</a>
+			</div>
+			<a id="toggle_btn" href="javascript:void(0);"><i class="fa fa-bars"></i></a>
+            <a id="mobile_btn" class="mobile_btn float-left" href="#sidebar"><i class="fa fa-bars"></i></a>
+            <ul class="nav user-menu float-right">
+               
+                           
+                <li class="nav-item dropdown d-none d-sm-block">
+                    <a href="javascript:void(0);" id="open_msg_box" class="hasnotifications nav-link"><i class="fa fa-comment-o"></i> <span class="badge badge-pill bg-danger float-right">8</span></a>
+                </li>
+                <li class="nav-item dropdown has-arrow">
+                    <a href="#" class="dropdown-toggle nav-link user-link" data-toggle="dropdown">
+                        <span class="user-img"><img class="rounded-circle" src="assets/img/user.jpg" width="40" alt="Admin">
+							<span class="status online"></span></span>
+                        <span>Admin</span>
+                    </a>
+					<div class="dropdown-menu">
+						<a class="dropdown-item" href="profile.html">My Profile</a>
+						<a class="dropdown-item" href="edit-profile.html">Edit Profile</a>
+					
+						<a class="dropdown-item" href="login.html">Logout</a>
+					</div>
+                    
+                </li>
+            </ul>
+            <div class="dropdown mobile-user-menu float-right">
+                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <a class="dropdown-item" href="{% url 'admin_profile' %}">My Profile</a>
+                    <a class="dropdown-item" href="{% url 'admin_editprofile' %}">Edit Profile</a>
+                    
+                    <a class="dropdown-item" href="{% url 'admin_login' %}">Logout</a>
+                </div>
+            </div>
+        </div>
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-inner slimscroll">
+                <div id="sidebar-menu" class="sidebar-menu">
+                    <ul>
+                        <li class="menu-title">Main</li>
+                        <li class="active">
+                            <a href="{% url 'admin_index2' %}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
+                        </li>
+						<li>
+                            <a href="{% url 'admin_poststudent' %}"><i class="fa-solid fa-user-graduate"></i> <span>Students</span></a>
+                        </li>
+                        <li class="submenu">
+							<a href="#"><i class="fas fa-user-tie"></i> <span> Company </span> <span class="menu-arrow"></span></a>
+							<ul style="display: none;">
+								<li><a href="{% url 'companyprofilelist' %}">Company List</a></li>
+                                <li><a href="{% url 'jobslist' %}">Jobs</a></li>
+								<li><a href="{% url 'admin_company' %}">Applied Students</a></li>
+								<li><a href="{% url 'admin_company' %}">Short Listed Students</a></li>
+								
+							</ul>
+						</li>
+                        <li>
+                            <a href="{% url 'admin_poststudent' %}"><i class="fa-solid fa-award"></i> <span>Selected Students</span></a>
+                        </li>
+        <div class="page-wrapper">
+            <div class="content">
+                <div class="row">
+                    <div class="col-sm-4 col-3">
+                        <h4 class="page-title">Students</h4>
+                    </div>
+                    <div class="col-sm-8 col-9 text-right m-b-20">
+                        <a href="{% url 'admin_addstudent'%}" class="btn btn btn-primary btn-rounded float-right"><i class="fa fa-plus"></i> Add</a>
+                    </div>
+                </div>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="table-responsive">
+							{% comment %} <table class="table table-border table-striped custom-table datatable mb-0">
+								<thead>
+									<tr>
+										<th>Name</th>
+										<th>Age</th>
+										<th>Address</th>
+										<th>Phone</th>
+										<th>Email</th>
+										<th class="text-right">Action</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td><img width="28" height="28" src="{% static 'assets_admin/img/user.jpg' %}" class="rounded-circle m-r-5" alt=""> Jennifer Robinson</td>
+										<td>35</td>
+										<td>1545 Dorsey Ln NE, Leland, NC, 28451</td>
+										<td>(207) 808 8863</td>
+										<td>jenniferrobinson@example.com</td>
+										<td class="text-right">
+											<div class="dropdown dropdown-action">
+												<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+												<div class="dropdown-menu dropdown-menu-right">
+													<a class="dropdown-item" href="{% url 'admin_index2'%}"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+													<a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_patient"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+												</div>
+											</div>
+										</td>
+									</tr>
+									
+									<tr>
+										<td><img width="28" height="28" src="{% static 'assets_admin/img/user.jpg' %}" class="rounded-circle m-r-5" alt=""> Sandra Mendez</td>
+										<td>24</td>
+										<td>2535 Linden Avenue, Orlando, FL, 32789</td>
+										<td>(797) 506 1265</td>
+										<td>sandramendez@example.com</td>
+										<td class="text-right">
+											<div class="dropdown dropdown-action">
+												<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+												<div class="dropdown-menu dropdown-menu-right">
+													<a class="dropdown-item" href="edit-patient.html"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+													<a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_patient"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+												</div>
+											</div>
+										</td>
+									</tr>
+								</tbody>
+							</table> {% endcomment %}
+
+                            <!-- your_template.html -->
+
+{% comment %} <table class="table table-border table-striped custom-table datatable mb-0">
+    <thead>
+        <tr>
+            <th>Company Name</th>
+            <th>Job Name</th>
+            <th>Salary</th>
+            <th>Email</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Link</th>
+            <th class="text-right">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for joblists in jobslist %}
+        <tr>
+            <td>{{ joblists.cname }}</td>
+            <td>{{ joblists.jname }}</td>
+            <td>{{ joblists.salary }}</td>
+            <td>{{ joblists.email }}</td>
+            <td>{{ joblists.sdate }}</td>
+            <td>{{ joblists.edate }}</td>
+            <td>{{ joblists.link }}</td>
+            <td class="text-right">
+                <div class="dropdown dropdown-action">
+                    <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a class="dropdown-item" href="{% url 'admin_index2'%}"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_job"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table> {% endcomment %}
+
+<h1>Jobs List</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Company</th>
+                <th>Job Name</th>
+                <th>Salary</th>
+                <th>Email</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Website</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for job in jobs %}
+            <tr>
+                <td>{{ job.cname }}</td>
+                <td>{{ job.jname }}</td>
+                <td>{{ job.salary }}</td>
+                <td>{{ job.email }}</td>
+                <td>{{ job.sdate }}</td>
+                <td>{{ job.edate }}</td>
+                <td>{{ job.link }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+						</div>
+					</div>
+                </div>
+            </div>
+            
+        </div>
+		<div id="delete_patient" class="modal fade delete-modal" role="dialog">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-body text-center">
+						<img src="{% static 'assets_admin/img/sent.png' %}" alt="" width="50" height="46">
+						<h3>Are you sure want to delete this Student?</h3>
+						<div class="m-t-20"> <a href="#" class="btn btn-white" data-dismiss="modal">Close</a>
+							<button type="submit" class="btn btn-danger">Delete</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+    </div>
+    <div class="sidebar-overlay" data-reff=""></div>
+    <script src="{% static 'assets_admin/js/jquery-3.2.1.min.js' %}"></script>
+	<script src="{% static 'assets_admin/js/popper.min.js' %}"></script>
+    <script src="{% static 'assets_admin/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'assets_admin/js/jquery.slimscroll.js' %}"></script>
+    <script src="{% static 'assets_admin/js/select2.min.js' %}"></script>
+    <script src="{% static 'assets_admin/js/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'assets_admin/js/dataTables.bootstrap4.min.js' %}"></script>
+    <script src="{% static 'assets_admin/js/moment.min.js' %}"></script>
+    <script src="{% static 'assets_admin/js/bootstrap-datetimepicker.min.js' %}"></script>
+    <script src="{% static 'assets_admin/js/app.js' %}"></script>
+</body>
+
+
+<!-- patients23:19-->
+</html>

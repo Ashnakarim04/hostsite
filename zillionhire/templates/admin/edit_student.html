@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+
+<!-- add-doctor24:06-->
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'assets_admin/img/logo.png' %}">
+    <title>ZillionHire Admin Edit Student</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets_admin/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets_admin/css/font-awesome.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets_admin/css/style.css' %}">
+    <!--[if lt IE 9]>
+		<script src="assets/js/html5shiv.min.js"></script>
+		<script src="assets/js/respond.min.js"></script>
+	<![endif]-->
+</head>
+
+<body>
+    <div class="main-wrapper">
+        <div class="header">
+			<div class="header-left">
+				<a href="{% url 'admin_index2' %}" class="logo">
+					<img src="{% static 'assets_admin/img/logo.png' %}" width="35" height="35" alt=""> <span>ZillionHire</span>
+				</a>
+			</div>
+			<a id="toggle_btn" href="javascript:void(0);"><i class="fa fa-bars"></i></a>
+            <a id="mobile_btn" class="mobile_btn float-left" href="#sidebar"><i class="fa fa-bars"></i></a>
+            <ul class="nav user-menu float-right">
+                <li class="nav-item dropdown d-none d-sm-block">
+                    <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown"><i class="fa fa-bell-o"></i> <span class="badge badge-pill bg-danger float-right">3</span></a>
+                    <div class="dropdown-menu notifications">
+                        <div class="topnav-dropdown-header">
+                            <span>Notifications</span>
+                        </div>
+                        
+                    </div>
+                </li>
+                
+                <li class="nav-item dropdown has-arrow">
+                    <a href="#" class="dropdown-toggle nav-link user-link" data-toggle="dropdown">
+                        <span class="user-img">
+							<img class="rounded-circle" src="{% static 'assets_admin/img/user.jpg' %}" width="24" alt="Admin">
+							<span class="status online"></span>
+						</span>
+						<span>Admin</span>
+                    </a>
+					<div class="dropdown-menu">
+						<a class="dropdown-item" href="{% url 'admin_profile' %}">My Profile</a>
+						<a class="dropdown-item" href="{% url 'admin_editprofile' %}">Edit Profile</a>
+
+						<a class="dropdown-item" href="{% url 'admin_login' %}">Logout</a>
+					</div>
+                </li>
+            </ul>
+            <div class="dropdown mobile-user-menu float-right">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <a class="dropdown-item" href="{% url 'admin_profile' %}">My Profile</a>
+                    <a class="dropdown-item" href="{% url 'admin_editprofile' %}">Edit Profile</a>
+                    
+                    <a class="dropdown-item" href="{% url 'admin_login' %}">Logout</a>
+                </div>
+            </div>
+        </div>
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-inner slimscroll">
+                <div id="sidebar-menu" class="sidebar-menu">
+                    <ul>
+                        <li class="menu-title">Main</li>
+                        <li class="active">
+                            <a href="{% url 'admin_index2' %}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
+                        </li>
+						<li>
+                            <a href="{% url 'admin_poststudent' %}"><i class="fa-solid fa-user-graduate"></i> <span>Students</span></a>
+                        </li>
+                        <li class="submenu">
+							<a href="#"><i class="fas fa-user-tie"></i> <span> Company </span> <span class="menu-arrow"></span></a>
+							<ul style="display: none;">
+								<li><a href="{% url 'companyprofilelist' %}">Company List</a></li>
+                                <li><a href="{% url 'jobslist' %}">Jobs</a></li>
+								<li><a href="{% url 'admin_company' %}">Applied Students</a></li>
+								<li><a href="{% url 'admin_company' %}">Short Listed Students</a></li>
+								
+							</ul>
+						</li>
+                        <li>
+                            <a href="{% url 'admin_poststudent' %}"><i class="fa-solid fa-award"></i> <span>Selected Students</span></a>
+                        </li>
+                        
+                        
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="page-wrapper">
+            <div class="content">
+                <div class="row">
+                    <div class="col-lg-8 offset-lg-2">
+                        <h4 class="page-title">Edit Student</h4>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-8 offset-lg-2">
+                        <form method='post' action="" id="addphar" role="form" nonvalidate="nonvalidate" class="bv-form">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label> Name <span class="text-danger">*</span></label>
+                                        <input class="form-control" type="text" name="sname" id="sname" value="{{ student.sname }}">
+                                    </div>
+                                </div>
+                                 
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Email(username) <span class="text-danger">*</span></label>
+                                        <input class="form-control" type="email" name="email" id="email" value="{{ student.email }}">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Password</label>
+                                        <input class="form-control" type="password" name="password" value="{{ student.password }}">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="course">course</label>
+                                        <select class="form-control" name="course" id="course" value="{{ student.course }}">
+                                            <option value="" disabled selected>-Select-</option>
+                                            <option value="B.Tech">B.Tech</option>
+                                            <option value="MCA">MCA</option>
+                                           
+                                            
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="department">Department</label>
+                                        <select class="form-control" name="department" id="department" value="{{ student.department }}">
+                                            <option value="" disabled selected>-Select-</option>
+                                            <option value="ECE">ECE (* B.Tech)</option>
+                                            <option value="CSE">CSE (* B.Tech)</option>
+                                            <option value="IT">IT(* B.Tech)</option>
+                                            <option value="Integrated MCA">Integrated MCA</option>
+                                            <option value="Regular MCA">Regular MCA</option>
+                                            
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="semester">Semester</label>
+                                        <select class="form-control" name="semester" id="semester" value="{{ student.semester }}">
+                                            <option value="" disabled selected>-Select-</option>
+                                            <option value="Semester 1">Semester 1 <span class="text-danger"> (* RLMCA) </span></option>
+                                            <option value="Semester 2">Semester 2<span class="text-danger">(* RLMCA)</span></option>
+                                            <option value="Semester 3">Semester 3<span class="text-danger">(* RLMCA)</span></option>
+                                            <option value="Semester 4">Semester 4<span class="text-danger">(* RLMCA)</span></option>
+                                            <option value="Semester 5">Semester 5</option>
+                                            <option value="Semester 6">Semester 6</option>
+                                            <option value="Semester 7">Semester 7</option>
+                                            <option value="Semester 8">Semester 8</option>
+                                            <option value="Semester 9">Semester 9</option>
+                                            <option value="Semester 10">Semester 10</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                
+                            </div>
+                             
+                             
+                            <div class="m-t-20 text-center">
+                                <button type="submit" class="btn btn-primary submit-btn">Save</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+             
+        </div>
+    </div>
+    <div class="sidebar-overlay" data-reff=""></div>
+    <script src="{% static 'assets_admin/js/jquery-3.2.1.min.js'%}"></script>
+    <script src="{% static 'assets_admin/static/assets/js/popper.min.js'%}"></script>
+    <script src="{% static 'assets_admin/static/assets/js/bootstrap.min.js'%}"></script>
+    <script src="{% static 'assets_admin/static/assets/js/jquery.slimscroll.js'%}"></script>
+    <script src="{% static 'assets_admin/static/assets/js/select2.min.js'%}"></script>
+    <script src="{% static 'assets_admin/static/assets/js/moment.min.js'%}"></script>
+    <script src="{% static 'assets_admin/js/bootstrap-datetimepicker.min.js'%}"></script>
+    <script src="{% static 'assets_admin/static/assets/js/app.js'%}"></script>
+    {% comment %} <script>
+        $(document).ready(function() {
+            // Add click event listener to the menu arrow
+            $('.submenu a').click(function(e) {
+                e.preventDefault(); // Prevent the link from navigating
+
+                // Toggle the display of the submenu
+                $(this).siblings('ul').slideToggle();
+            });
+        });
+    </script>
+
+    <style>
+        /* Add your CSS styles here */
+        .submenu ul {
+            display: none;
+        }
+    </style> {% endcomment %}
+</body>
+
+
+<!-- add-doctor24:06-->
+</html>

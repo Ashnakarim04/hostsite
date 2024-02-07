@@ -1,0 +1,198 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Apply for Job</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      padding: 20px;
+    }
+
+    h1 {
+      color: #333;
+    }
+    .success-message {
+      color: green;
+      margin-top: 10px;
+      display: none;
+    }
+    form {
+      max-width: 400px;
+      margin: 0 auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      color: #333;
+    }
+
+    input[type="number"] {
+      width: 100%;
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      margin-bottom: 10px;
+    }
+
+    input[type="number"]:focus {
+      border-color: #007BFF;
+    }
+
+    span {
+      display: none;
+      font-size: 14px;
+      margin-top: 5px;
+    }
+
+    span.error {
+      color: red;
+    }
+
+    button[type="submit"] {
+      padding: 10px 20px;
+      color: #fff;
+      background-color: #007BFF;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button[type="submit"]:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+    p.warning-message {
+      color: red;
+    }
+   
+      .btn.btn-primary {
+          /* Your custom CSS styles for the button */
+          background-color: #007BFF;
+          color: #ffffff;
+          font-weight: bold;
+          /* Add more styles as needed */
+      }
+  
+      .btn.btn-primary:hover {
+          background-color: #0056b3;
+          /* Adjust hover styles as needed */
+      }
+  
+  </style>
+</head>
+<body>
+
+<center><h3>CHECK ELIGIBILITY</h3></center>
+
+<form id="jobApplicationForm">
+  <p class="warning-message">*Enter correct data and proceed, otherwise you will debar from further recruitment activities</p>
+  <label for="tenthCgpa">10th CGPA:</label>
+  <input type="number" id="tenthCgpa" step="0.01" required>
+  <span id="tenthCgpaError" class="error">Minimum CGPA should be 6</span>
+
+  <label for="twelfthCgpa">12th CGPA:</label>
+  <input type="number" id="twelfthCgpa" step="0.01" required>
+  <span id="twelfthCgpaError" class="error">Minimum CGPA should be 6</span>
+
+  <label for="currentCgpa">Current CGPA:</label>
+  <input type="number" id="currentCgpa" step="0.01" required>
+  <span id="currentCgpaError" class="error">Minimum CGPA should be 6</span>
+
+  <label for="backlogs">Current number of Backlogs:</label>
+  <input type="number" id="backlogs" required>
+  <span id="backlogsError" class="error">No backlogs</span><br><br>
+  <div id="successMessage" class="success-message">You are eligible for this job, apply here</div>
+<br>
+
+  <center><a href="{% url 'appliedstudents' %}" class="btn btn-primary">Apply Job</a></center>
+  <button type="submit" id="applyButton" disabled>Apply</button>
+</form>
+{% comment %} <form method="post" action="{% url 'postjob' %}">
+  {% csrf_token %}
+  
+
+  <button type="submit" class="btn btn-primary">Apply</button>
+</form> {% endcomment %}
+<script>
+    const applyButton = document.getElementById('applyButton');
+    const tenthCgpaInput = document.getElementById('tenthCgpa');
+    const twelfthCgpaInput = document.getElementById('twelfthCgpa');
+    const currentCgpaInput = document.getElementById('currentCgpa');
+    const backlogsInput = document.getElementById('backlogs');
+    const successMessage = document.getElementById('successMessage');
+  
+    const tenthCgpaError = document.getElementById('tenthCgpaError');
+    const twelfthCgpaError = document.getElementById('twelfthCgpaError');
+    const currentCgpaError = document.getElementById('currentCgpaError');
+    const backlogsError = document.getElementById('backlogsError');
+  
+    const validateTenthCgpa = () => {
+      const tenthCgpa = parseFloat(tenthCgpaInput.value);
+      const isTenthCgpaValid = tenthCgpa >= 6;
+      tenthCgpaError.style.display = isTenthCgpaValid ? 'none' : 'block';
+    };
+  
+    const validateTwelfthCgpa = () => {
+      const twelfthCgpa = parseFloat(twelfthCgpaInput.value);
+      const isTwelfthCgpaValid = twelfthCgpa >= 6;
+      twelfthCgpaError.style.display = isTwelfthCgpaValid ? 'none' : 'block';
+    };
+  
+    const validateCurrentCgpa = () => {
+      const currentCgpa = parseFloat(currentCgpaInput.value);
+      const isCurrentCgpaValid = currentCgpa >= 6;
+      currentCgpaError.style.display = isCurrentCgpaValid ? 'none' : 'block';
+    };
+  
+    const validateBacklogs = () => {
+      const backlogs = parseInt(backlogsInput.value);
+      const isBacklogsValid = backlogs === 0;
+      backlogsError.style.display = isBacklogsValid ? 'none' : 'block';
+    };
+  
+
+
+    const validateFields = () => {
+      validateTenthCgpa();
+      validateTwelfthCgpa();
+      validateCurrentCgpa();
+      validateBacklogs();
+  
+      const isTenthCgpaValid = parseFloat(tenthCgpaInput.value) >= 6;
+      const isTwelfthCgpaValid = parseFloat(twelfthCgpaInput.value) >= 6;
+      const isCurrentCgpaValid = parseFloat(currentCgpaInput.value) >= 6;
+      const isBacklogsValid = parseInt(backlogsInput.value) === 0;
+  
+      const isValid = isTenthCgpaValid && isTwelfthCgpaValid && isCurrentCgpaValid && isBacklogsValid;
+  
+      if (isValid) {
+        applyButton.removeAttribute('disabled');
+        successMessage.style.display = 'block';
+      } else {
+        applyButton.setAttribute('disabled', 'true');
+        successMessage.style.display = 'none';
+      }
+    };
+  
+    tenthCgpaInput.addEventListener('blur', validateTenthCgpa);
+    twelfthCgpaInput.addEventListener('blur', validateTwelfthCgpa);
+    currentCgpaInput.addEventListener('blur', validateCurrentCgpa);
+    backlogsInput.addEventListener('blur', validateBacklogs);
+  
+    // Attach keyup event listeners to each input field for real-time validation
+    tenthCgpaInput.addEventListener('keyup', validateFields);
+    twelfthCgpaInput.addEventListener('keyup', validateFields);
+    currentCgpaInput.addEventListener('keyup', validateFields);
+    backlogsInput.addEventListener('keyup', validateFields);
+  </script>
+
+</body>
+</html>
+  

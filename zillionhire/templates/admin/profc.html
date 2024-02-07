@@ -1,0 +1,373 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+
+    <title>ZillionHire- Home Page</title>
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'assets2/img/logo.png' %}">
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    
+
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="{% static 'assets/css/fontawesome.css' %}">
+    <link rel="stylesheet" href="{% static  'assets/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/owl.css' %}">
+  </head>
+
+  <body>
+
+    <!-- ***** Preloader Start ***** -->
+    <div id="preloader">
+        <div class="jumper">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>  
+    <!-- ***** Preloader End ***** -->
+
+    <!-- Header -->
+    {% comment %} <div class="sub-header">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-8 col-xs-12">
+            <ul class="left-info">
+              
+              <img src="{% static 'assets/images/logo.png'  %}" class="logo1">
+              <li><a href="#"><i class="fa fa-envelope"></i>zillionhire@gmail.com</a></li>
+              <li><a href="#"><i class="fa fa-phone"></i>123-456-7890</a></li>
+            </ul>
+          </div>
+          <div class="col-md-4">
+            <ul class="right-icons">
+              <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+              <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+              <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div> {% endcomment %}
+
+    {% comment %} <header class="">
+      <nav class="navbar navbar-expand-lg">
+        <div class="container"> {% endcomment %}
+          {% comment %} <a class="navbar-brand" href="{% url 'index' %}"><h2>ZillionHire <em> Website</em></h2></a> {% endcomment %}
+          {% comment %} <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">           
+              <li class="nav-item active">
+                <a class="nav-link" href="{% url 'cindex' %}">Home
+                  <span class="sr-only">(current)</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'aboutuser' %}">About Us</a> {% endcomment %}
+              </li>
+              {% comment %} <li>
+                <a class="dropdown-toggle nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Others</a>
+              
+                  <div class="dropdown-menu">
+                    <a class="dropdown-item" href="{% url 'cprofile' %}">Profile</a>
+                    <a class="dropdown-item" href="{% url 'loginn' %}">Jobs</a>
+                    <a class="dropdown-item" href="{% url 'loginn' %}">Candidate List</a>
+                    
+                </div>
+              </li> {% endcomment %}
+              {% comment %} <li class="nav-item dropdown">
+                {% if user.is_authenticated %}
+                  <a class="nav-link" href="{% url 'loggout' %}">Log Out</a>
+                {% else %}
+                  <a class="dropdown-toggle nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Login</a>
+              
+                  <div class="dropdown-menu">
+                    <a class="dropdown-item" href="{% url 'loginn' %}">Student</a>
+                    <a class="dropdown-item" href="{% url 'loginn' %}">Company</a>
+                    <a class="dropdown-item" href="{% url 'loginn' %}">College Officer</a> {% endcomment %}
+                    {% comment %} <a class="dropdown-item" href="{% url 'blog' %}">Blog</a>
+                    <a class="dropdown-item" href="testimonials.html">Testimonials</a>
+                    <a class="dropdown-item" href="terms.html">Terms</a> {% endcomment %}
+                {% comment %} </div>
+                {% endif %}
+              </li>
+              
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'contactuser' %}">Contact Us</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'postjob' %}">Post Job</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header> {% endcomment %}
+    
+    {% comment %} {% if messages %}
+<ul  class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}    {% endcomment %}
+    <div class="main-banner header-text" id="top">
+      <div class="Modern-Slider">
+        <!-- Item -->
+        <div class="item item-1">
+          <div class="cimg">
+              <div class="text-content">
+                <h6 class="cph">PROFILE<em>DETAILS</em></h6><br>
+                {% comment %} <div class="image-container">
+                  <img src="{% if companyprofile.companydp %}{{ companyprofile.companydp.url }}{% else %}path_to_default_image{% endif %}" alt="Company Logo" name="companydp" id="companydp" width="100" height="80">&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;
+                  <input type="text" id="companyname" name="companyName" placeholder="    company name" value="{{ companyprofile.companyname }}" disabled><br><br>
+                </div> {% endcomment %}
+                    <div class="crow">                       
+                        <div class="ccolumn">
+                          
+                          <form method="POST" enctype="multipart/form-data" id="companyProfileForm">
+                                 {% csrf_token %}
+                                 
+                                <input type="text" id="companyName" name="companyName" placeholder="    company name" value="{{ company_profile.companyname }}" disabled><br><br>
+                                <input type="text" id="ceo" name="ceo"  placeholder="    ceo name" value="{{ company_profile.ceo }}" disabled ><br><br>     
+                                <input type="text" id="headquarters" name="headquarters" placeholder="    Head Quarter" value="{{ company_profile.headquarter }}"  disabled><br><br>
+                                <input type="text" id="email" name="email" value="{{company_profile.email }}" placeholder="    Email"  disabled><br><br>
+                                <input type="tel" id="contact" name="contact" placeholder="    Contact" value="{{ company_profile.contact }}"  disabled><br><br>
+                                
+                            
+                        </div>
+
+                        <div class="ccolumn">
+                            
+                                
+
+                                <input type="text" id="website" name="website" placeholder="    Website" value="{{ companyprofile.website }}" ><br><br>
+                                <span id="websiteError" style="color: red;"></span>
+                                <input type="text" id="addressLine1" name="addressline1" placeholder="    Address Line 1"value="{{ companyprofile.addressline1 }}"><br><br>
+                                <input type="text" id="city" name="city" placeholder="    City" value="{{ companyprofile.city }}"><br><br>
+                                <input type="text" id="district" name="district" placeholder="    District" value="{{ companyprofile.district }}"><br><br>
+                                <input type="text" id="state" name="state" placeholder="    State"value="{{ companyprofile.state }}" ><br><br>
+                                
+                                
+                            
+                           
+                        </div>
+                        <div class="ccolumn">
+                          
+                              
+                              <input type="text" id="country" name="country" placeholder="    Country" value="{{ companyprofile.country }}"><br><br>
+                              {% comment %} <select id="country" name="country" class="custom-dropdown" value="{{ companyprofile.country }}">
+                                <option value="">select country</option>
+                                <option value="USA">USA</option>
+                                <option value="Canada">Canada</option>
+                                <option value="UK">UK</option>
+                                <!-- Add more countries as needed -->
+                              </select><br><br> {% endcomment %} 
+                              <input type="text" id="pincode" name="pincode" placeholder="    Pincode" value="{{ companyprofile.pincode }}"><br><br>
+                              {% comment %} ?<input type="file" id="companydp" name="companydp" style="width: 70%; padding: 10px; border: 1px solid #a4c639; border-radius: 18px; font-size: 16px;"><br> {% endcomment %}
+                              {% comment %} <input type="file" id="companydp" name="companydp" accept=".png, .jpg, .jpeg, .svg" style="width: 70%; padding: 10px; border: 1px solid #a4c639; border-radius: 18px; font-size: 16px;" /> {% endcomment %}
+
+                              <span id="pincodeError" style="color: red;"></span><br>
+                              <img src="{% if companyprofile.companydp %}{{ companyprofile.companydp.url }}{% else %}path_to_default_image{% endif %}" alt="Company Logo" name="companydp" id="companydp" width="100" height="80">&ensp;&ensp;
+                              
+                              {% comment %} <button type="submit" class="postjob"> Save</button> {% endcomment %}
+                          </form>
+                    </div>
+
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="main-banner header-text" id="top">
+      <div class="Modern-Slider">
+        <!-- Item -->
+        
+      </div>
+    </div>
+
+  </div>
+  </div>
+    {% comment %} <footer>
+        <div class="container">
+          <div class="row">
+            <div class="col-md-3 footer-item">
+              <h4>ZillionHire</h4>
+              <p>Placement Cell of Kent Mounds College of Engg</p>
+              <ul class="social-icons">
+                <li><a rel="nofollow" href="#" target="_blank"><i class="fa fa-facebook"></i></a></li>
+                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+              </ul>
+            </div>
+            <div class="col-md-3 footer-item">
+              <h4>Useful Links</h4>
+              <ul class="menu-list">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Contact</a></li>
+                <li><a href="#">Login</a></li> {% endcomment %}
+                {% comment %} <li><a href="#">Lacinia ac sapien</a></li> {% endcomment %}
+              {% comment %} </ul>
+            </div>
+           
+            <div class="col-md-3 footer-item last-item">
+              <h4>Contact Us</h4>
+              <div class="contact-form">
+                <form id="contact footer-contact" action="" method="post">
+                  <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                      <fieldset>
+                        <input name="name" type="text" class="form-control" id="name" placeholder="Full Name" required="">
+                      </fieldset>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                      <fieldset>
+                        <input name="email" type="text" class="form-control" id="email" pattern="[^ @]*@[^ @]*" placeholder="E-Mail Address" required="">
+                      </fieldset>
+                    </div>
+                    <div class="col-lg-12">
+                      <fieldset>
+                        <textarea name="message" rows="6" class="form-control" id="message" placeholder="Your Message" required=""></textarea>
+                      </fieldset>
+                    </div>
+                    <div class="col-lg-12">
+                      <fieldset>
+                        <button type="submit" id="form-submit" class="filled-button">Send Message</button>
+                      </fieldset>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
+       {% endcomment %}
+      <div class="sub-footer">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <p>
+                  
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Bootstrap core JavaScript -->
+      <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+      <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  
+      <!-- Additional Scripts -->
+      <script src="{% static 'assets/js/custom.js' %}"></script>
+      <script src="{% static 'assets/js/owl.js' %}"></script>
+      <script src="{% static 'assets/js/accordions.js' %}"></script>
+  
+      <script language = "text/Javascript"> 
+        {% comment %} cleared[0] = cleared[1] = cleared[2] = 0; //set a cleared flag for each field
+        function clearField(t){                   //declaring the array outside of the
+        if(! cleared[t.id]){                      // function makes it static and global
+            cleared[t.id] = 1;  // you could use true and false, but that's more typing
+            t.value='';         // with more chance of typos
+            t.style.color='#fff';
+            }
+        } {% endcomment %}
+
+      
+          // Get references to the input fields
+          const websiteInput = document.getElementById('website');
+          const addressLine1Input = document.getElementById('addressLine1');
+          const cityInput = document.getElementById('city');
+          const districtInput = document.getElementById('district');
+          const stateInput = document.getElementById('state');
+          const countryInput = document.getElementById('country');
+          const pincodeInput = document.getElementById('pincode');
+      
+          // Add event listeners for keyup
+          websiteInput.addEventListener('keyup', validateWebsite);
+          addressLine1Input.addEventListener('keyup', validateAddressLine1);
+          cityInput.addEventListener('keyup', validateCity);
+          districtInput.addEventListener('keyup', validateDistrict);
+          stateInput.addEventListener('keyup', validateState);
+          countryInput.addEventListener('keyup', validateCountry);
+          pincodeInput.addEventListener('keyup', validatePincode);
+
+
+          
+
+                
+                    
+
+        
+     
+          function validateForm() {
+            var imageInput = document.getElementById("image");
+            var imageError = document.getElementById("imageError");
+            
+            // Check if a file is selected
+            if (!imageInput.files || imageInput.files.length === 0) {
+              imageError.textContent = "Please select an image.";
+              return false;
+            }
+            
+            var allowedFormats = ["image/jpeg", "image/jpg", "image/png"];
+            var maxFileSize = 10 * 1024 * 1024; // 5 MB
+            
+            // Check the file format
+            if (allowedFormats.indexOf(imageInput.files[0].type) === -1) {
+              imageError.textContent = "Please select a valid image format (jpg, jpeg, png).";
+              return false;
+            }
+            
+            // Check the file size
+            if (imageInput.files[0].size > maxFileSize) {
+              imageError.textContent = "File size exceeds the maximum allowed (5 MB).";
+              return false;
+            }
+            
+            // Clear any previous error messages
+            imageError.textContent = "";
+            return true;
+          }
+          document.getElementById('companydp').addEventListener('change', function() {
+            const file = this.files[0];
+            const maxSize = 10 * 1024 * 1024; // 10MB in bytes
+        
+            if (file && file.size > maxSize) {
+              alert('File size exceeds 10MB. Please choose a smaller file.');
+              this.value = ''; // Clear the file input
+            }
+          });
+          
+      </script>
+        
+      </script>
+      <style>
+        #companyname {
+          width: 200px; /* Set the width of the input box */
+          height: 60px; /* Set the height of the input box */
+          text-align: center;
+        }
+        .image-container{
+          {% comment %} display: inline-block; {% endcomment %}
+          margin-right:200px;
+          {% comment %} margin-left:350px; {% endcomment %}
+        }
+       
+      </style>
+  
+    </body>
+  </html>

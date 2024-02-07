@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+
+<!-- doctors23:12-->
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'assets_admin/img/logo.png' %}">
+    <title>ZillionHire - Admin - Students List</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'assets_admin/css/bootstrap.min.css'%}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'assets_admin/css/font-awesome.min.css'%}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets_admin/css/select2.min.css'%}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets_admin/css/bootstrap-datetimepicker.min.css'%}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets_admin/css/style.css'%}">
+    <!--[if lt IE 9]>
+        <script src="assets/js/html5shiv.min.js"></script>
+        <script src="assets/js/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+    <div class="main-wrapper">
+        <div class="header">
+                    
+        </div>
+        <div class="header">
+            <div class="header-left">
+                <a href="{% url 'admin_index2' %}" class="logo">
+                    <img src="{% static 'assets_admin/img/logo.png' %}" width="35" height="35" alt=""> <span>ZillionHire</span>
+                </a>
+            </div>
+            <a id="toggle_btn" href="javascript:void(0);"><i class="fa fa-bars"></i></a>
+            <a id="mobile_btn" class="mobile_btn float-left" href="#sidebar"><i class="fa fa-bars"></i></a>
+            <ul class="nav user-menu float-right">
+                <li class="nav-item dropdown d-none d-sm-block">
+                    <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown"><i class="fa fa-bell-o"></i> <span class="badge badge-pill bg-danger float-right">3</span></a>
+                    <div class="dropdown-menu notifications">
+                        <div class="topnav-dropdown-header">
+                            <span>Notifications</span>
+                        </div>
+                        
+                    </div>
+                </li>
+                
+                <li class="nav-item dropdown has-arrow">
+                    <a href="#" class="dropdown-toggle nav-link user-link" data-toggle="dropdown">
+                        <span class="user-img">
+                            <img class="rounded-circle" src="{% static 'assets_admin/img/user.jpg' %}" width="24" alt="Admin">
+                            <span class="status online"></span>
+                        </span>
+                        <span>Admin</span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="{% url 'admin_profile' %}">My Profile</a>
+                        <a class="dropdown-item" href="{% url 'admin_editprofile' %}">Edit Profile</a>
+
+                        <a class="dropdown-item" href="{% url 'admin_login' %}">Logout</a>
+                    </div>
+                </li>
+            </ul>
+            <div class="dropdown mobile-user-menu float-right">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <a class="dropdown-item" href="{% url 'admin_profile' %}">My Profile</a>
+                    <a class="dropdown-item" href="{% url 'admin_editprofile' %}">Edit Profile</a>
+                    
+                    <a class="dropdown-item" href="{% url 'admin_login' %}">Logout</a>
+                </div>
+            </div>
+        </div>
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-inner slimscroll">
+                <div id="sidebar-menu" class="sidebar-menu">
+                    <ul>
+                        <li class="menu-title">Main</li>
+                        <li >
+                            <a href="{% url 'admin_index2' %}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
+                        </li>
+						{% comment %} <li>
+                            <a href="{% url 'admin_poststudent' %}"><i class="fa-solid fa-user-graduate"></i> <span>Students</span></a>
+                        </li> {% endcomment %}
+                        <li class="active">
+                            <a href="{% url 'ad_studentlist' %}"><i class="fa-solid fa-award"></i> <span> Students List</span></a>
+                        </li>
+                        <li>
+                            <a href="{% url 'alumnilist' %}"><i class="fa-solid fa-award"></i> <span> Alumni List</span></a>
+                        </li>
+                        <li>
+                            <a href="{% url 'admin_addstudents' %}"><i class="fa-solid fa-award"></i> <span>Add student</span></a>
+                        </li>
+                        
+                        <li class="submenu">
+                            <a href="#"><i class="fas fa-user-tie"></i> <span> Company </span> <span class="menu-arrow"></span></a>
+                            <ul style="display: none;">
+                                <li><a href="{% url 'companyapprove' %}">Approve Company</a></li>
+                                <li><a href="{% url 'companyprofilelist' %}">Company List</a></li>
+                                <li><a href="{% url 'jobslist' %}">Jobs</a></li>
+                                {% comment %} <li><a href="{% url 'admin_company' %}">Applied Students</a></li>
+                                <li><a href="{% url 'admin_company' %}">Short Listed Students</a></li> {% endcomment %}
+                                
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="{% url 'adminappstudents' %}"><i class="fa-solid fa-user-check"></i> <span>Applied Students</span></a>
+                        </li>
+                        <li>
+                            <a href="{% url 'admin_shortlist' %}"><i class="fa-solid fa-award"></i> <span>Short Listed Students</span></a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="page-wrapper">
+            <div class="content">
+                <div class="row">
+                    <div class="col-sm-4 col-3">
+                        <h4 class="page-title">STUDENTS LIST</h4>
+                    </div>
+                    <div class="form-group">
+                        <a href="{% url 'ad_studentlist' %}" class="btn btn-success">Generate List</a>    
+                    </div>
+                    <div class="col-sm-12 col-16 text-right m-b-20">
+                        
+                       
+                        
+                        <a href="{% url 'admin_addstudents' %}" class="btn btn-primary btn-rounded float-right"><i class="fa fa-plus"></i> Add Student</a>
+                    </div>
+                    <div class="col-sm-8 col-9 text-left m-b-20">
+                        
+                        <form method="get" action="{% url 'ad_studentlist' %}">
+                            <div class="form-row"> 
+                                <div class="form-group col-md-3">
+                                    <label class="col-form-label">Filter by Department:</label>
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" id="mcaDepartmentFilter" name="department" value="MCA" {% if 'MCA' in selected_departments %}checked{% endif %}>
+                                        <label class="form-check-label" for="mcaDepartmentFilter">MCA</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" id="btechDepartmentFilter" name="department" value="B.Tech" {% if 'B.Tech' in selected_departments %}checked{% endif %}>
+                                        <label class="form-check-label" for="btechDepartmentFilter">B.Tech</label>
+                                    </div>
+                                </div>
+                        
+                                <div class="form-group col-md-3">
+                                    <label class="col-form-label">Filter by Course:</label>
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" id="integratedMcaCourseFilter" name="course" value="Integrated MCA" {% if 'Integrated MCA' in selected_courses %}checked{% endif %}>
+                                        <label class="form-check-label" for="integratedMcaCourseFilter">Integrated MCA</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" id="regularMcaCourseFilter" name="course" value="Regular MCA" {% if 'Regular MCA' in selected_courses %}checked{% endif %}>
+                                        <label class="form-check-label" for="regularMcaCourseFilter">Regular MCA</label>
+                                    </div>
+                                    
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" id="eceCourseFilter" name="course" value="Electronics and Communication Engineering" {% if 'Electronics and Communication Engineering' in selected_courses %}checked{% endif %}>
+                                        <label class="form-check-label" for="eceCourseFilter">ECE</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" id="cseCourseFilter" name="course" value="Computer Science Engineering" {% if 'Computer Science Engineering' in selected_courses %}checked{% endif %}>
+                                        <label class="form-check-label" for="cseCourseFilter">CSE</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" id="itCourseFilter" name="course" value="Information Technology" {% if 'Information Technology' in selected_courses %}checked{% endif %}>
+                                        <label class="form-check-label" for="itCourseFilter">IT</label>
+                                    </div>
+                                </div>
+                        
+                                <div class="form-group col-md-3">
+                                    <label class="col-form-label">Filter by Passout Year:</label>
+                                    <select class="form-control" id="passoutYearFilter" name="passout_year">
+                                        <option value="" {% if not request.GET.passout_year %}selected{% endif %}>All</option>
+                                        {% for year in available_years %}
+                                            <option value="{{ year }}" {% if year|default:"" == request.GET.passout_year %}selected{% endif %}>
+                                                {{ year }}
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        
+                            <button type="submit" class="btn btn-primary">Apply Filter</button>
+                        </form>
+                        
+                        
+                        
+                    </div>
+                    
+                </div>
+                
+                <div class="row doctor-grid">
+                    {% for adstu in adstus %}
+                    {% comment %} {% if adstu.is_active %} {% endcomment %}
+                    <div class="col-md-4 col-sm-4 col-lg-3">
+                        <div class="profile-widget">
+                            <div class="doctor-img">
+                                {% comment %} <a class="avatar" href="profile.html"><img alt="" src="{{ adstu.profile_photo }}"></a> {% endcomment %}
+                                <img class="avatar" src="{% if adstu.profile_photo %}{{ adstu.profile_photo.url }}{% else %}path_to_default_image{% endif %}" alt="Student profile" name="profile_photo" id="profile_photo" width="100" height="80" style="border-radius: 50%;">
+                            </div>
+                 
+                            <h4 class="doctor-name text-ellipsis"><a href="profile.html">{{ adstu.sname }}</a></h4>
+                
+                            <div  style="text-align: left;">
+                                <p class="card-text"><b>Admission Number :</b> {{ adstu.admission_no }}</p>
+                                <p class="card-text"><b>Name :</b> {{ adstu.first_name }}&ensp;{{ adstu.last_name }}</p>
+                                <p class="card-text"><b>Email :</b> {{ adstu.email }}</p>
+                                <p class="card-text"><b>Phone : </b> {{ adstu.phone }}</p>
+                                <p class="card-text"><b>Date Of Birth :</b> {{ adstu.dob }}</p>
+                                <p class="card-text"><b>Gender :</b> {{ adstu.gender }}</p>
+                                <p class="card-text"><b>Department : </b>{{ adstu.department }}</p>
+                                <p class="card-text"><b>Course : </b>{{ adstu.course }}</p>
+                                <p class="card-text"><b>Academic Year :</b> {{ adstu.academic_year }}</p>
+                                <p class="card-text"><b>Passout Year :</b> {{ adstu.passout_year }}</p>
+                                <p class="card-text"><b>Semester : </b>{{ adstu.current_semester }}</p>
+                                <p class="card-text"><b>CGPA : </b>{{ adstu.c_cgpa }}</p>
+                                <p class="card-text"><b>Active Backlog : </b>{{ adstu.c_backlog }}</p>
+                                {% comment %} <p class="card-text">
+                                    <b>Alumni: </b>{{ adstu.is_alumni }}
+                                    <a href="{% url 'toggle_alumni_status' student_profile_id=adstu.id %}" class="btn btn-primary">Edit</a>
+                                </p> {% endcomment %}
+                                {% if not adstu.is_alumni %}
+                                    <p class="card-text">
+                                        <b>Alumni: </b>{{ adstu.is_alumni }}
+                                        <a href="{% url 'toggle_alumni_status' student_profile_id=adstu.id %}" class="btn btn-primary">Edit</a>
+                                    </p>
+                                {% endif %}
+                                
+                            </div>
+                
+                            <!-- Edit and Delete buttons -->
+                            {% comment %} <div class="edit-delete-buttons">
+                                <a href="{% url 'edit_student' adstu.id %}" class="btn btn-primary">Edit</a>
+                                <a href="{% url 'delete_student' adstu.id %}" class="btn btn-danger">Delete</a>
+                            </div> {% endcomment %}
+                        </div>
+                    </div>
+                    {% comment %} {% endif %} {% endcomment %}
+                    {% endfor %}
+                </div>
+                
+                 
+                
+    
+            </div>
+           
+        </div>
+      
+    </div>
+    <div class="sidebar-overlay" data-reff=""></div>
+                            <script src="{% static 'assets_admin/js/jquery-3.2.1.min.js'%}"></script>
+                            <script src="{% static 'assets_admin/js/popper.min.js'%}"></script>
+                            <script src="{% static 'assets_admin/js/bootstrap.min.js'%}"></script>
+                            <script src="{% static 'assets_admin/js/jquery.slimscroll.js'%}"></script>
+                            <script src="{% static 'assets_admin/js/select2.min.js'%}"></script>
+                            <script src="{% static 'assets_admin/js/moment.min.js'%}"></script>
+                            <script src="{% static 'assets_admin/js/bootstrap-datetimepicker.min.js'%}"></script>
+                            <script src="{% static 'assets_admin/js/app.js'%}"></script>
+                            <script>
+                           
+                            </script>
+                           
+                            
+</body>
+</html>

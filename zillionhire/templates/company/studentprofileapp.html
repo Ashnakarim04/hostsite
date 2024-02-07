@@ -1,0 +1,278 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    .container {
+      width: 50%;
+      margin: 0 auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+    input[type="text"], input[type="date"], input[type="number"], input[type="email"] {
+      width: 100%;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+    
+  </style>
+  
+  
+</head>
+<body>
+    {% comment %} {% for appstu in app_stu %} {% endcomment %}
+        <div class="container">
+            <h2>Personal Information</h2>
+
+            <div class="form-group">
+                <label for="first_name">First Name:</label>
+                <input type="text" id="first_name" name="first_name" value="{{ job_application.first_name }}">
+            </div>
+            
+            
+            <div class="form-group">
+                <label for="last_name">Last Name:</label>
+                <input type="text" id="last_name" name="last_name" value="{{ job_application.last_name }}"required>
+            </div>
+            
+            <div class="form-group">
+                <label for="dob">Date of Birth:</label>
+                <input type="text" id="dob" name="dob"value="{{ job_application.dob }}" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="phone">Phone:</label>
+                <input type="text" id="phone" name="phone" value="{{ job_application.phone }}"required>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" value="{{ job_application.email }}"required>
+            </div>
+            
+            <div class="form-group">
+                <label for="gender">Gender:</label>
+                <input type="text" id="gender" name="gender" value="{{ job_application.gender }}" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="nationality">Nationality:</label>
+                <input type="text" id="nationality" name="nationality" value="{{ job_application.nationality }}"required>
+            </div>
+            
+            <div class="form-group">
+                <label for="profile-photo">Profile Photo:</label>
+                <div class="profile-photo-container">
+                <img id="profile_photo" class="profile_photo" src="#" alt="Profile Photo Preview">
+                </div>
+                <input type="file" id="profile_photo" name="profile_photo" accept="image/*" onchange="previewProfilePhoto(event)">
+            </div>
+            
+            <div class="form-group">
+                <label for="permanent_address">Permanent Address:</label>
+                <input type="text" id="permanent_address" name="permanent_address" rows="4" style="width: 80%;"value="{{ job_application.permanent_address }}" required></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="present_address">Present Address:</label>
+                <input type="text" id="present_address" name="present_address" rows="4" style="width: 80%;" value="{{ job_application.present_address }}"required></textarea>
+            </div>
+
+            <h2>Educational Information</h2>
+            <h3>Tenth Details</h3>
+            <div class="form-group">
+                        <label for="tenth_institution">10th Institution:</label>
+                <input type="text" id="tenth_institution" name="tenth_institution"value="{{ job_application.tenth_institution }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="tenth_cgpa-cgpa">10th CGPA:</label>
+                <input type="number" id="tenth_cgpa" name="tenth_cgpa" step="0.01"value="{{ job_application.tenth_cgpa }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="tenth_board">10th Board:</label>
+                <input type="text" id="tenth_board" name="tenth_board" value="{{ job_application.tenth_course }}"required>
+            </div>
+
+            <div class="form-group">
+                <label for="10th-certificate">10th Certificate:</label>
+                <input type="file" id="tenth_certificate_upload" name="tenth_certificate_upload" accept="application/pdf" value="{{ job_application.tenth_certificate_upload }}"required>
+            </div>
+
+            <!-- 12th Details -->
+            <h3>Twelfth Details</h3>
+            <div class="form-group">
+                <label for="12th-institution">12th Institution:</label>
+                <input type="text" id="twelfth_institution" name="twelfth_institution" value="{{ job_application.twelfth_institution }}"required>
+            </div>
+
+            <div class="form-group">
+                <label for="12th-cgpa">12th CGPA:</label>
+                <input type="number" id="twelfth_cgpa" name="twelfth_cgpa" step="0.01"value="{{ job_application.twelfth_cgpa }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="twelfth_board">12th Board:</label>
+                <input type="text" id="twelfth_board" name="twelfth_board" value="{{ job_application.twelfth_course }}"required>
+            </div>
+
+            <div class="form-group">
+                <label for="12th-certificate">12th Certificate:</label>
+                <input type="file" id="twelfth_certificate_upload" name="twelfth_certificate_upload" accept="application/pdf" value="{{ job_application.tweflth_certificate_upload }}"required>
+            </div>
+
+            <!-- UG Educational Information -->
+            <h3>Undergraduate (UG) Educational Information</h3>
+            <div class="form-group">
+                <label for="ug-institution">Course : </label>
+                <input type="text" id="ug_course" name="ug_course" value="{{ job_application.course }}"required>
+            </div>
+            <div class="form-group">
+                <label for="ug-institution">UG Institution:</label>
+                <input type="text" id="ug_institution" name="ug_institution" value="{{ job_application.ug_institution }}"required>
+            </div>
+            <div class="form-group">
+                <label for="ug-board">UG Board:</label>
+                <input type="text" id="ug_board" name="ug_board" value="{{ job_application.ug_course }}"required>
+            </div>
+            <div class="form-group">
+                <label for="ug-cgpa">UG CGPA:</label>
+                <input type="number" id="ug_cgpa" name="ug_cgpa" step="0.01" value="{{ job_application.ug_cgpa }}"required>
+            </div>
+
+            <div class="form-group">
+                <label for="ug-certificate">UG Certificate:</label>
+                <input type="file" id="ug_certificate_upload" name="ug_certificate_upload" accept="application/pdf" value="{{ job_application.ug_certificate_upload }}"required>
+            </div>
+
+                <h3>Current Degree Details</h3>
+                <div class="form-group">
+                    <label for="current-degree-course">Course:</label>
+                    <input type="text" id="c_course" name="c_course" value="{{ job_application.c_course }}"required>
+                </div>
+
+                <div class="form-group">
+                <label for="current-degree-institution">Institution:</label>
+                <input type="text" id="c_institution" name="c_institution" value="{{ job_application.c_institution }}"required>
+            </div>
+
+            <div class="form-group">
+                <label for="current-degree-cgpa">CGPA:</label>
+                <input type="number" id="c_cgpa" name="c_cgpa" step="0.01" value="{{ job_application.c_cgpa }}"required>
+            </div>
+
+            <div class="form-group">
+                <label for="current-degree-board">Board:</label>
+                <input type="text" id="c_university" name="c_university" value="{{ job_application.c_university }}"required>
+            </div>
+
+            
+
+            <div class="form-group">
+                <label for="academic-year">Academic Year:</label>
+                <input type="text" id="academic_year" name="academic_year"value="{{ job_application.academic_year }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="active-backlogs">Active Backlogs:</label>
+                <input type="number" id="c_backlog" name="c_backlog" value="{{ job_application.c_backlog }}"required>
+            </div>
+
+            {% comment %} <div class="form-group">
+                <label for="current-degree-certificate">Certificate:</label>
+                <input type="file" id="current-degree-certificate" name="current_degree_certificate" accept="application/pdf" required>
+            </div> {% endcomment %}
+
+            <h2>Skills and Certifications</h2>
+
+            <div class="form-group">
+                <label for="skills">Skills:</label>
+                <input type="text" id="skills" name="skills"value="{{ job_application.skills }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="course">Course:</label>
+                <input type="text" id="newcourse" name="newcourse" value="{{ job_application.newcourse }}"required>
+            </div>
+
+            <div class="form-group">
+                <label for="certification">Certification:</label>
+                <input type="file" id="newcert" name="newcert" accept="application/pdf" value="{{ job_application.newcert }}"required>
+            </div>
+
+            <!-- Work Experience -->
+            <h2>Work Experience</h2>
+
+            <div class="form-group">
+                <label for="workexperience">Work Experience:</label>
+                <input type="text" id="workexperience" name="workexperience" value="{{ job_application.workexperience }}"required>
+            </div>
+
+            <div class="form-group">
+                <label for="job-responsibility">Job Responsibility:</label>
+                <input type="text" id="jobresp" name="jobresp" rows="4" style="width: 100%;"value="{{ job_application.jobresp }}" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="employment-period">Period of Employment:</label>
+                <input type="text" id="period" name="period" value="{{ job_application.period }}"required>
+            </div>
+
+            <div class="form-group">
+                <label for="company-details">Company Details:</label>
+                <input type="text" id="companydetails" name="companydetails"value="{{ job_application.companydetails }}" required>
+            </div>
+
+            <!-- Criminal Background -->
+            <h2>Criminal Background</h2>
+
+            <div class="form-group">
+                <label for="crime">Criminal Background:</label>
+                <input type="text" id="crime" name="crime"value="{{ job_application.crime }}" required>
+            </div>
+        
+            <div class="form-group">
+                <label for="conviction-date">Details of Conviction:</label>
+                <input type="text" id="dtoc" name="dtoc"value="{{ job_application.dtoc }}" required>
+            </div>
+            <div class="form-group">
+                <label for="conviction-date">Date of Conviction:</label>
+                <input type="text" id="doc" name="doc" value="{{ job_application.doc }}"required>
+            </div>
+            <div class="form-group">
+                <label for="conviction-date">Nature of the Offense:</label>
+                <input type="text" id="nature" name="nature"value="{{ job_application.nature }}" required>
+            </div>
+            
+            <!-- View Resume -->
+            <h2>View Resume</h2>
+
+            <div class="form-group">
+                <label for="resume-file">Resume File:</label>
+                <input type="file" id="resume-file" name="resume_file" accept=".pdf">
+            </div>
+
+            <div class="form-group">
+                <button onclick="viewResume()">View Resume</button>
+            </div>
+            </div>
+        {% comment %} {% endfor %} {% endcomment %}
+
+
+    
+  </div>
+  
+</body>
+</html>

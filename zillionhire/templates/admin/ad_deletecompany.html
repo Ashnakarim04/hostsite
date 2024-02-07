@@ -1,0 +1,95 @@
+{% load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title> ZillionHire - Admin delete Company</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+ 
+        h4 {
+            color: #333;
+        }
+
+        .delete-box {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 400px;
+        }
+
+        p {
+            font-size: 18px;
+            margin: 20px 0;
+        }
+
+        .btn-delete {
+            background-color: #e74c3c;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .btn-cancel {
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-left: 10px;
+        }
+
+        .btn-delete:hover, .btn-cancel:hover {
+            background-color: #c0392b;
+        }
+    </style>
+    <script>
+        {% comment %} function cancelAction() {
+            // Redirect to the companyprofilelist URL
+            window.location.href = "{% url 'companyprofilelist' %}";
+        } {% endcomment %}
+    </script>
+</head>
+<body>
+    
+        <div class="delete-box">
+            <h4>Remove Company</h4>
+            <p>Are you sure you want to remove {{ company_profile.companyname }}?</p>
+            <form method="POST">
+                {% csrf_token %}
+                <button type="submit" class="btn-delete">Remove</button>
+                {% comment %} <a href="{% url '' %}" class="btn-delete">Remove</a> {% endcomment %}
+                <a href="{% url 'companyprofilelist' %}" class="btn-cancel">Cancel</a>
+            </form>
+        </div>
+
+
+
+    {% comment %} {% for comps in comp %}
+    <form method="post">
+        
+        {% comment %} <button type="submit" class="btn-delete">Remove</button> {% endcomment %}
+        {% comment %} <button type="submit" class="btn-cancel" onclick="cancelAction()">Cancel</button>
+        <a href="{% url 'companyprofilelist' %}" class="btn-cancel">Cancel</a> {% endcomment %}
+        {% comment %} <a href="{% url 'ad_deletecompany' comps_id=comp.id %}">Delete Company</a> {% endcomment %}
+        {% comment %} <form method="POST" action="{% url 'ad_deletecompany' comp_id=comps.id %}" class="btn-block" style="height: 100%;">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger btn-block" style="height: 100%;">Delete</button>
+        </form>
+    </form> {% endcomment %}
+    {% comment %} {% endfor %}  {% endcomment %}
+</body>
+</html>

@@ -1,0 +1,228 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+
+<head> 
+	<meta charset="UTF-8"> 
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+	<title>Document</title> 
+</head> 
+<style> 
+	* { 
+		box-sizing: border-box; 
+		margin: 0; 
+		padding: 0; 
+		font-family: montserrat; 
+	} 
+
+	.container { 
+		background-color: #f5f5f5; 
+		max-width: 800px; 
+		margin: 60px auto; 
+		height: 1100px; 
+		padding: 20px; 
+		box-shadow: 10px 2em 30px rgba(0, 0, 0, 0.3); 
+	} 
+
+	.header { 
+		text-align: center; 
+	} 
+
+	.header h1 { 
+		margin-bottom: 5px; 
+	} 
+
+	.header h3 { 
+		text-transform: uppercase; 
+		font-size: 15px; 
+		font-weight: 500; 
+	} 
+
+	.main { 
+		display: flex; 
+		flex-wrap: wrap; 
+	} 
+
+	.left { 
+		flex: 1; 
+		padding: 30px; 
+	} 
+
+	.left p { 
+		line-height: 1; 
+	} 
+
+	.left ul li { 
+		line-height: 1; 
+
+	} 
+
+	h2 { 
+
+		padding: 5px; 
+		color: #584d4d; 
+		margin: 30px 0; 
+		text-decoration: underline; 
+
+		font-size: 25px; 
+		border-radius: 0 20px 20px 0; 
+	} 
+
+	.right { 
+		flex: 1; 
+		padding: 20px; 
+
+	} 
+
+	.right h3 { 
+		margin-bottom: 5px; 
+
+	} 
+
+	.right ul li { 
+		line-height: 1; 
+	} 
+
+	.btn1 { 
+		margin-left: 43%; 
+		padding: 15px 15px; 
+		font-size: 15px; 
+		font-weight: bold; 
+		background-color: rgb(106, 233, 106); 
+		border-radius: 10px; 
+	} 
+	/* Apply standard form CSS to the "download-button" class */
+	.download-button {
+		display: inline-block;
+		padding: 10px 20px;
+		font-size: 16px;
+		text-align: center;
+		text-decoration: none;
+		background-color: #3498db;
+		color: #ffffff;
+		border-radius: 5px;
+		transition: background-color 0.3s;
+	}
+
+	/* Add a hover effect for better user experience */
+	.download-button:hover {
+		background-color: #2980b9;
+	}
+
+</style> 
+
+<body> 
+    <h1 style="text-align: center; color:green; font-size:40px; "></h1> 
+    <div id="mn" class="container"> 
+        <div class="header"> 
+            <br><br> 
+            <h1>{{ resume_instance.name }}</h1> 
+            <h3>{{ resume_instance.about }}</h3>  
+        </div> 
+        <div class="main"> 
+            <div class="left"> 
+                <h2>Personal Information</h2> 
+                <p><strong>Name :</strong>{{ resume_instance.name }}</p> 
+                <p><strong>Age :</strong>{{ resume_instance.age }} </p> 
+                <p><strong>Email</strong> {{ resume_instance.email }}</p> 
+                <p><strong>Phone</strong> +91-{{ resume_instance.phone }}</p> 
+                <h2>Skills</h2> 
+                <ul> 
+                    <li>{{ resume_instance.skill1 }}</li> 
+                    <li>{{ resume_instance.skill2 }}</li> 
+                    <li>{{ resume_instance.skill3 }}</li> 
+                    <li>{{ resume_instance.skill4 }}</li> 
+                    <li>{{ resume_instance.skill5 }}</li> 
+                </ul> 
+                <h2>Education</h2> 
+                <h3>{{ resume_instance.degree1 }} </h3> 
+                <p>{{ resume_instance.college1 }}</p> 
+                <p>{{ resume_instance.year1 }}</p> 
+                <br> 
+                <h3>{{ resume_instance.degree2 }} </h3> 
+                <p>{{ resume_instance.college2 }}</p> 
+                <p> Year : {{ resume_instance.year2 }}</p> 
+                <h3>{{ resume_instance.degree3 }} </h3> 
+                <p>{{ resume_instance.college3 }}</p> 
+                <p> Year : {{ resume_instance.year3 }}</p> 
+                <h2>Languages</h2> 
+                <ul> 
+                    <li>{{ resume_instance.lang1 }}</li> 
+                    <li>{{ resume_instance.lang2 }}</li> 
+                    <li>{{ resume_instance.lang3 }}</li> 
+                </ul> 
+            </div> 
+            <div class="right"> 
+                <h2>Projects</h2> 
+                <h3>{{ resume_instance.project1 }}</h3> 
+                <p><strong>Duration :</strong> {{ resume_instance.durat1 }}</p> 
+                <ul> 
+                    <li>{{ resume_instance.desc1 }}</li> 
+                </ul> 
+                <br> 
+                <h3>{{ resume_instance.project2 }}</h3> 
+                <p><strong>Duration :</strong> {{ resume_instance.durat2 }}</p> 
+                <ul> 
+                    <li>{{ resume_instance.desc2 }}</li> 
+                </ul> 
+                <h2>Work Experience</h2> 
+                <h3>{{ resume_instance.company1 }}</h3> 
+                <p><strong>Position:</strong> {{ resume_instance.post1 }}</p> 
+                <p><strong>Duration :</strong> {{ resume_instance.duration1 }}</p> 
+                <ul> 
+                    <li>{{ resume_instance.lin11 }}</li> 
+                </ul> 
+                <br><br> 
+                <h3>{{ resume_instance.company2 }}</h3> 
+                <p><strong>Position: </strong>{{ resume_instance.post2 }}</p> 
+                <p><strong>Duration</strong> {{ resume_instance.duration2 }}</p> 
+                <ul> 
+                    <li>{{ resume_instance.lin21 }}</li> 
+                </ul> 
+                <h2>Achievements :</h2> 
+                <ul> 
+                    <li>{{ resume_instance.ach1 }}</li> 
+                    <li>{{ resume_instance.ach2 }}</li> 
+                    <li>{{ resume_instance.ach3 }}</li> 
+                </ul> 
+            </div> 
+        </div> 
+    </div> 
+   <!-- Add a class "download-button" to the link -->
+<div class="center-container">
+    <a href="{% url 'generate_pdf' %}" target="_blank" class="download-button">Download PDF</a>
+</div>
+
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script> 
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.4.0/mammoth.browser.min.js"></script> 
+	<script type="text/javascript"> 
+		function generatePDF(containerId) { 
+			const container = document.getElementById(containerId); 
+
+			// Download as PDF 
+			const pdfOptions = { 
+				margin: 10, 
+				filename: 'resume.pdf', 
+				image: { type: 'jpeg', quality: 0.98 }, 
+				html2canvas: { scale: 2 }, 
+				jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' } 
+			}; 
+
+			html2pdf() 
+				.from(container) 
+				.set(pdfOptions) 
+				.outputPdf() 
+				.then(function (pdf) { 
+					const pdfBlob = new Blob([pdf], { type: 'application/pdf' }); 
+					const pdfUrl = URL.createObjectURL(pdfBlob); 
+					const pdfLink = document.createElement('a'); 
+					pdfLink.href = pdfUrl; 
+					pdfLink.download = 'resume.pdf'; 
+					pdfLink.click(); 
+				}); 
+		} 
+	</script> 
+
+</body> 
+
+</html>

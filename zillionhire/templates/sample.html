@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" href="styles.css"> -->
+    <title>Placement Cell</title>
+    <style>
+        /* Basic styling */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header, nav, main, footer {
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #ddd;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+nav li {
+    display: inline;
+    margin-right: 20px;
+}
+
+/* Additional styling can be added as needed */
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>PLACEMENT CELL </h1>
+    </header>
+    <nav>
+        <ul>
+            {% comment %} <li><a href="admin-login.html">Admin Login</a></li>
+            <li><a href="student-login.html">Student Login</a></li> {% endcomment %}
+            <li><a href="{% url 'loginn' %}">Company Login</a></li>
+        </ul>
+    </nav>
+    <main>
+        <section>
+            <h2>About Us</h2>
+            <p>Welcome to Placement Cell website...</p>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2023 Placement Cell</p>
+    </footer>
+</body>
+</html>

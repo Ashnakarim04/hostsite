@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Company Profile Form</title>
+    <style>
+        /* Style for two parallel columns */
+        .crow {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .ccolumn {
+            flex: 1;
+            padding: 5%;
+        }
+
+        /* Adjust the width and spacing as needed */
+        .form-group {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <center><h1>Company Profile</h1></center>
+    
+    <div class="crow">
+        <div class="ccolumn">
+            
+            <form>
+                <label for="companyName">Company Name:</label>
+                <input type="text" id="companyName" name="companyName" required><br><br>
+                <label for="ceo">CEO:</label>
+                <input type="text" id="ceo" name="ceo" required><br><br>     
+                <label for="headquarters">Headquarters:</label>
+                <input type="text" id="headquarters" name="headquarters" required><br><br>
+                <label for="offeredJobs">Offered Jobs:</label>
+                <input type="text" id="offeredJobs" name="offeredJobs" required><br><br>        
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required><br><br>
+                <label for="email2">Secondary Email:</label>
+                <input type="email" id="email2" name="email2"><br><br>
+            </form>
+        </div>
+
+        <div class="ccolumn">
+            <form>
+                <label for="contact">Contact:</label>
+                <input type="tel" id="contact" name="contact" required><br><br>
+                <label for="contact2">Secondary Contact:</label>
+                <input type="tel" id="contact2" name="contact2"><br><br>
+                <label for="website">Website:</label>
+                <input type="url" id="website" name="website" required><br><br>
+                <label for="addressLine1">Address Line 1:</label>
+                <input type="text" id="addressLine1" name="addressLine1" required><br><br>
+                <label for="city">City:</label>
+                <input type="text" id="city" name="city" required><br><br>
+                <label for="district">District:</label>
+                <input type="text" id="district" name="district" required><br><br>
+                <label for="state">State:</label>
+                <input type="text" id="state" name="state" required><br><br>
+                <label for="country">Country:</label>
+                <input type="text" id="country" name="country" required><br><br>
+                <label for="pincode">Pincode:</label>
+                <input type="text" id="pincode" name="pincode" required><br><br>
+                <label for="foundedDate">Founded Date:</label>
+                <input type="date" id="foundedDate" name="foundedDate" required><br><br>
+            </form>
+            <div class="button">
+                <input type="submit" value="Save">
+            </div>
+        </div>
+    </div>
+
+
+    
+</body>
+</html>

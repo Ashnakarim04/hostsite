@@ -1,0 +1,63 @@
+pip install PyPDF2
+
+pip install pymupdf
+
+import fitz  # PyMuPDF
+
+def extract_text_from_pdf(pdf_path):
+    text = ''
+    with fitz.open(pdf_path) as pdf_document:
+        for page_number in range(pdf_document.page_count):
+            page = pdf_document[page_number]
+            text += page.get_text()
+    return text
+
+import PyPDF2
+
+# Sample predefined skills and job titles (you should have a comprehensive database)
+job_skills_database = {
+    'Software Development': ['Python', 'Java', 'JavaScript', 'C++', 'HTML', 'CSS'],
+    'Data Analysis': ['SQL', 'Data Visualization', 'Machine Learning', 'Python', 'Statistics'],
+    'Project Management': ['Agile', 'Scrum', 'Budgeting', 'Risk Management']
+}
+
+def extract_skills_from_resume(text):
+    # Simple keyword-based skill extraction
+    extracted_skills = []
+    for job_title, skills in job_skills_database.items():
+        for skill in skills:
+            if skill.lower() in text.lower():
+                extracted_skills.append(skill)
+    return extracted_skills
+
+def suggest_jobs_based_on_skills(extracted_skills):
+    suggested_jobs = []
+    for job_title, skills in job_skills_database.items():
+        if all(skill in skills for skill in extracted_skills):
+            suggested_jobs.append(job_title)
+    return suggested_jobs
+
+# Read and extract text from a sample PDF resume (replace with user-uploaded PDF)
+
+
+def extract_text_from_pdf(pdf_path):
+    text = ''
+    with open(pdf_path, 'rb') as pdf_file:
+        pdf_reader = PyPDF2.PdfReader(pdf_file)  # Use PdfReader instead of PdfFileReader
+        for page_num in range(len(pdf_reader.pages)):
+            text += pdf_reader.pages[page_num].extract_text()
+    return text
+
+
+# Sample PDF file path (replace with the actual uploaded PDF)
+pdf_path = 'C:\\Users\\ashna\\Downloads\\sampler.pdf'
+
+# Extract skills from the resume
+resume_text = extract_text_from_pdf(pdf_path)
+extracted_skills = extract_skills_from_resume(resume_text)
+
+# Suggest jobs based on extracted skills
+suggested_jobs = suggest_jobs_based_on_skills(extracted_skills)
+
+print('Extracted Skills:', extracted_skills)
+print('Suggested Jobs:', suggested_jobs)

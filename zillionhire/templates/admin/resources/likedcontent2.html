@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+{% load static %} 
+<html lang="en">
+
+
+<!-- doctors23:12-->
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'assets2/img/logo.png' %}">
+    <title>ZillionHire - Company Dashboard</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'assets2/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets2/css/font-awesome.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets2/css/select2.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets2/css/bootstrap-datetimepicker.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets2/css/style.css' %}">
+   
+        <script src="{% static 'assets2/js/html5shiv.min.js' %}"></script>
+        <script src="{% static 'assets2/js/respond.min.js' %}"></script>
+       
+    <style>
+        .approved {
+          font-weight: bold;
+          color: green;
+        }
+      
+        .not-approved {
+          font-weight: bold;
+          color: red;
+        }
+        .custom-card {
+            margin-left: 250px; /* Adjust the value as needed */
+        }
+      </style>
+</head> 
+
+<body>
+    <header class="">
+        <nav class="navbar navbar-expand-lg">
+          <div class="container">
+            {% comment %} <a class="navbar-brand" href="{% url 'index' %}"><h2>ZillionHire <em> Website</em></h2></a> {% endcomment %}
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+              <ul class="navbar-nav ml-auto">
+                <li class="nav-item ">
+                  <a class="nav-link" href="{% url 'cindex' %}">Home
+                    {% comment %} <span class="sr-only">(current)</span> {% endcomment %}
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'aboutuser' %}">About Us</a>
+                </li>
+                {% comment %} <li>
+                  <a class="dropdown-toggle nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Others</a>
+                
+                    <div class="dropdown-menu">
+                      <a class="dropdown-item" href="{% url 'cprofile' %}">Profile</a>
+                      <a class="dropdown-item" href="{% url 'loginn' %}">Jobs</a>
+                      <a class="dropdown-item" href="{% url 'loginn' %}">Candidate List</a>
+                      
+                  </div>
+                </li> {% endcomment %}
+                <li class="nav-item dropdown">
+                  {% if user.is_authenticated %}
+                    <a class="nav-link" href="{% url 'loggout' %}">Log Out</a>
+                  {% else %}
+                    <a class="dropdown-toggle nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Login</a>
+                
+                    <div class="dropdown-menu">
+                      <a class="dropdown-item" href="{% url 'loginn' %}">Student</a>
+                      <a class="dropdown-item" href="{% url 'loginn' %}">Company</a>
+                      {% comment %} <a class="dropdown-item" href="{% url 'loginn' %}">College Officer</a> {% endcomment %}
+                      {% comment %} <a class="dropdown-item" href="{% url 'blog' %}">Blog</a>
+                      <a class="dropdown-item" href="testimonials.html">Testimonials</a>
+                      <a class="dropdown-item" href="terms.html">Terms</a> {% endcomment %}
+                  </div>
+                  {% endif %}
+                </li> 
+                
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'contactuser' %}">Contact Us</a>
+                </li>
+                <li class="nav-item active">
+                  <a class="nav-link" href="{% url 'postjob' %}">Post Job</a>
+                  <span class="sr-only">(current)</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </header>
+      <div class="sidebar" id="sidebar">
+        <div class="sidebar-inner slimscroll">
+            <div id="sidebar-menu" class="sidebar-menu">
+                <ul>
+                    <li class="menu-title">Student Dashboard</li>
+                    {% comment %} <li>
+                        <a href="{% url 'index-2' %}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
+                    </li> {% endcomment %}
+                    <li class>
+                      <a href="{% url 'sprofile' studentprofile_id=studentprofile.id %}">
+    
+                          <i class="fas fa-id-card"></i>
+                          <span>PROFILE</span>
+                      </a> 
+                  </li>
+                  
+                    <li class>
+                        <a href="{%url 'job_approve' studentprofile_id=studentprofile.id %}"><i class="fa-solid fa-desktop"></i> <span>JOBS</span></a>
+                        
+                      </li>
+                      <li class="active">
+                      <a href="{%url 'sappliedjobs' studentprofile_id=studentprofile.id%}"><i class="fa-solid fa-clipboard-check"></i></i> <span>APPLIED JOBS</span></a>
+                    </li>
+                    <li class>
+                      <a href="{% url 's_shortlist' studentprofile_id=studentprofile.id %}">
+                        <i class="fas fa-user-check"></i> <span>SHORT LISTED JOBS</span></a>
+                    </li>
+                    
+                    
+                </ul>
+            </div>
+        </div>
+    </div><br>
+                    <div class="page-wrapper">
+                        <div class="content">
+                            <div class="row">
+                                <div class="col-sm-4 col-3">
+                                    <h4 class="page-title">LIKED CONTENTS</h4>
+                                    
+                                </div>
+                                
+                                
+                            </div><br><br>
+                            
+                          </div>
+                          <div class="row">
+                            {% for adcont in liked_contents %}
+                                <div class="col-md-4 col-sm-4 col-lg-3">
+                                    <div class="profile-widget box-effect">
+                                        <div class="doctor-img">
+                                            <img class="avatar" src="{% if adcont.adcon.img %}{{ adcont.adcon.img.url }}{% else %}path_to_default_image{% endif %}" alt="Cover Image" name="cover_image" id="cover_image" width="100" height="80">
+                                            {% comment %} <i class="fas fa-heart like-icon" style="color: {% if adcont.adcon.id in liked_content_ids %}red{% else %}blue{% endif %}" data-adcon-id="{{ adcont.adcon.id }}"></i> {% endcomment %}
+                                        </div>
+                        
+                                        <div style="text-align: left;">
+                                            <p class="card-text"><b>CompanyName :</b> {{ adcont.adcon.cname }}</p>
+                                            <p class="card-text"><b>Name:</b> {{ adcont.adcon.name }}</p>
+                                            <p class="card-text"><b>Uploaded date :</b> {{ adcont.adcon.udate }}</p>
+                        
+                                            {% if adcont.adcon.price %}
+                                                <p class="card-text"><b>Price:</b> ₹{{ adcont.adcon.price }}</p>
+                                                {% if adcont.adcon.pdf %}
+                                                    <p class="card-text"><b></b> <a href="{{ adcont.adcon.pdf.url }}" target="_blank">PDF</a></p>
+                                                    <button class="btn btn-primary" onclick="window.location.href='{% url 'payconfirm' studentprofile_id=studentprofile.id content_id=adcont.adcon.id %}'">
+                                                        <i class="fa fa-shopping-cart"></i> Buy Now
+                                                    </button>
+                                                {% endif %}
+                                            {% else %}
+                                                <p class="card-text"><b>Price:</b> Free</p>
+                                                {% if adcont.adcon.pdf %}
+                                                    <p class="card-text"><b></b> <a href="{{ adcont.adcon.pdf.url }}" target="_blank">PDF</a></p>
+                                                {% endif %}
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        
+                            
+                            
+                            
+                        </div>
+                    </div>
+    </div>
+
+
+
+
+
+</div>
+<div class="sidebar-overlay" data-reff=""></div>
+<script src="{% static 'assets/js/jquery-3.2.1.min.js' %}"></script>
+<script src="{% static 'assets/js/popper.min.js' %}"></script>
+<script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'assets/js/jquery.slimscroll.js' %}"></script>
+<script src="{% static 'assets/js/select2.min.js' %}"></script>
+<script src="{% static 'ssets/js/moment.min.js' %}"></script>
+<script src="{% static 'assets/js/bootstrap-datetimepicker.min.js' %}"></script>
+<script src="{% static 'assets/js/app.js' %}"></script>
+
+                    
+                  </body>
+</html>

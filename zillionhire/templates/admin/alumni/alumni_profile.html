@@ -1,0 +1,759 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+        <link rel="shortcut icon" type="image/x-icon" href="{% static 'assets2/img/logo.png' %}">
+        <title>ZillionHire - Alumni Dashboard</title>
+        <link rel="stylesheet" type="text/css" href="{% static 'assets2/css/bootstrap.min.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'assets2/css/font-awesome.min.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'assets2/css/select2.min.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'assets2/css/bootstrap-datetimepicker.min.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'assets2/css/style.css' %}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+
+            <script src="{% static 'assets2/js/html5shiv.min.js' %}"></script>
+            <script src="{% static 'assets2/js/respond.min.js' %}"></script>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  
+    <!-- Include jQuery UI CSS and JS -->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+            <script>
+            function displayFileName(input) {
+              const fileName = input.files[0].name;
+              document.getElementById('file-name').textContent = 'File chosen: ' + fileName;
+            }
+          </script>
+            <style>
+              .custom-card {
+                margin-left: 250px; /* Adjust the value as needed */
+              }
+            </style>
+    </head>
+ 
+   
+   
+
+
+
+
+
+    <title></title>
+    <style>
+      .file-name {
+        display: inline-block;
+        margin-left: 10px;
+        font-style: italic;
+        color: #333; /* Adjust the color to your preference */
+      }
+      .file-name2 {
+        display: inline-block;
+        margin-left: 10px;
+        font-style: italic;
+        color: #333; /* Adjust the color to your preference */
+      }
+      
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+
+        .container2 {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .section {
+            margin-bottom: 20px;
+            background-color: #f7f7f7;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        {% comment %} #profile_photo {
+          display: block;
+          margin: 0 auto;
+          width: 150px; /* Adjust the width */
+          height: 150px; /* Adjust the height */
+          border-radius: 50%; /* Make it round */
+          box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); /* Add a shadow */
+        } {% endcomment %}
+        .circular-image {
+          display: block;
+          margin: 0 auto;
+          width: 150px; /* Adjust the width */
+          height: 150px; /* Adjust the height */
+          border-radius: 50%; /* Make it round */
+          box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); /* Add a shadow */
+        }
+
+        .section h2 {
+            color: #333;
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+        .section input[type="text"][placeholder="Present Address"],
+        .section input[type="text"][placeholder="Permanent Address"] {
+        width: 80%; /* Adjust the width as needed */
+        height: 80px; /* Adjust the height as needed */
+}
+
+        .edit-profile-button {
+            text-align: center;
+        }
+
+        .edit-profile-button a {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .edit-profile-button a:hover {
+            background-color: #000000;
+        }
+
+        h1, h2, h3 {
+            text-align: center;
+        }
+
+       
+        .profile-photo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%; /* Add border-radius to make it round */
+            overflow: hidden; /* Hide any overflow outside the border-radius */
+            width: 100px; /* Set a fixed width for the circular container */
+            height: 100px; /* Set a fixed height for the circular container */
+            border: 3px solid #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .profile-photo img {
+            width: 100%; /* Make the image fill the circular container */
+            height: 100%; /* Make the image fill the circular container */
+            object-fit: cover; /* Maintain aspect ratio and cover the container */
+            border-radius: 50%; /* Ensure the image is round within the circular container */
+        }
+
+        .profile-details {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .profile-details input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        {% comment %} body {
+          font-family: Arial, sans-serif;
+          padding: 20px;
+        } {% endcomment %}
+    
+        .container2 {
+          max-width: 60%;
+          margin: 0 auto;
+        }
+    
+        h1 {
+          text-align: center;
+        }
+    
+        .section {
+          margin-bottom: 20px;
+        }
+    
+        .section h2 {
+          margin-bottom: 10px;
+        }
+    
+        input {
+          width: 100%;
+          padding: 10px;
+          margin-bottom: 10px;
+          border: 1px solid #ccc;
+          border-radius: 5px;
+          box-sizing: border-box;
+        }
+    
+        input[type="file"] {
+          margin-bottom: 0; /* Remove extra bottom margin for file input */
+        }
+    
+        button {
+          align:center;
+          width: 20%;
+          padding: 10px;
+          border: none;
+          border-radius: 5px;
+          background-color: #4CAF50;
+          color: white;
+          font-size: 16px;
+          cursor: pointer;
+        }
+    
+        button:hover {
+          background-color: #45a049;
+        }
+        .disabled-input {
+          background-color: #f0f0f0;
+          cursor: not-allowed;
+      }
+      
+
+      
+      /* CSS for the submenu */
+      .sidebar-menu .menu-arrow {
+        -webkit-transition: -webkit-transform 0.15s;
+        -o-transition: -o-transform 0.15s;
+        transition: transform .15s;
+        position: absolute;
+        right: 15px;
+        display: inline-block;
+        font-family: 'FontAwesome';
+        text-rendering: auto;
+        line-height: 40px;
+        font-size: 18px;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        -webkit-transform: translate(0, 0);
+        -ms-transform: translate(0, 0);
+        -o-transform: translate(0, 0);
+        transform: translate(0, 0);
+        line-height: 18px;
+        top: 15px;
+      }
+      .sidebar-menu .menu-arrow:before {
+        content: "\f105";
+      }
+      .sidebar-menu li a.subdrop .menu-arrow {
+        -ms-transform: rotate(90deg);
+        -webkit-transform: rotate(90deg);
+        -o-transform: rotate(90deg);
+        transform: rotate(90deg);
+      }
+      .sidebar-menu ul ul a .menu-arrow {
+        top: 6px;
+      }
+
+    </style>
+
+<body>
+    <header class="">
+        <nav class="navbar navbar-expand-lg">
+          <div class="container">
+            {% comment %} <a class="navbar-brand" href="{% url 'index' %}"><h2>ZillionHire <em> Website</em></h2></a> {% endcomment %}
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+              <ul class="navbar-nav ml-auto">
+                <li class="nav-item ">
+                  <a class="nav-link" href="{% url 'cindex' %}">Home
+                    {% comment %} <span class="sr-only">(current)</span> {% endcomment %}
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'aboutuser' %}">About Us</a>
+                </li>
+          
+                <li class="nav-item dropdown">
+                  {% if user.is_authenticated %}
+                    <a class="nav-link" href="{% url 'loggout' %}">Log Out</a>
+                  {% else %}
+                    <a class="dropdown-toggle nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Login</a>
+                
+                    <div class="dropdown-menu">
+                      <a class="dropdown-item" href="{% url 'loginn' %}">Student</a>
+                      <a class="dropdown-item" href="{% url 'loginn' %}">Company</a>
+                      <a class="dropdown-item" href="{% url 'loginn' %}">College Officer</a>
+                  </div>
+                  {% endif %}
+                </li> 
+                
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'contactuser' %}">Contact Us</a>
+                </li>
+                <li class="nav-item active">
+                  <a class="nav-link" href="{% url 'postjob' %}">Post Job</a>
+                  <span class="sr-only">(current)</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </header>
+      <div class="sidebar" id="sidebar">
+        <div class="sidebar-inner slimscroll">
+            <div id="sidebar-menu" class="sidebar-menu">
+                <ul>
+                    <li class="menu-title">ALUMNI DASHBOARD</li>
+                    {% comment %} <li>
+                        <a href="{% url 'index-2' %}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
+                    </li> {% endcomment %}
+                    <li class="active">
+                      <a href="{% url 'alumni_profile' alumni_id=request.user.alumni.id %}">
+                          <i class="fas fa-id-card"></i>
+                          <span>PROFILE</span>
+                      </a> 
+                  </li> 
+                  <li>
+                    <a href="{% url 'create_blog_content' alumni_id=alumni_profile.id %}">
+                        <i class="fas fa-id-card"></i>
+                        <span>ADD OPENINGS</span>
+                    </a>
+                </li>
+                
+                <li>
+                  <a href="{% url 'display_blog_content' alumni_id=alumni_profile.id %}">
+                      <i class="fas fa-id-card"></i>
+                      <span>OPENINGS</span>
+                  </a>
+              </li>
+              
+              
+                    
+                    {% comment %} <li class>
+                        <a href="{%url 'job_approve' studentprofile_id=studentprofile.id %}"><i class="fa-solid fa-desktop"></i> <span>JOBS</span></a>
+                      </li>
+                    <li class>
+                      <a href="{%url 'sappliedjobs' studentprofile_id=studentprofile.id %}"><i class="fa-solid fa-clipboard-check"></i></i> <span>APPLIED JOBS</span></a>
+                    </li>
+                    <li class>
+                      <a href="{%url 's_shortlist' studentprofile_id=studentprofile.id %}"><i class="fas fa-user-check"></i> <span>SHORT LISTED JOBS</span></a>
+                    </li> {% endcomment %}
+                    
+                    {% comment %} <li class="submenu">
+                      <a href="#" onclick="toggleSubMenu('studySubMenu')">
+                          <i class="fas fa-user-check"></i>
+                          <span>STUDY RESOURCE</span>
+                          <span id="studyMenuArrow" class="menu-arrow">&#9658;</span>
+                      </a>
+                      <ul style="display: none;" id="studySubMenu">
+                          <li>
+                              <a href="{% url 'scontent1list' studentprofile_id=studentprofile.id %}">
+                                  <i class="t"></i> Content 1
+                              </a>
+                              <a href="{% url 'svideolist' studentprofile_id=studentprofile.id %}">
+                                <i class=""></i> Video Library
+                            </a>
+                            <a href="{% url 'scontent2list' studentprofile_id=studentprofile.id %}">
+                              <i class=""></i> Content2
+                          </a>
+                          </li>
+                          <!-- Add more submenu items as needed -->
+                      </ul>
+                  </li> {% endcomment %}
+                  {% comment %} <li class>
+                    <a href="{%url 'gen_resume'  %}"><i class="fas fa-user-check"></i> <span>RESUME</span></a>
+                  </li> {% endcomment %}
+                    
+                   
+                    
+                </ul>
+            </div>
+        </div>
+    </div><br><br><br><br>
+
+
+
+  
+
+<bR><br>
+  
+  <div class="container2">
+    <div class="section">
+    <h1>PROFILE</h1><br>
+    <div>
+      <form method="POST" enctype="multipart/form-data" id="companyProfileForm">
+        {% csrf_token %}
+        <img src="{% if alumni_profile.profile_photo %}{{ alumni_profile.profile_photo.url }}{% elif student_profile.profile_photo %}{{ student_profile.profile_photo.url }}{% else %}path_to_default_image{% endif %}" alt="Profile Photo" class="circular-image" id="profile_photo"><br><br>        <label for="Gender">Admission Number</label>  
+                <input type="text" id="admission_no" name="admission_no" placeholder="Admission Number" value="{{ alumni_profile.admission_no }}"><br><br>
+                <label for="Gender">First Name</label>
+                <input type="text" id="first_name" name="first_name" placeholder="First Name" value="{{ alumni_profile.first_name }}"><br><br>
+                <label for="Gender">Last Name</label>
+                <input type="text" id="last_name" name="last_name" placeholder="Last Name" value="{{alumni_profile.last_name }}"><br><br>
+                <label for="Gender">Date of Birth</label>
+                <input type="text" id="dob" name="dob" placeholder="YYYY-MM-DD" value="{{ alumni_profile.dob|date:'Y-m-d' }}">
+
+                <label for="Gender">Gender</label>
+                <select class="form-control" name="gender" id="gender">
+                    <option value="" disabled selected>-Select-</option>
+                    <option value="Male" {% if alumni_profile.gender == 'Male' %}selected{% endif %}>Male</option>
+                    <option value="Female" {% if alumni_profile.gender == 'Female' %}selected{% endif %}>Female</option>
+                    <option value="Others" {% if alumni_profile.gender == 'Others' %}selected{% endif %}>Others</option>
+                </select><br>
+                <label for="Gender">Nationality</label>
+                <input type="text" id="nationality" name="nationality" placeholder="Nationality" value="{{ student_profile.nationality }}"><br><br>
+                <label for="Gender">Religion</label>
+                <input type="text" id="religion" name="religion" placeholder="Religion" value="{{ alumni_profile.religion }}"><br><br>
+                {% comment %} <input type="file" id="profile_photo" name="profile_photo" value="{{ studentprofile.profile_photo }}" accept=".png, .jpg, .jpeg, .svg" style="width: 70%; padding: 10px; border: 1px solid #a4c639; border-radius: 18px; font-size: 16px;" /> {% endcomment %}
+                <input type="file" id="profile_photo_input" name="profile_photo" accept=".png, .jpg, .jpeg, .svg" onchange="displayFileName(this)">
+                <span id="file-name" class="file-name">No file chosen</span><br><br>
+                
+                          </div>
+      </div>
+                <div class="section">
+                  <h2>Contact Information</h2>
+                  <label for="Gender">Email</label>
+                  <input type="email" id="email" name="email"placeholder="Email" value="{{ alumni_profile.email }}"required>
+                  <label for="Gender">Contact Number</label>
+                  <input type="tel" id="phone" name="phone"placeholder="Phone" value="{{ alumni_profile.phone }}" required><br><br>
+                  <label for="Gender">Present Address</label>
+                  <input type="text" id="present_address" name="present_address"placeholder="AddressLine, City, District, State, Country, Pincode " value="{{ alumni_profile.present_address }}"required><br><br>
+                  <label for="Gender">Permanent Address</label>
+                  <input type="text" id="permanent_address" name="permanent_address"placeholder="AddressLine, City, District, State, Country, Pincode" value="{{ alumni_profile.permanent_address }}"required>
+                </div>
+  
+                <div class="section">
+                  <h2>Educational Information</h2><br>
+                  {% comment %} <input type="text" placeholder="Program/Course"value="{{ studentprofile.phone }}" required>  {% endcomment %}
+                   <label for="Department">Department:</label>
+                 
+                  <select  id="department" name="department" required>
+                    <option value="" disabled selected>-Select-</option>
+                    <option value="B.Tech" {% if alumni_profile.department == 'B.Tech' %}selected{% endif %}>B.Tech</option>
+                    <option value="MCA" {% if alumni_profile.department == 'MCA' %}selected{% endif %}>MCA</option>
+                </select>
+  
+                  <label for="Program/Course">Program/Course:</label>
+                  <select id="course" name="course" required>
+                    <option value="" disabled selected>-select-</option>
+                    <option value="Electronics and Communication engineering" {% if alumni_profile.course == 'Electronics and Communication engineering' %}selected{% endif %}>Electronics and Communication engineering</option>
+                    <option value="Computer Science Engineering" {% if alumni_profile.course == 'Computer Science Engineering' %}selected{% endif %}>Computer Science Engineering</option>
+                    <option value="Information Technology" {% if alumni_profile.course == 'Information Technology' %}selected{% endif %}>Information Technology</option>
+                    <option value="Integrated MCA" {% if alumni_profile.course == 'Integrated MCA' %}selected{% endif %}>Integrated MCA</option>
+                    <option value="Regular MCA" {% if alumni_profile.course == 'Regular MCA' %}selected{% endif %}>Regular MCA</option>
+  
+                   
+                  </select><br>
+                  
+                  <label for="Gender">Academic Year</label>
+                  <input type="text" id="academic_year" name="academic_year" placeholder="Academic Year" value="{{ alumni_profile.academic_year }}" required>
+                  <div id="academicYearError" class="error-message"></div>
+                  
+                  <label for="Gender">Pass Out Year</label>
+                  <input type="text" id="passout_year" name="passout_year" placeholder="Passout Year" value="{{ alumni_profile.passout_year }}" required>
+                  <div id="academicYearError" class="error-message"></div>
+
+                  <label for="Gender">CGPA</label>
+                  <input type="text" id="cgpa" name="cgpa" placeholder="CGPA" value="{{ alumni_profile.c_cgpa }}"required><br><br>
+
+                </div>
+                <div class="section">
+                    <center><h4>Previous Educational Informations</h4></center>
+
+
+                    <h4>10th</h4>
+                    <label for="Gender">Institution</label>
+                    <input type="text" id="tenth_institution" name="tenth_institution"placeholder="Institution"value="{{ alumni_profile.tenth_institution }}" required>
+                    <label for="Gender">CGPA </label>
+                    <input type="text" id="tenth_cgpa" name="tenth_cgpa"placeholder="CGPA/Percentage"value="{{ alumni_profile.tenth_cgpa }}" required>
+                    <label for="Gender">Board of Education</label>
+                    <input type="text" id="tenth_course" name="tenth_course"placeholder="Specification" value="{{ alumni_profile.tenth_course }}"required>
+                    {% comment %} <input type="file" id="tenth_certificate_upload" name="tenth_certificate_upload"value="{{ studentprofile.tenth_certificate_upload }}" ><br><br> {% endcomment %}
+                    <label for="Gender">Upload Certificate</label>
+                    <input type="file" id="tenth_certificate_upload" name="tenth_certificate_upload" >
+                    <span id="file-name" class="file-name">No file chosen</span><br><br>
+
+
+                    <h4>12th</h4><br>
+                    <label for="Gender">Institution</label>
+                    <input type="text" id="twelfth_institution" name="twelfth_institution" placeholder="Institution" value="{{ alumni_profile.twelfth_institution }}"required>
+                    <label for="Gender">CGPA</label>
+                    <input type="text"id="twelfth_cgpa" name="twelfth_cgpa" placeholder="CGPA/Percentage" value="{{ alumni_profile.twelfth_cgpa }}"required>
+                    <label for="Gender">Board of Education</label>
+                    <input type="text"id="twelfth_course" name="twelfth_course" placeholder="Specification" value="{{ alumni_profile.twelfth_course }}"required>
+                    {% comment %} <input type="file"id="twelfth_certificate_upload" name="twelfth_certificate_upload" placeholder="Upload Certificate"value="{{ studentprofile.twelfth_certificate_upload }}" ><br><br> {% endcomment %}
+                    {% comment %} <input type="file" id="twelfth_certificate_upload" name="twelfth_certificate_upload">
+                    <span id="file-name2"></span><br><br> {% endcomment %}
+                    <label for="Gender">Upload Certificate</label>
+                    <input type="file" id="twelfth_certificate_upload" name="twelfth_certificate_upload" onchange="updateFileName(this)">
+                    <span id="file-name2" class="file-name2">No file chosen</span><br><br>
+
+
+
+
+                    
+
+
+  
+                   
+                    <h4>UG(*for MCA)</h4><br>
+                    <label for="Gender">Institution</label>
+                    <input type="text"id="ug_institution" name="ug_institution" placeholder="Institution" value="{{ alumni_profile.ug_institution }}">
+                    <label for="Gender">CGPA</label>
+                    <input type="text" id="ug_cgpa" name="ug_cgpa"placeholder="CGPA/Percentage" value="{{ alumni_profile.ug_cgpa }}">
+                    <label for="Gender">University</label>
+                    <input type="text"id="ug_course" name="ug_course" placeholder="Specification" value="{{ alumni_profile.ug_course }}">
+                    {% comment %} <input type="file"id="ug_certificate_upload" name="ug_certificate_upload" placeholder="Upload Certificate" value="{{ studentprofile.ug_certificate_upload}}"><br><br> {% endcomment %}
+                    <label for="Gender">Upload Certificate</label>
+                    <input type="file" id="ug_certificate_upload" name="ug_certificate_upload" >
+                    <span id="file-name" class="file-name">No file chosen</span><br><br>
+
+
+                    <div class="section">
+                      <label for="address" id="carde" class="form-label text animated zoomIn">Reset Password:</label>
+                      <hr class=" text animated zoomIn" id="signintext2">
+                      <input type="Password" class="form-control text animated zoomIn"  id="cardelement" name="old_password" placeholder="current password">
+                      <input type="Password" class="form-control text animated zoomIn"  id="cardelement" name="reset_password" style="margin-top:20px;" placeholder="new password">
+                      <input type="Password" class="form-control text animated zoomIn"  id="cardelement" name="cpass" style="margin-top:20px;" placeholder="confirm new password">
+                      <span id="pspan" class="text-danger" style="margin-left:50%;"></span>
+                  </div>
+                  {% if messages %}
+                            {% for message in messages %}
+                                <p class="text-danger" style="margin-left:">{{ message }}</p>
+                            {% endfor %}
+                    {% endif %}
+
+                    
+                    <center><button type="submit" id="save-button">Save</button></center>&ensp;
+                    <div class="section edit-profile-button">
+                      <a href="{% url 'srequest' %}">Request Edit</a>
+                  </div>
+
+                </div>
+
+              </form>
+          </div>
+          
+  
+          
+  
+        
+    </div>
+  </div>
+  
+
+  
+  
+  
+
+</body>
+</html>
+
+        {% comment %} <div class="section edit-profile-button">
+            <a href="{% url 'srequest' %}">Request Edit</a>
+        </div> {% endcomment %}
+    </div> 
+
+    
+    <script>
+      const academicYearInput = document.getElementById('academic_year');
+      const academicYearError = document.getElementById('academicYearError');
+    
+      academicYearInput.addEventListener('keyup', function() {
+        const academicYearValue = academicYearInput.value;
+        const validInputRegex = /^[0-9-]+$/;  // Allow numbers and hyphens
+    
+        if (!validInputRegex.test(academicYearValue)) {
+          academicYearError.textContent = 'Please enter numeric values and hyphens only.';
+        } else {
+          academicYearError.textContent = '';
+        }
+      });
+    </script>
+    
+    
+    
+</body>
+<div class="sidebar-overlay" data-reff=""></div>
+    <script src="{% static 'assets/js/jquery-3.2.1.min.js' %}"></script>
+    <script src="{% static 'assets/js/popper.min.js' %}"></script>
+    <script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'assets/js/jquery.slimscroll.js' %}"></script>
+    <script src="{% static 'assets/js/select2.min.js' %}"></script>
+    <script src="{% static 'ssets/js/moment.min.js' %}"></script>
+    <script src="{% static 'assets/js/bootstrap-datetimepicker.min.js' %}"></script>
+    <script src="{% static 'assets/js/app.js' %}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+      function displayFileName(input) {
+        const fileName = input.files[0].name;
+        document.getElementById('file-name').textContent = 'File chosen: ' + fileName;
+      
+        // Save the file name to localStorage
+        localStorage.setItem('selectedFileName', fileName);
+      }
+      window.onload = function() {
+        const savedFileName = localStorage.getItem('selectedFileName');
+        if (savedFileName) {
+          document.getElementById('file-name').textContent = 'File chosen: ' + savedFileName;
+        }
+      }
+      document.getElementById('StudentProfile').addEventListener('submit', function() {
+        localStorage.removeItem('selectedFileName');
+      });
+
+     
+
+      function updateFileName(input) {
+        const fileName = input.files[0].name;
+        document.getElementById('file-name').textContent = 'File chosen: ' + fileName;
+      
+        // Save the file name to localStorage
+        localStorage.setItem('twelfthFileName', fileName);
+      }
+      
+      window.onload = function() {
+        const twelfthFileName = localStorage.getItem('twelfthFileName');
+        if (twelfthFileName) {
+          document.getElementById('file-name').textContent = 'File chosen: ' + twelfthFileName;
+        }
+      }
+      
+
+  
+        $(document).ready(function() {
+            $('#dob').datepicker({
+                dateFormat: 'yy-mm-dd',  // Set the desired date format
+                changeMonth: true,
+                changeYear: true,
+                yearRange: "-100:+0"  // Allow selection of years from 100 years ago to the current year
+            });
+        });
+
+
+    
+          const academicYearInput = document.getElementById('academic_year');
+          const academicYearError = document.getElementById('academicYearError');
+        
+          academicYearInput.addEventListener('keyup', function() {
+            const academicYearValue = academicYearInput.value;
+        
+            // Regular expression to match numeric values only
+            const numericRegex = /^[0-9]+$/;
+        
+            if (!numericRegex.test(academicYearValue)) {
+              academicYearError.textContent = 'Please enter numeric values only.';
+            } else {
+              academicYearError.textContent = ''; // Clear the error message if valid
+            }
+          });
+
+
+          const backlogInput = document.getElementById('c_backlog');
+          const backlogError = document.getElementById('backlogError');
+        
+          backlogInput.addEventListener('input', validateBacklog);
+        
+          function validateBacklog() {
+            const backlogValue = backlogInput.value;
+        
+            if (!/^\d+$/.test(backlogValue) || parseInt(backlogValue) > 25) {
+              backlogError.textContent = 'Please enter a valid number (0-25).';
+            } else {
+              backlogError.textContent = '';
+            }
+          }
+      
+          const cgpaInput = document.getElementById('cgpa');
+          const tenthCgpaInput = document.getElementById('tenth_cgpa');
+          const twelfthCgpaInput = document.getElementById('twelfth_cgpa');
+          const ugCgpaInput = document.getElementById('ug_cgpa');
+        
+          const numericDotPattern = /^\d*\.?\d*$/;
+        
+          cgpaInput.addEventListener('keyup', validateCgpa);
+          tenthCgpaInput.addEventListener('keyup', validateCgpa);
+          twelfthCgpaInput.addEventListener('keyup', validateCgpa);
+          ugCgpaInput.addEventListener('keyup', validateCgpa);
+        
+          function validateCgpa() {
+            const inputValue = this.value;
+        
+            if (!numericDotPattern.test(inputValue) || parseFloat(inputValue) > 10) {
+              this.setCustomValidity('Please enter a valid CGPA (0-10).');
+            } else {
+              this.setCustomValidity('');
+            }
+          }
+      
+      
+      
+      
+      //submenu
+      
+      
+      {% comment %} $(document).ready(function () {
+        $(".menu-arrow").click(function () {
+            $("#submenu").toggle();
+        });
+    }); {% endcomment %}
+
+
+            
+      // Check if the fields were previously disabled
+      {% comment %} var areFieldsDisabled = localStorage.getItem('fieldsDisabled');
+      if (areFieldsDisabled === 'true') {
+          disableFields();
+      }
+  
+      document.getElementById("companyProfileForm").addEventListener("submit", function(event) {
+          // Prevent the default form submission behavior
+          event.preventDefault();
+  
+          // Disable all input fields and select elements after form submission
+          disableFields();
+  
+          // Store a flag indicating that the fields are disabled
+          localStorage.setItem('fieldsDisabled', 'true');
+      });
+  
+      function disableFields() {
+          var inputs = document.querySelectorAll("input");
+          inputs.forEach(function(input) {
+              input.disabled = true;
+              input.classList.add("disabled-input");
+          });
+  
+          var selects = document.querySelectorAll("select");
+          selects.forEach(function(select) {
+              select.disabled = true;
+              select.classList.add("disabled-input");
+          });
+  
+          // Disable the submit button after form submission
+          document.getElementById("save-button").disabled = true;
+          document.getElementById("save-button").classList.add("disabled-input");
+      } {% endcomment %}
+  </script>
+  <script>
+    function toggleSubMenu(subMenuId) {
+        var submenu = document.getElementById(subMenuId);
+        submenu.style.display = (submenu.style.display === "none" || submenu.style.display === "") ? "block" : "none";
+        var menuarrow = document.getElementById(subMenuId === 'resumeSubMenu' ? 'resumeMenuArrow' : 'studyMenuArrow');
+        menuarrow.innerHTML = (submenu.style.display === "none" || submenu.style.display === "") ? "&#9658;" : "&#9660;";
+    }
+  </script>
+  <script>
+    function toggleSubMenu(subMenuId) {
+        var submenu = document.getElementById(subMenuId);
+        submenu.style.display = (submenu.style.display === "none" || submenu.style.display === "") ? "block" : "none";
+        var menuarrow = document.getElementById('studyMenuArrow');
+        menuarrow.innerHTML = (submenu.style.display === "none" || submenu.style.display === "") ? "&#9658;" : "&#9660;";
+    }
+</script>
+
+</html>

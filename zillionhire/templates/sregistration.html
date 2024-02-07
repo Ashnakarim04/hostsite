@@ -1,0 +1,253 @@
+{% load static %}
+{% load socialaccount %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Company Registration</title>
+  <!-- Add Bootstrap CSS link -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    /* Your existing styles */
+    .image-container {
+      background-size: cover;
+      min-height: 70vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .form-container {
+      background-color: rgba(225, 241, 245, 0.557);
+      padding: 70px;
+      border-radius: 5px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    }
+    .image-container img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+    h3 {
+      text-align: center;
+    }
+    .row{
+        margin-left: 200px;
+        margin-top: 65px;
+        margin-bottom: 200px;
+    }
+    
+  </style>
+</head>
+<body>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="container form-container mt-5">
+          <h3>STUDENT REGISTRATION</h3><br><br>
+          <form id="registrationForm" method="POST">
+            {% csrf_token%}
+            <div class="form-group">
+              <label for="companyname"> Name</label>
+              <input type="text" class="form-control" id="companyname" name="companyname" required>
+              <small id="companynameError" class="form-text text-danger"></small>
+            </div>
+            <div class="form-group">
+                <label for="headquarter">Course</label>
+                <input type="text" class="form-control" id="headquarter" name="course" required>
+                <small id="headquarterError" class="form-text text-danger"></small>
+            </div>
+            {% comment %} <div class="form-group">
+                <label for="ceo">CEO</label>
+                <input type="text" class="form-control" id="ceo" name="ceo" required>
+                <small id="ceoError" class="form-text text-danger"></small>
+            </div> {% endcomment %}
+            {% comment %} <div class="form-group">
+                <label for="fdate">founded date</label>
+                <input type="date" class="form-control" id="fdate" name="fdate" required>
+                <small id="fdateError" class="form-text text-danger"></small>
+            </div> {% endcomment %}
+            <div class="form-group">
+              <label for="email">email</label>
+              <input type="email" class="form-control" id="email" name="email" required>
+              <small id="emailError" class="form-text text-danger"></small>
+            </div>
+
+            <div class="form-group">
+              <label for="phoneNumber">contact</label>
+              <input type="tel" class="form-control" id="phoneNumber" name="phoneNumber" required>
+              <small id="phoneNumberError" class="form-text text-danger"></small>
+            </div>
+
+            <div class="form-group">
+              <label for="password">password</label>
+              <input type="password" class="form-control" id="password" name="password" required>
+              <small id="passwordError" class="form-text text-danger"></small>
+            </div>
+
+            <div class="form-group">
+              <label for="confirmPassword">confirm password</label>
+              <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
+              <small id="confirmPasswordError" class="form-text text-danger"></small>
+            </div>
+            {% comment %} <div class="checkbox">
+              <label>
+                <input type="checkbox"> I accept the Terms of Use & Privacy Policy.
+                <span class="checkmark"></span>
+              </label>
+            </div><br><br> {% endcomment %} 
+            <button type="submit" class="btn btn-primary">STUDENT REGISTER</button><br><br>
+            <a href="{% provider_login_url 'google'%}?next=/"><br>
+              
+              <span class="align-middle">
+                <img src="https://static.vecteezy.com/system/resources/previews/022/484/503/original/google-lens-icon-logo-symbol-free-png.png" alt="Google Icon" width="24" height="24">
+              </span>
+              <span class="align-middle ml-2">Sign Up with Google</span><br>
+              </a><br>
+            <div class="newreg">
+              <p class="mt-3">Already have an account? <a href="{% url 'loginn' %}">Login here</a></p>
+              
+          </div>
+          </form>
+        </div>
+      </div>
+      <div class="col-md-6 image-container">
+        <img src="https://img.freepik.com/free-vector/job-interview-conversation_74855-7566.jpg?w=1060&t=st=1691741721~exp=1691742321~hmac=2e2902eed457cd44498a041bb67e8b63c757192f2eabb0838be36c7e1ab580e6" alt="Image">
+      </div>
+    </div>
+  </div>
+  {% endblock %}
+  <!-- Add Bootstrap JS and jQuery scripts -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <script>
+       const registrationForm = document.getElementById('registrationForm');
+    const headquarterInput = document.getElementById('headquarter');
+    const ceoInput = document.getElementById('ceo');
+    const emailInput = document.getElementById('email');
+    const phoneNumberInput = document.getElementById('phoneNumber');
+    const passwordInput = document.getElementById('password');
+    const confirmPasswordInput = document.getElementById('confirmPassword');
+
+    function validateheadquarter() {
+      const headquarterValue = headquarterInput.value;
+      const headquarterError = document.getElementById('headquarterError');
+      
+      if (!/^[a-zA-Z]+$/.test(headquarterValue)) {
+        headquarterError.textContent = 'head quarter should contain only alphabetical characters.';
+        return false;
+      } else {
+        headquarterError.textContent = '';
+        return true;
+      }
+    }
+    function validateceo() {
+      const ceoValue = ceoInput.value;
+      const ceoError = document.getElementById('ceoError');
+      
+      if (!/^[a-zA-Z]+$/.test(ceoValue)) {
+        ceoError.textContent = 'ceo name should contain only alphabetical characters.';
+        return false;
+      } else {
+        ceoError.textContent = '';
+        return true;
+      }
+    }
+
+    function validateEmail() {
+      const emailValue = emailInput.value;
+      const emailError = document.getElementById('emailError');
+      
+      if (!/^\S+@\S+\.\S+$/.test(emailValue)) {
+        emailError.textContent = 'Enter a valid email address.';
+        return false;
+      } else {
+        emailError.textContent = '';
+        return true;
+      }
+    }
+
+     function validatePhoneNumber() 
+     {
+      const phoneNumberValue = phoneNumberInput.value;
+      const phoneNumberError = document.getElementById('phoneNumberError');
+      
+      if (!/^\d{1,10}$/.test(phoneNumberValue)) {
+        phoneNumberError.textContent = 'Phone number should be numeric and not exceed 10 digits.';
+        return false;
+      } else {
+        phoneNumberError.textContent = '';
+        return true;
+      }
+    } 
+    {% comment %} function validatePhoneNumber() {
+      const phoneNumberValue = phoneNumberInput.value;
+      const phoneNumberError = document.getElementById('phoneNumberError');
+      
+      // Check if all 10 digits are the same
+      if (/^(\d)\1{9}$/.test(phoneNumberValue)) {
+        phoneNumberError.textContent = 'Phone number cannot have all digits the same.';
+        return false;
+      }
+      
+      // Check if the first digit is 7, 8, or 9, and the remaining are digits 0-9
+      if (!/^[789]\d{9}$/.test(phoneNumberValue)) {
+        phoneNumberError.textContent = 'Enter a valid Indian phone number (10 digits starting with 7, 8, or 9).';
+        return false;
+      } else {
+        phoneNumberError.textContent = '';
+        return true;
+      }
+    } {% endcomment %}
+    function validatePassword() {
+      const passwordValue = passwordInput.value;
+      const passwordError = document.getElementById('passwordError');
+      
+      if (!/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{8,}/.test(passwordValue)) {
+        passwordError.textContent = 'Password should contain at least 8 characters, one uppercase letter, one lowercase letter, one number, and one special character.';
+        return false;
+      } else {
+        passwordError.textContent = '';
+        return true;
+      }
+    }
+
+    function validateConfirmPassword() {
+      const confirmPasswordValue = confirmPasswordInput.value;
+      const confirmPasswordError = document.getElementById('confirmPasswordError');
+      
+      if (confirmPasswordValue !== passwordInput.value) {
+        confirmPasswordError.textContent = 'Passwords do not match.';
+        return false;
+      } else {
+        confirmPasswordError.textContent = '';
+        return true;
+      }
+    }
+
+    // Validate on keyup for individual fields
+    headquarterInput.addEventListener('keyup', validateheadquarter);
+    ceoInput.addEventListener('keyup', validateceo);
+    emailInput.addEventListener('keyup', validateEmail);
+    phoneNumberInput.addEventListener('keyup', validatePhoneNumber);
+    passwordInput.addEventListener('keyup', validatePassword);
+    confirmPasswordInput.addEventListener('keyup', validateConfirmPassword);
+
+    // Validate on form submit
+    registrationForm.addEventListener('submit', function(event) {
+      const isheadquarterValid = validateheadquarter();
+      const isceoValid = validateceo();
+      const isEmailValid = validateEmail();
+      const isPhoneNumberValid = validatePhoneNumber();
+      const isPasswordValid = validatePassword();
+      const isConfirmPasswordValid = validateConfirmPassword();
+
+      if (!isheadquarterValid ||!isceoValid || !isEmailValid || !isPhoneNumberValid || !isPasswordValid || !isConfirmPasswordValid) {
+        event.preventDefault();
+      }
+    });
+  </script>
+</body>
+</html>

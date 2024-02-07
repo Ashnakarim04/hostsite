@@ -1,0 +1,233 @@
+<div class="form-container">  
+  <center><h2 style="color: #a4c639;">EDIT JOB</h2></center>
+  <form method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
+    {% csrf_token %}
+    <div class="form-group">
+      <label for="cname">COMPANY NAME :</label>
+      <input type="text" class="form-control" id="cname" name="cname" value="{{ job.cname }}" onkeyup="validateCname()">
+      <span id="cnameError" style="color: red;"></span>
+    </div>
+    <div class="form-group">
+      <label for="jname">JOB NAME :</label>
+      <input type="text" class="form-control" id="jname" name="jname" value="{{ job.jname }}" onkeyup="validateJname()">
+      <span id="jnameError" style="color: red;"></span>
+    </div>
+    <div class="form-group">
+      <label for="job_descriptions">ABOUT COMPANY :</label>
+      <input type="text" class="form-control" id="job_descriptions" name="job_descriptions" value="{{ job.job_descriptions }}">
+      
+    </div>
+    <div class="form-groupp">
+      <label for="responsibilities">RESPONSIBILITIES :</label>
+      <input type="text" class="form-controll" id="responsibilities" name="responsibilities" value="{{ job.responsibilities }}">
+      
+    </div>
+    <div class="form-groupp">
+      <label for="preferred_skills">PREFERRED SKILLS :</label>
+      <input type="text" class="form-controll" id="preferred_skills" name="preferred_skills" value="{{ job.preferred_skills }}">
+      
+    </div>
+    <div class="form-groupp">
+      <label for="qualifications">QUALIFICATIONS:</label>
+      <input type="text" class="form-controll" id="qualifications" name="qualifications" value="{{ job.qualifications }}">
+      
+    </div>
+    <div class="form-group">
+      <label for="salary">SALARY :</label>
+      <input type="text" class="form-control" id="salary" name="salary" value="{{ job.salary }}" onkeyup="validateSalary()">
+      <span id="salaryError" style="color: red;"></span>
+    </div>
+    <div class="form-group">
+      <label for="email">EMAIL :</label>
+      <input type="email" class="form-control" id="email" name="email" value="{{ job.email }}">
+    </div>
+    <div class="form-group">
+      <label for="sdate">APPLICATION START DATE :</label>
+      <input type="text" class="form-control" id="sdate" name="sdate" value="{{ job.sdate }}">
+    </div>
+    <div class="form-group"> 
+      <label for="edate">APPLICATION END DATE :</label>
+      <input type="text" class="form-control" id="edate" name="edate" value="{{ job.edate }}">
+    </div>
+    <div class="form-group">
+      <label for="link">WEBSITE :</label>
+      <input type="text" class="form-control" id="link" name="link" value="{{ job.link }}" onkeyup="validateLink()">
+      <span id="linkError" style="color: red;"></span>
+    </div>
+    {% comment %} <div class="form-group">
+      <label for="file">CRITERIA : </label>{{ job.criteria }}
+      <input type="file" id="criteria" name="criteria" accept="image/*, .pdf" onchange="updateCriteria(event)">
+      <span id="fileError" style="color: red;"></span> 
+      {% comment %} <input type="file" id="file" name="file" accept="image/*, .pdf" onchange="validateFile()">
+      <span id="fileError" style="color: red;"></span>  {% endcomment %}
+    {% comment %} </div>  {% endcomment %}
+    
+    {% comment %} <div class="form-group">
+      <label for="file">Elibility Criteria (img/PDF):</label>
+      <input type="file" id="file" name="file" accept="image/*, .pdf" onchange="validateFile()">
+      <span id="fileError" style="color: red;"></span> 
+    </div> {% endcomment %}
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+  </form>
+</div>
+<style>
+  .form-groupp {
+    margin-bottom: 20px; /* Add more margin between form groups */
+}
+
+.form-groupp label {
+    display: block; /* Display labels as block to move them to a new line */
+    margin-bottom: 5px; /* Add space between label and input */
+}
+
+.form-controll {
+    height: 100px; /* Increase the height of the input fields */
+}
+  /* Style the form container */
+  .form-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
+  }
+
+  /* Style form elements */
+  .form-group {
+    margin-bottom: 15px;
+  }
+
+  label {
+    font-weight: bold;
+  }
+
+  input[type="text"],
+  input[type="email"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #a4c639;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+
+  /* Style the submit button */
+  .btn-primary {
+    background-color: #a4c639;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    margin-left:350px;
+  }
+
+  /* Add hover effect to the submit button */
+  .btn-primary:hover {
+    background-color: #a4c659;
+  }
+
+  /* Style the form headings */
+  h2 {
+    color: #333;
+    font-size: 24px;
+  }
+</style>
+
+<script>
+  function validateCname() {
+    var cname = document.getElementById("cname").value;
+    var cnameError = document.getElementById("cnameError");
+    if (!cname.match(/^[A-Z]+$/)) {
+      cnameError.textContent = "Company name should be in capital letters.";
+    } else {
+      cnameError.textContent = "";
+    }
+  }
+  function updateCriteria(event) {
+    const file = event.target.files[0];
+    const criteriaText = document.getElementById('criteriaText');
+    
+    if (file) {
+      // Update the criteria text with the file name
+      criteriaText.textContent = 'CRITERIA : ' + file.name;
+    } else {
+      criteriaText.textContent = 'CRITERIA : No file selected';
+    }
+  }
+  
+  // Call the updateCriteria function on page load to handle existing image display
+  window.onload = function() {
+    // Get the file input element
+    const fileInput = document.getElementById('file');
+  
+    // Check if a file is already selected
+    if (fileInput.files && fileInput.files[0]) {
+      // Update the criteria text with the existing file name
+      const criteriaText = document.getElementById('criteriaText');
+      criteriaText.textContent = 'CRITERIA : ' + fileInput.files[0].name;
+    }
+  };
+  function validateJname() {
+    var jname = document.getElementById("jname").value;
+    var jnameError = document.getElementById("jnameError");
+    if (!jname.match(/^[A-Z]+$/)) {
+      jnameError.textContent = "Job name should be in capital letters.";
+    } else {
+      jnameError.textContent = "";
+    }
+  }
+  
+  function validateSalary() {
+    var salary = document.getElementById("salary").value;
+    var salaryError = document.getElementById("salaryError");
+    if (isNaN(salary) || parseInt(salary) <= 1000) {
+      salaryError.textContent = "Salary should be a number greater than 1000.";
+    } else {
+      salaryError.textContent = "";
+    }
+  }
+  
+  function validateLink() {
+    var link = document.getElementById("link").value;
+    var linkError = document.getElementById("linkError");
+    if (!link.startsWith("www.")) {
+      linkError.textContent = "Website should start with 'www.'";
+    } else {
+      linkError.textContent = "";
+    }
+  }
+  
+  function validateForm() {
+    // Additional form-wide validation logic if needed
+    return true; // Return true to allow form submission
+  }
+
+  function validateFile() {
+    var fileInput = document.getElementById("file");
+    var fileError = document.getElementById("fileError");
+
+    if (fileInput.files.length === 0) {
+      fileError.textContent = "Please select a file.";
+      return false;
+    }
+
+    var allowedTypes = ["image/jpeg", "image/png", "image/gif", "application/pdf"];
+    var fileType = fileInput.files[0].type;
+
+    if (allowedTypes.indexOf(fileType) === -1) {
+      fileError.textContent = "Invalid file type. Only images (JPEG, PNG, GIF) and PDFs are allowed.";
+      fileInput.value = ""; // Clear the file input
+      return false;
+    }
+
+    fileError.textContent = "";
+    return true;
+  }
+
+  function validateForm() {
+    // Add additional form validation logic here if needed
+    return validateFile();
+  }
+  </script>

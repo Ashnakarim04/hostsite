@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company Interface - Placement Cell</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #3498db;
+            color: white;
+            text-align: center;
+            padding: 10px;
+        }
+
+        nav {
+            background-color: #2c3e50;
+            color: white;
+            padding: 10px;
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        nav ul li {
+            margin: 0 15px;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        section {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        form label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        form input,
+        form textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        form button {
+            background-color: #3498db;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        ul.applications {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        ul.applications li {
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        ul.applications li h3 {
+            margin: 0;
+        }
+
+        ul.applications li p {
+            margin: 5px 0;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #2c3e50;
+            color: white;
+        }
+        nav ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+nav ul li a:hover {
+    color: #3498db; /* Change the color on hover if desired */
+}
+       
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Company Interface</h1>
+    </header>
+    
+    <nav>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Post Job</a></li>
+            <li><a href="#">Manage Applications</a></li>
+            <li><a href="#">Profile</a></li>
+            <li><a href="{% url 'loggout' %}">Logout</a></li>
+        </ul>
+    </nav>
+    
+    <main>
+        <section id="company-profile">
+            <h3>COMPANY PROFILE</h3>
+            <p>Company Name: ABC</p>
+            <p>Industry: Technology</p>
+            <p>Contact Email: abc@gmail.com</p>
+        </section>
+        
+        <section id="post-job">
+            <h3>POST JOB</h3>
+            <form>
+                <label for="job-title">Job Title:</label>
+                <input type="text" id="job-title" name="job-title" required>
+                
+                <label for="job-description">Job Description:</label>
+                <textarea id="job-description" name="job-description" rows="4" required></textarea>
+                
+                <label for="requirements">Requirements:</label>
+                <textarea id="requirements" name="requirements" rows="3" required></textarea>
+                
+                <button type="submit">Post Job</button>
+            </form>
+        </section>
+        
+        <section id="manage-applications">
+            <h3>MANAGE APPLICATIONS</h3>
+            <ul class="applications">
+                <li>
+                    <h3>Applicant Name</h3>
+                    <p>Email: applicant@gmail.com</p>
+                    <p>Applied for: Job Title</p>
+                    <p>Resume: <a href="#">View</a></p>
+                    <button>Accept</button>
+                    <button>Reject</button>
+                </li>
+            </ul>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2023 Your Placement Cell</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,927 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" href="styles.css"> Add the CSS file -->
+    <title>Job Application Form</title>
+    <style>
+      
+        .file-name {
+        display: inline-block;
+        margin-left: 10px;
+        font-style: italic;
+        color: #333; /* Adjust the color to your preference */
+      }
+      .file-name2 {
+        display: inline-block;
+        margin-left: 10px;
+        font-style: italic;
+        color: #333; /* Adjust the color to your preference */
+      }
+      
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+
+        .container2 {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .section {
+            margin-bottom: 20px;
+            background-color: #f7f7f7;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .section h2 {
+            color: #333;
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+        .section input[type="text"][placeholder="Present Address"],
+        .section input[type="text"][placeholder="Permanent Address"] {
+        width: 80%; /* Adjust the width as needed */
+        height: 80px; /* Adjust the height as needed */
+}
+
+        .edit-profile-button {
+            text-align: center;
+        }
+
+        .edit-profile-button a {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .edit-profile-button a:hover {
+            background-color: #000000;
+        }
+
+        h1, h2, h3 {
+            text-align: center;
+        }
+
+       
+        .profile-photo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%; /* Add border-radius to make it round */
+            overflow: hidden; /* Hide any overflow outside the border-radius */
+            width: 100px; /* Set a fixed width for the circular container */
+            height: 100px; /* Set a fixed height for the circular container */
+            border: 3px solid #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .profile-photo img {
+            width: 100%; /* Make the image fill the circular container */
+            height: 100%; /* Make the image fill the circular container */
+            object-fit: cover; /* Maintain aspect ratio and cover the container */
+            border-radius: 50%; /* Ensure the image is round within the circular container */
+        }
+
+        .profile-details {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .profile-details input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+       
+    
+        .container2 {
+          max-width: 80%;
+          margin: 0 auto;
+        }
+    
+        h1 {
+          text-align: center;
+        }
+    
+        .section {
+          margin-bottom: 20px;
+        }
+    
+        .section h2 {
+          margin-bottom: 10px;
+        }
+    
+        input {
+          width: 100%;
+          padding: 10px;
+          margin-bottom: 10px;
+          border: 1px solid #ccc;
+          border-radius: 5px;
+          box-sizing: border-box;
+        }
+    
+        input[type="file"] {
+          margin-bottom: 0; /* Remove extra bottom margin for file input */
+        }
+    
+        button {
+          align:center;
+          width: 20%;
+          padding: 10px;
+          border: none;
+          border-radius: 5px;
+          background-color: #4CAF50;
+          color: white;
+          font-size: 16px;
+          cursor: pointer;
+        }
+    
+        button:hover {
+          background-color: #45a049;
+        }
+        .disabled-input {
+          background-color: #f0f0f0;
+          cursor: not-allowed;
+      }
+      .file-name {
+        display: inline-block;
+        margin-left: 10px;
+        font-style: italic;
+        color: #333; /* Adjust the color to your preference */
+      }
+      .file-name2 {
+        display: inline-block;
+        margin-left: 10px;
+        font-style: italic;
+        color: #333; /* Adjust the color to your preference */
+      }
+      
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+
+        .container2 {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .section {
+            margin-bottom: 20px;
+            background-color: #f7f7f7;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .section h2 {
+            color: #333;
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+        .section input[type="text"][placeholder="Present Address"],
+        .section input[type="text"][placeholder="Permanent Address"] {
+        width: 80%; /* Adjust the width as needed */
+        height: 80px; /* Adjust the height as needed */
+}
+
+        .edit-profile-button {
+            text-align: center;
+        }
+
+        .edit-profile-button a {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .edit-profile-button a:hover {
+            background-color: #000000;
+        }
+
+        h1, h2, h3 {
+            text-align: center;
+        }
+
+       
+        .profile-photo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%; /* Add border-radius to make it round */
+            overflow: hidden; /* Hide any overflow outside the border-radius */
+            width: 100px; /* Set a fixed width for the circular container */
+            height: 100px; /* Set a fixed height for the circular container */
+            border: 3px solid #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .profile-photo img {
+            width: 100%; /* Make the image fill the circular container */
+            height: 100%; /* Make the image fill the circular container */
+            object-fit: cover; /* Maintain aspect ratio and cover the container */
+            border-radius: 50%; /* Ensure the image is round within the circular container */
+        }
+
+        .profile-details {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .profile-details input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+      
+    
+        .container2 {
+          max-width: 60%;
+          margin: 0 auto;
+        }
+    
+        h1 {
+          text-align: center;
+        }
+    
+        .section {
+          margin-bottom: 20px;
+        }
+    
+        .section h2 {
+          margin-bottom: 10px;
+        }
+    
+        input {
+          width: 100%;
+          padding: 10px;
+          margin-bottom: 10px;
+          border: 1px solid #ccc;
+          border-radius: 5px;
+          box-sizing: border-box;
+        }
+    
+        input[type="file"] {
+          margin-bottom: 0; /* Remove extra bottom margin for file input */
+        }
+    
+        button {
+          align:center;
+          width: 20%;
+          padding: 10px;
+          border: none;
+          border-radius: 5px;
+          background-color: #4CAF50;
+          color: white;
+          font-size: 16px;
+          cursor: pointer;
+        }
+    
+        button:hover {
+          background-color: #45a049;
+        }
+        .disabled-input {
+          background-color: #f0f0f0;
+          cursor: not-allowed;
+      }.file-name {
+        display: inline-block;
+        margin-left: 10px;
+        font-style: italic;
+        color: #333; /* Adjust the color to your preference */
+      }
+      .file-name2 {
+        display: inline-block;
+        margin-left: 10px;
+        font-style: italic;
+        color: #333; /* Adjust the color to your preference */
+      }
+      
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+
+        .container2 {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .section {
+            margin-bottom: 20px;
+            background-color: #f7f7f7;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .section h2 {
+            color: #333;
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+        .section input[type="text"][placeholder="Present Address"],
+        .section input[type="text"][placeholder="Permanent Address"] {
+        width: 80%; /* Adjust the width as needed */
+        height: 80px; /* Adjust the height as needed */
+}
+
+        .edit-profile-button {
+            text-align: center;
+        }
+
+        .edit-profile-button a {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .edit-profile-button a:hover {
+            background-color: #000000;
+        }
+
+        h1, h2, h3 {
+            text-align: center;
+        }
+
+       
+        .profile-photo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%; /* Add border-radius to make it round */
+            overflow: hidden; /* Hide any overflow outside the border-radius */
+            width: 100px; /* Set a fixed width for the circular container */
+            height: 100px; /* Set a fixed height for the circular container */
+            border: 3px solid #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .profile-photo img {
+            width: 100%; /* Make the image fill the circular container */
+            height: 100%; /* Make the image fill the circular container */
+            object-fit: cover; /* Maintain aspect ratio and cover the container */
+            border-radius: 50%; /* Ensure the image is round within the circular container */
+        }
+
+        .profile-details {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .profile-details input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+       
+    
+        .container2 {
+          max-width: 60%;
+          margin: 0 auto;
+        }
+    
+        h1 {
+          text-align: center;
+        }
+    
+        .section {
+          margin-bottom: 20px;
+        }
+    
+        .section h2 {
+          margin-bottom: 10px;
+        }
+    
+        input {
+          width: 100%;
+          padding: 10px;
+          margin-bottom: 10px;
+          border: 1px solid #ccc;
+          border-radius: 5px;
+          box-sizing: border-box;
+        }
+    
+        input[type="file"] {
+          margin-bottom: 0; /* Remove extra bottom margin for file input */
+        }
+    
+        button {
+          align:center;
+          width: 20%;
+          padding: 10px;
+          border: none;
+          border-radius: 5px;
+          background-color: #4CAF50;
+          color: white;
+          font-size: 16px;
+          cursor: pointer;
+        }
+    
+        button:hover {
+          background-color: #45a049;
+        }
+        .disabled-input {
+          background-color: #f0f0f0;
+          cursor: not-allowed;
+      }
+      .file-name {
+        display: inline-block;
+        margin-left: 10px;
+        font-style: italic;
+        color: #333; /* Adjust the color to your preference */
+      }
+      .file-name2 {
+        display: inline-block;
+        margin-left: 10px;
+        font-style: italic;
+        color: #333; /* Adjust the color to your preference */
+      }
+      
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+
+        .container2 {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .section {
+            margin-bottom: 20px;
+            background-color: #f7f7f7;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .section h2 {
+            color: #333;
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+        .section input[type="text"][placeholder="Present Address"],
+        .section input[type="text"][placeholder="Permanent Address"] {
+        width: 80%; /* Adjust the width as needed */
+        height: 80px; /* Adjust the height as needed */
+}
+
+        .edit-profile-button {
+            text-align: center;
+        }
+        .job-details h3 {
+          display: inline-block;
+          margin-right: 20px; /* Adjust as needed */
+      }
+      
+
+        .edit-profile-button a {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .edit-profile-button a:hover {
+            background-color: #000000;
+        }
+
+        h1, h2, h3 {
+            text-align: center;
+        }
+
+       
+        .profile-photo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%; /* Add border-radius to make it round */
+            overflow: hidden; /* Hide any overflow outside the border-radius */
+            width: 100px; /* Set a fixed width for the circular container */
+            height: 100px; /* Set a fixed height for the circular container */
+            border: 3px solid #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .profile-photo img {
+            width: 100%; /* Make the image fill the circular container */
+            height: 100%; /* Make the image fill the circular container */
+            object-fit: cover; /* Maintain aspect ratio and cover the container */
+            border-radius: 50%; /* Ensure the image is round within the circular container */
+        }
+
+        .profile-details {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .profile-details input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+      
+    
+        .container2 {
+          max-width: 60%;
+          margin: 0 auto;
+        }
+    
+        h1 {
+          text-align: center;
+        }
+    
+        .section {
+          margin-bottom: 20px;
+        }
+    
+        .section h2 {
+          margin-bottom: 10px;
+        }
+    
+        input {
+          width: 80%;
+          padding: 10px;
+          margin-bottom: 10px;
+          border: 1px solid #ccc;
+          border-radius: 5px;
+          box-sizing: border-box;
+        }
+    
+        input[type="file"] {
+          margin-bottom: 0; /* Remove extra bottom margin for file input */
+        }
+    
+        button {
+          align:center;
+          width: 20%;
+          padding: 10px;
+          border: none;
+          border-radius: 5px;
+          background-color: #4CAF50;
+          color: white;
+          font-size: 16px;
+          cursor: pointer;
+        }
+    
+        button:hover {
+          background-color: #45a049;
+        }
+        .disabled-input {
+          background-color: #f0f0f0;
+          cursor: not-allowed;
+      }
+       /* Additional CSS for layout */
+       .name-container {
+            display: flex;
+        }
+        .name-container input {
+            margin-right: 5px;
+        }
+        .phone-container {
+            display: flex;
+            align-items: center;
+        }
+        .phone-container select {
+            margin-right: 5px;
+        }
+        .alert-box {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100vh;
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background overlay */
+          z-index: 999; /* Ensure the alert is on top of other content */
+        }
+        
+        .certification-message {
+          text-align: center;
+          font-size: 24px;
+          color: #fff; /* Text color for the alert */
+          background-color: #333; /* Background color for the alert */
+          padding: 20px;
+          border-radius: 5px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+          max-width: 80%; /* Adjust the maximum width of the alert as needed */
+        }
+        
+        
+        
+    </style>
+</head>
+<body>
+ 
+      
+  {% if certification_status == 'pending' %}
+          <!-- Personal Information Section -->
+          {% comment %} <form class="container2" action="" method="post" enctype="multipart/form-data"> {% endcomment %}
+          <form class="container2"method="POST" action="{% url 'jobapply' jobapply_id=jobapply_id %}" enctype="multipart/form-data">
+
+          {% csrf_token %}
+            
+                    <h2>JOB APPLICATION</h2>
+                    <center>
+                      <div class="job-details">
+                        <h3 id="cname" name="cname">{{ job.cname }}</h3>- &ensp;&ensp; 
+                        <h3 id="jname" name="jname">{{ job.jname }}</h3>
+                    </div>
+                  </center>
+                 
+                    <div class="section">
+                      <br><br>
+                        <h2>Personal Information</h2><br><br>
+                        <div class="name-container">
+                            <label for="first-name"> Name:</label><br><br>
+                            <input type="text" id="first_name"name="first_name" placeholder="First Name" value="{{ sprof.first_name }}">
+                            <input type="text" id="last_name" name="last_name" placeholder="Last Name"value="{{ sprof.last_name }}">
+                        </div><br>
+                        <label for="present-address">Present Address:</label><br><br>
+                        <input type="text" name="present_address"id="present_address" placeholder="Present Address"value="{{ sprof.present_address }}"><br><br>
+                        <label for="permanent_address">Permanent Address:</label><br><br>
+                        <input type="text" id="permanent_address" name="permanent_address" placeholder="Permanent Address"value="{{ sprof.permanent_address }}"><br><br>
+                        <div class="phone-container">
+                            <label for="area_code">Phone:</label><br><br>
+                            <select id="area_code" name="area_code">
+                                <option value="" disabled selected>+</option>
+                                <option value="1" {% if studentprofile.area_code == '+1 (United States)' %}selected{% endif %}>+1 (United States)</option>
+                              <option value="44" {% if studentprofile.area_code == '+44 (United Kingdom)' %}selected{% endif %}>+44 (United Kingdom)</option>
+                              <option value="91" {% if studentprofile.area_code == '+91 (India)' %}selected{% endif %}>+91 (India)</option>
+                            </select><br>
+                            <input type="text" id="phone"name="phone" placeholder="Phone Number"value="{{ sprof.phone }}">
+                        </div><br>
+                        <label for="email">Email:</label><br><br>
+                        <input type="email" id="email" name="email" placeholder="Email" value="{{ sprof.email }}"><br>
+                        <label for="nationality">Nationality:</label><br><br>
+                        <input type="text" id="nationality" name="nationality" placeholder="Nationality"value="{{ sprof.nationality }}"><br>
+                        <label for="gender">Gender:</label><br><br>
+                        <input type="text" id="gender" name="gender" placeholder="Gender"value="{{ sprof.gender }}"><br>
+                        <label for="dob">Date of Birth:</label><br><br>
+                        <input type="text" id="dob" name="dob"placeholder="YYYY-MM-DD"value="{{ sprof.dob }}"><br>
+                        <label for="photo-upload">Upload Photo:</label><br>
+                        <input type="file" accept="image/*" id="profile_photo" name="profile_photo">
+                        
+                    </div>
+
+                    <!-- Educational Information Section -->
+                    <div class="section">
+                        <h2>Educational Information</h2>
+                        <h3>10th Details</h3>
+                        <label for="10th-institution">Institution:</label><br><br>
+                        <input type="text" id="tenth_institution" name="tenth_institution"placeholder="10th Institution"value="{{ sprof.tenth_institution }}"><br>
+                        <label for="tenth_board">Board of Education:</label><br><br>
+                        <input type="text" id="tenth_board" name="tenth_board" placeholder="Board of Education"value="{{ sprof.tenth_course }}"><br>
+                        <label for="cgpa">CGPA:</label><br><br>
+                        <input type="text" id="tenth_cgpa" name="tenth_cgpa" placeholder="CGPA"value="{{ sprof.tenth_cgpa }}"><br>
+                        <label for="10th-certificate-upload">Upload 10th Certificate:</label><br><br>
+                        <input type="file" accept=".pdf" name="tenth_certificate_upload" id="tenth_certificate_upload"value="{{ sprof.tenth_certificate_upload }}">
+                        
+
+                        <h3>12th Details</h3>
+                        <label for="12th-institution">Institution:</label><br><br>
+                        <input type="text" id="twelfth_institution"name="twelfth_institution" placeholder="12th Institution"value="{{ sprof.twelfth_institution }}"><br>
+                        <label for="twelfth_board">Board of Education:</label><br><br>
+                        <input type="text" id="twelfth_board" name="twelfth_board"placeholder="Board of Education"value="{{ sprof.twelfth_course }}"><br>
+                        <label for="cgpa">CGPA:</label><br><br>
+                        <input type="text" id="twelfth_cgpa" name="twelfth_cgpa" placeholder="CGPA"value="{{ sprof.twelfth_cgpa }}"><br>
+                        <label for="12th-certificate-upload">Upload 12th Certificate:</label><br><br>
+                        <input type="file" accept=".pdf" name="twelfth_certificate_upload"id="twelfth_certificate_upload"value="{{ sprof.twelfth_certificate_upload }}">
+                        {% comment %} <label for="12th-certificate-upload" class="file-name">No file chosen</label> {% endcomment %}
+
+                        <h3>UG  Details</h3>
+                        <label for="ugcoursename">Course name: </label><br><br>
+                        <input type="text" id="ug_course"name="ug_course" placeholder=" Course" value="{{ jobapply.course }}"><br>
+                        <label for="ug-institution">Institution:</label><br><br>
+                        <input type="text" id="ug_institution"name="ug_institution" placeholder=" Institution"value="{{ sprof.ug_institution }}"><br>
+                        <label for="board-education">University:</label><br><br>
+                        <input type="text" id="ug_university"name="ug_university" placeholder="University"value="{{ sprof.ug_course }}"><br>
+                        <label for="cgpa">CGPA:</label><br><br>
+                        <input type="text" id="ug_cgpa"name="ug_cgpa" placeholder="CGPA"value="{{ sprof.ug_cgpa }}"><br>
+                        <label for="ug-certificate-upload">Upload UG Certificate:</label><br><br>
+                        <input type="file" accept=".pdf" id="ug_certificate_upload" name="ug_certificate_upload"value="{{ sprof.ug_certificate_upload }}">
+                        {% comment %} <label for="ug-certificate-upload" class="file-name">No file chosen</label> {% endcomment %}
+
+                        <h3>Current  Details</h3>
+                        <label for="ugcoursename">Course name: </label><br><br>
+                        <input type="text" id="c_course" name="c_course"placeholder=" Course"value="{{ sprof.course }}"><br>
+                        <label for="c-institution">Institution:</label><br><br>
+                        <input type="text" id="c_institution" name="c_institution"placeholder=" Institution, Place"value="{{ jobapply.c_institution }}"><br>
+                        <label for="board-education">University:</label><br><br>
+                        <input type="text" id="c_university"name="c_university" placeholder="University"value="{{ jobapply.c_university }}"><br>
+                        <label for="board-education">Academic Year:</label><br><br>
+                        <input type="text" id="academic_year" name="academic_year"placeholder="Academic Year" value="{{ sprof.academic_year }}"><br>
+                        <label for="cgpa">CGPA:</label><br><br>
+                        <input type="text" id="c_cgpa"name="c_cgpa" placeholder="CGPA"value="{{ sprof.c_cgpa }}"><br>
+                        <label for="cgpa">Number of Backlogs:</label><br><br>
+                        <input type="text" id="c_backlog"name="c_backlog" placeholder="CGPA"value="{{ sprof.c_backlog }}"><br>
+                        
+                        
+                    </div>
+
+                    <!-- Skills and Certifications Section -->
+                    <div class="section">
+                        <h2>Skills and Certifications</h2>
+                        <label for="skills">Skill/Programming Skills Known:</label><br><br>
+                        <input type="text" id="skills"name="skills" placeholder="Skill/Programming Skills Known"value="{{ jobapply.skills }}"><br><br>
+
+                        <label for="certification-upload">Other Certification: </label><br><br>
+                        <input type="text" name="newcourse" id="newcourse"value="{{ jobapply.newcourse }}"><br>
+                        <input type="file" accept=".pdf,.doc,.docx" name="newcert" id="newcert"value="{{ jobapply.newcert }}"><br><br>
+                        {% comment %} <label for="certification-upload" class="file-name">No file chosen</label> {% endcomment %}
+
+                        
+                    </div>
+
+
+                    <!-- Work Experience Section -->
+                    <div class="section">
+                      <h2>Work Experience</h2>
+                      <label for="work-workexperience">Do you have any work experience?</label>
+
+                     
+
+                      <select id="workexperience" name="workexperience">
+                          <option value="" disabled selected>-Select-</option>
+                          <option value="Yes"{% if jobapply.workexperience == 'Yes' %}selected{% endif %}>Yes</option>
+                          <option value="No"{% if jobapply.workexperience == 'No' %}selected{% endif %}>No</option>
+                      </select>  &ensp;&ensp;&ensp;If yes, 
+                      <br><br>
+                      <div id="work-experience-details" >
+                          <label for="previous-employer">Job Responsibility: </label><br><br>
+                          <input type="text" name="jobresp"id="jobresp" placeholder="Job Responsibility"value="{{ jobapply.jobresp }}"><br>
+                          <label for="employment-period">Period of Employment:</label><br><br>
+                          <input type="text" id="period"name="period" placeholder="Period of Employment"value="{{ jobapply.period }}"><br>
+                          <label for="company-details">Company Details:</label><br><br>
+                          <input type="text" id="companydetails"name="companydetails" placeholder="Company Details"value="{{ jobapply.companydetails }}">
+                      </div>
+                  </div>
+
+                    <!-- Criminal Background Section -->
+                    <div class="section">
+                        <h2>Criminal Background</h2>
+                        <label for="crime-conviction">Have you ever been convicted of a crime?</label>
+
+                        <select id="crime"name="crime">
+                            <option value="" disabled selected>-Select-</option>
+                            <option value="Yes"{% if jobapply.crime == 'Yes' %}selected{% endif %}>Yes</option>
+                            <option value="No"{% if jobapply.crime == 'No' %}selected{% endif %}>No</option>
+                        </select> &ensp;&ensp;If yes, 
+                        <br><br>
+                        <div id="crime-details" >
+                            <label for="conviction-details">Details of Conviction:</label><br><br>
+                            <input type="text" id="dtoc" name="dtoc"placeholder="Details of Conviction"value="{{ jobapply.dtoc }}"><br>
+                            <label for="conviction-date">Date of Conviction:</label><br><br>
+                            <input type="text" id="doc" name="doc" placeholder="Date of Conviction"value="{{ jobapply.doc }}"><br>
+                            <label for="offense-nature">Nature of the Offense:</label><br><br>
+                            <input type="text" id="nature" name="nature"placeholder="Nature of the Offense"value="{{ jobapply.nature }}">
+                        </div>
+                    </div>
+
+                    <div class="section">
+                      <h2>Upload Resume</h2>
+                      
+                      <input type="file" accept=".pdf" name="resume"id="resume" value="{{ jobapply.resume }}"><br><br>
+                    </div>
+
+
+                    
+                      
+                      <center> <button type="submit">Submit</button></center>
+               
+              </form>
+                  
+              {% else %}
+              <div class="alert-box">
+                <p class="certification-message">You have already submitted an application.</p>
+              </div>
+              
+              
+              {% endif %}
+
+    
+
+<script>
+    // JavaScript to handle file uploads and conditional display
+    const photoUpload = document.getElementById('photo-upload');
+    const profilePhoto = document.getElementById('profile-photo');
+
+    photoUpload.addEventListener('change', (event) => {
+        const file = event.target.files[0];
+        const reader = new FileReader();
+
+        reader.onload = (e) => {
+            const img = document.createElement('img');
+            img.src = e.target.result;
+            profilePhoto.innerHTML = '';
+            profilePhoto.appendChild(img);
+        };
+
+        reader.readAsDataURL(file);
+    });
+
+    const crimeConvictionSelect = document.getElementById('crime-conviction');
+    const crimeDetails = document.getElementById('crime-details');
+
+    crimeConvictionSelect.addEventListener('change', () => {
+        if (crimeConvictionSelect.value === 'Yes') {
+            crimeDetails.style.display = 'block';
+        } else {
+            crimeDetails.style.display = 'none';
+        }
+    });
+
+    const workExperienceSelect = document.getElementById('work-experience');
+    const workExperienceDetails = document.getElementById('work-experience-details');
+
+    workExperienceSelect.addEventListener('change', () => {
+        if (workExperienceSelect.value === 'Yes') {
+            workExperienceDetails.style.display = 'block';
+        } else {
+            workExperienceDetails.style.display = 'none';
+        }
+    });
+
+    const addCertificationButton = document.getElementById('add-certification-button');
+    const certificationsSection = document.querySelector('.section:nth-child(3)');
+
+    addCertificationButton.addEventListener('click', () => {
+        const certificationInputs = document.createElement('div');
+        certificationInputs.innerHTML = `
+            <label for="certification-name">Certification Name:</label>
+            <input type="text" id="certification-name" placeholder="Certification Name">
+            <label for="certification-file-upload">Upload Certification:</label>
+            <input type="file" accept=".pdf,.doc,.docx" class="certification-file-upload">
+            <label for="certification-file-upload" class="file-name">No file chosen</label>
+        `;
+        certificationsSection.insertBefore(certificationInputs, addCertificationButton);
+    });
+</script>
+
+</body>
+</html>

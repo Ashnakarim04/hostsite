@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+
+<!-- doctors23:12-->
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'assets_admin/img/logo.png' %}">
+    <title>ZillionHire - Admin - Students List</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'assets_admin/css/bootstrap.min.css'%}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'assets_admin/css/font-awesome.min.css'%}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets_admin/css/select2.min.css'%}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets_admin/css/bootstrap-datetimepicker.min.css'%}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets_admin/css/style.css'%}">
+    <!--[if lt IE 9]>
+        <script src="assets/js/html5shiv.min.js"></script>
+        <script src="assets/js/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+    <div class="main-wrapper">
+        <div class="header">
+                    
+        </div>
+        <div class="header">
+            <div class="header-left">
+                <a href="{% url 'admin_index2' %}" class="logo">
+                    <img src="{% static 'assets_admin/img/logo.png' %}" width="35" height="35" alt=""> <span>ZillionHire</span>
+                </a>
+            </div>
+            <a id="toggle_btn" href="javascript:void(0);"><i class="fa fa-bars"></i></a>
+            <a id="mobile_btn" class="mobile_btn float-left" href="#sidebar"><i class="fa fa-bars"></i></a>
+            <ul class="nav user-menu float-right">
+                <li class="nav-item dropdown d-none d-sm-block">
+                    <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown"><i class="fa fa-bell-o"></i> <span class="badge badge-pill bg-danger float-right">3</span></a>
+                    <div class="dropdown-menu notifications">
+                        <div class="topnav-dropdown-header">
+                            <span>Notifications</span>
+                        </div>
+                        
+                    </div>
+                </li>
+                
+                <li class="nav-item dropdown has-arrow">
+                    <a href="#" class="dropdown-toggle nav-link user-link" data-toggle="dropdown">
+                        <span class="user-img">
+                            <img class="rounded-circle" src="{% static 'assets_admin/img/user.jpg' %}" width="24" alt="Admin">
+                            <span class="status online"></span>
+                        </span>
+                        <span>Admin</span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="{% url 'admin_profile' %}">My Profile</a>
+                        <a class="dropdown-item" href="{% url 'admin_editprofile' %}">Edit Profile</a>
+
+                        <a class="dropdown-item" href="{% url 'admin_login' %}">Logout</a>
+                    </div>
+                </li>
+            </ul>
+            <div class="dropdown mobile-user-menu float-right">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <a class="dropdown-item" href="{% url 'admin_profile' %}">My Profile</a>
+                    <a class="dropdown-item" href="{% url 'admin_editprofile' %}">Edit Profile</a>
+                    
+                    <a class="dropdown-item" href="{% url 'admin_login' %}">Logout</a>
+                </div>
+            </div>
+        </div>
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-inner slimscroll">
+                <div id="sidebar-menu" class="sidebar-menu">
+                    <ul>
+                        <li class="menu-title">Main</li>
+                        <li>
+                            <a href="{% url 'admin_index2' %}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
+                        </li>
+                        <li>
+                            <a href="{% url 'admin_poststudent' %}"><i class="fa-solid fa-user-graduate"></i> <span>Students</span></a>
+                        </li>
+                        <li class="submenu" class="active">
+                            <a href="#"><i class="fas fa-user-tie"></i> <span> Company </span> <span class="menu-arrow"></span></a>
+                            <ul style="display: none;">
+                                <li><a href="{% url 'companyprofilelist' %}">Company List</a></li>
+                                <li class="active"><a href="{% url 'jobslist' %}">Jobs</a></li>
+                                <li><a href="{% url 'admin_company' %}">Applied Students</a></li>
+                                <li><a href="{% url 'admin_company' %}">Short Listed Students</a></li>
+                                
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="{% url 'admin_poststudent' %}"><i class="fa-solid fa-award"></i> <span>Selected Students</span></a>
+                        </li>
+                    </ul>
+                    </div>
+                </div>
+            </div>
+        <div class="page-wrapper">
+            <div class="content">
+                <div class="row">
+                    <div class="col-sm-4 col-3">
+                        <h4 class="page-title">Add Student</h4>
+                    </div>
+                    <div class="col-sm-8 col-9 text-right m-b-20">
+                        <a href="{% url 'addstudents' %}" class="btn btn-primary btn-rounded float-right"><i class="fa fa-plus"></i> Add Student</a>
+                    </div>
+                </div>
+                <div class="row"> 
+                    <div class="col-md-12">
+                        <form id="search-form" method="GET" action="{% url 'search_student' %}">
+                            <div class="input-group">
+                                <a href="{% url 'admin_poststudent' %}" class="btn btn-secondary"><i class="fa fa-arrow-left"></i></a>&ensp;&ensp;&ensp;&ensp;
+                                <input type="text" class="form-control" name="studentname" placeholder="Search by Student Name">
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i> </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div><br><br>
+                {% comment %} <div class="row">
+                    <div class="col-md-12">
+                        <form id="search-form" method="GET" action="{% url 'search_course' %}">
+                            <div class="input-group">
+                                <a href="{% url 'admin_poststudent' %}" class="btn btn-secondary"><i class="fa fa-arrow-left"></i></a>&ensp;&ensp;&ensp;&ensp;
+                                <input type="text" class="form-control" name="coursename" placeholder="Search by Course Name">
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i> </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div><br><br> {% endcomment %}
+                <div class="row">
+                    {% comment %} <button id="generatePdfButton" class="btn btn-primary" onclick="generatePDF()">Download Students List</button> {% endcomment %}
+                    <form method="get" action="{% url 'generate_pdf' %}">
+                        <button type="submit" class="btn btn-primary">Download Students List</button>
+                    </form>
+                </div><br><br>
+                <div class="row">
+                    {% comment %} <button id="generatePdfButton" class="btn btn-primary" onclick="generatePDF()">Download Students List</button> {% endcomment %}
+                    <form method="get" action="{% url 'student_list' %}">
+                        <button type="submit" class="btn btn-primary"> Students List</button>
+                    </form>
+                </div><br><br>
+            
+                <div class="row doctor-grid">
+                    {% for stu in stus %}
+                    {% if stu.is_active %}
+                    <div class="col-md-4 col-sm-4 col-lg-3">
+                        <div class="profile-widget">
+                            <div class="doctor-img">
+                                <a class="avatar" href="profile.html"><img alt="" src="{{ ashaworker.profile_photo.url }}"></a>
+                            </div>
+                 
+                            <h4 class="doctor-name text-ellipsis"><a href="profile.html">{{ stu.sname }}</a></h4>
+                 
+                            <div>
+                                <p class="card-text">EMAIL : {{ stu.email }}</p>
+                                <p class="card-text">PASSWORD : {{ stu.password }}</p>
+                                <p class="card-text">COURSE : {{ stu.get_course_display }}</p>
+                                <p class="card-text">DEPARTMENT : {{ stu.get_department_display }}</p>
+                                <p class="card-text">SEMESTER: {{ stu.get_semester_display }}</p>
+                            </div>
+                
+                            <!-- Edit and Delete buttons -->
+                            <div class="edit-delete-buttons">
+                                <a href="{% url 'edit_student' stu.id %}" class="btn btn-primary">Edit</a>
+                                <a href="{% url 'delete_student' stu.id %}" class="btn btn-danger">Delete</a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+                
+                 
+                
+    
+            </div>
+           
+        </div>
+      
+    </div>
+    <div class="sidebar-overlay" data-reff=""></div>
+                            <script src="{% static 'assets_admin/js/jquery-3.2.1.min.js'%}"></script>
+                            <script src="{% static 'assets_admin/js/popper.min.js'%}"></script>
+                            <script src="{% static 'assets_admin/js/bootstrap.min.js'%}"></script>
+                            <script src="{% static 'assets_admin/js/jquery.slimscroll.js'%}"></script>
+                            <script src="{% static 'assets_admin/js/select2.min.js'%}"></script>
+                            <script src="{% static 'assets_admin/js/moment.min.js'%}"></script>
+                            <script src="{% static 'assets_admin/js/bootstrap-datetimepicker.min.js'%}"></script>
+                            <script src="{% static 'assets_admin/js/app.js'%}"></script>
+                            <script>
+                                // Function to generate PDF using Django view
+                                {% comment %} function generatePDF() {
+                                    // Send a request to the Django view to generate the PDF
+                                    window.location.href = '{% url "generate_pdf" %}';
+                                } {% endcomment %}
+                            </script>
+                            
+                            {% comment %} <script>
+                                // Function to generate PDF
+                                function generatePDF() {
+                                    // Initialize jsPDF
+                                    var doc = new jsPDF();
+                            
+                                    // Get the content to be converted to PDF (e.g., the student list)
+                                    var content = document.querySelector('.doctor-grid');
+                            
+                                    // Generate PDF from the HTML content
+                                    doc.fromHTML(content, 15, 15);
+                            
+                                    // Save or open the PDF (you can customize this)
+                                    doc.save('student_list.pdf');
+                                }
+                            
+                                // Attach the click event handler to the "Generate PDF" button
+                                var generatePdfButton = document.getElementById('generatePdfButton');
+                                generatePdfButton.addEventListener('click', generatePDF);
+                            </script> {% endcomment %}
+                            
+</body>
+
+{% comment %} <style>
+    .header {
+        background-color: #00c6a9;
+        left: 0;
+        position: fixed;
+        right: 0;
+        top: 0;
+        z-index: 1039;
+        height: 50px;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+    }
+</style> {% endcomment %}
+<!-- doctors23:17-->
+</html>

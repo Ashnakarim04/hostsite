@@ -1,0 +1,165 @@
+{% load static %}
+{% comment %} {% load crispy_forms_tags %}  {% endcomment %}
+{% load socialaccount %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login</title>
+  <!-- Add Bootstrap CSS link -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    /* Your existing styles */
+    .image-container {
+      background-size: cover;
+      min-height: 70vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .fp {
+      text-align: center;
+    }
+    .form-container {
+      background-color: rgba(225, 241, 245, 0.557);
+      padding: 70px;
+      border-radius: 5px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    }
+    .image-container img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+    .h3 {
+      text-align: center;
+    }
+    .row{
+        margin-left: 200px;
+        margin-top: 65px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="container form-container mt-5">
+          <h3 class="h3"> LOGIN</h3>
+          {% for messages in messages %}
+          <h3 style="color:blue">{{ messages }}</h3>
+          {% endfor %}
+          <form id="registrationForm" method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="username">email</label>
+                <input type="username" class="form-control" id="username" name="email" required>
+                <small id="usernameError" class="form-text text-danger"></small>
+                {% comment %} {{ form|crispy }} {% endcomment %}
+              </div>
+  
+              <div class="form-group">
+                <label for="password">password</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+                <small id="passwordError" class="form-text text-danger"></small>
+              </div>
+              
+              
+              <button type="submit" id="login" class="btn btn-primary btn-block">Login</button><br>
+              
+              {% comment %} <a href="{% provider_login_url 'google'%}?next=/"><br> {% endcomment %}
+                {% comment %} <a href="#" class="btn btn-danger btn-block mt-3" onclick="signInWithGoogle()"> {% endcomment %}
+                {% comment %} <span class="align-middle">
+                  <img src="https://static.vecteezy.com/system/resources/previews/022/484/503/original/google-lens-icon-logo-symbol-free-png.png" alt="Google Icon" width="24" height="24">
+                </span>
+                <span class="align-middle ml-2">Sign in with Google</span><br>
+                </a><br> {% endcomment %}
+
+                {% comment %} <a href="{% provider_login_url 'google'%}?next=/">
+                  <span class="align-middle">
+                      <img src="https://static.vecteezy.com/system/resources/previews/022/484/503/original/google-lens-icon-logo-symbol-free-png.png" alt="Google Icon" width="24" height="24">
+                  </span>
+                  <span class="align-middle ml-2">Sign in with Google</span>
+              </a> {% endcomment %}
+              
+                <pre>New here? <a href="{% url 'reg' %}" style="color: rgb(201, 7, 7); font-size: 14px;">Register</a></pre>
+                
+                {% comment %} <h1>Google Login</h1>
+                <a href="{% provider_login_url 'google'%}?next=/">Login with Google</a> {% endcomment %}
+                
+                
+         
+          </form>
+          <form action="{% url 'password_reset' %}" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+            <a href="{% url 'password_reset' %}" class="forgot-password">Forgot Password?</a>
+            </div>
+            
+
+          </form>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="row justify-content-center image-container">
+          <img src="https://img.freepik.com/free-vector/devops-team-abstract-concept-vector-illustration-software-development-team-member-agile-workflow-devops-team-model-it-teamwork-project-management-integrated-practice-abstract-metaphor_335657-2299.jpg?w=740&t=st=1694952991~exp=1694953591~hmac=c103a241c0189fbb2c3cef6541fe8cbf237a25e1fd299ae4e9d5d0f5534731cc" alt="Image">
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+  <!--  Bootstrap JS and jQuery scripts -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  
+  <script>
+    const registrationForm = document.getElementById('registrationForm');
+    const emailInput = document.getElementById('username');
+    const passwordInput = document.getElementById('password');
+    
+    function validateEmail() {
+      const emailValue = emailInput.value;
+      const emailError = document.getElementById('usernameError');
+      
+      if (!/^\S+@\S+\.\S+$/.test(emailValue)) {
+        emailError.textContent = 'Enter a valid email address.';
+        return false;
+      } else {
+        emailError.textContent = '';
+        return true;
+      }
+    }
+
+    function validatePassword() {
+      const passwordValue = passwordInput.value;
+      const passwordError = document.getElementById('passwordError');
+      
+      if (!/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9!@#$%^&*()_+,.?]{8,}$/.test(passwordValue)) {
+        passwordError.textContent = 'Password should contain at least 8 characters, one uppercase letter, one lowercase letter, one number, and one special character.';
+        return false;
+      } else {
+        passwordError.textContent = '';
+        return true;
+      }
+    }
+
+    emailInput.addEventListener('keyup', validateEmail);
+    passwordInput.addEventListener('keyup', validatePassword);
+
+    registrationForm.addEventListener('submit', function(event) {
+      const isEmailValid = validateEmail();
+      const isPasswordValid = validatePassword();
+
+      if (!isEmailValid || !isPasswordValid) {
+        event.preventDefault();
+      }
+    });
+    function signInWithGoogle(){
+
+    }
+   
+  </script>
+</body>
+</html>

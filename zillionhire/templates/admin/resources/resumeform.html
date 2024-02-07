@@ -1,0 +1,320 @@
+{% load static %}
+<html>
+{% block content %}
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* {
+  box-sizing: border-box;
+}
+
+.a{
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+}
+
+label {
+  padding: 12px 12px 12px 0;
+  display: inline-block;
+}
+
+input[type=submit] {
+  background-color: #04AA6D;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  float: right;
+}
+
+input[type=submit]:hover {
+  background-color: #45a049;
+}
+
+.container {
+  border-radius: 5px;
+  background-color: rgba(255, 255, 255, 0.352);
+  padding: 20px;
+  margin-top: 2%;
+  margin-left: 2.5%;
+  width: 95%;
+  height:fit-content;
+}
+
+.col-25 {
+  float: left;
+  width: 25%;
+  margin-top: 6px;
+}
+
+.col-75 {
+  float: left;
+  width: 75%;
+  margin-top: 6px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+  .col-25, .col-75, input[type=submit],.container {
+    width: 100%;
+    height: 100%;
+    margin-top: 0;
+  }
+}
+body {margin:0;font-family:Arial} 
+</style>
+<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'assets_admin/img/logo.png' %}">
+    <title>ZillionHire - Admin - Students List</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'assets_admin/css/bootstrap.min.css'%}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'assets_admin/css/font-awesome.min.css'%}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets_admin/css/select2.min.css'%}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets_admin/css/bootstrap-datetimepicker.min.css'%}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets_admin/css/style.css'%}">
+</head>
+<body style="background-image: linear-gradient(to right, rgba(22, 172, 213, 0.973),rgba(15, 184, 227, 0.598),rgba(15, 184, 227, 0.598), rgba(22, 172, 213, 0.973));overflow-x: hidden;">
+  <div class="main-wrapper">
+    <div class="header">
+                
+    </div>
+    <div class="header">
+        <div class="header-left">
+            <a href="{% url 'admin_index2' %}" class="logo">
+                <img src="{% static 'assets_admin/img/logo.png' %}" width="35" height="35" alt=""> <span>ZillionHire</span>
+            </a>
+        </div>
+        <a id="toggle_btn" href="javascript:void(0);"><i class="fa fa-bars"></i></a>
+        <a id="mobile_btn" class="mobile_btn float-left" href="#sidebar"><i class="fa fa-bars"></i></a>
+        <ul class="nav user-menu float-right">
+            <li class="nav-item dropdown d-none d-sm-block">
+                <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown"><i class="fa fa-bell-o"></i> <span class="badge badge-pill bg-danger float-right">3</span></a>
+                <div class="dropdown-menu notifications">
+                    <div class="topnav-dropdown-header">
+                        <span>Notifications</span>
+                    </div>
+                    
+                </div>
+            </li>
+            
+            <li class="nav-item dropdown has-arrow">
+                <a href="#" class="dropdown-toggle nav-link user-link" data-toggle="dropdown">
+                    <span class="user-img">
+                        <img class="rounded-circle" src="{% static 'assets_admin/img/user.jpg' %}" width="24" alt="Admin">
+                        <span class="status online"></span>
+                    </span>
+                    <span>Admin</span>
+                </a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="{% url 'admin_profile' %}">My Profile</a>
+                    <a class="dropdown-item" href="{% url 'admin_editprofile' %}">Edit Profile</a>
+
+                    <a class="dropdown-item" href="{% url 'admin_login' %}">Logout</a>
+                </div>
+            </li>
+        </ul>
+        <div class="dropdown mobile-user-menu float-right">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+            <div class="dropdown-menu dropdown-menu-right">
+                <a class="dropdown-item" href="{% url 'admin_profile' %}">My Profile</a>
+                <a class="dropdown-item" href="{% url 'admin_editprofile' %}">Edit Profile</a>
+                
+                <a class="dropdown-item" href="{% url 'admin_login' %}">Logout</a>
+            </div>
+        </div>
+    </div>
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-inner slimscroll">
+            <div id="sidebar-menu" class="sidebar-menu">
+                <ul>
+                    <li class="menu-title">Main</li>
+                    <li >
+                        <a href="{% url 'admin_index2' %}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
+                    </li>
+        {% comment %} <li>
+                        <a href="{% url 'admin_poststudent' %}"><i class="fa-solid fa-user-graduate"></i> <span>Students</span></a>
+                    </li> {% endcomment %}
+                    <li class="active">
+                        <a href="{% url 'ad_studentlist' %}"><i class="fa-solid fa-award"></i> <span> Students List</span></a>
+                    </li>
+                    <li>
+                        <a href="{% url 'admin_addstudents' %}"><i class="fa-solid fa-award"></i> <span>Add student</span></a>
+                    </li>
+                    
+                    <li class="submenu">
+                        <a href="#"><i class="fas fa-user-tie"></i> <span> Company </span> <span class="menu-arrow"></span></a>
+                        <ul style="display: none;">
+                            <li><a href="{% url 'companyapprove' %}">Approve Company</a></li>
+                            <li><a href="{% url 'companyprofilelist' %}">Company List</a></li>
+                            <li><a href="{% url 'jobslist' %}">Jobs</a></li>
+                            {% comment %} <li><a href="{% url 'admin_company' %}">Applied Students</a></li>
+                            <li><a href="{% url 'admin_company' %}">Short Listed Students</a></li> {% endcomment %}
+                            
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="{% url 'adminappstudents' %}"><i class="fa-solid fa-user-check"></i> <span>Applied Students</span></a>
+                    </li>
+                    <li>
+                        <a href="{% url 'admin_shortlist' %}"><i class="fa-solid fa-award"></i> <span>Short Listed Students</span></a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+    </div> 
+    <div class="page-wrapper">
+      <div class="content">
+          <div class="row">
+              <div class="col-sm-4 col-3">
+                  <h4 class="page-title">CONTENTS</h4>
+              </div>
+              {% comment %} <a href="{% url 'adcontent2' %}">
+                <button class="btn btn-primary">View Contents</button>
+              </a> {% endcomment %}
+              {% comment %} <div class="col-sm-8 col-9 text-right m-b-20">
+                  <a href="{% url 'content2form' %}" class="btn btn-primary btn-rounded float-right"><i class="fa fa-plus"></i> Add New Content</a>
+              </div> {% endcomment %}
+          </div> 
+          <center>
+      <br><br><br><br>
+      <div style="width: 100%;"> 
+        <div style="background-color:rgba(255, 255, 255, 0.373);align-items:center;width:60%;padding:3%;border-radius:10px;margin-left:15%;">
+         <h2>Add New Content</h2><br>
+         <table>
+         <form action="{% url 'resume1' %}" method="POST" enctype="multipart/form-data">
+             {% csrf_token %}
+             <tr>
+                <td><label for="title">Enter Title : </label></td>
+                <td><input type="text" class="a" placeholder="title" name="title" class="ab"></td>
+              </tr>
+             
+              <tr>
+                <td><label for="more">More : </label></td>
+                <td><input type="text" class="a" placeholder="more" name="more" class="ab"></td>
+            </tr>
+            
+              
+              <tr>
+               <td><label for="date">Uploaded Date : </label></td>
+               <td><input type="date" placeholder="Startdate" id="date" name="date" class="ab" onmouseleave="TDate()" style="border-radius:5px;"></td>
+             </tr>
+
+             
+             
+                <td><label for="pp" style="background-color: rgb(35, 157, 214);height:20%;padding:1.5%;border-radius:5px;float:left;padding:5%;"> Add Cover Image</label>
+                  <input type="file" accept="image/png, image/jpeg" name="image" id="pp" hidden>
+ 
+                
+             
+             <td>
+                 <label for="pdf" style="background-color: rgb(35, 157, 214); height: 20%; padding: 1.5%; border-radius: 5px; float: left; padding: 5%;">
+                     Add PDF File
+                 </label>
+                 <input type="file" accept="application/pdf" name="pdf" id="pdf" hidden>
+             </td>
+             <td>
+                <label for="video" style="background-color: rgb(214, 35, 35); height: 20%; padding: 1.5%; border-radius: 5px; float: left; padding: 5%;">
+                    Add Video File
+                </label>
+                <input type="file" accept="video/*" name="video" id="video" hidden>
+                <progress id="video-progress" max="100" value="0"></progress>
+            </td>
+             
+
+            
+               <td><input type="submit" value="Submit" style="border-radius: 5px;background-color:#07cb83;border:none;padding:1.3%;float:right;padding:4%;" onsubmit="myFunction2()"></td>
+             </tr>
+          </form>
+         </table>
+       </div>
+       </div>
+     </center>
+
+    </div>
+           
+  </div>
+
+</div>
+     <div class="sidebar-overlay" data-reff=""></div>
+     <script src="{% static 'assets_admin/js/jquery-3.2.1.min.js'%}"></script>
+     <script src="{% static 'assets_admin/js/popper.min.js'%}"></script>
+     <script src="{% static 'assets_admin/js/bootstrap.min.js'%}"></script>
+     <script src="{% static 'assets_admin/js/jquery.slimscroll.js'%}"></script>
+     <script src="{% static 'assets_admin/js/select2.min.js'%}"></script>
+     <script src="{% static 'assets_admin/js/moment.min.js'%}"></script>
+     <script src="{% static 'assets_admin/js/bootstrap-datetimepicker.min.js'%}"></script>
+     <script src="{% static 'assets_admin/js/app.js'%}"></script>
+     <script>
+    
+     </script>
+     <script>
+      function TDate() {
+        var UserDate = document.getElementById("startdate").value;
+        var ToDate = new Date();
+    
+        if (new Date(UserDate).getTime() <= ToDate.getTime()) {
+              alert("The Date must be Bigger or Equal to today date");
+              return false;
+         }
+        return true;
+    }
+
+    
+function DateCheck()
+{
+  var StartDate= document.getElementById('startdate').value;
+  var EndDate= document.getElementById('enddate').value;
+  var eDate = new Date(EndDate);
+  var sDate = new Date(StartDate);
+  if(StartDate!= '' && StartDate!= '' && sDate> eDate)
+    {
+    alert("Please ensure that the End Date is greater than or equal to the Start Date.");
+    return false;
+    }
+  var ToDate = new Date();
+
+  if (new Date(EndDate).getTime() <= ToDate.getTime()) {
+          alert("The Date must be Bigger or Equal to today date");
+          return false;
+     }
+    return true;
+}
+    
+      function myFunction2() {
+        alert("Succefully Added Internship");
+      }
+      // JavaScript for handling file input and displaying progress
+    document.getElementById('video').addEventListener('change', function(event) {
+        var input = event.target;
+        var progress = document.getElementById('video-progress');
+
+        if (input.files.length > 0) {
+            var file = input.files[0];
+
+            // You can customize the file upload process using AJAX and update the progress element
+            // For simplicity, I'm just setting the progress to 100% after a delay of 2 seconds
+            setTimeout(function() {
+                progress.value = 100;
+            }, 2000);
+        }
+    });
+      
+    </script>
+</body>
+{% endblock %}
+</html>

@@ -1,0 +1,399 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'assets2/img/logo.png' %}">
+    <title>ZillionHire - Company Dashboard</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'assets2/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets2/css/font-awesome.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets2/css/select2.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets2/css/bootstrap-datetimepicker.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets2/css/style.css' %}">
+   
+        <script src="{% static 'assets2/js/html5shiv.min.js' %}"></script>
+        <script src="{% static 'assets2/js/respond.min.js' %}"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog</title>
+    <style>
+        .blog-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin: 20px;
+        }
+        .blog-item {
+            width: calc(33.33% - 20px);
+            margin-bottom: 20px;
+            transform: perspective(1500px) rotateY(15deg);
+            border-radius: 1rem;
+            box-shadow: rgba(0, 0, 0, 0.25) 0px 25px 50px -12px;
+            transition: transform 1s ease 0s;
+            overflow: hidden;
+        }
+        .blog-item:hover {
+            transform: perspective(3000px) rotateY(5deg);
+        }
+        .blog-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .blog-content {
+            margin-bottom: 10px;
+        }
+        .blog-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+        .profile-photo {
+            border-radius: 50%;
+            overflow: hidden;
+            width: 100px;
+            height: 100px;
+            margin: 0 auto;
+            display: block;
+            transition: transform 0.3s ease-in-out;
+        }
+        .profile-photo:hover {
+            transform: rotate(360deg);
+        }
+    </style>
+</head>
+
+<header class="">
+    <nav class="navbar navbar-expand-lg">
+      <div class="container">
+        {% comment %} <a class="navbar-brand" href="{% url 'index' %}"><h2>ZillionHire <em> Website</em></h2></a> {% endcomment %}
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item ">
+              <a class="nav-link" href="{% url 'cindex' %}">Home
+                {% comment %} <span class="sr-only">(current)</span> {% endcomment %}
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'aboutuser' %}">About Us</a>
+            </li>
+      
+            <li class="nav-item dropdown">
+              {% if user.is_authenticated %}
+                <a class="nav-link" href="{% url 'loggout' %}">Log Out</a>
+              {% else %}
+                <a class="dropdown-toggle nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Login</a>
+            
+                <div class="dropdown-menu">
+                  <a class="dropdown-item" href="{% url 'loginn' %}">Student</a>
+                  <a class="dropdown-item" href="{% url 'loginn' %}">Company</a>
+                  <a class="dropdown-item" href="{% url 'loginn' %}">College Officer</a>
+              </div>
+              {% endif %}
+            </li> 
+            
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'contactuser' %}">Contact Us</a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="{% url 'postjob' %}">Post Job</a>
+              <span class="sr-only">(current)</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+  <div class="sidebar" id="sidebar">
+    <div class="sidebar-inner slimscroll">
+        <div id="sidebar-menu" class="sidebar-menu">
+            <ul>
+                <li class="menu-title">ALUMNI DASHBOARD</li>
+                {% comment %} <li>
+                    <a href="{% url 'index-2' %}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
+                </li> {% endcomment %}
+                <li class="active">
+                  <a href="{% url 'alumni_profile' alumni_id=request.user.alumni.id %}">
+                      <i class="fas fa-id-card"></i>
+                      <span>PROFILE</span>
+                  </a> 
+              </li> 
+              <li>
+                <a href="{% url 'create_blog_content' alumni_id=alumni_instance.id %}">
+                    <i class="fas fa-id-card"></i>
+                    <span>ADD OPENINGS</span>
+                </a>
+            </li>
+            
+            
+            <li>
+                <a href="{% url 'display_blog_content' alumni_id=alumni_instance.id %}">
+                    <i class="fas fa-id-card"></i>
+                    <span>OPENINGS</span>
+                </a>
+            </li>
+            
+       
+            </ul>
+        </div>
+    </div>
+</div><br><br><br><br>
+<div class="page-wrapper">
+    <div class="content">
+        <div class="row">
+            <div class="col-sm-4 col-3">
+                <h4 class="page-title">CONTENTS</h4>
+                
+                 
+            </div>
+
+
+
+
+
+<bR><br>
+
+<div class="container2">
+<div class="section">
+
+<div>
+    <div class="blog-container">
+        {% for blog_content in blog_contents %}
+        <div class="blog-item">
+            {% if alumni_instance.profile_photo %}
+            <img src="{{ alumni_instance.profile_photo.url }}" alt="Profile Photo" class="profile-photo">
+            {% endif %}
+            <h3 class="alumni-name">{{ alumni_instance.first_name }} {{ alumni_instance.last_name }}</h3>
+            <h2 class="blog-title">{{ blog_content.title }}</h2>
+            <p class="blog-content">{{ blog_content.content }}</p>
+            {% if blog_content.image %}
+            <img src="{{ blog_content.image.url }}" alt="Blog Image" class="blog-image">
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+      
+
+      
+
+    
+</div>
+</div>
+
+
+
+
+
+
+</body>
+</html>
+
+    {% comment %} <div class="section edit-profile-button">
+        <a href="{% url 'srequest' %}">Request Edit</a>
+    </div> {% endcomment %}
+</div> 
+
+
+<script>
+  const academicYearInput = document.getElementById('academic_year');
+  const academicYearError = document.getElementById('academicYearError');
+
+  academicYearInput.addEventListener('keyup', function() {
+    const academicYearValue = academicYearInput.value;
+    const validInputRegex = /^[0-9-]+$/;  // Allow numbers and hyphens
+
+    if (!validInputRegex.test(academicYearValue)) {
+      academicYearError.textContent = 'Please enter numeric values and hyphens only.';
+    } else {
+      academicYearError.textContent = '';
+    }
+  });
+</script>
+
+
+
+</body>
+<div class="sidebar-overlay" data-reff=""></div>
+<script src="{% static 'assets/js/jquery-3.2.1.min.js' %}"></script>
+<script src="{% static 'assets/js/popper.min.js' %}"></script>
+<script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'assets/js/jquery.slimscroll.js' %}"></script>
+<script src="{% static 'assets/js/select2.min.js' %}"></script>
+<script src="{% static 'ssets/js/moment.min.js' %}"></script>
+<script src="{% static 'assets/js/bootstrap-datetimepicker.min.js' %}"></script>
+<script src="{% static 'assets/js/app.js' %}"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+  function displayFileName(input) {
+    const fileName = input.files[0].name;
+    document.getElementById('file-name').textContent = 'File chosen: ' + fileName;
+  
+    // Save the file name to localStorage
+    localStorage.setItem('selectedFileName', fileName);
+  }
+  window.onload = function() {
+    const savedFileName = localStorage.getItem('selectedFileName');
+    if (savedFileName) {
+      document.getElementById('file-name').textContent = 'File chosen: ' + savedFileName;
+    }
+  }
+  document.getElementById('StudentProfile').addEventListener('submit', function() {
+    localStorage.removeItem('selectedFileName');
+  });
+
+ 
+
+  function updateFileName(input) {
+    const fileName = input.files[0].name;
+    document.getElementById('file-name').textContent = 'File chosen: ' + fileName;
+  
+    // Save the file name to localStorage
+    localStorage.setItem('twelfthFileName', fileName);
+  }
+  
+  window.onload = function() {
+    const twelfthFileName = localStorage.getItem('twelfthFileName');
+    if (twelfthFileName) {
+      document.getElementById('file-name').textContent = 'File chosen: ' + twelfthFileName;
+    }
+  }
+  
+
+
+    $(document).ready(function() {
+        $('#dob').datepicker({
+            dateFormat: 'yy-mm-dd',  // Set the desired date format
+            changeMonth: true,
+            changeYear: true,
+            yearRange: "-100:+0"  // Allow selection of years from 100 years ago to the current year
+        });
+    });
+
+
+
+      const academicYearInput = document.getElementById('academic_year');
+      const academicYearError = document.getElementById('academicYearError');
+    
+      academicYearInput.addEventListener('keyup', function() {
+        const academicYearValue = academicYearInput.value;
+    
+        // Regular expression to match numeric values only
+        const numericRegex = /^[0-9]+$/;
+    
+        if (!numericRegex.test(academicYearValue)) {
+          academicYearError.textContent = 'Please enter numeric values only.';
+        } else {
+          academicYearError.textContent = ''; // Clear the error message if valid
+        }
+      });
+
+
+      const backlogInput = document.getElementById('c_backlog');
+      const backlogError = document.getElementById('backlogError');
+    
+      backlogInput.addEventListener('input', validateBacklog);
+    
+      function validateBacklog() {
+        const backlogValue = backlogInput.value;
+    
+        if (!/^\d+$/.test(backlogValue) || parseInt(backlogValue) > 25) {
+          backlogError.textContent = 'Please enter a valid number (0-25).';
+        } else {
+          backlogError.textContent = '';
+        }
+      }
+  
+      const cgpaInput = document.getElementById('cgpa');
+      const tenthCgpaInput = document.getElementById('tenth_cgpa');
+      const twelfthCgpaInput = document.getElementById('twelfth_cgpa');
+      const ugCgpaInput = document.getElementById('ug_cgpa');
+    
+      const numericDotPattern = /^\d*\.?\d*$/;
+    
+      cgpaInput.addEventListener('keyup', validateCgpa);
+      tenthCgpaInput.addEventListener('keyup', validateCgpa);
+      twelfthCgpaInput.addEventListener('keyup', validateCgpa);
+      ugCgpaInput.addEventListener('keyup', validateCgpa);
+    
+      function validateCgpa() {
+        const inputValue = this.value;
+    
+        if (!numericDotPattern.test(inputValue) || parseFloat(inputValue) > 10) {
+          this.setCustomValidity('Please enter a valid CGPA (0-10).');
+        } else {
+          this.setCustomValidity('');
+        }
+      }
+  
+  
+  
+  
+  //submenu
+  
+  
+  {% comment %} $(document).ready(function () {
+    $(".menu-arrow").click(function () {
+        $("#submenu").toggle();
+    });
+}); {% endcomment %}
+
+
+        
+  // Check if the fields were previously disabled
+  {% comment %} var areFieldsDisabled = localStorage.getItem('fieldsDisabled');
+  if (areFieldsDisabled === 'true') {
+      disableFields();
+  }
+
+  document.getElementById("companyProfileForm").addEventListener("submit", function(event) {
+      // Prevent the default form submission behavior
+      event.preventDefault();
+
+      // Disable all input fields and select elements after form submission
+      disableFields();
+
+      // Store a flag indicating that the fields are disabled
+      localStorage.setItem('fieldsDisabled', 'true');
+  });
+
+  function disableFields() {
+      var inputs = document.querySelectorAll("input");
+      inputs.forEach(function(input) {
+          input.disabled = true;
+          input.classList.add("disabled-input");
+      });
+
+      var selects = document.querySelectorAll("select");
+      selects.forEach(function(select) {
+          select.disabled = true;
+          select.classList.add("disabled-input");
+      });
+
+      // Disable the submit button after form submission
+      document.getElementById("save-button").disabled = true;
+      document.getElementById("save-button").classList.add("disabled-input");
+  } {% endcomment %}
+</script>
+<script>
+function toggleSubMenu(subMenuId) {
+    var submenu = document.getElementById(subMenuId);
+    submenu.style.display = (submenu.style.display === "none" || submenu.style.display === "") ? "block" : "none";
+    var menuarrow = document.getElementById(subMenuId === 'resumeSubMenu' ? 'resumeMenuArrow' : 'studyMenuArrow');
+    menuarrow.innerHTML = (submenu.style.display === "none" || submenu.style.display === "") ? "&#9658;" : "&#9660;";
+}
+</script>
+<script>
+function toggleSubMenu(subMenuId) {
+    var submenu = document.getElementById(subMenuId);
+    submenu.style.display = (submenu.style.display === "none" || submenu.style.display === "") ? "block" : "none";
+    var menuarrow = document.getElementById('studyMenuArrow');
+    menuarrow.innerHTML = (submenu.style.display === "none" || submenu.style.display === "") ? "&#9658;" : "&#9660;";
+}
+</script>
+
+</html>
