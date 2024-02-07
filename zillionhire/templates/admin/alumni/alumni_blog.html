@@ -140,6 +140,10 @@
                             <!-- Add more submenu items as needed -->
                         </ul>
                     </li>
+                    <li class="active">
+                        <a href="{%url 'alumni_blog' studentprofile_id=studentprofile.id  %}"><i class="fas fa-user-check"></i> <span>ALUMNI NOTES</span></a>
+                      </li>
+                        
                     
                 </ul>
             </div>
@@ -200,23 +204,27 @@
                           </div><br><br> {% endcomment %}
                             
                             <div class="row">
-                                {% for content in adcont %}
+                                {% for content in blog_contents %}
                                     <div class="col-md-4 col-sm-4 col-lg-3">
                                         <div class="profile-widget box-effect d-flex flex-column">
-                                            <div class="doctor-img">
+                                            {% comment %} <div class="doctor-img">
                                                 <img class="avatar" src="{% if content.img %}{{ content.img.url }}{% else %}path_to_default_image{% endif %}" alt="Cover Image" name="cover_image" id="cover_image" width="100" height="80">
                                                 <i class="fas fa-heart like-icon" style="color: {% if content.id in liked_content_ids %}red{% else %}blue{% endif %}" data-adcon-id="{{ content.id }}" data-status="{{ content.status }}"></i>
-                                            </div>
+                                            </div> {% endcomment %}
                                             
                                             <div style="text-align: left;">
+                                                <h4 class="alumni-name" style="color: #468C3E">
+                                                    
+                                                        {{ content.alumni.first_name }} {{ content.alumni.last_name }}
+                                                   
+                                                </h4>
+                                                {% comment %} <p>{{ content.alumni.first_name }}</p> {% endcomment %}
                                                 <p class="card-text"><b> {{ content.title }}</b></p>
-                                                <p class="card-text"> {{ content.moreinfo }}</p>
-                                                <p class="card-text"> {{ content.caption }}</p>
-                                                <p class="card-text"><b>Uploaded by:</b> {{ content.stdate }}</p>
+                                                <p class="card-text"> {{ content.content }}</p>
+                                                {% comment %} <p class="card-text"> {{ content.caption }}</p> {% endcomment %}
+                                                {% comment %} <p class="card-text"><b>Uploaded by:</b> {{ content.stdate }}</p> {% endcomment %}
                                                 
-                                                {% if content.pdf %}
-                                                    <p class="card-text"><b></b> <a href="{{ content.pdf.url }}" target="_blank">PDF</a></p>     
-                                                {% endif %}
+                                               
                                             </div>
                                         </div>
                                     </div>

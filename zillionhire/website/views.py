@@ -2272,20 +2272,35 @@ def display_blog_content(request, alumni_id):
     except Alumni.DoesNotExist:
         messages.error(request, 'Alumni profile not found.')
         return redirect(reverse('admin_index'))
+from django.shortcuts import render, get_object_or_404
+from .models import BlogContent, StudentProfile
 
-def alumni_blog(request,studentprofile_id):
+def alumni_blog(request, studentprofile_id):
     # Fetch data from BlogContent and StudentProfile models
     blog_contents = BlogContent.objects.all()
-    # student_profiles = StudentProfile.objects.filter(is_alumni=True)  # Assuming you want only alumni profiles
     studentprofile = get_object_or_404(StudentProfile, id=studentprofile_id)
+    
+    user = studentprofile.user
+    alumni = None
+    try:
+        alumni = user.alumni  # Fetch Alumni object associated with User
+    except AttributeError:
+        pass  # Alumni attribute does not exist on User object
+    except user.alumni.RelatedObjectDoesNotExist:
+        pass  # Alumni object does not exist
+
     context = {
         'blog_contents': blog_contents,
         'studentprofile': studentprofile,
+        'alumni': alumni,  # Pass Alumni object to context
     }
 
     return render(request, 'admin/alumni/alumni_blog.html', context)
 
 
+def ad_alumniblog(request):
+    blog_contents = BlogContent.objects.all()
+    return render(request, 'admin/alumni/ad_alumninote.html', {'blog_contents': blog_contents})
 # def scontent2list(request, studentprofile_id):
 #     studentprofile = get_object_or_404(StudentProfile, id=studentprofile_id)
 #     adcon=ccontent.objects.all()

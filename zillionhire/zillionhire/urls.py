@@ -206,6 +206,8 @@ urlpatterns = [
     path('create_blog_content/<int:alumni_id>/', create_blog_content, name='create_blog_content'),
     path('display_blog_content/<int:alumni_id>/', display_blog_content, name='display_blog_content'),
     path('alumni_blog/<int:studentprofile_id>/', views.alumni_blog, name='alumni_blog'),
+    path('ad_alumniblog/', views.ad_alumniblog, name='ad_alumniblog'),
+
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
