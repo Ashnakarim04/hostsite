@@ -207,6 +207,11 @@ urlpatterns = [
     path('display_blog_content/<int:alumni_id>/', display_blog_content, name='display_blog_content'),
     path('alumni_blog/<int:studentprofile_id>/', views.alumni_blog, name='alumni_blog'),
     path('ad_alumniblog/', views.ad_alumniblog, name='ad_alumniblog'),
+    path('bloglist2/<int:alumni_id>/', views.bloglist2, name='bloglist2'),
+    path('delete_blog/', views.delete_blog, name='delete_blog'),
+    # path('editblog//', views.editblog, name='editblog'),
+    # path('delete_blog_content/<int:blog_content_id>/', views.delete_blog_content, name='delete_blog_content'),
+
 
 ]
 if settings.DEBUG:

@@ -190,7 +190,7 @@
     <div class="section">
     <h1>PROFILE</h1><br>
     <div>
-<form method="post" action="{% url 'create_blog_content' alumni_id=alumni_id %}" enctype="multipart/form-data">
+<form method="post" action="{% url 'create_blog_content' alumni_id=alumni_instance.id  %}" enctype="multipart/form-data">
     {% csrf_token %}
     
     <h2>Add Opening</h2>

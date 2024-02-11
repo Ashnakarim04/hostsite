@@ -317,12 +317,12 @@
                           <span>PROFILE</span>
                       </a> 
                   </li> 
-                  <li>
+                  {% comment %} <li>
                     <a href="{% url 'create_blog_content' alumni_id=alumni_profile.id %}">
                         <i class="fas fa-id-card"></i>
                         <span>ADD OPENINGS</span>
                     </a>
-                </li>
+                </li> {% endcomment %}
                 
                 <li>
                   <a href="{% url 'display_blog_content' alumni_id=alumni_profile.id %}">
@@ -330,43 +330,14 @@
                       <span>OPENINGS</span>
                   </a>
               </li>
+              <li>
+                <a href="{% url 'bloglist2' alumni_id=alumni_profile.id %}">
+                    <i class="fas fa-id-card"></i>
+                    <span>EVENTS</span>
+                </a>
+            </li>
               
-              
-                    
-                    {% comment %} <li class>
-                        <a href="{%url 'job_approve' studentprofile_id=studentprofile.id %}"><i class="fa-solid fa-desktop"></i> <span>JOBS</span></a>
-                      </li>
-                    <li class>
-                      <a href="{%url 'sappliedjobs' studentprofile_id=studentprofile.id %}"><i class="fa-solid fa-clipboard-check"></i></i> <span>APPLIED JOBS</span></a>
-                    </li>
-                    <li class>
-                      <a href="{%url 's_shortlist' studentprofile_id=studentprofile.id %}"><i class="fas fa-user-check"></i> <span>SHORT LISTED JOBS</span></a>
-                    </li> {% endcomment %}
-                    
-                    {% comment %} <li class="submenu">
-                      <a href="#" onclick="toggleSubMenu('studySubMenu')">
-                          <i class="fas fa-user-check"></i>
-                          <span>STUDY RESOURCE</span>
-                          <span id="studyMenuArrow" class="menu-arrow">&#9658;</span>
-                      </a>
-                      <ul style="display: none;" id="studySubMenu">
-                          <li>
-                              <a href="{% url 'scontent1list' studentprofile_id=studentprofile.id %}">
-                                  <i class="t"></i> Content 1
-                              </a>
-                              <a href="{% url 'svideolist' studentprofile_id=studentprofile.id %}">
-                                <i class=""></i> Video Library
-                            </a>
-                            <a href="{% url 'scontent2list' studentprofile_id=studentprofile.id %}">
-                              <i class=""></i> Content2
-                          </a>
-                          </li>
-                          <!-- Add more submenu items as needed -->
-                      </ul>
-                  </li> {% endcomment %}
-                  {% comment %} <li class>
-                    <a href="{%url 'gen_resume'  %}"><i class="fas fa-user-check"></i> <span>RESUME</span></a>
-                  </li> {% endcomment %}
+            
                     
                    
                     
@@ -528,9 +499,9 @@
 
                     
                     <center><button type="submit" id="save-button">Save</button></center>&ensp;
-                    <div class="section edit-profile-button">
+                    {% comment %} <div class="section edit-profile-button">
                       <a href="{% url 'srequest' %}">Request Edit</a>
-                  </div>
+                  </div> {% endcomment %}
 
                 </div>
 
@@ -552,9 +523,7 @@
 </body>
 </html>
 
-        {% comment %} <div class="section edit-profile-button">
-            <a href="{% url 'srequest' %}">Request Edit</a>
-        </div> {% endcomment %}
+  
     </div> 
 
     
@@ -689,55 +658,7 @@
               this.setCustomValidity('');
             }
           }
-      
-      
-      
-      
-      //submenu
-      
-      
-      {% comment %} $(document).ready(function () {
-        $(".menu-arrow").click(function () {
-            $("#submenu").toggle();
-        });
-    }); {% endcomment %}
-
-
-            
-      // Check if the fields were previously disabled
-      {% comment %} var areFieldsDisabled = localStorage.getItem('fieldsDisabled');
-      if (areFieldsDisabled === 'true') {
-          disableFields();
-      }
-  
-      document.getElementById("companyProfileForm").addEventListener("submit", function(event) {
-          // Prevent the default form submission behavior
-          event.preventDefault();
-  
-          // Disable all input fields and select elements after form submission
-          disableFields();
-  
-          // Store a flag indicating that the fields are disabled
-          localStorage.setItem('fieldsDisabled', 'true');
-      });
-  
-      function disableFields() {
-          var inputs = document.querySelectorAll("input");
-          inputs.forEach(function(input) {
-              input.disabled = true;
-              input.classList.add("disabled-input");
-          });
-  
-          var selects = document.querySelectorAll("select");
-          selects.forEach(function(select) {
-              select.disabled = true;
-              select.classList.add("disabled-input");
-          });
-  
-          // Disable the submit button after form submission
-          document.getElementById("save-button").disabled = true;
-          document.getElementById("save-button").classList.add("disabled-input");
-      } {% endcomment %}
+    
   </script>
   <script>
     function toggleSubMenu(subMenuId) {

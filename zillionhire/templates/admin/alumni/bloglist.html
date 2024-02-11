@@ -62,6 +62,59 @@
             transform: rotate(360deg);
         }
         
+
+        /* Dropdown Button */
+        
+.dropbtn {
+  background-color: #fff;
+  color: #000;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+/* Dropdown button on hover & focus */
+.dropbtn:hover, .dropbtn:focus {
+  background-color: #f9f9f9;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: #000;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: #f1f1f1;}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {
+  background-color: #f1f1f1;
+}
+
     </style>
 </head>
 
@@ -123,12 +176,7 @@
                       <span>PROFILE</span>
                   </a> 
               </li> 
-              <li>
-                <a href="{% url 'create_blog_content' alumni_id=alumni_instance.id %}">
-                    <i class="fas fa-id-card"></i>
-                    <span>ADD OPENINGS</span>
-                </a>
-            </li>
+             
             
             
             <li>
@@ -137,7 +185,12 @@
                     <span>OPENINGS</span>
                 </a>
             </li>
-            
+            <li>
+              <a href="{% url 'display_blog_content' alumni_id=alumni_instance.id %}">
+                  <i class="fas fa-id-card"></i>
+                  <span>EVENTS</span>
+              </a>
+          </li>
        
             </ul>
         </div>
@@ -146,29 +199,40 @@
 <div class="page-wrapper">
     <div class="content">
         <div class="row">
-            <div class="col-sm-4 col-3">
-                <h4 class="page-title">CONTENTS</h4>
-                
-                 
-            </div>
-
-
-
-
-
+          <div class="col-sm-4 col-3">
+            <h4 class="page-title">CONTENTS</h4>
+          </div>
+          <div class="col-sm-8 col-7">
+            <button type="button" class="btn btn-primary" onclick="location.href='{% url 'create_blog_content' alumni_id=alumni_instance.id %}'">Add New Opening</button>
+  
+          </div>
+        </div>
+        
+        
 <bR><br>
 
 <div class="container2">
-<div class="section">
 
-<div>
+
+  <div>
+
     <div class="blog-container">
         {% for blog_content in blog_contents %}
         <div class="blog-item">
-            {% if alumni_instance.profile_photo %}
-            <img src="{{ alumni_instance.profile_photo.url }}" alt="Profile Photo" class="profile-photo">
-            {% endif %}
-            <h4 class="alumni-name">{{ alumni_instance.first_name }} {{ alumni_instance.last_name }}</h4>
+            <div class="blog-header">
+              <div class="dropdown">
+                <button class="dropbtn">&#8942; </button>
+                <div class="dropdown-content">
+                    {% comment %} <a href="{% url 'editblog' %}">Edit</a> {% endcomment %}
+                    <button onclick="displayConfirmationModal({{ blog_content.id }})">Delete</button>
+                </div>
+            </div>
+                {% if alumni_instance.profile_photo %}
+                <img src="{{ alumni_instance.profile_photo.url }}" alt="Profile Photo" class="profile-photo">
+                {% endif %}
+                <h4 class="alumni-name">{{ alumni_instance.first_name }} {{ alumni_instance.last_name }}</h4>
+               
+            </div>
             <h3 class="blog-title">{{ blog_content.title }}</h3>
             <p class="blog-content">{{ blog_content.content }}</p>
             {% if blog_content.image %}
@@ -177,11 +241,26 @@
         </div>
         {% endfor %}
     </div>
-      
-
-      
-
-    
+</div>
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="confirmDeleteModalLabel">Confirm Deletion</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body">
+              Are you sure you want to remove this content?
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+              <a class="btn btn-danger" id="confirmDeleteButton" href="#">Yes</a>
+          </div>
+      </div>
+  </div>
+</div>
 </div>
 </div>
 
@@ -334,51 +413,6 @@
   
   
   
-  //submenu
-  
-  
-  {% comment %} $(document).ready(function () {
-    $(".menu-arrow").click(function () {
-        $("#submenu").toggle();
-    });
-}); {% endcomment %}
-
-
-        
-  // Check if the fields were previously disabled
-  {% comment %} var areFieldsDisabled = localStorage.getItem('fieldsDisabled');
-  if (areFieldsDisabled === 'true') {
-      disableFields();
-  }
-
-  document.getElementById("companyProfileForm").addEventListener("submit", function(event) {
-      // Prevent the default form submission behavior
-      event.preventDefault();
-
-      // Disable all input fields and select elements after form submission
-      disableFields();
-
-      // Store a flag indicating that the fields are disabled
-      localStorage.setItem('fieldsDisabled', 'true');
-  });
-
-  function disableFields() {
-      var inputs = document.querySelectorAll("input");
-      inputs.forEach(function(input) {
-          input.disabled = true;
-          input.classList.add("disabled-input");
-      });
-
-      var selects = document.querySelectorAll("select");
-      selects.forEach(function(select) {
-          select.disabled = true;
-          select.classList.add("disabled-input");
-      });
-
-      // Disable the submit button after form submission
-      document.getElementById("save-button").disabled = true;
-      document.getElementById("save-button").classList.add("disabled-input");
-  } {% endcomment %}
 </script>
 <script>
 function toggleSubMenu(subMenuId) {
@@ -396,5 +430,23 @@ function toggleSubMenu(subMenuId) {
     menuarrow.innerHTML = (submenu.style.display === "none" || submenu.style.display === "") ? "&#9658;" : "&#9660;";
 }
 </script>
+<script>
+  function displayConfirmationModal(blogId) {
+      var modal = document.getElementById('deleteConfirmationModal');
+      modal.style.display = "block";
+      // Store the blog id in a hidden input field for further processing
+      document.getElementById('blogIdInput').value = blogId;
+  }
 
+  function closeConfirmationModal() {
+      var modal = document.getElementById('deleteConfirmationModal');
+      modal.style.display = "none";
+  }
+
+  function deleteBlogContent() {
+      var blogId = document.getElementById('blogIdInput').value;
+      // Redirect to delete_blog view with the blog_id parameter
+      window.location.href = "{% url 'delete_blog' %}?blog_id=" + blogId;
+  }
+</script>
 </html>

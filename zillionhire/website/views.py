@@ -1857,19 +1857,6 @@ def toggle_like(request):
     else:
         return JsonResponse({'success': False, 'error': 'Invalid request method'})
 
-# def likedcontent2(request, studentprofile_id):
-#     studentprofile = get_object_or_404(StudentProfile, id=studentprofile_id)
-    
-#     # Fetch LikedContent objects with status=1 for the given user
-#     liked_content_ids = LikedContent.objects.filter(user=request.user, status=False).values_list('adcon_id', flat=True)
-    
-#     # Fetch the corresponding ccontent objects
-#     liked_contents = ccontent.objects.filter(id__in=liked_content_ids)
-    
-#     return render(request, 'admin/resources/likedcontent2.html', {
-#         'studentprofile': studentprofile,
-#         'liked_content_ids': liked_contents,
-#     })
 
 def adcontent2(request):
     return render(request, 'admin/resources/ad_content2view.html')
@@ -2437,3 +2424,14 @@ def submit_review(request):
         
         # Redirect to a success page or the product detail page
         return redirect('content_details')
+    
+def bloglist2(request, alumni_id):
+    alumni_instance = get_object_or_404(Alumni, id=alumni_id)
+
+    return render(request,'admin/alumni/bloglist2.html', {'alumni_instance': alumni_instance})
+
+def delete_blog(request):
+    if request.method == 'GET':
+        blog_id = request.GET.get('blog_id')
+      
+        return redirect('admin/alumni/bloglist.html',{'blog_id':blog_id}) 
