@@ -26,7 +26,7 @@
             margin: 20px;
         }
         .blog-item {
-            width: calc(80.33% - 20px);
+            width: calc(100.33% - 20px);
             margin-bottom: 20px;
             transform: perspective(1500px) rotateY(15deg);
             border-radius: 1rem;
@@ -168,8 +168,8 @@
             {% if alumni_instance.profile_photo %}
             <img src="{{ alumni_instance.profile_photo.url }}" alt="Profile Photo" class="profile-photo">
             {% endif %}
-            <h3 class="alumni-name">{{ alumni_instance.first_name }} {{ alumni_instance.last_name }}</h3>
-            <h2 class="blog-title">{{ blog_content.title }}</h2>
+            <h4 class="alumni-name">{{ alumni_instance.first_name }} {{ alumni_instance.last_name }}</h4>
+            <h3 class="blog-title">{{ blog_content.title }}</h3>
             <p class="blog-content">{{ blog_content.content }}</p>
             {% if blog_content.image %}
             <img src="{{ blog_content.image.url }}" alt="Blog Image" class="blog-image">
