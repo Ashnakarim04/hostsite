@@ -6,7 +6,7 @@ from django.contrib import messages, auth
 from django.http import HttpResponse,HttpResponseRedirect
 from .models import AdminStudent, Jobs, CompanyProfile
 from .models import Students,StudentProfile,CompanyApprove,JobApplication,internship,classdetails,videolibrary,ccontent, LikedContent, Alumni
-from .models import resume1, LikedContent1, ResumeBuilder, Review
+from .models import resume1, LikedContent1, ResumeBuilder, Review, Event
 # from .forms import StudentForm 
 from django.shortcuts import render, get_object_or_404, redirect
 # from .models import  CustomUser
@@ -2430,8 +2430,44 @@ def bloglist2(request, alumni_id):
 
     return render(request,'admin/alumni/bloglist2.html', {'alumni_instance': alumni_instance})
 
-def delete_blog(request):
+def dlt_blog(request, id):  # Use the same parameter name as in the URL pattern
     if request.method == 'GET':
-        blog_id = request.GET.get('blog_id')
-      
-        return redirect('admin/alumni/bloglist.html',{'blog_id':blog_id}) 
+        adcont_instance = get_object_or_404(BlogContent, id=id)
+        adcont_instance.delete()
+        return redirect('display_blog_content')
+    
+# def eventsform(request, alumni_id):
+#     alumni_instance = get_object_or_404(Alumni, id=alumni_id)
+#     return render(request,'admin/alumni/eventform.html', {'alumni_instance': alumni_instance})
+def eventform(request, alumni_id):
+    alumni_instance = get_object_or_404(Alumni, id=alumni_id)
+
+    if request.method == 'POST':
+        # Process the form data here
+        title = request.POST.get('title')
+        description = request.POST.get('description')
+        date = request.POST.get('date')
+        image = request.FILES.get('image')
+        event_type = request.POST.get('event_type')
+        link = request.POST.get('link')
+        
+        # Create a new Event object and save it to the database
+        event = Event(
+            title=title,
+            description=description,
+            date=date,
+            image=image,
+            event_type=event_type,
+            link=link,
+            alumni=alumni_instance  # Associate the event with the corresponding alumni
+        )
+        event.save()
+        
+        # Redirect to a success page or wherever you want
+        return redirect(reverse('eventform', kwargs={'alumni_id': alumni_id}))        
+    else:
+        return render(request, 'admin/alumni/eventform.html', {'alumni_instance': alumni_instance})
+    
+def eventlist(request, alumni_id):
+    alumni_instance = get_object_or_404(Alumni, id=alumni_id)
+    return render(request, 'admin/alumni/eventlist.html', {'alumni_instance': alumni_instance})

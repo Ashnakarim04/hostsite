@@ -606,3 +606,19 @@ class Review(models.Model):
 
     def _str_(self):
         return f"Review by {self.user.username}"
+    
+class Event(models.Model):
+    title = models.CharField(max_length=255)
+    description = models.TextField()
+    date = models.DateField()
+    image = models.ImageField(upload_to='event_images/')
+    EVENT_TYPE_CHOICES = [
+        ('offline', 'Offline'),
+        ('online', 'Online'),
+    ]
+    event_type = models.CharField(max_length=10, choices=EVENT_TYPE_CHOICES)
+    link = models.URLField()
+    alumni = models.ForeignKey('Alumni', on_delete=models.CASCADE, default=1)  # Replace 1 with the default Alumni ID
+
+    def __str__(self):
+        return self.title

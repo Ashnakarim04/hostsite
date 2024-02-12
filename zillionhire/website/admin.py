@@ -1,6 +1,6 @@
 from django.contrib import admin
 from . models import Jobs, CompanyProfile, LikedContent, Students,AdminStudent,StudentProfile,CompanyApprove,JobApplication,internship,videolibrary,ccontent
-from . models import Alumni, resume1, LikedContent1, ResumeBuilder, BlogContent, Review
+from . models import Alumni, resume1, LikedContent1, ResumeBuilder, BlogContent, Review, Event
 
 
 # Register your models here.
@@ -24,4 +24,5 @@ admin.site.register(LikedContent1)
 admin.site.register(ResumeBuilder)
 admin.site.register(BlogContent)
 admin.site.register(Review)
+admin.site.register(Event)
 # admin.site.register(CustomUser)

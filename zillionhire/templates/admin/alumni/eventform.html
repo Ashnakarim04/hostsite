@@ -117,7 +117,7 @@
 
 
 .container2 {
-  max-width: 400px; /* Adjust as needed */
+  max-width: 1000px; /* Adjust as needed */
   margin: 0 auto; /* Center the container horizontally */
   padding: 20px;
 }
@@ -277,6 +277,8 @@
     opacity: 0.8;
 }
 
+
+body{color: #000;overflow-x: hidden;height: 100%;background-image: url("https://i.imgur.com/GMmCQHC.png");background-repeat: no-repeat;background-size: 100% 100%}.card{padding: 30px 40px;margin-top: 60px;margin-bottom: 60px;border: none !important;box-shadow: 0 6px 12px 0 rgba(0,0,0,0.2)}.blue-text{color: #00BCD4}.form-control-label{margin-bottom: 0}input, textarea, button{padding: 8px 15px;border-radius: 5px !important;margin: 5px 0px;box-sizing: border-box;border: 1px solid #ccc;font-size: 18px !important;font-weight: 300}input:focus, textarea:focus{-moz-box-shadow: none !important;-webkit-box-shadow: none !important;box-shadow: none !important;border: 1px solid #00BCD4;outline-width: 0;font-weight: 400}.btn-block{text-transform: uppercase;font-size: 15px !important;font-weight: 400;height: 43px;cursor: pointer}.btn-block:hover{color: #fff !important}button:focus{-moz-box-shadow: none !important;-webkit-box-shadow: none !important;box-shadow: none !important;outline-width: 0}
     </style>
 </head>
 
@@ -364,61 +366,69 @@
           <div class="col-sm-4 col-3">
             <h4 class="page-title">CONTENTS</h4>
           </div>
-          <div class="col-sm-8 col-7">
+          {% comment %} <div class="col-sm-8 col-7">
             <button type="button" class="btn btn-primary" onclick="location.href='{% url 'create_blog_content' alumni_id=alumni_instance.id %}'">Add New Opening</button>
   
-          </div>
+          </div> {% endcomment %}
         </div>
         
         
 <bR><br>
-  <div class="container2">
-    <div class="blog-container">
-        {% for blog_content in blog_contents %}
-        <div class="blog-item">
-            <div class="blog-header">
-                <div class="dropdown">
-                    {% comment %} <button class="dropbtn">&#8942;</button> {% endcomment %}
-                    <button class="dropbtn" onclick="displayConfirmationModal({{ blog_content.id }}, {{ alumni_instance.id }})">&#8942;</button>
+  {% comment %} <div class="container2"> {% endcomment %}
+    <div class="container-fluid px-1 py-5 mx-auto">
+        <div class="row d-flex justify-content-center">
+            <div class="col-xl-7 col-lg-8 col-md-9 col-11 text-center">
+                {% comment %} <h3>Request a Demo</h3>
+                <p class="blue-text">Just answer a few questions<br> so that we can personalize the right experience for you.</p> {% endcomment %}
+                <div class="card">
+                    <h5 class="text-center mb-4">Add Events</h5>
+                    <form class="form-card" method="post" enctype="multipart/form-data" action="{% url 'eventform' alumni_id=alumni_instance.id %}">
+                        {% csrf_token %}
+                        <div class="row justify-content-between text-left">
+                            <div class="form-group col-sm-6 flex-column d-flex">
+                                <label class="form-control-label px-3">Title<span class="text-danger"> *</span></label>
+                                <input type="text" id="title" name="title" placeholder="Enter event title" onblur="validate(1)">
+                            </div>
+                            <div class="form-group col-sm-6 flex-column d-flex">
+                                <label class="form-control-label px-3">Description<span class="text-danger"> *</span></label>
+                                <input type="text" id="description" name="description" placeholder="Enter event description" onblur="validate(2)">
+                            </div>
+                        </div>
+                        <div class="row justify-content-between text-left">
+                            <div class="form-group col-sm-6 flex-column d-flex">
+                                <label class="form-control-label px-3">Date<span class="text-danger"> *</span></label>
+                                <input type="date" id="date" name="date">
+                            </div>
+                            <div class="form-group col-sm-6 flex-column d-flex">
+                                <label class="form-control-label px-3">Upload Image<span class="text-danger"> *</span></label>
+                                <input type="file" id="image" name="image">
+                            </div>
+                        </div>
+                        <div class="row justify-content-between text-left">
+                            <div class="form-group col-sm-6 flex-column d-flex">
+                                <label class="form-control-label px-3">Event Type<span class="text-danger"> *</span></label>
+                                <select id="event_type" name="event_type">
+                                    <option value="offline">Offline</option>
+                                    <option value="online">Online</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-sm-6 flex-column d-flex">
+                                <label class="form-control-label px-3">Link<span class="text-danger"> *</span></label>
+                                <input type="text" id="link" name="link" placeholder="Enter event link" onblur="validate(2)">
+                            </div>
+                        </div>
+                        <div class="row justify-content-end">
+                            <div class="form-group col-sm-6">
+                                <button type="submit" class="btn-block btn-primary">Submit</button>
+                            </div>
+                        </div>
+                    </form>
 
-                    <div class="dropdown-content">
-                        <button onclick="displayConfirmationModal({{ blog_content.id }})">Delete</button>
-                    </div>
                 </div>
-                {% if alumni_instance.profile_photo %}
-                <img src="{{ alumni_instance.profile_photo.url }}" alt="Profile Photo" class="profile-photo">
-                {% endif %}
-                <h4 class="alumni-name">{{ alumni_instance.first_name }} {{ alumni_instance.last_name }}</h4>
             </div>
-            <h3 class="blog-title">{{ blog_content.title }}</h3>
-            <p class="blog-content">{{ blog_content.content }}</p>
-            {% if blog_content.image %}
-            <img src="{{ blog_content.image.url }}" alt="Blog Image" class="blog-image">
-            {% endif %}
         </div>
-        {% endfor %}
     </div>
-</div>
-
-<div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-      <div class="modal-content">
-          <div class="modal-header">
-              <h5 class="modal-title" id="confirmDeleteModalLabel">Confirm Deletion</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-              </button>
-          </div>
-          <div class="modal-body">
-              Are you sure you want to remove this content?
-          </div>
-          <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-              <a class="btn btn-danger" id="confirmDeleteButton" href="#">Yes</a>
-          </div>
-      </div>
-  </div>
-</div>
+    
 
 
 
@@ -602,6 +612,90 @@ function toggleSubMenu(subMenuId) {
           $('#confirmDeleteModal').modal('show');
       });
   });
+
+
+
+  function validate(val) {
+    v1 = document.getElementById("fname");
+    v2 = document.getElementById("lname");
+    v3 = document.getElementById("email");
+    v4 = document.getElementById("mob");
+    v5 = document.getElementById("job");
+    v6 = document.getElementById("ans");
+
+    flag1 = true;
+    flag2 = true;
+    flag3 = true;
+    flag4 = true;
+    flag5 = true;
+    flag6 = true;
+
+    if(val>=1 || val==0) {
+        if(v1.value == "") {
+            v1.style.borderColor = "red";
+            flag1 = false;
+        }
+        else {
+            v1.style.borderColor = "green";
+            flag1 = true;
+        }
+    }
+
+    if(val>=2 || val==0) {
+        if(v2.value == "") {
+            v2.style.borderColor = "red";
+            flag2 = false;
+        }
+        else {
+            v2.style.borderColor = "green";
+            flag2 = true;
+        }
+    }
+    if(val>=3 || val==0) {
+        if(v3.value == "") {
+            v3.style.borderColor = "red";
+            flag3 = false;
+        }
+        else {
+            v3.style.borderColor = "green";
+            flag3 = true;
+        }
+    }
+    if(val>=4 || val==0) {
+        if(v4.value == "") {
+            v4.style.borderColor = "red";
+            flag4 = false;
+        }
+        else {
+            v4.style.borderColor = "green";
+            flag4 = true;
+        }
+    }
+    if(val>=5 || val==0) {
+        if(v5.value == "") {
+            v5.style.borderColor = "red";
+            flag5 = false;
+        }
+        else {
+            v5.style.borderColor = "green";
+            flag5 = true;
+        }
+    }
+    if(val>=6 || val==0) {
+        if(v6.value == "") {
+            v6.style.borderColor = "red";
+            flag6 = false;
+        }
+        else {
+            v6.style.borderColor = "green";
+            flag6 = true;
+        }
+    }
+
+    flag = flag1 && flag2 && flag3 && flag4 && flag5 && flag6;
+
+    return flag;
+}
 </script>
 
 </html>
