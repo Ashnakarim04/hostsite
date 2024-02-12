@@ -178,7 +178,7 @@ a, a:hover {
   }
 
   .postcard__img {
-    max-height: 180px;
+    max-height: 300px;
     width: 100%;
     object-fit: cover;
     position: relative;
@@ -265,15 +265,16 @@ a, a:hover {
     }
 
     .postcard__img {
-      max-width: 80px;
+      max-width: 300px;
       max-height: auto;
       transition: transform 0.3s ease;
     }
 
     .postcard__text {
-      padding: 3rem;
-      width: 100%;
+        padding: 1.5rem 1rem; /* Adjust the left and right padding */
+        position: relative;
     }
+    
 
     .media.postcard__text:before {
       content: "";
@@ -464,6 +465,89 @@ a, a:hover {
 	}
 }
 
+.container2 {
+    display: flex;
+    justify-content: center; /* Horizontally center */
+    align-items: center; /* Vertically center */
+    height: 100vh; /* Use the full viewport height */
+    position: relative;
+    top: -200px; 
+}
+
+.section {
+    text-align: center; /* Align the content inside the section to center */
+}
+
+.postcard {
+    width: 60%; /* Adjust the width as needed */
+    margin: 0 auto 2rem; /* Center the postcard horizontally and add bottom margin */
+    box-shadow: 0 4px 21px -12px rgba(0, 0, 0, 0.66);
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    color: #ffffff;
+    background-color: #18151f; /* Dark background color */
+}
+
+.postcard__text {
+    padding: 1.5rem;
+    position: relative;
+}
+
+.postcard__title {
+    font-size: 1.75rem;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    line-height: 1.2;
+}
+
+.postcard__img {
+    max-height: 180px;
+    width: 100%;
+    object-fit: cover;
+    position: relative;
+}
+
+.postcard__bar {
+    width: 50px;
+    height: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    background-color: #424242;
+    transition: width 0.2s ease;
+}
+
+.postcard__preview-txt {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: justify;
+    height: 100%;
+}
+
+.postcard__tagbox {
+    display: flex;
+    flex-flow: row wrap;
+    font-size: 14px;
+    margin: 20px 0 0 0;
+    padding: 0;
+    justify-content: center;
+}
+
+.tag__item {
+    display: inline-block;
+    background: rgba(83, 83, 83, 0.4);
+    border-radius: 3px;
+    padding: 2.5px 10px;
+    margin: 0 5px 5px 0;
+    cursor: default;
+    user-select: none;
+    transition: background-color 0.3s;
+}
+
+.tag__item:hover {
+    background: rgba(83, 83, 83, 0.8);
+}
+
     </style>
 </head>
 
@@ -554,7 +638,7 @@ a, a:hover {
 
 <div class="container2">
     <div class="section">
-    <h1>PROFILE</h1><br>
+    {% comment %} <h1>PROFILE</h1><br> {% endcomment %}
     <div>
         <article class="postcard light yellow">
 			<a class="postcard__img_link" href="#">
