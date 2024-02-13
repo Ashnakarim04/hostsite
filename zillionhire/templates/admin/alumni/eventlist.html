@@ -135,7 +135,7 @@ a, a:hover {
 /* Cards */
 .postcard {
    
-    width:50%;
+    width:100%;
     height:auto;
     margin-left:80px;
   flex-wrap: wrap;
@@ -178,7 +178,7 @@ a, a:hover {
   }
 
   .postcard__img {
-    max-height: 300px;
+    max-height: 500px;
     width: 100%;
     object-fit: cover;
     position: relative;
@@ -209,6 +209,7 @@ a, a:hover {
     text-overflow: ellipsis;
     text-align: justify;
     height: 100%;
+    width:100%;
   }
 
   .postcard__tagbox {
@@ -273,6 +274,8 @@ a, a:hover {
     .postcard__text {
         padding: 1.5rem 1rem; /* Adjust the left and right padding */
         position: relative;
+        width:1600px;
+        height:auto;
     }
     
 
@@ -471,7 +474,7 @@ a, a:hover {
     align-items: center; /* Vertically center */
     height: 100vh; /* Use the full viewport height */
     position: relative;
-    top: -200px; 
+    top: -150px; 
 }
 
 .section {
@@ -546,6 +549,28 @@ a, a:hover {
 
 .tag__item:hover {
     background: rgba(83, 83, 83, 0.8);
+}
+.postcard-container {
+    display: flex;
+    flex-wrap: nowrap; /* Prevent wrapping */
+    overflow-x: auto; /* Enable horizontal scrolling if needed */
+    margin-bottom: 20px; /* Add margin between the container and other content */
+}
+
+.postcard {
+    flex: 0 0 auto; /* Prevent items from growing or shrinking */
+    margin-right: 20px; /* Add spacing between cards */
+}
+
+.page-wrapper {
+    margin-top: -100px;
+}
+.time-tag {
+    color: green;
+}
+
+.profile-widget {
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1); /* Adjust the values as needed */
 }
 
     </style>
@@ -634,37 +659,59 @@ a, a:hover {
 
 <bR><br>
     
-<canvas id="animated-background"></canvas>
-
-<div class="container2">
-    <div class="section">
-    {% comment %} <h1>PROFILE</h1><br> {% endcomment %}
-    <div>
-        <article class="postcard light yellow">
-			<a class="postcard__img_link" href="#">
-				<img class="postcard__img" src="https://picsum.photos/501/501" alt="Image Title" />
-			</a>
-			<div class="postcard__text t-dark">
-				<h1 class="postcard__title yellow"><a href="#">Podcast Title</a></h1>
-				<div class="postcard__subtitle small">
-					<time datetime="2020-05-25 12:00:00">
-						<i class="fas fa-calendar-alt mr-2"></i>Mon, May 25th 2020
-					</time>
-				</div>
-				<div class="postcard__bar"></div>
-				<div class="postcard__preview-txt">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi, fugiat asperiores inventore beatae accusamus odit minima enim, commodi quia, doloribus eius! Ducimus nemo accusantium maiores velit corrupti tempora reiciendis molestiae repellat vero. Eveniet ipsam adipisci illo iusto quibusdam, sunt neque nulla unde ipsum dolores nobis enim quidem excepturi, illum quos!</div>
-				<ul class="postcard__tagbox">
-					<li class="tag__item"><i class="fas fa-tag mr-2"></i>Podcast</li>
-					<li class="tag__item"><i class="fas fa-clock mr-2"></i>55 mins.</li>
-					<li class="tag__item play yellow">
-						<a href="#"><i class="fas fa-play mr-2"></i>Play Episode</a>
-					</li>
-				</ul>
-			</div>
-		</article>
-</div>
+<div class="page-wrapper">
+        <div class="content"> 
+            <div class="row">
+                <div class="col-sm-4 col-3">
+                    <h4 class="page-title">CONTENTS</h4>
+                    
+                </div>
         
-</div>
+            </div>
+            <div class="row">
+                <div>
+                  {% comment %} <form method="GET" action="{% url 'search_content1' studentprofile_id=studentprofile.id %}">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Search.." name="search" value="{{ search_query }}">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="submit">Search</button>
+                            </div>
+                        </div>
+                    </form> {% endcomment %}
+                  </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  <div>
+                    
+                </div>
+                </div>
+            </div><br><br>
+              
+              <div class="row">
+                  {% for event in events %}
+                      <div class="col-md-4 col-sm-4 col-lg-3">
+                          <div class="profile-widget box-effect d-flex flex-column">
+                              <div class="doctor-img">
+                                  <img class="avatar" src="{{ event.image.url }}" alt="Cover Image" name="cover_image" id="cover_image" width="100" height="80">
+                              </div>
+                              
+                              <div style="text-align: left;">
+                                  <center><p class="card-text"><b> {{ event.title }}</b></p></center><br>
+                                  <p class="card-text"> {{ event.description }}</p>
+                                  
+                                  
+                                  <time datetime="{{ event.date }}">
+                                    <i class="fas fa-calendar-alt mr-2"></i>{{ event.date|date:"D, M d Y" }}
+                                </time>
+                                <i class="fas fa-tag mr-2"></i>{{ event.event_type }}</li>
+                                <a href="{{ event.link }}"><i class="fas fa-play mr-2"></i>Link</a>
+                              </div>
+                          </div>
+                      </div>
+                  {% endfor %}
+              </div>
+              
+              
+        
+        </div>
 </div>
 
 

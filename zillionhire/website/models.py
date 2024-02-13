@@ -608,6 +608,7 @@ class Review(models.Model):
         return f"Review by {self.user.username}"
     
 class Event(models.Model):
+    status=models.BooleanField('status', default=True)
     title = models.CharField(max_length=255)
     description = models.TextField()
     date = models.DateField()
