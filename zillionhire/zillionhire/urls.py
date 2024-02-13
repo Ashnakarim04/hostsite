@@ -212,7 +212,7 @@ urlpatterns = [
     path('eventform/<int:alumni_id>/', eventform, name='eventform'),
     path('eventlist/<int:alumni_id>/', eventlist, name='eventlist'),
     path('editevent/<int:alumni_id>/<int:event_id>/', editevent, name='editevent'),
-]
+    path('deleteevent/<int:alumni_id>/<int:event_id>/', views.deleteevent, name='deleteevent'),]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

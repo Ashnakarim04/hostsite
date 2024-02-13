@@ -780,9 +780,8 @@ a, a:hover {
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" id="noButton" data-alumni-id="{{ event.alumni.id }}">No</button>
-            <button type="button" class="btn btn-primary" id="confirmDeleteButton">Yes</button>
-        </div>
-      </div>
+             <button type="button" class="btn btn-primary" id="confirmDeleteButton" data-alumni-id="{{ event.alumni.id }}" data-event-id="{{ event.id }}">Yes</button>
+        
     </div>
   </div>
   
@@ -811,7 +810,7 @@ a, a:hover {
 
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 
-
+    
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const confirmDeleteButton = document.getElementById('confirmDeleteButton');
@@ -825,12 +824,6 @@ a, a:hover {
         });
     </script>
     
-    {% comment %} <script>
-        document.getElementById('noButton').addEventListener('click', function() {
-            // Go back to the previous page in the browser history
-            window.history.back();
-        });
-    </script> {% endcomment %}
     
     <script>
         // Add an event listener to the "No" button

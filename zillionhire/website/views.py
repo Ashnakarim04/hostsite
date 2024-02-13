@@ -2550,3 +2550,13 @@ def update_event_status():
     events_to_update = Event.objects.filter(date__lt=today)
     events_to_update.update(status=False)
 
+def deleteevent(request, alumni_id, event_id):
+    # Get the Event object based on alumni_id and event_id
+    event = get_object_or_404(Event, alumni_id=alumni_id, id=event_id)
+    
+    # Set the status of the event to inactive (0)
+    event.status = False
+    event.save()
+    
+    # Redirect back to the event list or any other desired page
+    return redirect('eventlist', alumni_id=alumni_id)
