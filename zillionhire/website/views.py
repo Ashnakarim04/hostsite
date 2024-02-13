@@ -2500,11 +2500,48 @@ def eventform(request, alumni_id):
         return render(request, 'admin/alumni/eventform.html', {'alumni_instance': alumni_instance})
 
 
+
+
+# 
+from datetime import date
+
+def editevent(request, alumni_id, event_id):
+    # Retrieve the alumni instance
+    alumni_instance = get_object_or_404(Alumni, id=alumni_id)
+
+    # Retrieve the specific event instance
+    event = get_object_or_404(Event, id=event_id)
+
+    if request.method == 'POST':
+        # Retrieve the form data from the request
+        title = request.POST.get('title')
+        description = request.POST.get('description')
+        date = request.POST.get('date')
+        image = request.FILES.get('image') if 'image' in request.FILES else None
+        event_type = request.POST.get('event_type')
+        link = request.POST.get('link')
+        
+        # Update the event fields
+        event.title = title
+        event.description = description
+        event.date = date
+        if image:
+            event.image = image
+        event.event_type = event_type
+        event.link = link
+        # Save the updated event to the database
+        event.save()
+        
+        # Redirect to the eventlist view or another page
+        return redirect('eventlist', alumni_id=alumni_id)
     
+    return render(request, 'admin/alumni/editevent.html', {'alumni_instance': alumni_instance, 'event': event})
+
+
 def eventlist(request, alumni_id):
     alumni_instance = get_object_or_404(Alumni, id=alumni_id)
     events = Event.objects.filter(alumni=alumni_instance, status=True)  # Filter by status=1
-    return render(request, 'admin/alumni/eventlist.html', {'alumni_instance': alumni_instance,'events': events})
+    return render(request, 'admin/alumni/eventlist.html', {'alumni_instance': alumni_instance,'events': events,'alumni_id': alumni_id})
 
 from django.utils import timezone
 

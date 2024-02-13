@@ -1,0 +1,702 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'assets2/img/logo.png' %}">
+    <title>ZillionHire - Company Dashboard</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'assets2/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets2/css/font-awesome.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets2/css/select2.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets2/css/bootstrap-datetimepicker.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets2/css/style.css' %}">
+   
+        <script src="{% static 'assets2/js/html5shiv.min.js' %}"></script>
+        <script src="{% static 'assets2/js/respond.min.js' %}"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog</title>
+    <style>
+        .blog-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin: 20px;
+        }
+        .blog-item {
+            width: calc(100.33% - 20px);
+            margin-bottom: 20px;
+            transform: perspective(1500px) rotateY(15deg);
+            border-radius: 1rem;
+            box-shadow: rgba(0, 0, 0, 0.25) 0px 25px 50px -12px;
+            transition: transform 1s ease 0s;
+            overflow: hidden;
+        }
+        .blog-item:hover {
+            transform: perspective(3000px) rotateY(5deg);
+        }
+        .blog-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .blog-content {
+            margin-bottom: 10px;
+        }
+        .blog-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+        .profile-photo {
+            border-radius: 50%;
+            overflow: hidden;
+            width: 20px;
+            height: 20px;
+            margin: 0 auto;
+            display: block;
+            transition: transform 0.3s ease-in-out;
+        }
+        .profile-photo:hover {
+            transform: rotate(360deg);
+        }
+        
+
+        /* Dropdown Button */
+        
+.dropbtn {
+  background-color: #fff;
+  color: #000;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+/* Dropdown button on hover & focus */
+.dropbtn:hover, .dropbtn:focus {
+  background-color: #f9f9f9;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: #000;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: #f1f1f1;}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {
+  background-color: #f1f1f1;
+}
+
+
+.container2 {
+  max-width: 1000px; /* Adjust as needed */
+  margin: 0 auto; /* Center the container horizontally */
+  padding: 20px;
+}
+
+.blog-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.blog-item {
+  width: 100%; /* Each item takes up full width */
+  margin-bottom: 20px;
+  border-radius: 1rem;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 25px 50px -12px;
+  overflow: hidden;
+}
+
+.blog-header {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #ddd; /* Add a border between header and content */
+}
+
+.blog-header .dropdown {
+  margin-right: 10px;
+}
+
+.blog-title {
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+.blog-content {
+  margin-bottom: 10px;
+}
+
+.blog-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
+}
+
+.profile-photo {
+  border-radius: 50%;
+  overflow: hidden;
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+}
+
+/* Dropdown styles */
+.dropbtn {
+  background-color: #fff;
+  color: #000;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content button {
+  color: #000;
+  padding: 12px 16px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+}
+
+.dropdown-content button:hover {
+  background-color: #f1f1f1;
+}
+
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+/* Modal content */
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 40%;
+    border-radius: 10px;
+}
+
+/* Close button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Modal buttons */
+.modal-buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.yes-btn,
+.no-btn {
+    padding: 10px 20px;
+    margin: 0 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.yes-btn {
+    background-color: #f44336;
+    color: white;
+}
+
+.no-btn {
+    background-color: #ddd;
+    color: black;
+}
+
+.yes-btn:hover,
+.no-btn:hover {
+    opacity: 0.8;
+}
+
+
+body{color: #000;overflow-x: hidden;height: 100%;background-image: url("https://i.imgur.com/GMmCQHC.png");background-repeat: no-repeat;background-size: 100% 100%}.card{padding: 30px 40px;margin-top: 60px;margin-bottom: 60px;border: none !important;box-shadow: 0 6px 12px 0 rgba(0,0,0,0.2)}.blue-text{color: #00BCD4}.form-control-label{margin-bottom: 0}input, textarea, button{padding: 8px 15px;border-radius: 5px !important;margin: 5px 0px;box-sizing: border-box;border: 1px solid #ccc;font-size: 18px !important;font-weight: 300}input:focus, textarea:focus{-moz-box-shadow: none !important;-webkit-box-shadow: none !important;box-shadow: none !important;border: 1px solid #00BCD4;outline-width: 0;font-weight: 400}.btn-block{text-transform: uppercase;font-size: 15px !important;font-weight: 400;height: 43px;cursor: pointer}.btn-block:hover{color: #fff !important}button:focus{-moz-box-shadow: none !important;-webkit-box-shadow: none !important;box-shadow: none !important;outline-width: 0}
+    </style>
+</head>
+
+<header class="">
+    <nav class="navbar navbar-expand-lg">
+      <div class="container">
+        {% comment %} <a class="navbar-brand" href="{% url 'index' %}"><h2>ZillionHire <em> Website</em></h2></a> {% endcomment %}
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item ">
+              <a class="nav-link" href="{% url 'cindex' %}">Home
+                {% comment %} <span class="sr-only">(current)</span> {% endcomment %}
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'aboutuser' %}">About Us</a>
+            </li>
+      
+            <li class="nav-item dropdown">
+              {% if user.is_authenticated %}
+                <a class="nav-link" href="{% url 'loggout' %}">Log Out</a>
+              {% else %}
+                <a class="dropdown-toggle nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Login</a>
+            
+                <div class="dropdown-menu">
+                  <a class="dropdown-item" href="{% url 'loginn' %}">Student</a>
+                  <a class="dropdown-item" href="{% url 'loginn' %}">Company</a>
+                  <a class="dropdown-item" href="{% url 'loginn' %}">College Officer</a>
+              </div>
+              {% endif %}
+            </li> 
+            
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'contactuser' %}">Contact Us</a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="{% url 'postjob' %}">Post Job</a>
+              <span class="sr-only">(current)</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+  <div class="sidebar" id="sidebar">
+    <div class="sidebar-inner slimscroll">
+        <div id="sidebar-menu" class="sidebar-menu">
+            <ul>
+                <li class="menu-title">ALUMNI DASHBOARD</li>
+                {% comment %} <li>
+                    <a href="{% url 'index-2' %}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
+                </li> {% endcomment %}
+                <li class="active">
+                  <a href="{% url 'alumni_profile' alumni_id=request.user.alumni.id %}">
+                      <i class="fas fa-id-card"></i>
+                      <span>PROFILE</span>
+                  </a> 
+              </li> 
+             
+            
+            
+            <li>
+                <a href="{% url 'display_blog_content' alumni_id=alumni_instance.id %}">
+                    <i class="fas fa-id-card"></i>
+                    <span>OPENINGS</span>
+                </a>
+            </li>
+            <li>
+              <a href="{% url 'display_blog_content' alumni_id=alumni_instance.id %}">
+                  <i class="fas fa-id-card"></i>
+                  <span>EVENTS</span>
+              </a>
+          </li>
+       
+            </ul>
+        </div>
+    </div>
+</div><br><br><br><br>
+<div class="page-wrapper">
+    <div class="content">
+        <div class="row">
+          <div class="col-sm-4 col-3">
+            <h4 class="page-title">CONTENTS</h4>
+          </div>
+          {% comment %} <div class="col-sm-8 col-7">
+            <button type="button" class="btn btn-primary" onclick="location.href='{% url 'create_blog_content' alumni_id=alumni_instance.id %}'">Add New Opening</button>
+  
+          </div> {% endcomment %}
+        </div>
+        
+        
+<bR><br>
+  {% comment %} <div class="container2"> {% endcomment %}
+    <div class="container-fluid px-1 py-5 mx-auto">
+        <div class="row d-flex justify-content-center">
+            <div class="col-xl-7 col-lg-8 col-md-9 col-11 text-center">
+                {% comment %} <h3>Request a Demo</h3>
+                <p class="blue-text">Just answer a few questions<br> so that we can personalize the right experience for you.</p> {% endcomment %}
+                <div class="card">
+                    <h5 class="text-center mb-4">Add Events</h5>
+                    <form class="form-card" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="row justify-content-between text-left">
+                            <div class="form-group col-sm-6 flex-column d-flex">
+                                <label class="form-control-label px-3">Title<span class="text-danger"> *</span></label>
+                                <input type="text" id="title" name="title" value="{{ event.title }}" placeholder="Enter event title" onblur="validate(1)">
+                            </div>
+                            <div class="form-group col-sm-6 flex-column d-flex">
+                                <label class="form-control-label px-3">Description<span class="text-danger"> *</span></label>
+                                <input type="text" id="description" name="description" value="{{ event.description }}" placeholder="Enter event description" onblur="validate(2)">
+                            </div>
+                        </div>
+                        <div class="row justify-content-between text-left">
+                            <div class="form-group col-sm-6 flex-column d-flex">
+                                <label class="form-control-label px-3">Date<span class="text-danger"> *</span></label>
+                                <input type="date" id="date" name="date" value="{{ event.date|date:'Y-m-d' }}">
+                            </div>
+                            
+                            <div class="form-group col-sm-6 flex-column d-flex">
+                                <label class="form-control-label px-3">Upload Image<span class="text-danger"> *</span></label>
+                                <input type="file" id="image" name="image">
+                            </div>
+                        </div>
+                        <div class="row justify-content-between text-left">
+                            <div class="form-group col-sm-6 flex-column d-flex">
+                                <label class="form-control-label px-3">Event Type<span class="text-danger"> *</span></label>
+                                <select id="event_type" name="event_type">
+                                    <option value="offline" {% if event.event_type == "offline" %} selected {% endif %}>Offline</option>
+                                    <option value="online" {% if event.event_type == "online" %} selected {% endif %}>Online</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-sm-6 flex-column d-flex">
+                                <label class="form-control-label px-3">Link<span class="text-danger"> *</span></label>
+                                <input type="text" id="link" name="link" value="{{ event.link }}" placeholder="Enter event link" onblur="validate(2)">
+                            </div>
+                        </div>
+                        <div class="row justify-content-end">
+                            <div class="form-group col-sm-6">
+                                <button type="submit" class="btn-block btn-primary">Submit</button>
+                            </div>
+                        </div>
+                    </form>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+
+
+
+
+</div>
+</div>
+
+
+
+
+
+
+</body>
+</html>
+
+    {% comment %} <div class="section edit-profile-button">
+        <a href="{% url 'srequest' %}">Request Edit</a>
+    </div> {% endcomment %}
+</div> 
+
+
+<script>
+  const academicYearInput = document.getElementById('academic_year');
+  const academicYearError = document.getElementById('academicYearError');
+
+  academicYearInput.addEventListener('keyup', function() {
+    const academicYearValue = academicYearInput.value;
+    const validInputRegex = /^[0-9-]+$/;  // Allow numbers and hyphens
+
+    if (!validInputRegex.test(academicYearValue)) {
+      academicYearError.textContent = 'Please enter numeric values and hyphens only.';
+    } else {
+      academicYearError.textContent = '';
+    }
+  });
+</script>
+
+
+
+</body>
+<div class="sidebar-overlay" data-reff=""></div>
+<script src="{% static 'assets/js/jquery-3.2.1.min.js' %}"></script>
+<script src="{% static 'assets/js/popper.min.js' %}"></script>
+<script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'assets/js/jquery.slimscroll.js' %}"></script>
+<script src="{% static 'assets/js/select2.min.js' %}"></script>
+<script src="{% static 'ssets/js/moment.min.js' %}"></script>
+<script src="{% static 'assets/js/bootstrap-datetimepicker.min.js' %}"></script>
+<script src="{% static 'assets/js/app.js' %}"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+  function displayFileName(input) {
+    const fileName = input.files[0].name;
+    document.getElementById('file-name').textContent = 'File chosen: ' + fileName;
+  
+    // Save the file name to localStorage
+    localStorage.setItem('selectedFileName', fileName);
+  }
+  window.onload = function() {
+    const savedFileName = localStorage.getItem('selectedFileName');
+    if (savedFileName) {
+      document.getElementById('file-name').textContent = 'File chosen: ' + savedFileName;
+    }
+  }
+  document.getElementById('StudentProfile').addEventListener('submit', function() {
+    localStorage.removeItem('selectedFileName');
+  });
+
+ 
+
+  function updateFileName(input) {
+    const fileName = input.files[0].name;
+    document.getElementById('file-name').textContent = 'File chosen: ' + fileName;
+  
+    // Save the file name to localStorage
+    localStorage.setItem('twelfthFileName', fileName);
+  }
+  
+  window.onload = function() {
+    const twelfthFileName = localStorage.getItem('twelfthFileName');
+    if (twelfthFileName) {
+      document.getElementById('file-name').textContent = 'File chosen: ' + twelfthFileName;
+    }
+  }
+  
+
+
+    $(document).ready(function() {
+        $('#dob').datepicker({
+            dateFormat: 'yy-mm-dd',  // Set the desired date format
+            changeMonth: true,
+            changeYear: true,
+            yearRange: "-100:+0"  // Allow selection of years from 100 years ago to the current year
+        });
+    });
+
+
+
+      const academicYearInput = document.getElementById('academic_year');
+      const academicYearError = document.getElementById('academicYearError');
+    
+      academicYearInput.addEventListener('keyup', function() {
+        const academicYearValue = academicYearInput.value;
+    
+        // Regular expression to match numeric values only
+        const numericRegex = /^[0-9]+$/;
+    
+        if (!numericRegex.test(academicYearValue)) {
+          academicYearError.textContent = 'Please enter numeric values only.';
+        } else {
+          academicYearError.textContent = ''; // Clear the error message if valid
+        }
+      });
+
+
+      const backlogInput = document.getElementById('c_backlog');
+      const backlogError = document.getElementById('backlogError');
+    
+      backlogInput.addEventListener('input', validateBacklog);
+    
+      function validateBacklog() {
+        const backlogValue = backlogInput.value;
+    
+        if (!/^\d+$/.test(backlogValue) || parseInt(backlogValue) > 25) {
+          backlogError.textContent = 'Please enter a valid number (0-25).';
+        } else {
+          backlogError.textContent = '';
+        }
+      }
+  
+      const cgpaInput = document.getElementById('cgpa');
+      const tenthCgpaInput = document.getElementById('tenth_cgpa');
+      const twelfthCgpaInput = document.getElementById('twelfth_cgpa');
+      const ugCgpaInput = document.getElementById('ug_cgpa');
+    
+      const numericDotPattern = /^\d*\.?\d*$/;
+    
+      cgpaInput.addEventListener('keyup', validateCgpa);
+      tenthCgpaInput.addEventListener('keyup', validateCgpa);
+      twelfthCgpaInput.addEventListener('keyup', validateCgpa);
+      ugCgpaInput.addEventListener('keyup', validateCgpa);
+    
+      function validateCgpa() {
+        const inputValue = this.value;
+    
+        if (!numericDotPattern.test(inputValue) || parseFloat(inputValue) > 10) {
+          this.setCustomValidity('Please enter a valid CGPA (0-10).');
+        } else {
+          this.setCustomValidity('');
+        }
+      }
+  
+  
+  
+  
+</script>
+<script>
+function toggleSubMenu(subMenuId) {
+    var submenu = document.getElementById(subMenuId);
+    submenu.style.display = (submenu.style.display === "none" || submenu.style.display === "") ? "block" : "none";
+    var menuarrow = document.getElementById(subMenuId === 'resumeSubMenu' ? 'resumeMenuArrow' : 'studyMenuArrow');
+    menuarrow.innerHTML = (submenu.style.display === "none" || submenu.style.display === "") ? "&#9658;" : "&#9660;";
+}
+</script>
+<script>
+function toggleSubMenu(subMenuId) {
+    var submenu = document.getElementById(subMenuId);
+    submenu.style.display = (submenu.style.display === "none" || submenu.style.display === "") ? "block" : "none";
+    var menuarrow = document.getElementById('studyMenuArrow');
+    menuarrow.innerHTML = (submenu.style.display === "none" || submenu.style.display === "") ? "&#9658;" : "&#9660;";
+}
+</script>
+
+  <script>
+    $(document).ready(function () {
+      $(".delete-button").click(function () {
+          var contentId = $(this).data('content-id');
+          $("#confirmDeleteButton").attr('href', '{% url "dlt_blog" id=0 %}'.replace('0', contentId));
+          $('#confirmDeleteModal').modal('show');
+      });
+  });
+
+
+
+  function validate(val) {
+    v1 = document.getElementById("fname");
+    v2 = document.getElementById("lname");
+    v3 = document.getElementById("email");
+    v4 = document.getElementById("mob");
+    v5 = document.getElementById("job");
+    v6 = document.getElementById("ans");
+
+    flag1 = true;
+    flag2 = true;
+    flag3 = true;
+    flag4 = true;
+    flag5 = true;
+    flag6 = true;
+
+    if(val>=1 || val==0) {
+        if(v1.value == "") {
+            v1.style.borderColor = "red";
+            flag1 = false;
+        }
+        else {
+            v1.style.borderColor = "green";
+            flag1 = true;
+        }
+    }
+
+    if(val>=2 || val==0) {
+        if(v2.value == "") {
+            v2.style.borderColor = "red";
+            flag2 = false;
+        }
+        else {
+            v2.style.borderColor = "green";
+            flag2 = true;
+        }
+    }
+    if(val>=3 || val==0) {
+        if(v3.value == "") {
+            v3.style.borderColor = "red";
+            flag3 = false;
+        }
+        else {
+            v3.style.borderColor = "green";
+            flag3 = true;
+        }
+    }
+    if(val>=4 || val==0) {
+        if(v4.value == "") {
+            v4.style.borderColor = "red";
+            flag4 = false;
+        }
+        else {
+            v4.style.borderColor = "green";
+            flag4 = true;
+        }
+    }
+    if(val>=5 || val==0) {
+        if(v5.value == "") {
+            v5.style.borderColor = "red";
+            flag5 = false;
+        }
+        else {
+            v5.style.borderColor = "green";
+            flag5 = true;
+        }
+    }
+    if(val>=6 || val==0) {
+        if(v6.value == "") {
+            v6.style.borderColor = "red";
+            flag6 = false;
+        }
+        else {
+            v6.style.borderColor = "green";
+            flag6 = true;
+        }
+    }
+
+    flag = flag1 && flag2 && flag3 && flag4 && flag5 && flag6;
+
+    return flag;
+}
+</script>
+
+</html>

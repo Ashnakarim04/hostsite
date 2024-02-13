@@ -14,7 +14,15 @@
         <link rel="stylesheet" type="text/css" href="{% static 'assets2/css/bootstrap-datetimepicker.min.css' %}">
         <link rel="stylesheet" type="text/css" href="{% static 'assets2/css/style.css' %}">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+        <!-- Bootstrap CSS -->
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
 
+
+
+            <!-- Bootstrap JS and dependencies (Popper.js) -->
+            <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
             <script src="{% static 'assets2/js/html5shiv.min.js' %}"></script>
             <script src="{% static 'assets2/js/respond.min.js' %}"></script>
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -573,6 +581,48 @@ a, a:hover {
     box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1); /* Adjust the values as needed */
 }
 
+.menu-icon {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.menu-options {
+    position: absolute;
+    top: 100%; /* Position below the menu icon */
+    right: 0; /* Align with the right side of the menu icon */
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 5px 10px;
+    list-style: none;
+    display: none; /* Initially hide the menu options */
+}
+
+.menu-options li {
+    margin-bottom: 5px;
+}
+
+.menu-options li a {
+    color: #333;
+    text-decoration: none;
+}
+
+.menu-options li a:hover {
+    color: #007bff;
+}
+
+.profile-widget:hover .menu-icon {
+    display: block; /* Show the menu icon when profile widget is hovered */
+}
+
+.profile-widget:hover .menu-options {
+    display: block; /* Show the menu options when profile widget is hovered */
+}
+
+
+
     </style>
 </head>
 
@@ -685,29 +735,60 @@ a, a:hover {
                 </div>
             </div><br><br>
               
-              <div class="row">
-                  {% for event in events %}
-                      <div class="col-md-4 col-sm-4 col-lg-3">
-                          <div class="profile-widget box-effect d-flex flex-column">
-                              <div class="doctor-img">
-                                  <img class="avatar" src="{{ event.image.url }}" alt="Cover Image" name="cover_image" id="cover_image" width="100" height="80">
-                              </div>
-                              
-                              <div style="text-align: left;">
-                                  <center><p class="card-text"><b> {{ event.title }}</b></p></center><br>
-                                  <p class="card-text"> {{ event.description }}</p>
-                                  
-                                  
-                                  <time datetime="{{ event.date }}">
+            <div class="row">
+                {% for event in events %}
+                    <div class="col-md-4 col-sm-4 col-lg-3">
+                        <div class="profile-widget box-effect d-flex flex-column">
+                            <div class="menu-icon position-absolute top-0 start-100 translate-middle-y">
+                                <i class="fas fa-bars"></i>
+                                <ul class="menu-options">
+                                    <li><a href="{% url 'editevent' event.alumni.id event.id %}">Reschedule</a></li>
+                                    <li><a href="#" class="delete-event" data-toggle="modal" data-target="#deleteConfirmationModal" data-alumni-id="{{ event.alumni.id }}" data-event-id="{{ event.id }}">Remove</a></li>
+                                </ul>
+                            </div>
+                            
+                            <div class="doctor-img position-relative">
+                                <img class="avatar" src="{{ event.image.url }}" alt="Cover Image" name="cover_image" id="cover_image" width="100" height="80">
+                                
+                            </div>
+                            
+                            <div style="text-align: left;">
+                                <center><p class="card-text"><b> {{ event.title }}</b></p></center><br>
+                                <p class="card-text"> {{ event.description }}</p>
+                                
+                                <time datetime="{{ event.date }}">
                                     <i class="fas fa-calendar-alt mr-2"></i>{{ event.date|date:"D, M d Y" }}
                                 </time>
                                 <i class="fas fa-tag mr-2"></i>{{ event.event_type }}</li>
                                 <a href="{{ event.link }}"><i class="fas fa-play mr-2"></i>Link</a>
-                              </div>
-                          </div>
-                      </div>
-                  {% endfor %}
-              </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            
+            <!-- Modal -->
+<div class="modal fade" id="deleteConfirmationModal" tabindex="-1" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteConfirmationModalLabel">Confirm Delete</h5>
+          {% comment %} <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> {% endcomment %}
+        </div>
+        <div class="modal-body">
+          Are you sure you want to remove the event?
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" id="noButton" data-alumni-id="{{ event.alumni.id }}">No</button>
+            <button type="button" class="btn btn-primary" id="confirmDeleteButton">Yes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Link to trigger modal -->
+  {% comment %} <li><a href="#" class="delete-event" data-toggle="modal" data-target="#deleteConfirmationModal" data-alumni-id="{{ event.alumni.id }}" data-event-id="{{ event.id }}">Remove</a></li> {% endcomment %}
+  
               
               
         
@@ -729,6 +810,41 @@ a, a:hover {
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const confirmDeleteButton = document.getElementById('confirmDeleteButton');
+    
+            confirmDeleteButton.addEventListener('click', function() {
+                const alumniId = this.dataset.alumniId;
+                const eventId = this.dataset.eventId;
+                const deleteUrl = `/deleteevent/${alumniId}/${eventId}/`;
+                window.location.href = deleteUrl;
+            });
+        });
+    </script>
+    
+    {% comment %} <script>
+        document.getElementById('noButton').addEventListener('click', function() {
+            // Go back to the previous page in the browser history
+            window.history.back();
+        });
+    </script> {% endcomment %}
+    
+    <script>
+        // Add an event listener to the "No" button
+        document.getElementById("noButton").addEventListener("click", function() {
+            // Get the alumni_id from the data attribute
+            var alumniId = this.getAttribute("data-alumni-id");
+            
+            // Redirect to the eventlist view
+            window.location.href = "{% url 'eventlist' alumni_id=alumni_id %}";
+        });
+    </script>
+    
+    
+    
 <script>
     particlesJS('animated-background', {
         particles: {

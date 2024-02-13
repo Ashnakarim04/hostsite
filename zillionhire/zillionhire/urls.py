@@ -211,7 +211,7 @@ urlpatterns = [
     path('dlt_blog/<int:id>/', dlt_blog, name='dlt_blog'),
     path('eventform/<int:alumni_id>/', eventform, name='eventform'),
     path('eventlist/<int:alumni_id>/', eventlist, name='eventlist'),
-
+    path('editevent/<int:alumni_id>/<int:event_id>/', editevent, name='editevent'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
