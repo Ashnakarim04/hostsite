@@ -718,22 +718,15 @@ a, a:hover {
                 </div>
         
             </div>
-            <div class="row">
+            {% comment %} <div class="row">
                 <div>
-                  {% comment %} <form method="GET" action="{% url 'search_content1' studentprofile_id=studentprofile.id %}">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Search.." name="search" value="{{ search_query }}">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="submit">Search</button>
-                            </div>
-                        </div>
-                    </form> {% endcomment %}
+                  
                   </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                   <div>
                     
                 </div>
                 </div>
-            </div><br><br>
+            </div><br><br> {% endcomment %}
               
             <div class="row">
                 {% for event in events %}
@@ -784,14 +777,8 @@ a, a:hover {
         
     </div>
   </div>
-  
-  <!-- Link to trigger modal -->
-  {% comment %} <li><a href="#" class="delete-event" data-toggle="modal" data-target="#deleteConfirmationModal" data-alumni-id="{{ event.alumni.id }}" data-event-id="{{ event.id }}">Remove</a></li> {% endcomment %}
-  
-              
-              
-        
-        </div>
+ 
+  </div>
 </div>
 
 

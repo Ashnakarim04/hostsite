@@ -2538,10 +2538,26 @@ def editevent(request, alumni_id, event_id):
     return render(request, 'admin/alumni/editevent.html', {'alumni_instance': alumni_instance, 'event': event})
 
 
+# def eventlist(request, alumni_id):
+#     alumni_instance = get_object_or_404(Alumni, id=alumni_id)
+#     events = Event.objects.filter(alumni=alumni_instance, status=True)  # Filter by status=1
+#     return render(request, 'admin/alumni/eventlist.html', {'alumni_instance': alumni_instance,'events': events,'alumni_id': alumni_id})
+
+from datetime import datetime
+
 def eventlist(request, alumni_id):
     alumni_instance = get_object_or_404(Alumni, id=alumni_id)
     events = Event.objects.filter(alumni=alumni_instance, status=True)  # Filter by status=1
+    
+    # Check event dates and update status accordingly
+    current_date = datetime.now().date()
+    for event in events:
+        if event.date > current_date:
+            event.status = False  # Set status to False (0)
+            event.save()  # Save the updated event
+    
     return render(request, 'admin/alumni/eventlist.html', {'alumni_instance': alumni_instance,'events': events,'alumni_id': alumni_id})
+
 
 from django.utils import timezone
 
