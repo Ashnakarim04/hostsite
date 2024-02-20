@@ -2259,6 +2259,7 @@ def display_blog_content(request, alumni_id):
     except Alumni.DoesNotExist:
         messages.error(request, 'Alumni profile not found.')
         return redirect(reverse('admin_index'))
+    
 from django.shortcuts import render, get_object_or_404
 from .models import BlogContent, StudentProfile
 
@@ -2436,37 +2437,7 @@ def dlt_blog(request, id):  # Use the same parameter name as in the URL pattern
         adcont_instance.delete()
         return redirect('display_blog_content')
     
-# def eventsform(request, alumni_id):
-#     alumni_instance = get_object_or_404(Alumni, id=alumni_id)
-#     return render(request,'admin/alumni/eventform.html', {'alumni_instance': alumni_instance})
-# def eventform(request, alumni_id):
-#     alumni_instance = get_object_or_404(Alumni, id=alumni_id)
 
-#     if request.method == 'POST':
-#         # Process the form data here
-#         title = request.POST.get('title')
-#         description = request.POST.get('description')
-#         date = request.POST.get('date')
-#         image = request.FILES.get('image')
-#         event_type = request.POST.get('event_type')
-#         link = request.POST.get('link')
-        
-#         # Create a new Event object and save it to the database
-#         event = Event(
-#             title=title,
-#             description=description,
-#             date=date,
-#             image=image,
-#             event_type=event_type,
-#             link=link,
-#             alumni=alumni_instance  # Associate the event with the corresponding alumni
-#         )
-#         event.save()
-        
-#         # Redirect to a success page or wherever you want
-#         return redirect(reverse('eventform', kwargs={'alumni_id': alumni_id}))        
-#     else:
-#         return render(request, 'admin/alumni/eventform.html', {'alumni_instance': alumni_instance})
 def eventform(request, alumni_id):
     alumni_instance = get_object_or_404(Alumni, id=alumni_id)
 

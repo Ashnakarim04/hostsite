@@ -12,13 +12,30 @@
     <link rel="stylesheet" type="text/css" href="{% static 'assets2/css/select2.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'assets2/css/bootstrap-datetimepicker.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'assets2/css/style.css' %}">
-   
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
         <script src="{% static 'assets2/js/html5shiv.min.js' %}"></script>
         <script src="{% static 'assets2/js/respond.min.js' %}"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blog</title>
     <style>
+
+
+
+      /* Custom CSS for smaller card and 3D box effect */
+      .card {
+        width: 18rem; /* Adjust as needed */
+        transition: transform 0.3s;
+        transform-style: preserve-3d;
+      }
+  
+      .card:hover {
+        transform: rotateY(5deg);
+      }
+  
+      .card-body {
+        backface-visibility: hidden;
+      }
         .blog-container {
             display: flex;
             flex-wrap: wrap;
@@ -372,13 +389,40 @@
         
         
 <bR><br>
-  <div class="container2">
-    <div class="blog-container">
+  <div class="container mt-4">
+    <div class="row">
+      {% for blog_content in blog_contents %}
+        <div class="col-md-4"> <!-- Adjust column width as needed -->
+          <div class="card">
+            <div class="card-header">
+              <div class="d-flex align-items-center">
+                {% comment %}
+                <img src="{{ alumni_instance.profile_photo.url }}" class="rounded-circle mr-2 profile-photo" width="50" height="50" alt="Profile Picture">
+                {% endcomment %}
+                <div>
+                  <h5 class="mb-0 alumni-name">{{ alumni_instance.first_name }} {{ alumni_instance.last_name }}</h5>
+                  <p class="mb-0 text-muted">Posting Date</p> <!-- You need to replace "Posting Date" with actual posting date -->
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <h5 class="card-title blog-title">{{ blog_content.title }}</h5>
+              <p class="card-text blog-content">{{ blog_content.content }}</p>
+              {% if blog_content.image %}
+              <img src="{{ blog_content.image.url }}" alt="Blog Image" class="blog-image">
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+  
+    {% comment %} <div class="blog-container">
         {% for blog_content in blog_contents %}
         <div class="blog-item">
             <div class="blog-header">
                 <div class="dropdown">
-                    {% comment %} <button class="dropbtn">&#8942;</button> {% endcomment %}
                     <button class="dropbtn" onclick="displayConfirmationModal({{ blog_content.id }}, {{ alumni_instance.id }})">&#8942;</button>
 
                     <div class="dropdown-content">
@@ -397,9 +441,7 @@
             {% endif %}
         </div>
         {% endfor %}
-    </div>
-</div>
-
+    </div> {% endcomment %}
 <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
       <div class="modal-content">
