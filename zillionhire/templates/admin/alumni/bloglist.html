@@ -396,9 +396,12 @@
           <div class="card">
             <div class="card-header">
               <div class="d-flex align-items-center">
-                {% comment %}
-                <img src="{{ alumni_instance.profile_photo.url }}" class="rounded-circle mr-2 profile-photo" width="50" height="50" alt="Profile Picture">
-                {% endcomment %}
+               
+                {% if alumni_instance.profile_photo %}
+                <p>Profile Photo URL: {{ alumni_instance.profile_photo.url }}</p>
+            {% endif %}
+            
+                         
                 <div>
                   <h5 class="mb-0 alumni-name">{{ alumni_instance.first_name }} {{ alumni_instance.last_name }}</h5>
                   <p>{{ blog_content.date_time|date:"F j, Y" }}  {{ blog_content.date_time|time:"g:i A" }}</p>                </div>
