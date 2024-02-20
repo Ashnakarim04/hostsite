@@ -591,7 +591,7 @@ class BlogContent(models.Model):
     content = models.TextField()
     image = models.ImageField(upload_to='blog_images/', null=True, blank=True)
     alumni = models.ForeignKey('Alumni', on_delete=models.CASCADE, null=True, blank=True)
-
+    date_time = models.DateTimeField(default=datetime.now)        
     def __str__(self):
         return self.title
     
