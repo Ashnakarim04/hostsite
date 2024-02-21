@@ -2537,13 +2537,26 @@ def update_event_status():
     events_to_update = Event.objects.filter(date__lt=today)
     events_to_update.update(status=False)
 
-def deleteevent(request, alumni_id, event_id):
-    # Get the Event object based on alumni_id and event_id
-    event = get_object_or_404(Event, alumni_id=alumni_id, id=event_id)
+def delete_event(request):
+    event_id = request.POST.get('event_id')
     
-    # Set the status of the event to inactive (0)
-    event.status = False
-    event.save()
-    
-    # Redirect back to the event list or any other desired page
-    return redirect('eventlist', alumni_id=alumni_id)
+    try:
+        event = Event.objects.get(id=event_id)
+        # Instead of deleting the event, set its status to False (0)
+        event.status = False
+        event.save()
+        return JsonResponse({'success': True})
+    except Event.DoesNotExist:
+        return JsonResponse({'success': False, 'error': 'Event does not exist'})
+
+def delete_event(request):
+    if request.method == 'POST':
+        event_id = request.POST.get('event_id')
+        try:
+            event = Event.objects.get(id=event_id)
+            event.delete()
+            return JsonResponse({'success': True})
+        except Event.DoesNotExist:
+            return JsonResponse({'success': False, 'error': 'Event not found'})
+    else:
+        return JsonResponse({'success': False, 'error': 'Invalid request method'})

@@ -716,8 +716,11 @@ a, a:hover {
                     <h4 class="page-title">CONTENTS</h4>
                     
                 </div>
+                <div class="col-sm-8 col-7">
+                  <button type="button" class="btn btn-primary" onclick="location.href='{% url 'eventform' alumni_id=alumni_instance.id %}'">Add New Event</button>
         
-            </div>
+                </div>
+            </div><bR><bR>
             {% comment %} <div class="row">
                 <div>
                   
@@ -773,7 +776,7 @@ a, a:hover {
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" id="noButton" data-alumni-id="{{ event.alumni.id }}">No</button>
-             <button type="button" class="btn btn-primary" id="confirmDeleteButton" data-alumni-id="{{ event.alumni.id }}" data-event-id="{{ event.id }}">Yes</button>
+            <button type="button" class="btn btn-primary" onclick="deleteEvent('{{ event.id }}')">Yes</button>
         
     </div>
   </div>
@@ -798,7 +801,7 @@ a, a:hover {
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 
     
-    <script>
+    {% comment %} <script>
         document.addEventListener("DOMContentLoaded", function() {
             const confirmDeleteButton = document.getElementById('confirmDeleteButton');
     
@@ -809,7 +812,7 @@ a, a:hover {
                 window.location.href = deleteUrl;
             });
         });
-    </script>
+    </script> {% endcomment %}
     
     
     <script>
@@ -823,8 +826,69 @@ a, a:hover {
         });
     </script>
     
+    <script>
+      document.getElementById("confirmDeleteButton").addEventListener("click", function() {
+        var eventId = this.getAttribute('data-event-id');
+        var formData = new FormData();
+        formData.append('event_id', eventId);
     
+        fetch('/delete_event/', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRFToken': csrftoken  // Use the CSRF token variable
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Event deleted successfully
+                window.location.reload();  // Reload the page or do any other action you need
+            } else {
+                console.error('Failed to delete event:', data.error);
+                // Handle error as needed
+            }
+        })
+        .catch(error => {
+            console.error('Error deleting event:', error);
+            // Handle error as needed
+        });
+    });
     
+      </script>
+      
+      <script>
+        function deleteEvent(eventId) {
+            var formData = new FormData();
+            formData.append('event_id', eventId);
+            
+            fetch('/delete_event/', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-CSRFToken': csrftoken
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Event status updated successfully
+                    // Optionally, you can reload the page or update the UI
+                    window.location.reload(); // Reload the page
+                } else {
+                    console.error('Failed to update event status:', data.error);
+                    // Handle error as needed
+                }
+            })
+            .catch(error => {
+                console.error('Error updating event status:', error);
+                // Handle error as needed
+            });
+        }
+    </script>
+    
+   
+
 <script>
     particlesJS('animated-background', {
         particles: {
