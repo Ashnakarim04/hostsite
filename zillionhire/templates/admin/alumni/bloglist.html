@@ -388,7 +388,7 @@
         </div>
         
         
-<bR><br>
+<br><br>
   <div class="container mt-4">
     <div class="row">
       {% for blog_content in blog_contents %}
@@ -398,7 +398,7 @@
               <div class="d-flex align-items-center">
                
                 {% if alumni_instance.profile_photo %}
-                <p>Profile Photo URL: {{ alumni_instance.profile_photo.url }}</p>
+                <p>Profile Photo URL: {{ alumni_instance.profile_photo }}</p>
             {% endif %}
             
                          
@@ -410,9 +410,9 @@
             <div class="card-body">
               <h5 class="card-title blog-title">{{ blog_content.title }}</h5>
               <p class="card-text blog-content">{{ blog_content.content }}</p>
-              {% if blog_content.image %}
+              {% comment %} {% if blog_content.image %}
               <img src="{{ blog_content.image.url }}" alt="Blog Image" class="blog-image">
-              {% endif %}
+              {% endif %} {% endcomment %}
             </div>
           </div>
         </div>
