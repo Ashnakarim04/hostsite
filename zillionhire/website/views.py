@@ -872,31 +872,8 @@ def approve_comp(request, company_id):
 def admin_addstudents(request):
     return render(request, 'admin/student/student.html')
 
-# def ad_studentlist(request):
-#     adstus=StudentProfile.objects.all()
-#     return render(request,'admin/student/ad_studentlist.html',{'adstus': adstus})
 
-from django.shortcuts import render
-from .models import StudentProfile
-# def ad_studentlist(request):
-#     adstus = StudentProfile.objects.all()
 
-#     # Handling academic year filter
-#     academic_years_filter = request.GET.get('academic_year')
-#     if academic_years_filter:
-#         adstus = adstus.filter(academic_year=academic_years_filter)
-
-#     # Handling passout year filter
-#     passout_year_filter = request.GET.get('passout_year')
-#     if passout_year_filter:
-#         adstus = adstus.filter(passout_year=passout_year_filter)
-
-#     # Generate a list of academic years from 2020 to 2030
-#     available_years = range(2020, 2031)
-
-#     return render(request, 'admin/student/ad_studentlist.html', {'adstus': adstus, 'available_years': available_years})
-from django.shortcuts import render
-from .models import StudentProfile
 
 from django.shortcuts import render
 from .models import StudentProfile
