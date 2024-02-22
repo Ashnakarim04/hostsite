@@ -144,8 +144,8 @@
                                             <thead>
                                                 <tr>
                                                     {% comment %} <th>No</th> {% endcomment %}
-                                                    <th>First Name </th>
-                                                    <th>Last Name</th>
+                                                    <th>Name </th>
+                                                    {% comment %} <th>Last Name</th> {% endcomment %}
                                                     <th>Email</th>
                                                     <th>Phone</th>
                                                    
@@ -166,8 +166,8 @@
 
                                                     <tr>
                                                         {% comment %} <td>{{ appstu.id }}</td> {% endcomment %}
-                                                        <td>{{ appstu.first_name }}</td>
-                                                        <td>{{ appstu.last_name }}</td>
+                                                        <td>{{ appstu.first_name }}&nbsp;{{ appstu.last_name }}</td>
+                                                        
                                                         <td>{{ appstu.email }}</td>
                                                         <td>{{ appstu.phone }}</td>
                                                        
@@ -184,7 +184,9 @@
                                                               <button type="submit" class="btn btn-success">Profile</button>
                                                           </form>
                                                           
+                                                          
                                                       </td>
+                                                     
                                                         
                                                         </td>
                                                         {% comment %} {% comment %} <td>

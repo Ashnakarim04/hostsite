@@ -1467,6 +1467,15 @@ def studentprofileapp(request, studentprofile_id):
     context = {'job_application': job_application, 'studentprofile_id': studentprofile_id}
     return render(request, 'company/studentprofileapp.html', context)
 
+
+
+
+
+
+
+
+
+
 def approve_shortlist(request, application_id):
     shortlist = get_object_or_404(JobApplication, id=application_id)
     if request.method == 'POST':

@@ -127,6 +127,12 @@ urlpatterns = [
     path('cfirstround', views.cfirstround, name='cfirstround'),
     path('admin_shortlist', views.admin_shortlist, name='admin_shortlist'),
     path('studentprofileapp/<int:studentprofile_id>/', views.studentprofileapp, name='studentprofileapp'), 
+
+
+
+    
+
+
     path('reject_shortlist/<int:application_id>/', views.reject_shortlist, name='reject_shortlist'),
     path('approve_shortlist/<int:application_id>/', views.approve_shortlist, name='approve_shortlist'),
     path('admincontent',views.admincontent, name="admincontent"),
@@ -214,6 +220,11 @@ urlpatterns = [
     path('editevent/<int:alumni_id>/<int:event_id>/', editevent, name='editevent'),
     path('delete_event/', views.delete_event, name='delete_event'),
     path('delete_blog_content/<int:content_id>/', views.delete_blog_content, name='delete_blog_content'),
+
+
+
+
+    
     # path('deleteevent/<int:alumni_id>/<int:event_id>/', views.deleteevent, name='deleteevent'),
     ]
 if settings.DEBUG:

@@ -1,7 +1,12 @@
 {% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Job Application Details</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -25,7 +30,20 @@
       padding: 10px;
       box-sizing: border-box;
     }
-    
+    /* styles.css or your custom stylesheet */
+.green-button {
+    background-color: green;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
   </style>
   
   
@@ -259,14 +277,15 @@
             <!-- View Resume -->
             <h2>View Resume</h2>
 
-            <div class="form-group">
-                <label for="resume-file">Resume File:</label>
-                <input type="file" id="resume-file" name="resume_file" accept=".pdf">
-            </div>
 
             <div class="form-group">
-                <button onclick="viewResume()">View Resume</button>
+                <button onclick="window.open('{{ job_application.resume.url }}', '_blank')" class="green-button">View Resume</button>
             </div>
+            
+            
+            
+            
+            
             </div>
         {% comment %} {% endfor %} {% endcomment %}
 

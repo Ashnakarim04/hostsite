@@ -133,52 +133,42 @@
           </div>
 
  
-<div class="row"> 
-  
-  {% for obj in job %} 
-  {% if obj.is_active %}
-  <div class="col-md-4 custom-card">
-    
-      <div class="card">
-          <div class="card-body"> 
-              <h5 class="card-title"><b>{{ obj.cname }} - {{ obj.jname }} </b></h5></b>
-              {% comment %} <p class="card-text"> {{ jobs.cname }}</p> {% endcomment %}
-              <p class="card-text"><b>JOB :</b><br> {{ obj.job_descriptions }}</p>
-              <p class="card-text"><b>RESPONSIBILITIES :</b><br> {{ obj.responsibilities }}</p>
-              <p class="card-text"><b>PREFERRED SKILLS :</b><br> {{ obj.preferred_skills }}</p>
-              <p class="card-text"><b>ELIGIBILITY :</b><br> {{ obj.qualifications }}</p>
-              <h6 class="card-text"><b>TENTH  CGPA :</b>{{ obj.required_tenth_cgpa }}</h6>
-              <h6 class="card-text"><b>TWELFTH CGPA :</b>{{ obj.required_twelfth_cgpa }}</h6>
-              <h6 class="card-text"><b>CURRENT CGPA :</b>{{ obj.required_current_cgpa }}</h6>
-              <h6 class="card-text"><b>BACKLOGS :</b>{{ obj.required_backlog }}</h6>
-              <p class="card-text"><b>EMAIL :</b> {{ obj.email }}</p>
-              <p class="card-text"><b>SALARY : </b>{{ obj.salary }}</p>
-              <p class="card-text"><b>APPLICATION START DATE:</b> {{ obj.sdate }}</p> 
-              <p class="card-text"><b>APPLICATION END DATE:</b> {{ obj.edate }}</p>
-              
-              <p class="card-text"><b>For more visit, </b>{{ obj.link }}</p>
+          <div class="row"> 
+            {% for obj in job %} 
+              {% if obj.is_active %}
+                <div class="col-md-4 custom-card">
+                  <div class="card">
+                    <div class="card-body"> 
+                      <h5 class="card-title"><b>{{ obj.cname }} - {{ obj.jname }} </b></h5></b>
+                      <p class="card-text"><b>JOB :</b><br> {{ obj.job_descriptions }}</p>
+                      <p class="card-text"><b>RESPONSIBILITIES :</b><br> {{ obj.responsibilities }}</p>
+                      <p class="card-text"><b>PREFERRED SKILLS :</b><br> {{ obj.preferred_skills }}</p>
+                      <p class="card-text"><b>ELIGIBILITY :</b><br> {{ obj.qualifications }}</p>
+                      <h6 class="card-text"><b>TENTH  CGPA :</b>{{ obj.required_tenth_cgpa }}</h6>
+                      <h6 class="card-text"><b>TWELFTH CGPA :</b>{{ obj.required_twelfth_cgpa }}</h6>
+                      <h6 class="card-text"><b>CURRENT CGPA :</b>{{ obj.required_current_cgpa }}</h6>
+                      <h6 class="card-text"><b>BACKLOGS :</b>{{ obj.required_backlog }}</h6>
+                      <p class="card-text"><b>EMAIL :</b> {{ obj.email }}</p>
+                      <p class="card-text"><b>SALARY : </b>{{ obj.salary }}</p>
+                      <p class="card-text"><b>APPLICATION START DATE:</b> {{ obj.sdate }}</p> 
+                      <p class="card-text"><b>APPLICATION END DATE:</b> {{ obj.edate }}</p>
+                      <p class="card-text"><b>For more visit, </b>{{ obj.link }}</p>
           
-
-              <!-- Button group for Edit and Delete -->
-              <div class="btn-group mt-2" style="width: 50%; display: flex; flex-direction: column;">
-                <a href="{% url 'edit_job' job_id=obj.id %}" class="btn btn-primary btn-block" style="height: 100%;">Edit</a>
-                <form method="POST" action="{% url 'delete_job' job_id=obj.id %}" class="btn-block" style="height: 100%;">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-danger btn-block" style="height: 100%;">Delete</button>
-                </form>
-            </div>
-            
-            
-             
+                      <!-- Button group for Edit and Delete -->
+                      <div class="btn-group mt-2" style="width: 50%; display: flex; flex-direction: column;">
+                        <a href="{% url 'edit_job' job_id=obj.id %}" class="btn btn-primary btn-block" style="height: 100%;">Edit</a>
+                        <form method="POST" action="{% url 'delete_job' job_id=obj.id %}" class="btn-block" style="height: 100%;">
+                          {% csrf_token %}
+                          <button type="submit" class="btn btn-danger btn-block" style="height: 100%;">Delete</button>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              {% endif %}
+            {% endfor %}
           </div>
-      </div>
-  </div>
-  {% endif %}
-  {% endfor %}
-</div>
-
-
-
+          
 
 
 
@@ -200,6 +190,23 @@
 
     <style>
       
+      .custom-card {
+        margin-bottom: 20px; /* Adjust spacing between cards */
+      }
+      
+      .card {
+        border: 1px solid #ddd; /* Add border */
+        border-radius: 10px; /* Add border-radius for rounded corners */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow effect */
+        transition: box-shadow 0.3s ease; /* Smooth transition for shadow */
+      }
+      
+      .card:hover {
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Increase shadow on hover */
+      }
+      
+
+
         body {
             font-family: 'Roboto', sans-serif;
             color: #0c0c0c;
