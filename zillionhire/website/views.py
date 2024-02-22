@@ -6,7 +6,7 @@ from django.contrib import messages, auth
 from django.http import HttpResponse,HttpResponseRedirect
 from .models import AdminStudent, Jobs, CompanyProfile
 from .models import Students,StudentProfile,CompanyApprove,JobApplication,internship,classdetails,videolibrary,ccontent, LikedContent, Alumni
-from .models import resume1, LikedContent1, ResumeBuilder, Review, Event
+from .models import resume1, LikedContent1, ResumeBuilder, Review, Event, ExcelData
 # from .forms import StudentForm 
 from django.shortcuts import render, get_object_or_404, redirect
 # from .models import  CustomUser
@@ -2559,3 +2559,64 @@ def delete_blog_content(request, content_id):
     else:
         # Handle GET request if necessary
         pass
+
+def import_excel_data(file_path):
+    try:
+        # Read the Excel file using pandas
+        excel_data = pd.read_csv(file_path)
+
+        # Iterate through each row in the DataFrame
+        for index, row in excel_data.iterrows():
+            # Check if a record with the same admission_no already exists
+            if not ExcelData.objects.filter(admission_no=row['admission_no']).exists():
+                # Create an instance of ExcelData model and assign values from the DataFrame
+                excel_entry = ExcelData(
+                    admission_no=row['admission_no'],
+                    email=row['email'],
+                    phone=row['phone'],
+                    first_name=row['first_name'],
+                    last_name=row['last_name'],
+                    status=False  # Assuming all entries are initially set to False (Pending)
+                )
+                # Save the ExcelData instance to the database
+                excel_entry.save()
+
+        print("Data imported successfully.")
+    except Exception as e:
+        print(f"Error occurred while importing data: {str(e)}")
+
+import pandas as pd
+def import_excel_data_view(request):
+    if request.method == 'POST':
+        file = request.FILES.get('excel_file')
+        if file:
+            try:
+                # Read the Excel file using pandas
+                excel_data = pd.read_csv(file)
+
+                # Check if all required columns are present in the DataFrame
+                required_columns = ['admission_no', 'email', 'phone', 'first_name', 'last_name']
+                if not all(column in excel_data.columns for column in required_columns):
+                    return HttpResponse("Required columns are missing in the uploaded Excel file.")
+
+                # Iterate through each row in the DataFrame
+                for index, row in excel_data.iterrows():
+                    # Create an instance of ExcelData model and assign values from the DataFrame
+                    excel_entry = ExcelData.objects.create(
+                        admission_no=row['admission_no'],
+                        email=row['email'],
+                        phone=row['phone'],
+                        first_name=row['first_name'],
+                        last_name=row['last_name'],
+                        status=False  # Assuming all entries are initially set to False (Pending)
+                    )
+
+                return HttpResponse("Data imported successfully.")
+            except Exception as e:
+                # Print the exception message for debugging
+                print(f"Error occurred while importing data: {str(e)}")
+                return HttpResponse(f"Error occurred while importing data: {str(e)}")
+        else:
+            return HttpResponse("No file provided.")
+    else:
+        return render(request, 'exceldata.html')

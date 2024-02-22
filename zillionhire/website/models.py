@@ -237,6 +237,24 @@ class AdminStudent(models.Model):
     def __str__(self):
         return self.get_full_name()
 
+
+class ExcelData(models.Model):
+    admission_no = models.CharField(max_length=20)
+    email = models.EmailField(max_length=254)
+    phone = models.CharField(max_length=15)
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    status = models.BooleanField(default=False)  # Default status is False (Pending)
+
+    def get_full_name(self):
+        return f"{self.first_name} {self.last_name}"
+
+    def __str__(self):
+        return f"{self.get_full_name()} - {self.admission_no} - Status: {self.status}"
+
+
+
+
 from django.db import models
 
 class StudentProfile(models.Model):
