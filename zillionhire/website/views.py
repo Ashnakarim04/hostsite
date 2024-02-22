@@ -2560,3 +2560,16 @@ def delete_event(request):
             return JsonResponse({'success': False, 'error': 'Event not found'})
     else:
         return JsonResponse({'success': False, 'error': 'Invalid request method'})
+    
+
+def delete_blog_content(request, content_id):
+    if request.method == 'POST':
+        # Retrieve the BlogContent instance
+        blog_content = get_object_or_404(BlogContent, pk=content_id)
+        # Delete the instance
+        blog_content.delete()
+        # Redirect to a success page or wherever you want
+        return redirect('success_url_name')
+    else:
+        # Handle GET request if necessary
+        pass

@@ -396,30 +396,33 @@
           <div class="card">
             <div class="card-header">
               <div class="d-flex align-items-center">
-               
                 {% if alumni_instance.profile_photo %}
-                <p>Profile Photo URL: {{ alumni_instance.profile_photo }}</p>
-            {% endif %}
-            
-                         
+                  <p>Profile Photo URL: {{ alumni_instance.profile_photo }}</p>
+                {% endif %}
                 <div>
+                  <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton{{ forloop.counter }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Menu
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton{{ forloop.counter }}">
+    <!-- Within your template -->
+                          <a href="{% url 'delete_blog_content' blog_content.id %}" class="dropdown-item">Remove</a>
+                    </div>
+                  </div>
                   <h5 class="mb-0 alumni-name">{{ alumni_instance.first_name }} {{ alumni_instance.last_name }}</h5>
                   <p>{{ blog_content.date_time|date:"F j, Y" }}  {{ blog_content.date_time|time:"g:i A" }}</p>         
-                         
                 </div>
               </div>
             </div>
             <div class="card-body">
               <h5 class="card-title blog-title">{{ blog_content.title }}</h5>
               <p class="card-text blog-content">{{ blog_content.content }}</p>
-              {% comment %} {% if blog_content.image %}
-              <img src="{{ blog_content.image.url }}" alt="Blog Image" class="blog-image">
-              {% endif %} {% endcomment %}
             </div>
           </div>
         </div>
       {% endfor %}
     </div>
+    
   </div>
   
     {% comment %} <div class="blog-container">

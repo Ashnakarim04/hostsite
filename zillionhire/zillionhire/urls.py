@@ -213,6 +213,7 @@ urlpatterns = [
     path('eventlist/<int:alumni_id>/', eventlist, name='eventlist'),
     path('editevent/<int:alumni_id>/<int:event_id>/', editevent, name='editevent'),
     path('delete_event/', views.delete_event, name='delete_event'),
+    path('delete_blog_content/<int:content_id>/', views.delete_blog_content, name='delete_blog_content'),
     # path('deleteevent/<int:alumni_id>/<int:event_id>/', views.deleteevent, name='deleteevent'),
     ]
 if settings.DEBUG:
