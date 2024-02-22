@@ -293,6 +293,46 @@
 .no-btn:hover {
     opacity: 0.8;
 }
+.menu-icon {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.menu-options {
+    position: absolute;
+    top: 100%; /* Position below the menu icon */
+    right: 0; /* Align with the right side of the menu icon */
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 5px 10px;
+    list-style: none;
+    display: none; /* Initially hide the menu options */
+}
+
+.menu-options li {
+    margin-bottom: 5px;
+}
+
+.menu-options li a {
+    color: #333;
+    text-decoration: none;
+}
+
+.menu-options li a:hover {
+    color: #007bff;
+}
+
+.profile-widget:hover .menu-icon {
+    display: block; /* Show the menu icon when profile widget is hovered */
+}
+
+.profile-widget:hover .menu-options {
+    display: block; /* Show the menu options when profile widget is hovered */
+}
+
 
     </style>
 </head>
@@ -400,15 +440,10 @@
                   <p>Profile Photo URL: {{ alumni_instance.profile_photo }}</p>
                 {% endif %}
                 <div>
-                  <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton{{ forloop.counter }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      Menu
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton{{ forloop.counter }}">
-    <!-- Within your template -->
-                          <a href="{% url 'delete_blog_content' blog_content.id %}" class="dropdown-item">Remove</a>
-                    </div>
-                  </div>
+                  <ul class="menu-options">
+                    {% comment %} <li><a href="{% url 'editevent' event.alumni.id event.id %}">Reschedule</a></li> {% endcomment %}
+                    <li><a href="#" class="delete-event" data-toggle="modal" data-target="#deleteConfirmationModal" data-alumni-id="{{ event.alumni.id }}" data-event-id="{{ event.id }}">Remove</a></li>
+                </ul>
                   <h5 class="mb-0 alumni-name">{{ alumni_instance.first_name }} {{ alumni_instance.last_name }}</h5>
                   <p>{{ blog_content.date_time|date:"F j, Y" }}  {{ blog_content.date_time|time:"g:i A" }}</p>         
                 </div>
