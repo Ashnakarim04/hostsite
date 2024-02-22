@@ -2587,6 +2587,8 @@ def import_excel_data(file_path):
 
 import pandas as pd
 def import_excel_data_view(request):
+    data_list = None  # Initialize data_list as None
+
     if request.method == 'POST':
         file = request.FILES.get('excel_file')
         if file:
@@ -2594,15 +2596,13 @@ def import_excel_data_view(request):
                 # Read the Excel file using pandas
                 excel_data = pd.read_csv(file)
 
-                # Check if all required columns are present in the DataFrame
-                required_columns = ['admission_no', 'email', 'phone', 'first_name', 'last_name']
-                if not all(column in excel_data.columns for column in required_columns):
-                    return HttpResponse("Required columns are missing in the uploaded Excel file.")
+                # Initialize an empty list to store ExcelData objects
+                data_list = []
 
                 # Iterate through each row in the DataFrame
                 for index, row in excel_data.iterrows():
                     # Create an instance of ExcelData model and assign values from the DataFrame
-                    excel_entry = ExcelData.objects.create(
+                    excel_entry = ExcelData(
                         admission_no=row['admission_no'],
                         email=row['email'],
                         phone=row['phone'],
@@ -2610,13 +2610,17 @@ def import_excel_data_view(request):
                         last_name=row['last_name'],
                         status=False  # Assuming all entries are initially set to False (Pending)
                     )
+                    # Append the ExcelData instance to the data_list
+                    data_list.append(excel_entry)
 
-                return HttpResponse("Data imported successfully.")
+                # Save all ExcelData instances to the database
+                ExcelData.objects.bulk_create(data_list)
+
+                # Fetch all ExcelData objects from the database
+                data_list = ExcelData.objects.all()
+
             except Exception as e:
                 # Print the exception message for debugging
-                print(f"Error occurred while importing data: {str(e)}")
-                return HttpResponse(f"Error occurred while importing data: {str(e)}")
-        else:
-            return HttpResponse("No file provided.")
-    else:
-        return render(request, 'exceldata.html')
+                print(e)
+
+    return render(request, 'exceldata.html', {'data_list': data_list})
