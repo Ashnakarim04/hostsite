@@ -771,45 +771,7 @@ from website.models import Student
 def student_list(request):
     students = Student.objects.all()
     return render(request, 'admin/student/student_list.html', {'students': students})
-# import pandas as pd
-# from django.shortcuts import render
-# from django.http import JsonResponse
-# from .models import Student
 
-# def student_list(request):
-#     # Read data from Excel or database (replace with your logic)
-#     students = Student.objects.values('id', 'username', 'password')
-
-#     # Return data as JSON
-#     return JsonResponse(list(students), safe=False)
-
-# # def index(request):
-# #     return render(request, 'index.html')
-
-# import json
-# from django.shortcuts import render
-# from django.http import JsonResponse
-# from django.views.decorators.csrf import csrf_exempt
-# from django.utils.decorators import method_decorator
-# from django.views import View
-# from .models import Student
-
-# class StudentListView(View):
-#     def get(self, request):
-#         students = Student.objects.values('id', 'username', 'password')
-#         return JsonResponse(list(students), safe=False)
-
-# @method_decorator(csrf_exempt, name='dispatch')
-# class AddStudentView(View):
-#     def post(self, request):
-#         data = json.loads(request.body)
-#         username = data.get('username')
-#         password = data.get('password')
-#         student = Student.objects.create(username=username, password=password)
-#         return JsonResponse({'id': student.id})
-
-# def index(request):
-#     return render(request, 'index.html')
 from django.http import JsonResponse
 from .models import Student
 
@@ -817,34 +779,7 @@ def get_student_data(request):
     students = Student.objects.all()
     student_data = [{'id':student.id,'username': student.username, 'password': student.password} for student in students]
     return JsonResponse(student_data, safe=False)
-# Example structure in views.py
-# from rest_framework.views import APIView
-# from rest_framework.response import Response
-# from rest_framework import status
 
-# class StudentDataAPIView(APIView):
-#     # Your implementation
-#     pass 
-
-
-
-# @ashaworker_required
-# def asha_approved_appointments(request):
-#     approved_appointments = Appointment.objects.filter(is_approved=True)
-#     print(approved_appointments)
-#     return render(request, 'asha_temp/asha_approved_appo.html', {'approved_appointments': approved_appointments})
-
-
-
-# from django.shortcuts import get_object_or_404, redirect
-# @login_required(login_url='login_page')
-# def approve_appointment(request, appointment_id):
-#     appointment = get_object_or_404(Appointment, pk=appointment_id)
-#     appointment.is_approved = True
-#     appointment.save()
-    
-#     # Redirect back to the list of approved appointments
-#     return redirect("asha_approved_appo")
 from django.shortcuts import render
 from website.models import CompanyProfile
 
@@ -1063,14 +998,9 @@ def sindex(request):
     except StudentProfile.DoesNotExist:
         studentprofile = StudentProfile.objects.create(user=request.user)
         return redirect(reverse('sprofile', kwargs={'studentprofile_id': studentprofile.id}))
-    # try:
-    # studentprofile = request.user.studentprofile
-    # return render(request, 'sindex.html',{'studentprofile': studentprofile})
-        # Continue with the rest of your view logic using the student_profile
-        # ...
-    # except StudentProfile.DoesNotExist:
-        # If the studentprofile does not exist for the user, redirect to a profile creation page
-        # return redirect(reverse('index'))  # Adjust the URL name accordingly
+
+
+
 from django.contrib.auth import update_session_auth_hash  # Add this import
 @login_required
 def sprofile(request, studentprofile_id):
