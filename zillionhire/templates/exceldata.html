@@ -4,6 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Import Excel Data</title>
+    <style>
+        /* Style for the table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+    
+        /* Style for table headers */
+        th {
+            background-color: #f2f2f2; /* Light gray background */
+            color: #333; /* Dark gray text color */
+            padding: 10px;
+            text-align: left;
+        }
+    
+        /* Style for table rows */
+        tr:nth-child(even) {
+            background-color: #f9f9f9; /* Lighter gray background for even rows */
+        }
+    
+        /* Style for table cells */
+        td {
+            padding: 10px;
+            border: 1px solid #ddd; /* Light gray border */
+        }
+    </style>
 </head>
 <body>
     <h2> Excel Data</h2>
@@ -18,10 +44,10 @@
         <thead>
             <tr>
                 <th>Admission Number</th>
-                <th>Email</th>
-                <th>Phone</th>
                 <th>First Name</th>
                 <th>Last Name</th>
+                <th>Email</th>
+                <th>Phone</th>
                 <th>Status</th>
             </tr>
         </thead>
@@ -29,10 +55,11 @@
             {% for item in data_list %}
             <tr>
                 <td>{{ item.admission_no }}</td>
-                <td>{{ item.email }}</td>
-                <td>{{ item.phone }}</td>
                 <td>{{ item.first_name }}</td>
                 <td>{{ item.last_name }}</td>
+                <td>{{ item.email }}</td>
+                <td>{{ item.phone }}</td>
+                
                 <td>{{ item.status }}</td>
             </tr>
             {% endfor %}
