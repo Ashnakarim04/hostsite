@@ -1586,32 +1586,61 @@ def searchvideo(request):
 def content2form(request):
     return render(request,'admin/resources/content2form.html')
 
-def aptform(request):
+def aptform(request, aptitude_id=None):
     if request.method == 'POST':
-        title = request.POST['title']
-        description = request.POST['description']
-        date_and_time = request.POST['date_and_time']
-        link = request.POST['link']
-        login_id = request.POST['login_id']
-        password = request.POST['password']
-        steps = request.POST['steps']
-        regulations = request.POST['regulations']
-        
-        # Create a new AddAptitude instance with the provided data
-        aptitude = AddAptitude.objects.create(
-            title=title,
-            description=description,
-            date_and_time=date_and_time,
-            link=link,
-            login_id=login_id,
-            password=password,
-            steps=steps,
-            regulations=regulations
-        )
-        
-        aptitude.save()
-        
-        return redirect('aptform2')  
+        try:
+            title = request.POST['title']
+            description = request.POST['description']
+            date_and_time = request.POST['date_and_time']
+            link = request.POST['link']
+            login_id = request.POST['login_id']
+            password = request.POST['password']
+            steps = request.POST['steps']
+            regulations = request.POST['regulations']
+
+            if aptitude_id:
+                # Update existing instance if aptitude_id is provided
+                aptitude = AddAptitude.objects.get(pk=aptitude_id)
+                aptitude.title = title
+                aptitude.description = description
+                aptitude.date_and_time = date_and_time
+                aptitude.link = link
+                aptitude.login_id = login_id
+                aptitude.password = password
+                aptitude.steps = steps
+                aptitude.regulations = regulations
+                aptitude.save()
+            else:
+                # Create new instance if aptitude_id is not provided
+                aptitude = AddAptitude.objects.create(
+                    title=title,
+                    description=description,
+                    date_and_time=date_and_time,
+                    link=link,
+                    login_id=login_id,
+                    password=password,
+                    steps=steps,
+                    regulations=regulations
+                )
+
+            return redirect('aptform')  # Redirect to the same form page after submission
+        except Exception as e:
+            print(e)  # Print the exception for debugging purposes
+            # You might want to render a form with error messages here
+            # For simplicity, we'll just return a generic error response
+            return HttpResponse('An error occurred while processing your request. Please try again later.')
+    
+    # If it's a GET request
+    # Check if aptitude_id is provided in the URL
+    if aptitude_id:
+        # Fetch the existing instance if aptitude_id is provided
+        aptitude = AddAptitude.objects.get(pk=aptitude_id)
+    else:
+        # Create a blank instance if aptitude_id is not provided
+        aptitude = None
+    
+    context = {'aptitude': aptitude}
+    return render(request, 'company/add_aptitude.html', context)
 
  
 
