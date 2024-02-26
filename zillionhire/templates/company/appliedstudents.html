@@ -117,35 +117,29 @@
                 </div>
                     <div class="page-wrapper">
                         <div class="content">
-                            <div class="row">
-                                <div class="col-sm-4 col-3">
-                                    <h4 class="page-title">APPLIED STUDENTS</h4>
-                                </div>
-                                
+                          <div class="row">
+                            <div class="col-sm-4 col-3">
+                                <h4 class="page-title">APPLIED STUDENTS</h4>
                             </div>
-                            {% comment %} <div class="row">
-                                <div class="col-md-12">
-                                    <form id="search-form" method="GET" action="{% url 'search_job' %}">
-                                        <div class="input-group">
-                                            <a href="{% url 'jobslist' %}" class="btn btn-secondary"><i class="fa fa-arrow-left"></i></a>&ensp;&ensp;&ensp;&ensp;
-                                            <input type="text" class="form-control" name="jobsname" placeholder="Search">
-                                            <div class="input-group-append">
-                                                <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i> </button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                    
+                            <div class="col-sm-8 offset-sm-4 text-right">
+                                <div class="col-sm-4 col-3">
+                                    <a href="{% url 'appliedstudents' %}" class="btn btn-primary">Aptitude notification</a>
                                 </div>
-                            </div><br><br> {% endcomment %}
+                            </div>
+                        </div>
+                            </div>
+                      
+                            
+                            
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="table-responsive">
                                         <table class="table table-striped custom-table">
                                             <thead>
                                                 <tr>
-                                                    {% comment %} <th>No</th> {% endcomment %}
+                                                  
                                                     <th>Name </th>
-                                                    {% comment %} <th>Last Name</th> {% endcomment %}
+                                                 
                                                     <th>Email</th>
                                                     <th>Phone</th>
                                                    
@@ -186,16 +180,9 @@
                                                           
                                                           
                                                       </td>
-                                                     
                                                         
                                                         </td>
-                                                        {% comment %} {% comment %} <td>
-                                                            {% if job.is_approved == 'pending' %}
-                                                            <span class="not-approved">Not Approved</span>
-                                                            {% else %}
-                                                            <span class="approved">Approved</span>
-                                                            {% endif %}
-                                                          </td>{% endcomment %}
+                                                     
                                                         
                                                         </td>
                                                         <td>
