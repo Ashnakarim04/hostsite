@@ -222,6 +222,7 @@ urlpatterns = [
     path('delete_blog_content/<int:content_id>/', views.delete_blog_content, name='delete_blog_content'),
     path('import-excel/', views.import_excel_data_view, name='import_excel_data'),
 
+    path('aptform2',views.aptform2, name="aptform2"),
 
 
     

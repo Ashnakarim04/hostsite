@@ -1582,6 +1582,42 @@ def searchvideo(request):
     
     return render(request, 'admin/resources/videolist.html')
 
+
+def content2form(request):
+    return render(request,'admin/resources/content2form.html')
+
+def aptform(request):
+    if request.method == 'POST':
+        title = request.POST['title']
+        description = request.POST['description']
+        date_and_time = request.POST['date_and_time']
+        link = request.POST['link']
+        login_id = request.POST['login_id']
+        password = request.POST['password']
+        steps = request.POST['steps']
+        regulations = request.POST['regulations']
+        
+        # Create a new AddAptitude instance with the provided data
+        aptitude = AddAptitude.objects.create(
+            title=title,
+            description=description,
+            date_and_time=date_and_time,
+            link=link,
+            login_id=login_id,
+            password=password,
+            steps=steps,
+            regulations=regulations
+        )
+        
+        aptitude.save()
+        
+        return redirect('aptform2')  
+
+    # return render(request, 'company/add_aptitude.html')  
+
+def aptform2(request):
+    return render(request,'company/add_aptitude.html')
+
 #studentcontent2
 from decimal import Decimal
 
