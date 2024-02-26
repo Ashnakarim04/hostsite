@@ -641,3 +641,17 @@ class Event(models.Model):
 
     def __str__(self):
         return self.title
+    
+class AddAptitude(models.Model):
+    aptitude = models.AutoField(primary_key=True)
+    title = models.CharField(max_length=100)
+    description = models.TextField()
+    date_and_time = models.DateTimeField()
+    link = models.URLField()
+    login_id = models.CharField(max_length=100)
+    password = models.CharField(max_length=100)
+    steps = models.TextField()
+    regulations = models.TextField()
+
+    def __str__(self):
+        return self.title

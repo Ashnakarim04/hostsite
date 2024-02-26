@@ -6,7 +6,7 @@ from django.contrib import messages, auth
 from django.http import HttpResponse,HttpResponseRedirect
 from .models import AdminStudent, Jobs, CompanyProfile
 from .models import Students,StudentProfile,CompanyApprove,JobApplication,internship,classdetails,videolibrary,ccontent, LikedContent, Alumni
-from .models import resume1, LikedContent1, ResumeBuilder, Review, Event, ExcelData
+from .models import resume1, LikedContent1, ResumeBuilder, Review, Event, ExcelData, AddAptitude
 # from .forms import StudentForm 
 from django.shortcuts import render, get_object_or_404, redirect
 # from .models import  CustomUser
