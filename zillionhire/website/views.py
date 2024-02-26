@@ -1613,7 +1613,7 @@ def aptform(request):
         
         return redirect('aptform2')  
 
-    # return render(request, 'company/add_aptitude.html')  
+ 
 
 def aptform2(request):
     return render(request,'company/add_aptitude.html')

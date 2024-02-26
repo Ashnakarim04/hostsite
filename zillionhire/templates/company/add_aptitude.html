@@ -121,11 +121,7 @@
                             <div class="col-sm-4 col-3">
                                 <h4 class="page-title">APTITUDE NOTIFICATION</h4>
                             </div>
-                            {% comment %} <div class="col-sm-8 col-9 text-right m-b-20">
-                                <div class="col-sm-4 col-3">
-                                    <a href="{% url 'appliedstudents' %}" class="btn btn-primary">Aptitude notification</a>
-                                </div>
-                            </div> {% endcomment %}
+                     
                         </div>
                             </div>
                       
@@ -133,81 +129,44 @@
                             
                             <div class="row">
                                 <div class="col-md-12">
-                                    <div class="table-responsive">
-                                        <table class="table table-striped custom-table">
-                                            <thead>
-                                                <tr>
-                                                  
-                                                    <th>Name </th>
-                                                 
-                                                    <th>Email</th>
-                                                    <th>Phone</th>
-                                                   
-                                                    <th>10th CGPA</th>
-                                                    <th>12th CGPA</th>
-                                                    <th>UG CGPA</th>
-                                                    <th>Current CGPA</th>
-                                                    <th>Active Backlogs</th>
-                                                    
-                                                   
-                                                    <th>profile</th>
-                                                    <th class="text-right">Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tbody>
-                                                    {% for appstu in app_stu %}
-
-                                                    <tr>
-                                                        {% comment %} <td>{{ appstu.id }}</td> {% endcomment %}
-                                                        <td>{{ appstu.first_name }}&nbsp;{{ appstu.last_name }}</td>
-                                                        
-                                                        <td>{{ appstu.email }}</td>
-                                                        <td>{{ appstu.phone }}</td>
-                                                       
-                                                        <td>{{ appstu.tenth_cgpa }}</td>
-                                                        <td>{{ appstu.twelfth_cgpa }}</td>
-                                                        <td>{{ appstu.ug_cgpa }}</td>
-                                                        <td>{{ appstu.c_cgpa }}</td>
-                                                        <td>{{ appstu.c_backlog }}</td>
-                                                        
-                                                        <td>
-                                                         
-                                                          <form method="post" action="{% url 'studentprofileapp' studentprofile_id=appstu.id %}">
-                                                              {% csrf_token %}
-                                                              <button type="submit" class="btn btn-success">Profile</button>
-                                                          </form>
-                                                          
-                                                          
-                                                      </td>
-                                                        
-                                                        </td>
-                                                     
-                                                        
-                                                        </td>
-                                                        <td>
-                                                            {% if appstu.is_approved == 'pending' %}
-                                                            <form method="post" action="{% url 'approve_shortlist' appstu.id %}">
-                                                                {% csrf_token %}
-                                                                <button type="submit" class="btn btn-success">Select</button>
-                                                            </form>
-                                                            <form method="post" action="{% url 'reject_shortlist' appstu.id %}">
-                                                              {% csrf_token %}
-                                                              <button type="submit" class="btn btn-danger">Reject</button>
-                                                            </form>
-                                                            {% elif  appstu.is_approved == 'approved' %}
-                                                            <button disabled="" type="button" class="btn btn-success">Approved</button>
-                                                            {% else  %}
-                                                            <button disabled="" type="button" class="btn btn-danger">Rejected</button>
-                                                            {% endif  %}
-                                                        </td>  
-                                                    </tr>
-                                                    {% endfor %}
-                                                </tbody>
-                                                
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                    
+                                    <form method="post">
+                                        {% csrf_token %}
+                                        <div class="form-group">
+                                          <label for="title">Title</label>
+                                          <input type="text" class="form-control" id="title" name="title" value="{{ aptitude.title }}">
+                                        </div>
+                                        <div class="form-group">
+                                          <label for="description">Description</label>
+                                          <textarea class="form-control" id="description" name="description">{{ aptitude.description }}</textarea>
+                                        </div>
+                                        <div class="form-group">
+                                          <label for="date_and_time">Date and Time</label>
+                                          <input type="datetime-local" class="form-control" id="date_and_time" name="date_and_time" value="{{ aptitude.date_and_time|date:'Y-m-d\TH:i' }}">
+                                        </div>
+                                        <div class="form-group">
+                                          <label for="link">Link</label>
+                                          <input type="url" class="form-control" id="link" name="link" value="{{ aptitude.link }}">
+                                        </div>
+                                        <div class="form-group">
+                                          <label for="login_id">Login ID</label>
+                                          <input type="text" class="form-control" id="login_id" name="login_id" value="{{ aptitude.login_id }}">
+                                        </div>
+                                        <div class="form-group">
+                                          <label for="password">Password</label>
+                                          <input type="password" class="form-control" id="password" name="password" value="{{ aptitude.password }}">
+                                        </div>
+                                        <div class="form-group">
+                                          <label for="steps">Steps</label>
+                                          <textarea class="form-control" id="steps" name="steps">{{ aptitude.steps }}</textarea>
+                                        </div>
+                                        <div class="form-group">
+                                          <label for="regulations">Regulations</label>
+                                          <textarea class="form-control" id="regulations" name="regulations">{{ aptitude.regulations }}</textarea>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                      </form>
+                                      
                                 </div>
                             </div>
                         </div>
