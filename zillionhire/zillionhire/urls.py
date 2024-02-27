@@ -225,6 +225,7 @@ urlpatterns = [
     path('aptform2',views.aptform2, name="aptform2"),
     path('apt_notification/<int:studentprofile_id>/', views.apt_notification, name='apt_notification'),
 
+    path('conduct-aptitude-test/', conduct_aptitude_test, name='conduct_aptitude_test'),
     
     # path('deleteevent/<int:alumni_id>/<int:event_id>/', views.deleteevent, name='deleteevent'),
     ]

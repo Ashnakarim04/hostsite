@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+{% load static %} 
+<html lang="en">
+
+
+<!-- doctors23:12-->
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'assets2/img/logo.png' %}">
+    <title>ZillionHire - Company Dashboard</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'assets2/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets2/css/font-awesome.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets2/css/select2.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets2/css/bootstrap-datetimepicker.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets2/css/style.css' %}">
+   
+        <script src="{% static 'assets2/js/html5shiv.min.js' %}"></script>
+        <script src="{% static 'assets2/js/respond.min.js' %}"></script>
+       
+    <style>
+        .approved {
+          font-weight: bold;
+          color: green;
+        }
+      
+        .not-approved {
+          font-weight: bold;
+          color: red;
+        }
+        .custom-card {
+            margin-left: 250px; /* Adjust the value as needed */
+        }
+      </style>
+</head> 
+
+<body>
+    <header class="">
+        <nav class="navbar navbar-expand-lg">
+          <div class="container">
+            {% comment %} <a class="navbar-brand" href="{% url 'index' %}"><h2>ZillionHire <em> Website</em></h2></a> {% endcomment %}
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+              <ul class="navbar-nav ml-auto">
+                <li class="nav-item ">
+                  <a class="nav-link" href="{% url 'cindex' %}">Home
+                    {% comment %} <span class="sr-only">(current)</span> {% endcomment %}
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'aboutuser' %}">About Us</a>
+                </li>
+                {% comment %} <li>
+                  <a class="dropdown-toggle nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Others</a>
+                
+                    <div class="dropdown-menu">
+                      <a class="dropdown-item" href="{% url 'cprofile' %}">Profile</a>
+                      <a class="dropdown-item" href="{% url 'loginn' %}">Jobs</a>
+                      <a class="dropdown-item" href="{% url 'loginn' %}">Candidate List</a>
+                      
+                  </div>
+                </li> {% endcomment %}
+                <li class="nav-item dropdown">
+                  {% if user.is_authenticated %}
+                    <a class="nav-link" href="{% url 'loggout' %}">Log Out</a>
+                  {% else %}
+                    <a class="dropdown-toggle nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Login</a>
+                
+                    <div class="dropdown-menu">
+                      <a class="dropdown-item" href="{% url 'loginn' %}">Student</a>
+                      <a class="dropdown-item" href="{% url 'loginn' %}">Company</a>
+                      {% comment %} <a class="dropdown-item" href="{% url 'loginn' %}">College Officer</a> {% endcomment %}
+                      {% comment %} <a class="dropdown-item" href="{% url 'blog' %}">Blog</a>
+                      <a class="dropdown-item" href="testimonials.html">Testimonials</a>
+                      <a class="dropdown-item" href="terms.html">Terms</a> {% endcomment %}
+                  </div>
+                  {% endif %}
+                </li> 
+                
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'contactuser' %}">Contact Us</a>
+                </li>
+                <li class="nav-item active">
+                  <a class="nav-link" href="{% url 'postjob' %}">Post Job</a>
+                  <span class="sr-only">(current)</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </header>
+                <div class="sidebar" id="sidebar">
+                    <div class="sidebar-inner slimscroll">
+                        <div id="sidebar-menu" class="sidebar-menu">
+                            <ul>
+                                <li class="menu-title">Main</li>
+                                {% comment %} <li>
+                                    <a href="{% url 'index-2' %}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
+                                </li> {% endcomment %}
+                                <li class>
+                                  <a href="{%url 'postjob'%}"><i class="fa-solid fa-desktop"></i> <span>JOBS</span></a>
+                              </li>
+                              <li class="active">
+                                <a href="{%url 'appliedstudents'%}"><i class="fas fa-user"></i> <span>APPLICANTS</span></a>
+                              </li>
+                              <li class>
+                                <a href="{%url 'cfirstround'%}"><i class="fas fa-user"></i> <span>SHORT LIST </span></a>
+                              </li>
+                              
+                                
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                    <div class="page-wrapper">
+                        <div class="content">
+                          <div class="row">
+                            <div class="col-sm-4 col-3">
+                                <h4 class="page-title">APTITUDE NOTIFICATION</h4>
+                            </div>
+                     
+                        </div>
+                            </div>
+                      
+                            
+                            
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            {% comment %} <h1 class="card-title">Conduct Aptitude Test</h1> {% endcomment %}
+                                            {% comment %} <form method="post">
+                                                {% csrf_token %}
+                                                <div class="form-group">
+                                                    <label for="title">Title:</label>
+                                                    <input type="text" class="form-control" id="title" name="title">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="description">Description:</label>
+                                                    <textarea class="form-control" id="description" name="description"></textarea>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="date_and_time">Date and Time:</label>
+                                                    <input type="datetime-local" class="form-control" id="date_and_time" name="date_and_time">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="duration_minutes">Duration (minutes):</label>
+                                                    <input type="number" class="form-control" id="duration_minutes" name="duration_minutes">
+                                                </div>
+                                             
+                                                <button type="submit" class="btn btn-primary">Submit</button>
+                                            </form>
+                                            <form id="aptitude-form">
+                                                <div id="question-container"></div>
+                                                <button type="button" class="btn btn-primary mt-3" onclick="addQuestion()">Add Question</button>
+                                                <button type="submit" class="btn btn-success mt-3">Submit</button>
+                                            </form> {% endcomment %}
+                                            <form method="post">
+                                                {% csrf_token %}
+                                                <div class="form-group">
+                                                    <label for="title">Title:</label>
+                                                    <input type="text" class="form-control" id="title" name="title">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="description">Description:</label>
+                                                    <textarea class="form-control" id="description" name="description"></textarea>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="date_and_time">Date and Time:</label>
+                                                    <input type="datetime-local" class="form-control" id="date_and_time" name="date_and_time">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="duration_minutes">Duration (minutes):</label>
+                                                    <input type="number" class="form-control" id="duration_minutes" name="duration_minutes">
+                                                </div>
+                                                <div id="question-container"></div>
+                                                <button type="button" class="btn btn-primary mt-3" onclick="addQuestion()">Add Question</button>
+                                                <button type="button" class="btn btn-success mt-3" onclick="saveQuestions()">Save Questions</button>
+                                                <button type="submit" class="btn btn-success mt-3">Submit</button>
+                                            </form>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+    </div>
+
+
+
+
+
+</div>
+<div class="sidebar-overlay" data-reff=""></div>
+<script src="{% static 'assets/js/jquery-3.2.1.min.js' %}"></script>
+<script src="{% static 'assets/js/popper.min.js' %}"></script>
+<script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'assets/js/jquery.slimscroll.js' %}"></script>
+<script src="{% static 'assets/js/select2.min.js' %}"></script>
+<script src="{% static 'ssets/js/moment.min.js' %}"></script>
+<script src="{% static 'assets/js/bootstrap-datetimepicker.min.js' %}"></script>
+<script src="{% static 'assets/js/app.js' %}"></script>
+
+<script>
+    let questionCount = 0;
+
+    function addQuestion() {
+        questionCount++;
+
+        const questionContainer = document.getElementById('question-container');
+
+        const questionDiv = document.createElement('div');
+        questionDiv.classList.add('question-div', 'mt-3', 'mb-3');
+        questionDiv.innerHTML = `
+            <div class="form-group">
+                <label for="question${questionCount}">Question ${questionCount}</label>
+                <input type="text" class="form-control" id="question${questionCount}" name="question${questionCount}" required>
+            </div>
+            <div class="form-group">
+                <label for="answer-type${questionCount}">Answer Type</label>
+                <select class="form-control" id="answer-type${questionCount}" name="answer-type${questionCount}" onchange="showAnswerOptions(${questionCount})" required>
+                    <option value="">Select Answer Type</option>
+                    <option value="radio">Radio Button</option>
+                    <option value="checkbox">Checkbox</option>
+                    <option value="text">Text Box</option>
+                </select>
+            </div>
+            <div id="answer-options${questionCount}" class="form-group"></div>
+        `;
+
+        questionContainer.appendChild(questionDiv);
+    }
+
+    function showAnswerOptions(questionNumber) {
+        const answerType = document.getElementById(`answer-type${questionNumber}`).value;
+        const answerOptionsDiv = document.getElementById(`answer-options${questionNumber}`);
+        answerOptionsDiv.innerHTML = '';
+    
+        if (answerType === 'radio' || answerType === 'checkbox') {
+            for (let i = 0; i < 4; i++) {
+                answerOptionsDiv.innerHTML += `
+                    <div class="form-check">
+                        <input class="form-check-input" type="${answerType}" name="answer${questionNumber}" id="option${i}${questionNumber}" value="Option ${i + 1}">
+                        <input type="text" class="form-control" id="optionName${i}${questionNumber}" value="Option ${i + 1}" onchange="updateOptionName(${questionNumber}, ${i})">
+                    </div>
+                `;
+            }
+        } else if (answerType === 'text') {
+            answerOptionsDiv.innerHTML += `
+            <textarea class="form-control" name="answer${questionNumber}" id="text-answer${questionNumber}" placeholder="Enter your answer" style="font-family: 'Courier New', monospace;"></textarea>
+            `;
+        }
+    }
+    
+    function updateOptionName(questionNumber, optionIndex) {
+        const optionInput = document.getElementById(`option${optionIndex}${questionNumber}`);
+        const optionNameInput = document.getElementById(`optionName${optionIndex}${questionNumber}`);
+        optionInput.value = optionNameInput.value;
+    }
+       
+
+
+
+    function saveQuestions() {
+        const questions = [];
+    
+        // Iterate over each question
+        for (let i = 1; i <= questionCount; i++) {
+            const question = {};
+            question.question_text = document.getElementById(`question${i}`).value;
+            question.answer_type = document.getElementById(`answer-type${i}`).value;
+    
+            // If answer type is radio or checkbox, collect options
+            if (question.answer_type === 'radio' || question.answer_type === 'checkbox') {
+                question.options = [];
+                for (let j = 0; j < 4; j++) {
+                    const option = {};
+                    option.text = document.getElementById(`optionName${j}${i}`).value;
+                    question.options.push(option);
+                }
+            }
+    
+            // If answer type is text, collect answer
+            if (question.answer_type === 'text') {
+                question.answer = document.getElementById(`text-answer${i}`).value;
+            }
+    
+            questions.push(question);
+        }
+    
+        // Send data to the server
+        $.ajax({
+            type: 'POST',
+            url: '/save_questions/',  // Replace with your Django view URL
+            data: JSON.stringify({ questions: questions }),
+            contentType: 'application/json',
+            success: function(response) {
+                // Handle success response
+                console.log(response);
+            },
+            error: function(xhr, status, error) {
+                // Handle error
+                console.error(error);
+            }
+        });
+    }
+    
+</script>
+
+
+                    
+                  </body>
+</html>

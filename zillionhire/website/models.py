@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from datetime import date
-
+from django.contrib.postgres.fields import JSONField
 # from imagekit.processors import ResizeToFit
 # from imagekit.models import ProcessedImageField
 
@@ -658,3 +658,23 @@ class AddAptitude(models.Model):
 
     def __str__(self):
         return self.title
+
+class AptitudeTest(models.Model):
+    title = models.CharField(max_length=100)
+    description = models.TextField()
+    date_and_time = models.DateTimeField()
+    duration_minutes = models.IntegerField()
+    # Add more fields as needed
+
+    def __str__(self):
+        return self.title
+class Question(models.Model):
+    aptitude_test = models.ForeignKey(AptitudeTest, on_delete=models.CASCADE)
+    aptitude_test = models.ForeignKey(AptitudeTest, on_delete=models.CASCADE)
+    question_text = models.TextField()
+    answer_type = models.CharField(max_length=10, choices=[('radio', 'Radio Button'), ('checkbox', 'Checkbox'), ('text', 'Text Box')])
+    options = models.JSONField(null=True, blank=True)  # Use django.db.models.JSONField
+    answer = models.TextField(null=True, blank=True)  # TextField to store text answer
+
+    def __str__(self):
+        return self.question_text
