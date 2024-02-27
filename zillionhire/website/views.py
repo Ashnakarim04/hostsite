@@ -1605,27 +1605,22 @@ def aptform(request, aptitude_id=None):
             if aptitude_id:
                 # Update existing instance if aptitude_id is provided
                 aptitude = AddAptitude.objects.get(pk=aptitude_id)
-                aptitude.title = title
-                aptitude.description = description
-                aptitude.date_and_time = date_and_time
-                aptitude.link = link
-                aptitude.login_id = login_id
-                aptitude.password = password
-                aptitude.steps = steps
-                aptitude.regulations = regulations
-                aptitude.save()
             else:
                 # Create new instance if aptitude_id is not provided
-                aptitude = AddAptitude.objects.create(
-                    title=title,
-                    description=description,
-                    date_and_time=date_and_time,
-                    link=link,
-                    login_id=login_id,
-                    password=password,
-                    steps=steps,
-                    regulations=regulations
-                )
+                aptitude = AddAptitude()
+
+            # Assign values to the fields
+            aptitude.title = title
+            aptitude.description = description
+            aptitude.date_and_time = date_and_time
+            aptitude.link = link
+            aptitude.login_id = login_id
+            aptitude.password = password
+            aptitude.steps = steps
+            aptitude.regulations = regulations
+            aptitude.companyname = company_profile.companyname  # Set companyname from company_profile
+
+            aptitude.save()  # Save the instance
 
             # Redirect to the form page with the newly created/updated instance
             return redirect('aptform', aptitude_id=aptitude.id)  
@@ -1633,8 +1628,8 @@ def aptform(request, aptitude_id=None):
             print(e)  # Print the exception for debugging purposes
             # You might want to render a form with error messages here
             # For simplicity, we'll just return a generic error response
-            return HttpResponse('An error occurred while processing your request. Please try again later.')
-    
+            return redirect('aptform')  # Redirect to the form page
+
     if aptitude_id:
         aptitude = AddAptitude.objects.get(pk=aptitude_id)
     else:
@@ -2269,16 +2264,25 @@ def alumni_blog(request, studentprofile_id):
     }
 
     return render(request, 'admin/alumni/alumni_blog.html', context)
+def apt_notification(request, studentprofile_id):
+    # Your logic to fetch the student profile based on the studentprofile_id
+    studentprofile = StudentProfile.objects.get(id=studentprofile_id)
+    
+    # Retrieve instances of AddAptitude where status is True
+    filtered_aptitudes = AddAptitude.objects.filter(status=True)
+    
+    # Pass the studentprofile and filtered_aptitudes to the template context
+    context = {
+        'studentprofile': studentprofile,
+        'filtered_aptitudes': filtered_aptitudes,
+    }
+    
+    return render(request, 'student/apt_notification.html', context)
 
 
 def ad_alumniblog(request):
     blog_contents = BlogContent.objects.all()
     return render(request, 'admin/alumni/ad_alumninote.html', {'blog_contents': blog_contents})
-# def scontent2list(request, studentprofile_id):
-#     studentprofile = get_object_or_404(StudentProfile, id=studentprofile_id)
-#     adcon=ccontent.objects.all()
-#     liked_content_ids = LikedContent.objects.filter(user=request.user).values_list('adcon__id', flat=True)
-#     return render(request, 'admin/resources/scontent2list.html', {'studentprofile': studentprofile, 'adcon': adcon, 'liked_content_ids':liked_content_ids})
 
 def payconfirm(request, content_id, studentprofile_id=None):
     # Your existing code to retrieve studentprofile and content_instance

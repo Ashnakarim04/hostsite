@@ -223,7 +223,7 @@ urlpatterns = [
     path('import-excel/', views.import_excel_data_view, name='import_excel_data'),
     path('aptform/', aptform, name='aptform'),
     path('aptform2',views.aptform2, name="aptform2"),
-
+    path('apt_notification/<int:studentprofile_id>/', views.apt_notification, name='apt_notification'),
 
     
     # path('deleteevent/<int:alumni_id>/<int:event_id>/', views.deleteevent, name='deleteevent'),
