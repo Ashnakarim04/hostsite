@@ -1586,6 +1586,7 @@ def searchvideo(request):
 def content2form(request):
     return render(request,'admin/resources/content2form.html')
 
+
 def aptform(request, aptitude_id=None):
     if request.method == 'POST':
         try:
@@ -1623,7 +1624,8 @@ def aptform(request, aptitude_id=None):
                     regulations=regulations
                 )
 
-            return redirect('aptform')  # Redirect to the same form page after submission
+            # Redirect to the form page with the newly created/updated instance
+            return redirect('aptform', aptitude_id=aptitude.id)  
         except Exception as e:
             print(e)  # Print the exception for debugging purposes
             # You might want to render a form with error messages here
@@ -1641,6 +1643,7 @@ def aptform(request, aptitude_id=None):
     
     context = {'aptitude': aptitude}
     return render(request, 'company/add_aptitude.html', context)
+
  
 
 def aptform2(request):
