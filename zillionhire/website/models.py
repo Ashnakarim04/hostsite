@@ -670,7 +670,6 @@ class AptitudeTest(models.Model):
         return self.title
 class Question(models.Model):
     aptitude_test = models.ForeignKey(AptitudeTest, on_delete=models.CASCADE)
-    aptitude_test = models.ForeignKey(AptitudeTest, on_delete=models.CASCADE)
     question_text = models.TextField()
     answer_type = models.CharField(max_length=10, choices=[('radio', 'Radio Button'), ('checkbox', 'Checkbox'), ('text', 'Text Box')])
     options = models.JSONField(null=True, blank=True)  # Use django.db.models.JSONField

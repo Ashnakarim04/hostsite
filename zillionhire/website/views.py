@@ -2307,12 +2307,17 @@ from .forms import AptitudeTestForm  # Create a form for conducting aptitude tes
 def conduct_aptitude_test(request):
     if request.method == 'POST':
         # Process the aptitude test details
+        title = request.POST.get('title')
+        description = request.POST.get('description')
+        date_and_time_str = request.POST.get('date_and_time')
+        date_and_time = datetime.strptime(date_and_time_str, '%Y-%m-%dT%H:%M')
+        duration_minutes = int(request.POST.get('duration_minutes'))
+        
         aptitude_test = AptitudeTest.objects.create(
-            # Retrieve data from the form fields
-            title=request.POST.get('title'),
-            description=request.POST.get('description'),
-            date_and_time=request.POST.get('date_and_time'),
-            duration_minutes=request.POST.get('duration_minutes')
+            title=title,
+            description=description,
+            date_and_time=date_and_time,
+            duration_minutes=duration_minutes
         )
 
         # Process the questions dynamically added
@@ -2339,33 +2344,53 @@ def conduct_aptitude_test(request):
             )
 
         # Redirect or render success message
-        return redirect('success_page')  # Redirect to a success page
+        return render(request, 'company/create_apt.html')
     else:
         # Handle GET request (render the form)
         return render(request, 'company/create_apt.html')
 
+from django.shortcuts import render, redirect
+from .models import AptitudeTest, Question
+
 def save_questions(request):
     if request.method == 'POST':
-        data = request.POST.get('questions')
-        if data:
-            questions = json.loads(data)
-            for question_data in questions:
-                question_text = question_data['question_text']
-                answer_type = question_data['answer_type']
-                options = question_data.get('options', [])
-                answer = question_data.get('answer', '')
+        # Extract data for AptitudeTest model
+        aptitude_test = AptitudeTest.objects.create(
+            title=request.POST.get('title'),
+            description=request.POST.get('description'),
+            date_and_time=request.POST.get('date_and_time'),
+            duration_minutes=request.POST.get('duration_minutes')
+        )
 
-                question = Question.objects.create(
-                    question_text=question_text,
-                    answer_type=answer_type,
-                    options=options,
-                    answer=answer
-                )
-            return JsonResponse({'message': 'Questions saved successfully'}, status=200)
-        else:
-            return JsonResponse({'error': 'No data received'}, status=400)
+        # Process the questions dynamically added
+        question_count = int(request.POST.get('question_count', 0))
+        for i in range(1, question_count + 1):
+            question_text = request.POST.get(f'question{i}')
+            answer_type = request.POST.get(f'answer-type{i}')
+            options = []
+
+            # Retrieve options based on answer type
+            if answer_type == 'radio' or answer_type == 'checkbox':
+                for j in range(1, 5):  # Assuming there are 4 options
+                    option_text = request.POST.get(f'option{i}_{j}_name')
+                    options.append(option_text)
+            elif answer_type == 'text':
+                options.append(request.POST.get(f'text-answer{i}'))
+
+            # Create question instance and save
+            question = Question.objects.create(
+                aptitude_test=aptitude_test,
+                question_text=question_text,
+                answer_type=answer_type,
+                options=options  # Ensure options are properly formatted
+            )
+
+        # Redirect or render success message
+        return redirect('cfirstround')  # Redirect to a success page
     else:
-        return JsonResponse({'error': 'Invalid request method'}, status=405)
+        # Handle GET request (render the form)
+        return render(request, 'company/create_apt.html')
+
 
 
 def ad_alumniblog(request):
