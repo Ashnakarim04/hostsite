@@ -1641,7 +1641,6 @@ def aptform(request, aptitude_id=None):
     
     context = {'aptitude': aptitude}
     return render(request, 'company/add_aptitude.html', context)
-
  
 
 def aptform2(request):
