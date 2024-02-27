@@ -1588,6 +1588,9 @@ def content2form(request):
 
 
 def aptform(request, aptitude_id=None):
+    # Fetch the company profile related to the logged-in user
+    company_profile = CompanyProfile.objects.get(user=request.user)
+
     if request.method == 'POST':
         try:
             title = request.POST['title']
@@ -1632,16 +1635,15 @@ def aptform(request, aptitude_id=None):
             # For simplicity, we'll just return a generic error response
             return HttpResponse('An error occurred while processing your request. Please try again later.')
     
-    # If it's a GET request
-    # Check if aptitude_id is provided in the URL
     if aptitude_id:
-        # Fetch the existing instance if aptitude_id is provided
         aptitude = AddAptitude.objects.get(pk=aptitude_id)
     else:
-        # Create a blank instance if aptitude_id is not provided
         aptitude = None
     
-    context = {'aptitude': aptitude}
+    context = {
+        'aptitude': aptitude,
+        'company_profile': company_profile,  # Pass the company profile to the template context
+    }
     return render(request, 'company/add_aptitude.html', context)
 
  
