@@ -6,7 +6,7 @@ from django.contrib import messages, auth
 from django.http import HttpResponse,HttpResponseRedirect
 from .models import AdminStudent, Jobs, CompanyProfile
 from .models import Students,StudentProfile,CompanyApprove,JobApplication,internship,classdetails,videolibrary,ccontent, LikedContent, Alumni
-from .models import resume1, LikedContent1, ResumeBuilder, Review, Event, ExcelData, AddAptitude, AptitudeTest,Question
+from .models import resume1, LikedContent1, ResumeBuilder, Review, Event, ExcelData, AddAptitude, AptitudeTest,Question, Option, ExamSchedule
 from .models import *
 # from .forms import StudentForm 
 from django.shortcuts import render, get_object_or_404, redirect
@@ -2304,63 +2304,70 @@ from .forms import AptitudeTestForm  # Create a form for conducting aptitude tes
     
 #     return render(request, 'company/create_apt.html')
 
-def conduct_aptitude_test(request):
-    if request.method == 'POST':
-        # Process the aptitude test details
-        aptitude_test = AptitudeTest.objects.create(
-            title=request.POST.get('title'),
-            description=request.POST.get('description'),
-            date_and_time=request.POST.get('date_and_time'),
-            duration_minutes=request.POST.get('duration_minutes')
-        )
+# def conduct_aptitude_test(request):
+#     if request.method == 'POST':
+#         # Process the aptitude test details
+#         aptitude_test = AptitudeTest.objects.create(
+#             title=request.POST.get('title'),
+#             description=request.POST.get('description'),
+#             date_and_time=request.POST.get('date_and_time'),
+#             duration_minutes=request.POST.get('duration_minutes')
+#         )
 
-        # Process the questions dynamically added
-        question_count = int(request.POST.get('question_count', 0))
-        for i in range(1, question_count + 1):
-            question_text = request.POST.get(f'question{i}')
-            answer_type = request.POST.get(f'answer-type{i}')
-            options = []
+#         # Process the questions dynamically added
+#         question_count = int(request.POST.get('question_count', 0))
+#         for i in range(1, question_count + 1):
+#             question_text = request.POST.get(f'question{i}')
+#             answer_type = request.POST.get(f'answer-type{i}')
+#             options = []
 
-            # Retrieve options based on answer type
-            if answer_type == 'radio' or answer_type == 'checkbox':
-                for j in range(4):  # Assuming there are 4 options
-                    option_text = request.POST.get(f'option{i}_{j}_name')
-                    options.append(option_text)
-            elif answer_type == 'text':
-                options.append(request.POST.get(f'text-answer{i}'))
+#             # Retrieve options based on answer type
+#             if answer_type == 'radio' or answer_type == 'checkbox':
+#                 for j in range(4):  # Assuming there are 4 options
+#                     option_text = request.POST.get(f'option{i}_{j}_name')
+#                     options.append(option_text)
+#             elif answer_type == 'text':
+#                 options.append(request.POST.get(f'text-answer{i}'))
 
-            # Create question instance and save
-            question = Question.objects.create(
-                aptitude_test=aptitude_test,
-                question_text=question_text,
-                answer_type=answer_type,
-                options=options
-            )
+#             # Create question instance and save
+#             question = Question.objects.create(
+#                 aptitude_test=aptitude_test,
+#                 question_text=question_text,
+#                 answer_type=answer_type,
+#                 options=options
+#             )
 
-        # Redirect to a success page
-        return redirect('cfirstround')
-    else:
-        # Handle GET request (render the form)
-        return render(request, 'company/create_apt.html')
+#         # Redirect to a success page
+#         return redirect('cfirstround')
+#     else:
+#         # Handle GET request (render the form)
+#         return render(request, 'company/create_apt.html')
 
 from django.shortcuts import render, redirect
-from .models import AptitudeTest, Question
 
-def save_questions(request):
+def conduct_aptitude_test(request):
     if request.method == 'POST':
-        questions_data = request.POST.getlist('questions[]')
-        for question_data in questions_data:
-            question = Question.objects.create(
-                aptitude_test_id=request.POST.get('aptitude_test_id'),
-                question_text=question_data['question_text'],
-                answer_type=question_data['answer_type'],
-                options=question_data.get('options'),
-                answer=question_data.get('answer')
-            )
-        return JsonResponse({'message': 'Questions saved successfully'}, status=200)
-    else:
-        return JsonResponse({'error': 'Invalid request method'}, status=405)
+        exam_schedule_id = request.POST.get('exam_schedule')
+        exam_schedule = ExamSchedule.objects.get(id=exam_schedule_id)
+        question_count = int(request.POST.get('question_count'))
 
+        for i in range(1, question_count + 1):
+            question_text = request.POST.get(f'question{i}')
+            question = Question.objects.create(exam_schedule=exam_schedule, question_text=question_text)
+
+            for j in range(1, 5):
+                option_text = request.POST.get(f'question{i}_option{j}')
+                is_correct = (j == int(request.POST.get(f'question{i}_answer')))
+                Option.objects.create(question=question, option_text=option_text, is_correct=is_correct)
+
+        return redirect('cfirstround', exam_schedule_id=exam_schedule_id)
+  # Redirect to a success page after saving
+
+    else:
+        # Fetch all exam schedules to populate the dropdown
+        exam_schedules = ExamSchedule.objects.all()
+        return render(request, 'company/create_apt.html', {'exam_schedules': exam_schedules})
+from .models import AptitudeTest, Question
 
 
 def ad_alumniblog(request):

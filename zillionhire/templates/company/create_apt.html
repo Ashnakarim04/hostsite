@@ -131,55 +131,32 @@
                                 <div class="col-md-12">
                                     <div class="card">
                                         <div class="card-body">
-                                            {% comment %} <h1 class="card-title">Conduct Aptitude Test</h1> {% endcomment %}
-                                            {% comment %} <form method="post">
+                                           
+                                            <h2>Create Online Exam</h2>
+
+                                            <form method="post" action="">
+                                    
                                                 {% csrf_token %}
+                                    
                                                 <div class="form-group">
-                                                    <label for="title">Title:</label>
-                                                    <input type="text" class="form-control" id="title" name="title">
+                                                    <label for="exam_schedule">Exam Schedule:</label>
+                                                    <select class="form-control" id="exam_schedule" name="exam_schedule">
+                                                        {% for schedule in exam_schedules %}
+                                                        <option value="{{ schedule.id }}">{{ schedule }}</option>
+                                                        {% endfor %}
+                                                    </select>
                                                 </div>
-                                                <div class="form-group">
-                                                    <label for="description">Description:</label>
-                                                    <textarea class="form-control" id="description" name="description"></textarea>
+                                    
+                                                <div id="questions-container">
+                                                    <!-- Dynamic questions will be added here -->
                                                 </div>
-                                                <div class="form-group">
-                                                    <label for="date_and_time">Date and Time:</label>
-                                                    <input type="datetime-local" class="form-control" id="date_and_time" name="date_and_time">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="duration_minutes">Duration (minutes):</label>
-                                                    <input type="number" class="form-control" id="duration_minutes" name="duration_minutes">
-                                                </div>
-                                             
-                                                <button type="submit" class="btn btn-primary">Submit</button>
-                                            </form>
-                                            <form id="aptitude-form">
-                                                <div id="question-container"></div>
-                                                <button type="button" class="btn btn-primary mt-3" onclick="addQuestion()">Add Question</button>
-                                                <button type="submit" class="btn btn-success mt-3">Submit</button>
-                                            </form> {% endcomment %}
-                                            <form method="post">
-                                                {% csrf_token %}
-                                                <div class="form-group">
-                                                    <label for="title">Title:</label>
-                                                    <input type="text" class="form-control" id="title" name="title">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="description">Description:</label>
-                                                    <textarea class="form-control" id="description" name="description"></textarea>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="date_and_time">Date and Time:</label>
-                                                    <input type="datetime-local" class="form-control" id="date_and_time" name="date_and_time">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="duration_minutes">Duration (minutes):</label>
-                                                    <input type="number" class="form-control" id="duration_minutes" name="duration_minutes">
-                                                </div>
-                                                <div id="question-container"></div>
-                                                <button type="button" class="btn btn-primary mt-3" onclick="addQuestion()">Add Question</button>
-                                                <button type="button" class="btn btn-success mt-3" onclick="saveQuestions()">Save Questions</button>
-                                                <button type="submit" class="btn btn-success mt-3">Submit</button>
+                                    
+                                                <button type="button" class="btn btn-primary mb-2" onclick="addQuestion()">Add Question</button>
+                                                <button type="button" class="btn btn-secondary mb-2" onclick="removeQuestion()">Remove Question</button>
+                                                <button type="button" class="btn btn-warning mb-2" onclick="resetQuestions()">Reset Questions</button>
+                                                <input type="hidden" name="question_count" id="question_count" value="0">
+                                    
+                                                <button type="submit" class="btn btn-primary">Create Online Exam</button>
                                             </form>
                                             
                                         </div>
@@ -206,113 +183,70 @@
 <script src="{% static 'assets/js/app.js' %}"></script>
 
 <script>
-    let questionCount = 0;
-
     function addQuestion() {
-        questionCount++;
+        var container = document.getElementById("questions-container");
+        var questionNumber = container.childElementCount + 1;
 
-        const questionContainer = document.getElementById('question-container');
+        var questionDiv = document.createElement("div");
+        questionDiv.className = "form-group";
 
-        const questionDiv = document.createElement('div');
-        questionDiv.classList.add('question-div', 'mt-3', 'mb-3');
-        questionDiv.innerHTML = `
-            <div class="form-group">
-                <label for="question${questionCount}">Question ${questionCount}</label>
-                <input type="text" class="form-control" id="question${questionCount}" name="question${questionCount}" required>
-            </div>
-            <div class="form-group">
-                <label for="answer-type${questionCount}">Answer Type</label>
-                <select class="form-control" id="answer-type${questionCount}" name="answer-type${questionCount}" onchange="showAnswerOptions(${questionCount})" required>
-                    <option value="">Select Answer Type</option>
-                    <option value="radio">Radio Button</option>
-                    <option value="checkbox">Checkbox</option>
-                    <option value="text">Text Box</option>
-                </select>
-            </div>
-            <div id="answer-options${questionCount}" class="form-group"></div>
-        `;
+        var questionLabel = document.createElement("label");
+        questionLabel.textContent = "Question " + questionNumber + " (Malayalam):";
+        questionDiv.appendChild(questionLabel);
 
-        questionContainer.appendChild(questionDiv);
-    }
+        var questionInput = document.createElement("input");
+        questionInput.type = "text";
+        questionInput.className = "form-control mb-2";  // Added Bootstrap classes for styling
+        questionInput.name = "question" + questionNumber;
+        questionInput.placeholder = "ചോദ്യം";
+        questionDiv.appendChild(questionInput);
 
-    function showAnswerOptions(questionNumber) {
-        const answerType = document.getElementById(`answer-type${questionNumber}`).value;
-        const answerOptionsDiv = document.getElementById(`answer-options${questionNumber}`);
-        answerOptionsDiv.innerHTML = '';
-    
-        if (answerType === 'radio' || answerType === 'checkbox') {
-            for (let i = 0; i < 4; i++) {
-                answerOptionsDiv.innerHTML += `
-                    <div class="form-check">
-                        <input class="form-check-input" type="${answerType}" name="answer${questionNumber}" id="option${i}${questionNumber}" value="Option ${i + 1}">
-                        <input type="text" class="form-control" id="optionName${i}${questionNumber}" value="Option ${i + 1}" onchange="updateOptionName(${questionNumber}, ${i})">
-                    </div>
-                `;
-            }
-        } else if (answerType === 'text') {
-            answerOptionsDiv.innerHTML += `
-            <textarea class="form-control" name="answer${questionNumber}" id="text-answer${questionNumber}" placeholder="Enter your answer" style="font-family: 'Courier New', monospace;"></textarea>
-            `;
+        for (var i = 1; i <= 4; i++) {
+            var optionInput = document.createElement("input");
+            optionInput.type = "text";
+            optionInput.className = "form-control mb-2";  // Added Bootstrap classes for styling
+            optionInput.name = "question" + questionNumber + "_option" + i;
+            optionInput.placeholder = "Option " + i;
+            questionDiv.appendChild(optionInput);
         }
-    }
-    
-    function updateOptionName(questionNumber, optionIndex) {
-        const optionInput = document.getElementById(`option${optionIndex}${questionNumber}`);
-        const optionNameInput = document.getElementById(`optionName${optionIndex}${questionNumber}`);
-        optionInput.value = optionNameInput.value;
-    }
-       
 
+        var answerLabel = document.createElement("label");
+        answerLabel.textContent = "Correct Answer for Question " + questionNumber + ":";
+        questionDiv.appendChild(answerLabel);
 
+        var answerSelect = document.createElement("select");
+        answerSelect.className = "form-control mb-2";  // Added Bootstrap classes for styling
+        answerSelect.name = "question" + questionNumber + "_answer";
+        answerSelect.required = true;
 
-    function saveQuestions() {
-        const questions = [];
-    
-        // Iterate over each question
-        for (let i = 1; i <= questionCount; i++) {
-            const question = {};
-            question.question_text = document.getElementById(`question${i}`).value;
-            question.answer_type = document.getElementById(`answer-type${i}`).value;
-    
-            // If answer type is radio or checkbox, collect options
-            if (question.answer_type === 'radio' || question.answer_type === 'checkbox') {
-                question.options = [];
-                for (let j = 0; j < 4; j++) {
-                    const option = {};
-                    option.text = document.getElementById(`optionName${j}${i}`).value;
-                    question.options.push(option);
-                }
-            }
-    
-            // If answer type is text, collect answer
-            if (question.answer_type === 'text') {
-                question.answer = document.getElementById(`text-answer${i}`).value;
-            }
-    
-            questions.push(question);
+        for (var j = 1; j <= 4; j++) {
+            var option = document.createElement("option");
+            option.value = j;
+            option.textContent = "Option " + j;
+            answerSelect.appendChild(option);
         }
-    
-        // Send data to the server
-        $.ajax({
-            type: 'POST',
-            url: '/save_questions/',  // Replace with your Django view URL
-            data: {
-                aptitude_test_id: document.getElementById('aptitude_test_id').value,
-                questions: questions,
-                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
-            },
-            success: function(response) {
-                // Handle success response
-                console.log(response);
-            },
-            error: function(xhr, status, error) {
-                // Handle error
-                console.error(error);
-            }
-        });
+
+        questionDiv.appendChild(answerSelect);
+
+        container.appendChild(questionDiv);
+        document.getElementById('question_count').value = container.childElementCount;
     }
-    
-    
+
+    function removeQuestion() {
+        var container = document.getElementById("questions-container");
+        var questionCount = container.childElementCount;
+
+        if (questionCount > 0) {
+            container.removeChild(container.lastChild);
+        }
+        
+        document.getElementById('question_count').value = container.childElementCount;
+    }
+
+    function resetQuestions() {
+        var container = document.getElementById("questions-container");
+        container.innerHTML = "";
+    }
 </script>
 
 

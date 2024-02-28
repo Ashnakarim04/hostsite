@@ -668,12 +668,36 @@ class AptitudeTest(models.Model):
 
     def __str__(self):
         return self.title
+# class Question(models.Model):
+#     aptitude_test = models.ForeignKey(AptitudeTest, on_delete=models.CASCADE)
+#     question_text = models.TextField()
+#     answer_type = models.CharField(max_length=10, choices=[('radio', 'Radio Button'), ('checkbox', 'Checkbox'), ('text', 'Text Box')])
+#     options = models.JSONField(null=True, blank=True)  # Use django.db.models.JSONField
+#     answer = models.TextField(null=True, blank=True)  # TextField to store text answer
+
+#     def __str__(self):
+#         return self.question_text
+    
+class ExamSchedule(models.Model):
+    name = models.CharField(max_length=100)
+    date = models.DateField()
+    # You can add more fields as per your requirements
+
+    def __str__(self):
+        return self.name
+
 class Question(models.Model):
-    aptitude_test = models.ForeignKey(AptitudeTest, on_delete=models.CASCADE)
+    exam_schedule = models.ForeignKey(ExamSchedule, on_delete=models.CASCADE, default=1)  # Use the primary key of an existing ExamSchedule instance
     question_text = models.TextField()
-    answer_type = models.CharField(max_length=10, choices=[('radio', 'Radio Button'), ('checkbox', 'Checkbox'), ('text', 'Text Box')])
-    options = models.JSONField(null=True, blank=True)  # Use django.db.models.JSONField
-    answer = models.TextField(null=True, blank=True)  # TextField to store text answer
+    # Add more fields as needed
 
     def __str__(self):
         return self.question_text
+class Option(models.Model):
+    exam_schedule = models.ForeignKey(ExamSchedule, on_delete=models.CASCADE, default=" id ")    
+    option_text = models.CharField(max_length=255)
+    is_correct = models.BooleanField(default=False)
+    # You can add more fields as per your requirements
+
+    def __str__(self):
+        return self.option_text
