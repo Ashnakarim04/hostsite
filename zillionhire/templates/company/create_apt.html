@@ -296,8 +296,11 @@
         $.ajax({
             type: 'POST',
             url: '/save_questions/',  // Replace with your Django view URL
-            data: JSON.stringify({ questions: questions }),
-            contentType: 'application/json',
+            data: {
+                aptitude_test_id: document.getElementById('aptitude_test_id').value,
+                questions: questions,
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+            },
             success: function(response) {
                 // Handle success response
                 console.log(response);
@@ -308,6 +311,7 @@
             }
         });
     }
+    
     
 </script>
 
