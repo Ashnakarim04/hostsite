@@ -154,9 +154,7 @@ function getAdmissionNumber(firstName) {
                 <li >
                     <a href="{% url 'admin_index2' %}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
                 </li>
-    {% comment %} <li>
-                    <a href="{% url 'admin_poststudent' %}"><i class="fa-solid fa-user-graduate"></i> <span>Students</span></a>
-                </li> {% endcomment %}
+    
                 <li class="active">
                     <a href="{% url 'ad_studentlist' %}"><i class="fa-solid fa-award"></i> <span> Students List</span></a>
                 </li>
@@ -170,9 +168,7 @@ function getAdmissionNumber(firstName) {
                         <li><a href="{% url 'companyapprove' %}">Approve Company</a></li>
                         <li><a href="{% url 'companyprofilelist' %}">Company List</a></li>
                         <li><a href="{% url 'jobslist' %}">Jobs</a></li>
-                        {% comment %} <li><a href="{% url 'admin_company' %}">Applied Students</a></li>
-                        <li><a href="{% url 'admin_company' %}">Short Listed Students</a></li> {% endcomment %}
-                        
+                       
                     </ul>
                 </li>
                 <li>
@@ -187,103 +183,64 @@ function getAdmissionNumber(firstName) {
     </div>
 </div> 
 <div class="page-wrapper">
-  <div class="content">
+    <div class="content">
       <div class="row">
-          <div class="col-sm-4 col-3">
-              <h4 class="page-title">ADD STUDENT</h4>
-          </div>
-<div id="content-wrapper">
-    <div class="container-fluid">
-        <!-- Icon Cards-->
-        <div class="row">
-            <div class="container-fluid">
-                <h2 class="mt-3 text-center">Add Student</h2>
-                <div class="row">
-                    <div class="col-md-6 offset-md-3">
-                        <form method="POST" action="{% url 'add_student' %}" enctype="multipart/form-data">
-                            {% csrf_token %}
-
-                            {% comment %} <div class="form-group">
-                                <label for="first_name">First Name</label>
-                                <input type="text" class="form-control" id="first_name" name="first_name" placeholder="Your first name" oninput="validateName(this)">
-                                <div class="feedback" style="color: red;"></div>
-                            </div> {% endcomment %}
-                            <div class="form-group">
-                                <label for="first_name">First Name</label>
-                                <input type="text" class="form-control" id="first_name" name="first_name" placeholder="Your first name" oninput="suggestFirstName(this)">
-                                <ul id="first_name_suggestions" class="suggestions"></ul>
-                                <div class="feedback" style="color: red;"></div>
-                            </div>
-
-                            {% comment %} <div class="form-group">
-                                <label for="last_name">Last Name</label>
-                                <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Your last name" oninput="validateName(this)">
-                                <div class="feedback" style="color: red;"></div>
-                            </div> {% endcomment %}
-                            <div class="form-group">
-                                <label for="last_name">Last Name</label>
-                                <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Your last name" oninput="suggestLastName(this)">
-                                <ul id="last_name_suggestions" class="suggestions"></ul>
-                                <div class="feedback" style="color: red;"></div>
-                            </div>
-                            
- 
-                            <div class="form-group">
-                                <label for="email">Email Address</label>
-                                <input type="email" class="form-control" id="email" name="email" placeholder="Your email address" oninput="validateEmail(this)">
-                                <div class="feedback" style="color: red;"></div>
-                            </div>
-                            
-                            {% comment %} <div class="form-group">
-                               <label for="license_no">Admission Number</label>
-                                <input type="text" class="form-control" id="license_no" name="Admission_no" placeholder="Your License Number" oninput="validateLicenseNumber(this)">
-                                <div class="feedback" style="color: red;"></div>
-                            </div> {% endcomment %}
-                            <div class="form-group">
-                                <label for="admission_no">Admission Number</label>
-                                <input type="text" class="form-control" id="admission_no" name="admission_no" placeholder="Your Admission Number" oninput="suggestAdmissionNumber(this)">
-                                <ul id="admission_no_suggestions" class="suggestions"></ul>
-                                <div class="feedback" style="color: red;"></div>
-                            </div>
-                            
-
-                            <div class="form-group">
-                                <label for="phone">Phone</label>
-                                <input type="text" class="form-control" id="phone" name="phone" placeholder="Your Phone Number" oninput="validatePhoneNumber(this)">
-                                <div class="feedback" style="color: red;"></div>
-                            </div>
-
-                            {% if messages %}
-                                <ul class="messages">
-                                    {% for message in messages %}
-                                        {% if message.tags == 'error' %}
-                                            <div class="alert alert-danger">
-                                                {{ message }}
-                                            </div>
-                                        {% elif message.tags == 'success' %}
-                                            <div class="alert alert-success">
-                                                {{ message }}
-                                            </div>
-                                        {% endif %}
-                                    {% endfor %}
-                                </ul>
-                            {% endif %}
-
-                            <div class="text-center mt-4">
-                                <button id="submitstu" type="submit" class="btn btn-warning" style="min-width: 15em;">
-                                    Submit
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
+        <div class="col-sm-12">
+          <h2 class="page-title">Add Student</h2>
         </div>
+      </div>
+      <div class="row">
+        <div class="col-md-8 offset-md-2">
+          <div class="card">
+            <div class="card-body">
+              <form method="POST" action="{% url 'add_student' %}" enctype="multipart/form-data">
+                {% csrf_token %}
+  
+                <div class="form-group">
+                  <label for="first_name">First Name</label>
+                  <input type="text" class="form-control" id="first_name" name="first_name" placeholder="Enter first name" required>
+                </div>
+  
+                <div class="form-group">
+                  <label for="last_name">Last Name</label>
+                  <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Enter last name" required>
+                </div>
+  
+                <div class="form-group">
+                  <label for="email">Email Address</label>
+                  <input type="email" class="form-control" id="email" name="email" placeholder="Enter email address" required>
+                </div>
+  
+                <div class="form-group">
+                  <label for="admission_no">Admission Number</label>
+                  <input type="text" class="form-control" id="admission_no" name="admission_no" placeholder="Enter admission number" required>
+                </div>
+  
+                <div class="form-group">
+                  <label for="phone">Phone</label>
+                  <input type="text" class="form-control" id="phone" name="phone" placeholder="Enter phone number" required>
+                </div>
+  
+                {% if messages %}
+                  <div class="alert alert-dismissible {% if messages.tags == 'error' %}alert-danger{% elif messages.tags == 'success' %}alert-success{% endif %}">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    {% for message in messages %}
+                      {{ message }}
+                    {% endfor %}
+                  </div>
+                {% endif %}
+  
+                <div class="text-center mt-4">
+                  <button id="submitstu" type="submit" class="btn btn-primary">Submit</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-</div>
-</div>          
-</div>
-</div>
+  </div>
+  
 
 <head>
     <meta charset="utf-8">
