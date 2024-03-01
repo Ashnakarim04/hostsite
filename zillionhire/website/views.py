@@ -1463,31 +1463,10 @@ def resume1(request):
         entry.save()
         return redirect('resumeform')
 
-# def resume1(request):
-#     if request.method == 'POST':
-#         title = request.POST.get('title', '')
-#         date = request.POST.get('date', '')
-#         more = request.POST.get('more', '')
 
-#         # Basic validation
-#         if not title or not date or not more:
-#             return HttpResponse("Please fill in all required fields.")
-
-#         image = request.FILES.get('p')
-#         pdf_file = request.FILES.get('pdf')
-#         video = request.FILES.get('video')
-
-#         try:
-#             member = resume1(title=title, date=date, more=more, image=image, pdf=pdf_file, video=video)
-#             member.save()
-#             return redirect('resumeform')
-#         except Exception as e:
-#             return HttpResponse(f"An error occurred: {e}")
-
-#     return HttpResponse("Invalid request.")
 
 def resumelist(request):
-    adconts=resume1.objects.all()
+    adconts=resumeadmin.objects.all()
     return render(request,'admin/resources/resumelist.html',{'adconts': adconts})
 # def ad_studentlist(request):
 #     adstus=StudentProfile.objects.all()

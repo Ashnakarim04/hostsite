@@ -199,7 +199,7 @@ body {margin:0;font-family:Arial}
               </div><br><br>
 
               <div class="col-sm-8 col-9 text-right m-b-20">
-                <div class="float-left">
+                {% comment %} <div class="float-left">
                     <form method="get" action="{% url 'searchcontent' %}">
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="Search..." name="search_query">
@@ -210,7 +210,7 @@ body {margin:0;font-family:Arial}
                             </div>
                         </div>
                     </form>
-                </div>
+                </div> {% endcomment %}
                 <div class="col-sm-8 col-9 text-right m-b-20">
                     <a href="{% url 'resumeform' %}" class="btn btn-primary btn-rounded float-right"><i class="fa fa-plus"></i> Add New Content</a>
                 </div>
@@ -225,26 +225,31 @@ body {margin:0;font-family:Arial}
                 <div class="profile-widget box-effect">
                 <div class="profile-widget">
                     <div class="doctor-img">
-                        <img class="avatar" src="{% if adcont.img %}{{ adcont.img.url }}{% else %}path_to_default_image{% endif %}" alt="Cover Image" name="cover_image" id="cover_image" width="100" height="80" style="border-radius: 50%;">
+                        <img class="avatar" src="{% if adcont.image %}{{ adcont.image.url }}{% else %}path_to_default_image{% endif %}" alt="Cover Image" name="cover_image" id="cover_image" width="100" height="80" style="border-radius: 50%;">
                     </div>
-                    <div class="dropdown profile-action">
+                    {% comment %} <div class="dropdown profile-action">
                         <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
                         <!-- Add actions or options here if needed -->
                         <div class="dropdown-menu dropdown-menu-right">
                             <a class="dropdown-item" href=" {% url 'profc'  %}"><i class="fa fa-user"></i> Edit</a>
-                            {% comment %} <a class="dropdown-item" href=" {% url 'ad_deletecompany'  %}"><i class="fa fa-ban"></i> Remove</a> {% endcomment %}
                             <a class="dropdown-item" href="{% url 'delete_company' %}">
                                 <i class="fa fa-ban"></i> Remove
                             </a>
                         </div> 
-                    </div>
+                    </div> {% endcomment %}
                     <div  style="text-align: left;">
-                        <p class="card-text"><b>Title :</b> {{ adcont.title }}</p>
-                        <p class="card-text"><b>Caption :</b> {{ adcont.caption }}</p>
-                        <p class="card-text"><b>About :</b> {{ adcont.moreinfo }}</p>
-                        <p class="card-text"><b>Uploaded date :</b> {{ adcont.stdate }}</p>
+                        <p class="card-text"><b></b> {{ adcont.title }}</p>
+                        <p class="card-text"><b></b> {{ adcont.more }}</p>
+                        {% comment %} <p class="card-text"><b></b> {{ adcont.moreinfo }}</p> {% endcomment %}
+                        {% comment %} <p class="card-text"><b></b> {{ adcont.stdate }}</p> {% endcomment %}
                         {% if adcont.pdf %}
                         <p class="card-text"><b></b> <a href="{{ adcont.pdf.url }}" target="_blank">PDF</a></p>
+                        {% endif %}
+                        {% if adcont.video %}
+                            <video width="250" height="240" controls>
+                            <source src="{{ adcont.video.url }}" type="video/mp4">
+                            Your browser does not support the video tag.
+                            </video>
                         {% endif %}
                         
                         
