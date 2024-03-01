@@ -1,0 +1,26 @@
+<main class="main-container bg-grey"> <!-- Added bg-grey class for grey background -->
+    <div class="container mt-5">
+        <h2 class="text-black display-4">Questions and Options</h2>
+
+        <div class="card-body">
+            <ul class="list-group">
+                {% for question in questions %}
+                <li class="list-group-item">
+                    <h5 class="text-black">Question {{ forloop.counter }}</h5>
+                    <p class="text-black">{{ question.question_text }}</p>
+                    <h6 class="text-black">Options:</h6>
+                    <ul class="list-group">
+                        {% for option in question.option_set.all %}
+                        <li class="list-group-item {% if option.is_correct %}text-success{% endif %}">
+                            {{ option.option_text }}
+                            {% if option.is_correct %}<span class="badge bg-success">Correct</span>{% endif %}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</main>
+

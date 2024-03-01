@@ -2344,11 +2344,16 @@ from .forms import AptitudeTestForm  # Create a form for conducting aptitude tes
 #         return render(request, 'company/create_apt.html')
 
 from django.shortcuts import render, redirect
+from django.http import HttpResponseNotFound
 
 def conduct_aptitude_test(request):
     if request.method == 'POST':
         exam_schedule_id = request.POST.get('exam_schedule')
-        exam_schedule = ExamSchedule.objects.get(id=exam_schedule_id)
+        try:
+            exam_schedule = ExamSchedule.objects.get(id=exam_schedule_id)
+        except ExamSchedule.DoesNotExist:
+            return HttpResponseNotFound("Exam Schedule does not exist.")
+
         question_count = int(request.POST.get('question_count'))
 
         for i in range(1, question_count + 1):
@@ -2361,13 +2366,67 @@ def conduct_aptitude_test(request):
                 Option.objects.create(question=question, option_text=option_text, is_correct=is_correct)
 
         return redirect('cfirstround', exam_schedule_id=exam_schedule_id)
-  # Redirect to a success page after saving
-
     else:
         # Fetch all exam schedules to populate the dropdown
         exam_schedules = ExamSchedule.objects.all()
         return render(request, 'company/create_apt.html', {'exam_schedules': exam_schedules})
-from .models import AptitudeTest, Question
+    
+def list_questions_and_answers(request, exam_schedule_id):
+    exam_schedule = get_object_or_404(ExamSchedule, id=exam_schedule_id)
+    questions = exam_schedule.question_set.all()  # Assuming a reverse relation from ExamSchedule to Question model
+    context = {
+        'exam_schedule': exam_schedule,
+        'questions': questions,
+    }
+    return render(request, 'company/list_questions_and_answers.html', context)
+
+def schedule_exam(request,exam_schedule_id):
+    exam_schedule = ExamSchedule.objects.get(pk=exam_schedule_id)
+    
+    if request.method == 'POST':
+        form = QuestionForm(request.POST)
+        if form.is_valid():
+            # Extract data from the form
+            question_text = form.cleaned_data['question_text']
+            option1_text = form.cleaned_data['option1']
+            option2_text = form.cleaned_data['option2']
+            option3_text = form.cleaned_data['option3']
+            option4_text = form.cleaned_data['option4']
+            correct_option_index = int(form.cleaned_data['correct_option'])
+            
+            # Create the question
+            question = Question.objects.create(exam_schedule=exam_schedule, question_text=question_text)
+            
+            # Create options
+            options_data = [
+                (option1_text, 1),
+                (option2_text, 2),
+                (option3_text, 3),
+                (option4_text, 4)
+            ]
+            for option_text, option_index in options_data:
+                is_correct = (option_index == correct_option_index)
+                Option.objects.create(question=question, option_text=option_text, is_correct=is_correct)
+            
+            # Redirect to a success page or another view
+            return redirect('success_page')  # Replace 'success_page' with the actual URL name of your success page
+    else:
+        form = QuestionForm()
+    
+    context = {
+        'form': form,
+        'exam_schedule': exam_schedule,
+    }
+    return render(request, 'company/create_apt.html', context)
+
+
+
+
+
+
+
+
+
 
 
 def ad_alumniblog(request):
