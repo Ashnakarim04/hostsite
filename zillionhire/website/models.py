@@ -472,7 +472,7 @@ class videolibrary(models.Model):
     video = models.FileField(null=True, blank=True, upload_to="videos/")   
 
 
-class resume1(models.Model):
+class resumeadmin(models.Model):
     title=models.CharField(max_length=100,null=True)
     more=models.TextField(null=True)
     date = models.DateField()

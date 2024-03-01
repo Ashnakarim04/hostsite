@@ -6,7 +6,7 @@ from django.contrib import messages, auth
 from django.http import HttpResponse,HttpResponseRedirect
 from .models import AdminStudent, Jobs, CompanyProfile
 from .models import Students,StudentProfile,CompanyApprove,JobApplication,internship,classdetails,videolibrary,ccontent, LikedContent, Alumni
-from .models import resume1, LikedContent1, ResumeBuilder, Review, Event, ExcelData, AddAptitude, AptitudeTest,Question, Option, ExamSchedule
+from .models import resumeadmin, LikedContent1, ResumeBuilder, Review, Event, ExcelData, AddAptitude, AptitudeTest,Question, Option, ExamSchedule
 from .models import *
 # from .forms import StudentForm 
 from django.shortcuts import render, get_object_or_404, redirect
@@ -1459,8 +1459,8 @@ def resume1(request):
         pdf_file = request.FILES.get('pdf')
         video = request.FILES.get('video')
         
-        member = resume1(title=title, more=more, date=date, image=image, pdf=pdf_file, video=video)
-        member.save()
+        entry = resumeadmin(title=title, more=more, date=date, image=image, pdf=pdf_file, video=video)
+        entry.save()
         return redirect('resumeform')
 
 # def resume1(request):
@@ -2608,7 +2608,17 @@ def eventform(request, alumni_id):
     else:
         return render(request, 'admin/alumni/eventform.html', {'alumni_instance': alumni_instance})
 
+from .models import Event
 
+from .models import Event
+
+def sevent(request, studentprofile_id):
+    studentprofile = get_object_or_404(StudentProfile, id=studentprofile_id)
+    
+    # Fetch events associated with the student profile and with status=True
+    events = Event.objects.filter(status=True)
+    
+    return render(request, 'admin/student/alumni_events.html', {'studentprofile': studentprofile, 'events': events})
 
 
 # 
