@@ -226,6 +226,7 @@ class AdminStudent(models.Model):
     admission_no = models.CharField(max_length=20, default='')
     phone = models.CharField(max_length=15, null=True)
     email = models.EmailField(max_length=255, null=True)
+    course_end_date = models.DateField(null=True)  # New field for course end date
     is_active = models.BooleanField(default=True)
 
     def get_full_name(self):
@@ -297,7 +298,7 @@ class StudentProfile(models.Model):
 )
 
     academic_year = models.CharField(max_length=10,blank= True,null=True)
-    passout_year = models.CharField(max_length=10,blank= True,null=True)
+    passout_year = models.DateField(null=True)
     current_semester = models.CharField(max_length=10,blank= True,null=True)
     c_cgpa = models.FloatField(max_length=10,blank= True,null=True)
     c_backlog=models.CharField(max_length=100,blank= True,null=True)

@@ -220,7 +220,11 @@ function getAdmissionNumber(firstName) {
                   <label for="phone">Phone</label>
                   <input type="text" class="form-control" id="phone" name="phone" placeholder="Enter phone number" required>
                 </div>
-  
+                <div class="form-group">
+                    <label for="course_end_date">Course End Date</label>
+                    <input type="date" class="form-control" id="course_end_date" name="course_end_date" placeholder="Select course end date" required>
+                </div>
+                
                 {% if messages %}
                   <div class="alert alert-dismissible {% if messages.tags == 'error' %}alert-danger{% elif messages.tags == 'success' %}alert-success{% endif %}">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>

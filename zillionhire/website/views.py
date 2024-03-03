@@ -835,6 +835,7 @@ def ad_studentlist(request):
     # Generate a list of academic years from 2020 to 2030
     available_years = range(2020, 2031)
 
+    
     return render(request, 'admin/student/ad_studentlist.html', {'adstus': adstus, 'available_years': available_years})
 
 
@@ -846,6 +847,69 @@ from django.contrib import messages
 from .models import AdminStudent
 from django.core.mail import send_mail
 from django.conf import settings
+# def add_student(request):
+#     if request.method == 'POST':
+#         first_name = request.POST.get('first_name', '')
+#         last_name = request.POST.get('last_name', '')
+#         admission_no = request.POST.get('admission_no', '')
+#         email = request.POST.get('email', '')
+#         phone = request.POST.get('phone', '')
+
+#         # Path to your CSV file for validation
+#         csv_file_path = 'dataset/student.csv'
+#         match_found = False
+
+#         with open(csv_file_path, 'r') as csv_file:
+#             csv_reader = csv.DictReader(csv_file)
+#             for row in csv_reader:
+#                 if (
+#                     row['first_name'] == first_name and
+#                     row['last_name'] == last_name and
+#                     row['admission_no'] == admission_no
+#                 ):
+#                     match_found = True
+#                     break
+
+#         if match_found:
+#             # Check if a user with the same email already exists
+#             existing_user = User.objects.filter(username=email).first()
+
+#             if existing_user:
+#                 messages.error(request, 'User with this email already exists')
+#             else:
+#                 # Create a new user with is_staff=True
+#                 user = User.objects.create_user(
+#                     username=email,
+#                     first_name=first_name,
+#                     last_name=last_name,
+#                     email=email,
+#                 )
+#                 user.is_staff = True  # Set as staff
+#                 user.set_password("Student@Zillionhire1")
+#                 user.save()
+
+#                 # Create a new Student
+#                 student = AdminStudent(
+#                     user=user,
+#                     admission_no=admission_no,
+#                     phone=phone,
+#                     email=email
+#                 )
+#                 student.save()
+
+#                 subject = 'ZillionHire Student Login Details'
+#                 message = f'Registered as Student. Your username: {email}, Password: Student@Zillionhire1'
+#                 from_email = settings.EMAIL_HOST_USER # Your email address
+#                 recipient_list = [user.email] # Employee's email address
+
+#                 send_mail(subject, message, from_email, recipient_list)
+
+
+#                 messages.success(request, 'Student added successfully')
+#         else:
+#             messages.error(request, 'No matching records found')
+
+#     return render(request, 'admin/student/student.html', context={'messages': messages.get_messages(request)})
 def add_student(request):
     if request.method == 'POST':
         first_name = request.POST.get('first_name', '')
@@ -853,6 +917,7 @@ def add_student(request):
         admission_no = request.POST.get('admission_no', '')
         email = request.POST.get('email', '')
         phone = request.POST.get('phone', '')
+        course_end_date = request.POST.get('course_end_date', '')  # New field
 
         # Path to your CSV file for validation
         csv_file_path = 'dataset/student.csv'
@@ -892,17 +957,17 @@ def add_student(request):
                     user=user,
                     admission_no=admission_no,
                     phone=phone,
-                    email=email
+                    email=email,
+                    course_end_date=course_end_date  # Assign course end date
                 )
                 student.save()
 
                 subject = 'ZillionHire Student Login Details'
                 message = f'Registered as Student. Your username: {email}, Password: Student@Zillionhire1'
-                from_email = settings.EMAIL_HOST_USER # Your email address
-                recipient_list = [user.email] # Employee's email address
+                from_email = settings.EMAIL_HOST_USER  # Your email address
+                recipient_list = [user.email]  # Employee's email address
 
                 send_mail(subject, message, from_email, recipient_list)
-
 
                 messages.success(request, 'Student added successfully')
         else:
@@ -1468,9 +1533,7 @@ def resume1(request):
 def resumelist(request):
     adconts=resumeadmin.objects.all()
     return render(request,'admin/resources/resumelist.html',{'adconts': adconts})
-# def ad_studentlist(request):
-#     adstus=StudentProfile.objects.all()
-#     return render(request,'admin/student/ad_studentlist.html',{'adstus': adstus})
+
 def contentlist(request):
     adconts=internship.objects.all()
     return render(request,'admin/resources/contentlist.html',{'adconts': adconts})

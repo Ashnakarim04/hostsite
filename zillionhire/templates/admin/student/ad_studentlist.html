@@ -223,10 +223,7 @@
                                 <p class="card-text"><b>Semester : </b>{{ adstu.current_semester }}</p>
                                 <p class="card-text"><b>CGPA : </b>{{ adstu.c_cgpa }}</p>
                                 <p class="card-text"><b>Active Backlog : </b>{{ adstu.c_backlog }}</p>
-                                {% comment %} <p class="card-text">
-                                    <b>Alumni: </b>{{ adstu.is_alumni }}
-                                    <a href="{% url 'toggle_alumni_status' student_profile_id=adstu.id %}" class="btn btn-primary">Edit</a>
-                                </p> {% endcomment %}
+                                <p class="card-text"><b>Course End Date:</b> {{ adstu.course_end_date }}</p>
                                 {% if not adstu.is_alumni %}
                                     <p class="card-text">
                                         <b>Alumni: </b>{{ adstu.is_alumni }}

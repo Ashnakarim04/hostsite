@@ -446,9 +446,13 @@
                   <input type="text" id="academic_year" name="academic_year" placeholder="Academic Year" value="{{ studentprofile.academic_year }}" required>
                   <div id="academicYearError" class="error-message"></div>
                   
-                  <label for="Gender">Pass Out Year</label>
-                  <input type="text" id="passout_year" name="passout_year" placeholder="Passout Year" value="{{ studentprofile.passout_year }}" required>
+                  <label for="Gender">Passout Year</label>
+                  <input type="text" id="academic_year" name="academic_year" placeholder="Academic Year" value="{{ admin_student.course_end_date }}" required>
                   <div id="academicYearError" class="error-message"></div>
+
+                  {% comment %} <label for="Gender">Pass Out Year</label>
+                  <input type="text" id="passout_year" name="passout_year" placeholder="Passout Year" value="{{ admin_student.course_end_date }}" required>
+                  <div id="academicYearError" class="error-message"></div> {% endcomment %}
 
                   <label for="Gender">Semester</label>
                   <input type="text" id="current_semester" name="current_semester"placeholder="Current Semester" value="{{ studentprofile.current_semester }}"required><br><br>
