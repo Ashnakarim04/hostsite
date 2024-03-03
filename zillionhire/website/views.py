@@ -835,8 +835,9 @@ def ad_studentlist(request):
     # Generate a list of academic years from 2020 to 2030
     available_years = range(2020, 2031)
 
+    admstu = AdminStudent.objects.filter(alumni=False)
     
-    return render(request, 'admin/student/ad_studentlist.html', {'adstus': adstus, 'available_years': available_years})
+    return render(request, 'admin/student/ad_studentlist.html', {'adstus': adstus, 'available_years': available_years, 'admstu':admstu})
 
 
 
