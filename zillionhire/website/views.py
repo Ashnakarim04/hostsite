@@ -812,7 +812,7 @@ def admin_addstudents(request):
 
 
 from django.shortcuts import render
-from .models import StudentProfile
+from .models import StudentProfile,AdminStudent
 
 def ad_studentlist(request):
 
