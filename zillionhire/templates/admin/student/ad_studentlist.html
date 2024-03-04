@@ -224,6 +224,10 @@
                                 <p class="card-text"><b>CGPA : </b>{{ adstu.c_cgpa }}</p>
                                 <p class="card-text"><b>Active Backlog : </b>{{ adstu.c_backlog }}</p>
                                 <p class="card-text"><b>Course End Date:</b> {{ adstu.course_end_date }}</p>
+                                {% if course_end_date %}
+                                    <p class="card-text"><b>Course End Date:</b> {{ course_end_date }}</p>
+                                {% endif %}
+                               
                                 {% if not adstu.is_alumni %}
                                     <p class="card-text">
                                         <b>Alumni: </b>{{ adstu.is_alumni }}
