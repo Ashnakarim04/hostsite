@@ -234,6 +234,7 @@ urlpatterns = [
     path('edit_company_event/<int:event_id>/', views.edit_company_event, name='edit_company_event'),
     path('exam_view/', exam_view, name='exam_view'),
     path('save-and-next/', save_and_next, name='save_and_next'),
+    path('create-question/', create_question, name='create_question'),
     # path('deleteevent/<int:alumni_id>/<int:event_id>/', views.deleteevent, name='deleteevent'),
     ]
 if settings.DEBUG:

@@ -1,7 +1,7 @@
 from django.contrib import admin
 from . models import Jobs, CompanyProfile, LikedContent, Students,AdminStudent,StudentProfile,CompanyApprove,JobApplication,internship,videolibrary,ccontent
 from . models import Alumni, resumeadmin, LikedContent1, ResumeBuilder, BlogContent, Review, AlumniEvent, ExcelData, AddAptitude, AptitudeTest,Question, Option, ExamSchedule
-from . models import Question2, Option2, Quiz3, Question3, Option3, CompanyEvent
+from . models import Question2, Option2, Quiz3, Question3, Option3, CompanyEvent, Questionn
 
 # Register your models here.
 # from . import models
@@ -37,4 +37,5 @@ admin.site.register(Quiz3)
 admin.site.register(Question3)
 admin.site.register(Option3)
 admin.site.register(CompanyEvent)
+admin.site.register(Questionn)
 # admin.site.register(CustomUser)

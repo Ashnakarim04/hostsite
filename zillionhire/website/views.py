@@ -2331,31 +2331,74 @@ from .forms import AptitudeTestForm  # Create a form for conducting aptitude tes
 from django.shortcuts import render, redirect
 from django.http import HttpResponseNotFound
 
+# def conduct_aptitude_test(request):
+#     if request.method == 'POST':
+#         exam_schedule_id = request.POST.get('exam_schedule')
+#         try:
+#             exam_schedule = ExamSchedule.objects.get(id=exam_schedule_id)
+#         except ExamSchedule.DoesNotExist:
+#             return HttpResponseNotFound("Exam Schedule does not exist.")
+
+#         question_count = int(request.POST.get('question_count'))
+
+#         for i in range(1, question_count + 1):
+#             question_text = request.POST.get(f'question{i}')
+#             question = Question.objects.create(exam_schedule=exam_schedule, question_text=question_text)
+
+#             for j in range(1, 5):
+#                 option_text = request.POST.get(f'question{i}_option{j}')
+#                 is_correct = (j == int(request.POST.get(f'question{i}_answer')))
+#                 Option.objects.create(question=question, option_text=option_text, is_correct=is_correct)
+
+#         return redirect('cfirstround', exam_schedule_id=exam_schedule_id)
+#     else:
+#         # Fetch all exam schedules to populate the dropdown
+#         exam_schedules = ExamSchedule.objects.all()
+#         return render(request, 'company/create_apt.html', {'exam_schedules': exam_schedules})
+
 def conduct_aptitude_test(request):
-    if request.method == 'POST':
-        exam_schedule_id = request.POST.get('exam_schedule')
-        try:
-            exam_schedule = ExamSchedule.objects.get(id=exam_schedule_id)
-        except ExamSchedule.DoesNotExist:
-            return HttpResponseNotFound("Exam Schedule does not exist.")
+    # if request.method == 'POST':
+    #     ques = request.POST.get('exam_schedule')
 
-        question_count = int(request.POST.get('question_count'))
-
-        for i in range(1, question_count + 1):
-            question_text = request.POST.get(f'question{i}')
-            question = Question.objects.create(exam_schedule=exam_schedule, question_text=question_text)
-
-            for j in range(1, 5):
-                option_text = request.POST.get(f'question{i}_option{j}')
-                is_correct = (j == int(request.POST.get(f'question{i}_answer')))
-                Option.objects.create(question=question, option_text=option_text, is_correct=is_correct)
-
-        return redirect('cfirstround', exam_schedule_id=exam_schedule_id)
-    else:
+    # else:
         # Fetch all exam schedules to populate the dropdown
-        exam_schedules = ExamSchedule.objects.all()
-        return render(request, 'company/create_apt.html', {'exam_schedules': exam_schedules})
-    
+    exam_schedules = ExamSchedule.objects.all()
+    return render(request, 'company/create_apt.html')
+
+from django.shortcuts import render, redirect
+from .models import Questionn
+
+def create_question(request):
+    if request.method == 'POST':
+        exam_title = request.POST.get('exam_title')
+        # company_name = request.POST.get('company_name')
+        question = request.POST.get('question')
+        option1 = request.POST.get('option1')
+        option2 = request.POST.get('option2')
+        option3 = request.POST.get('option3')
+        option4 = request.POST.get('option4')
+        correct_option = request.POST.get('correct_option')
+        # status = request.POST.get('status') == 'on'  # Convert checkbox value to boolean
+
+        # Create a new Questionn instance
+        questionn = Questionn.objects.create(
+            exam_title=exam_title,
+            # company_name=company_name,
+            question=question,
+            option1=option1,
+            option2=option2,
+            option3=option3,
+            option4=option4,
+            correct_option=correct_option,
+            # status=status
+        )
+
+        # Redirect to a success page or any other page
+        return redirect('conduct_aptitude_test')
+    else:
+        # Render the form template
+        return redirect('conduct_aptitude_test')
+
 
 from django.core.serializers import serialize
 import json

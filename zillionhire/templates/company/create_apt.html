@@ -139,7 +139,7 @@
                                            
                                             <h2>Create new test</h2>
 
-                                            <form method="post" action="">
+                                            {% comment %} <form method="post" action="">
                                     
                                                 {% csrf_token %}                               
                                                 <div class="form-group">
@@ -161,7 +161,53 @@
                                                 <input type="hidden" name="question_count" id="question_count" value="0">
                                     
                                                 <button type="submit" class="btn btn-primary">save</button>
-                                            </form>
+                                            </form> {% endcomment %}
+                                            <form method="post" action="{% url 'create_question'%}">
+                                              {% csrf_token %}
+                                              <div class="form-group">
+                                                  <label for="exam_title">Exam Title</label>
+                                                  <input type="text" class="form-control" id="exam_title" name="exam_title" value="{{ questionn.exam_title }}" required>
+                                              </div>
+                                              {% comment %} <div class="form-group">
+                                                  <label for="company_name">Company Name</label>
+                                                  <input type="text" class="form-control" id="company_name" name="company_name" value="{{ questionn.company_name }}" required>
+                                              </div> {% endcomment %}
+                                              <div class="form-group">
+                                                  <label for="question">Question</label>
+                                                  <input type="text" class="form-control" id="question" name="question" value="{{ questionn.question }}" required>
+                                              </div>
+                                              <div class="form-group">
+                                                  <label for="option1">Option 1</label>
+                                                  <input type="text" class="form-control" id="option1" name="option1" value="{{ questionn.option1 }}" required>
+                                              </div>
+                                              <div class="form-group">
+                                                  <label for="option2">Option 2</label>
+                                                  <input type="text" class="form-control" id="option2" name="option2" value="{{ questionn.option2 }}" required>
+                                              </div>
+                                              <div class="form-group">
+                                                  <label for="option3">Option 3</label>
+                                                  <input type="text" class="form-control" id="option3" name="option3" value="{{ questionn.option3 }}" required>
+                                              </div>
+                                              <div class="form-group">
+                                                  <label for="option4">Option 4</label>
+                                                  <input type="text" class="form-control" id="option4" name="option4" value="{{ questionn.option4 }}" required>
+                                              </div>
+                                              <div class="form-group">
+                                                  <label for="correct_option">Correct Option</label>
+                                                  <select class="form-control" id="correct_option" name="correct_option" required>
+                                                      <option value="1" {% if questionn.correct_option == 1 %} selected {% endif %}>Option 1</option>
+                                                      <option value="2" {% if questionn.correct_option == 2 %} selected {% endif %}>Option 2</option>
+                                                      <option value="3" {% if questionn.correct_option == 3 %} selected {% endif %}>Option 3</option>
+                                                      <option value="4" {% if questionn.correct_option == 4 %} selected {% endif %}>Option 4</option>
+                                                  </select>
+                                              </div>
+                                              {% comment %} <div class="form-group form-check">
+                                                  <input type="checkbox" class="form-check-input" id="status" name="status" {% if questionn.status %} checked {% endif %}>
+                                                  <label class="form-check-label" for="status">Status</label>
+                                              </div> {% endcomment %}
+                                              <button type="submit" class="btn btn-primary">Submit</button>
+                                          </form>
+                                  
                                             
                                         </div>
                                     </div>

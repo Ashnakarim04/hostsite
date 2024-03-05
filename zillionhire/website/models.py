@@ -773,7 +773,7 @@ class Option3(models.Model):
 
 
 class Questionn(models.Model):
-    question_id = models.IntegerField(primary_key=True, default=1)    
+    question_id = models.AutoField(primary_key=True)    
     exam_title = models.CharField(max_length=255, default='Aptitude')
     company_name = models.CharField(max_length=255)
     question = models.CharField(max_length=255, default='question')  # Renamed from 'title' to 'question'
