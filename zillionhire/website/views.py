@@ -2749,8 +2749,33 @@ def eventform(request, alumni_id):
     else:
         return render(request, 'admin/alumni/eventform.html', {'alumni_instance': alumni_instance})
 
-
-from .models import Event
+def company_event_form(request, company_id):
+    if request.method == 'POST':
+        # Process the form data here
+        title = request.POST.get('title')
+        description = request.POST.get('description')
+        date = request.POST.get('date')
+        image = request.FILES.get('image')
+        event_type = request.POST.get('event_type')
+        link = request.POST.get('link')
+        
+        # Create a new CompanyEvent object and set its status to True
+        event = CompanyEvent(
+            title=title,
+            description=description,
+            date=date,
+            image=image,
+            event_type=event_type,
+            link=link,
+            status=True,  # Set the status to True
+            company_id=company_id  # Associate the event with the corresponding company
+        )
+        event.save()
+        
+        # Redirect to a success page or wherever you want
+        return redirect(reverse('company_event_form', kwargs={'company_id': company_id}))        
+    else:
+        return render(request, 'company/ceventform.html')
 
 from .models import Event
 
@@ -2799,13 +2824,8 @@ def editevent(request, alumni_id, event_id):
     return render(request, 'admin/alumni/editevent.html', {'alumni_instance': alumni_instance, 'event': event})
 
 
-# def eventlist(request, alumni_id):
-#     alumni_instance = get_object_or_404(Alumni, id=alumni_id)
-#     events = Event.objects.filter(alumni=alumni_instance, status=True)  # Filter by status=1
-#     return render(request, 'admin/alumni/eventlist.html', {'alumni_instance': alumni_instance,'events': events,'alumni_id': alumni_id})
+from datetime import datetime
 
-from datetime import datetime
-from datetime import datetime
 
 def eventlist(request, alumni_id):
     alumni_instance = get_object_or_404(Alumni, id=alumni_id)
@@ -2819,6 +2839,11 @@ def eventlist(request, alumni_id):
             event.save()  # Save the updated event
     
     return render(request, 'admin/alumni/eventlist.html', {'alumni_instance': alumni_instance,'events': events,'alumni_id': alumni_id})
+
+
+
+
+
 
 
 from django.utils import timezone

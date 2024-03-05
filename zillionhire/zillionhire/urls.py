@@ -229,6 +229,7 @@ urlpatterns = [
     path('sevent/<int:studentprofile_id>/', views.sevent, name='sevent'),    
     path('quiz_form/', views.quiz_form, name='quiz_form'),    
     path('error/',error,name='error'),
+    path('company_event_form/<int:company_id>/', company_event_form, name='company_event_form'),
     # path('deleteevent/<int:alumni_id>/<int:event_id>/', views.deleteevent, name='deleteevent'),
     ]
 if settings.DEBUG:

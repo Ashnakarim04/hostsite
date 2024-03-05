@@ -661,6 +661,23 @@ class AlumniEvent(models.Model):
     def __str__(self):
         return self.title
     
+class CompanyEvent(models.Model):
+    status=models.BooleanField('status', default=True)
+    title = models.CharField(max_length=255)
+    description = models.TextField()
+    date = models.DateField()
+    image = models.ImageField(upload_to='event_images/')
+    EVENT_TYPE_CHOICES = [
+        ('offline', 'Offline'),
+        ('online', 'Online'),
+    ]
+    event_type = models.CharField(max_length=10, choices=EVENT_TYPE_CHOICES)
+    link = models.URLField()
+    company = models.ForeignKey('CompanyProfile', on_delete=models.CASCADE, default=1)  # Replace 1 with the default Alumni ID
+
+    def __str__(self):
+        return self.title
+    
 class AddAptitude(models.Model):
     aptitude = models.AutoField(primary_key=True)
     company_profile = models.ForeignKey(CompanyProfile, on_delete=models.CASCADE, default=None)
