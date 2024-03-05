@@ -643,6 +643,24 @@ class Event(models.Model):
     def __str__(self):
         return self.title
     
+
+class AlumniEvent(models.Model):
+    status=models.BooleanField('status', default=True)
+    title = models.CharField(max_length=255)
+    description = models.TextField()
+    date = models.DateField()
+    image = models.ImageField(upload_to='event_images/')
+    EVENT_TYPE_CHOICES = [
+        ('offline', 'Offline'),
+        ('online', 'Online'),
+    ]
+    event_type = models.CharField(max_length=10, choices=EVENT_TYPE_CHOICES)
+    link = models.URLField()
+    alumni = models.ForeignKey('Alumni', on_delete=models.CASCADE, default=1)  # Replace 1 with the default Alumni ID
+
+    def __str__(self):
+        return self.title
+    
 class AddAptitude(models.Model):
     aptitude = models.AutoField(primary_key=True)
     company_profile = models.ForeignKey(CompanyProfile, on_delete=models.CASCADE, default=None)
@@ -702,3 +720,36 @@ class Option(models.Model):
 
     def __str__(self):
         return self.option_text
+    
+class Question2(models.Model):
+    # course = models.ForeignKey(CourseDetail, on_delete=models.CASCADE)
+    title = models.CharField(max_length=255)
+    is_active = models.BooleanField(default=True)  # Add this field
+    # unlock_condition = models.ForeignKey(Progress, on_delete=models.SET_NULL, blank=True, null=True)
+
+    
+
+    def __str__(self):
+        return self.title
+
+class Option2(models.Model):
+    question = models.ForeignKey(Question2, related_name='options', on_delete=models.CASCADE)
+    text = models.CharField(max_length=255)
+    is_correct = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.text
+    
+# new
+
+class Quiz3(models.Model):
+    title = models.CharField(max_length=100)
+
+class Question3(models.Model):
+    quiz = models.ForeignKey(Quiz3, on_delete=models.CASCADE)
+    text = models.CharField(max_length=255)
+
+class Option3(models.Model):
+    question = models.ForeignKey(Question3, on_delete=models.CASCADE)
+    text = models.CharField(max_length=255)
+    is_correct = models.BooleanField(default=False)

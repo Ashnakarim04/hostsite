@@ -227,6 +227,8 @@ urlpatterns = [
 
     path('conduct-aptitude-test/', conduct_aptitude_test, name='conduct_aptitude_test'),
     path('sevent/<int:studentprofile_id>/', views.sevent, name='sevent'),    
+    path('quiz_form/', views.quiz_form, name='quiz_form'),    
+    path('error/',error,name='error'),
     # path('deleteevent/<int:alumni_id>/<int:event_id>/', views.deleteevent, name='deleteevent'),
     ]
 if settings.DEBUG:

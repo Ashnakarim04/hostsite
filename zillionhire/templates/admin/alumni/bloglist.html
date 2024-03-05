@@ -389,7 +389,7 @@
                 {% comment %} <li>
                     <a href="{% url 'index-2' %}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
                 </li> {% endcomment %}
-                <li class="active">
+                <li>
                   <a href="{% url 'alumni_profile' alumni_id=request.user.alumni.id %}">
                       <i class="fas fa-id-card"></i>
                       <span>PROFILE</span>
@@ -398,14 +398,14 @@
              
             
             
-            <li>
+            <li class="active">
                 <a href="{% url 'display_blog_content' alumni_id=alumni_instance.id %}">
                     <i class="fas fa-id-card"></i>
                     <span>OPENINGS</span>
                 </a>
             </li>
             <li>
-              <a href="{% url 'display_blog_content' alumni_id=alumni_instance.id %}">
+              <a href="{% url 'eventlist' alumni_id=alumni_instance.id %}">
                   <i class="fas fa-id-card"></i>
                   <span>EVENTS</span>
               </a>

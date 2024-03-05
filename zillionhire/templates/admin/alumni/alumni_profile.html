@@ -317,12 +317,7 @@
                           <span>PROFILE</span>
                       </a> 
                   </li> 
-                  {% comment %} <li>
-                    <a href="{% url 'create_blog_content' alumni_id=alumni_profile.id %}">
-                        <i class="fas fa-id-card"></i>
-                        <span>ADD OPENINGS</span>
-                    </a>
-                </li> {% endcomment %}
+                
                 
                 <li>
                   <a href="{% url 'display_blog_content' alumni_id=alumni_profile.id %}">
@@ -330,12 +325,7 @@
                       <span>OPENINGS</span>
                   </a>
               </li>
-              {% comment %} <li>
-                <a href="{% url 'eventform' alumni_id=alumni_profile.id %}">
-                    <i class="fas fa-id-card"></i>
-                    <span>EVENTS</span>
-                </a>
-            </li> {% endcomment %}
+           
             <li>
               <a href="{% url 'eventlist' alumni_id=alumni_profile.id %}">
                   <i class="fas fa-id-card"></i>

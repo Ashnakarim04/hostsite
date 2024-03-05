@@ -2414,6 +2414,76 @@ def conduct_aptitude_test(request):
         exam_schedules = ExamSchedule.objects.all()
         return render(request, 'company/create_apt.html', {'exam_schedules': exam_schedules})
     
+
+from django.core.serializers import serialize
+import json
+
+@csrf_exempt
+def quiz_form(request):
+    # try:
+    #     course = CourseDetail.objects.get(pk=course_id)
+    # except CourseDetail.DoesNotExist:
+    #     return render(request, 'tutor_template/error.html', {'error_message': 'Course not found'})
+    
+    if request.method == 'POST':
+        try:
+            # Check if the form is for updating an existing question
+            question_id = request.POST.get('question_id')
+            if question_id:
+                question = Question.objects.get(pk=question_id)
+                question.title = request.POST.get('question-title')
+                question.save()
+
+                # Delete existing options for the question
+                question.options.all().delete()
+
+                # Update options for the question
+                for key, value in request.POST.items():
+                    if key.startswith('option-'):
+                        option = Option(question=question, text=value)
+                        option.save()
+                        is_correct = request.POST.get('marked')
+
+                        option.is_correct = 1 if key.endswith(is_correct) else 0
+                        option.save()
+
+
+                return JsonResponse({'success': True})
+            # If it's a new question, create it
+            else:
+                question_title = request.POST.get('question-title')
+                new_question = Question.objects.create(title=question_title)
+                for key, value in request.POST.items():
+                    if key.startswith('option-'):
+                        is_correct = request.POST.get('marked')
+                        Option.objects.create(
+                            question=new_question,
+                            text=value,
+                            is_correct=1 if key.endswith(is_correct) else 0
+                        )
+                return redirect('quiz_form')
+        except Exception as e:
+            print(f"Error in quiz_form view (Form Submission): {e}")
+            return render(request, 'company/cfirstround.html', {'error_message': f'An error occurred: {e}'})
+    
+    # Fetch existing questions for the course
+    questions = Question.objects.all()
+    
+    # Serialize questions and options to JSON
+    questions_json = json.dumps([
+        {
+            'pk': q.pk,
+            'title': q.title,
+            'options': [{'pk': option.pk, 'text': option.text, 'is_correct': option.is_correct} for option in q.options.all()]
+        }
+        for q in questions
+    ])
+    # print(course.id)
+    return render(request, 'company/set_question.html', {'questions': questions,'questions_json' : questions_json})
+
+
+
+
 def list_questions_and_answers(request, exam_schedule_id):
     exam_schedule = get_object_or_404(ExamSchedule, id=exam_schedule_id)
     questions = exam_schedule.question_set.all()  # Assuming a reverse relation from ExamSchedule to Question model
@@ -2462,6 +2532,31 @@ def schedule_exam(request,exam_schedule_id):
     }
     return render(request, 'company/create_apt.html', context)
 
+def error(request):
+    return render(request,'error.html')
+
+# new
+
+def save_quiz(request):
+    if request.method == 'POST':
+        quiz_title = request.POST.get('quiz_title')
+        questions_count = int(request.POST.get('question_count'))
+
+        # Create a new Quiz instance
+        quiz = Quiz3.objects.create(title=quiz_title)
+
+        for question_number in range(1, questions_count + 1):
+            question_text = request.POST.get(f'question{question_number}')
+            question = Question.objects.create(quiz=quiz, text=question_text)
+
+            for option_number in range(1, 5):
+                option_text = request.POST.get(f'question{question_number}_option{option_number}')
+                is_correct = request.POST.get(f'question{question_number}_answer') == str(option_number)
+                Option.objects.create(question=question, text=option_text, is_correct=is_correct)
+
+        return render(request, 'company/create_apt.html')  # Redirect or render success page
+    else:
+        return render(request, 'error.html')  # Handle non-POST requests
 
 
 
@@ -2619,6 +2714,8 @@ def dlt_blog(request, id):  # Use the same parameter name as in the URL pattern
         return redirect('display_blog_content')
     
 
+from django.utils import timezone
+
 def eventform(request, alumni_id):
     alumni_instance = get_object_or_404(Alumni, id=alumni_id)
 
@@ -2631,14 +2728,15 @@ def eventform(request, alumni_id):
         event_type = request.POST.get('event_type')
         link = request.POST.get('link')
         
-        # Create a new Event object and save it to the database
-        event = Event(
+        # Create a new Event object and set its status to True
+        event = AlumniEvent(
             title=title,
             description=description,
             date=date,
             image=image,
             event_type=event_type,
             link=link,
+            status=True,  # Set the status to True
             alumni=alumni_instance  # Associate the event with the corresponding alumni
         )
         event.save()
@@ -2651,6 +2749,7 @@ def eventform(request, alumni_id):
     else:
         return render(request, 'admin/alumni/eventform.html', {'alumni_instance': alumni_instance})
 
+
 from .models import Event
 
 from .models import Event
@@ -2659,7 +2758,7 @@ def sevent(request, studentprofile_id):
     studentprofile = get_object_or_404(StudentProfile, id=studentprofile_id)
     
     # Fetch events associated with the student profile and with status=True
-    events = Event.objects.filter(status=True)
+    events = AlumniEvent.objects.filter(status=True)
     
     return render(request, 'admin/student/alumni_events.html', {'studentprofile': studentprofile, 'events': events})
 
@@ -2672,7 +2771,7 @@ def editevent(request, alumni_id, event_id):
     alumni_instance = get_object_or_404(Alumni, id=alumni_id)
 
     # Retrieve the specific event instance
-    event = get_object_or_404(Event, id=event_id)
+    event = get_object_or_404(AlumniEvent, id=event_id)
 
     if request.method == 'POST':
         # Retrieve the form data from the request
@@ -2706,15 +2805,16 @@ def editevent(request, alumni_id, event_id):
 #     return render(request, 'admin/alumni/eventlist.html', {'alumni_instance': alumni_instance,'events': events,'alumni_id': alumni_id})
 
 from datetime import datetime
+from datetime import datetime
 
 def eventlist(request, alumni_id):
     alumni_instance = get_object_or_404(Alumni, id=alumni_id)
-    events = Event.objects.filter(alumni=alumni_instance, status=True)  # Filter by status=1
+    events = AlumniEvent.objects.filter(alumni=alumni_instance, status=True)  # Filter by status=1
     
     # Check event dates and update status accordingly
     current_date = datetime.now().date()
     for event in events:
-        if event.date > current_date:
+        if event.date < current_date:  # Check if the event date is in the past
             event.status = False  # Set status to False (0)
             event.save()  # Save the updated event
     

@@ -110,7 +110,9 @@
                                 <a href="{%url 'cfirstround'%}"><i class="fas fa-user"></i> <span>SHORT LIST </span></a>
                               </li>
                               
-                                
+                              <li class>
+                                <a href="{%url 'quiz_form'%}"><i class="fas fa-user"></i> <span>SET QUESTIONS </span></a>
+                              </li>
                             </ul>
                         </div>
                     </div>
@@ -119,7 +121,7 @@
                         <div class="content">
                           <div class="row">
                             <div class="col-sm-4 col-3">
-                                <h4 class="page-title">APTITUDE NOTIFICATION</h4>
+                                <h4 class="page-title">SET APTITUDE QUESTIONS </h4>
                             </div>
                      
                         </div>
@@ -132,12 +134,12 @@
                                     <div class="card">
                                         <div class="card-body">
                                            
-                                            <h2>Create Online Exam</h2>
+                                            <h2>Create new test</h2>
 
                                             <form method="post" action="">
                                     
                                                 {% csrf_token %}
-                                    
+{% comment %}                                     
                                                 <div class="form-group">
                                                     <label for="exam_schedule">Exam Schedule:</label>
                                                     <select class="form-control" id="exam_schedule" name="exam_schedule">
@@ -145,7 +147,7 @@
                                                         <option value="{{ schedule.id }}">{{ schedule }}</option>
                                                         {% endfor %}
                                                     </select>
-                                                </div>
+                                                </div> {% endcomment %}
                                     
                                                 <div id="questions-container">
                                                     <!-- Dynamic questions will be added here -->
@@ -156,7 +158,7 @@
                                                 <button type="button" class="btn btn-warning mb-2" onclick="resetQuestions()">Reset Questions</button>
                                                 <input type="hidden" name="question_count" id="question_count" value="0">
                                     
-                                                <button type="submit" class="btn btn-primary">Create Online Exam</button>
+                                                <button type="submit" class="btn btn-primary">save</button>
                                             </form>
                                             
                                         </div>
@@ -191,14 +193,14 @@
         questionDiv.className = "form-group";
 
         var questionLabel = document.createElement("label");
-        questionLabel.textContent = "Question " + questionNumber + " (Malayalam):";
+        questionLabel.textContent = "Question " + questionNumber + " :";
         questionDiv.appendChild(questionLabel);
 
         var questionInput = document.createElement("input");
         questionInput.type = "text";
         questionInput.className = "form-control mb-2";  // Added Bootstrap classes for styling
         questionInput.name = "question" + questionNumber;
-        questionInput.placeholder = "ചോദ്യം";
+        questionInput.placeholder = "question";
         questionDiv.appendChild(questionInput);
 
         for (var i = 1; i <= 4; i++) {
