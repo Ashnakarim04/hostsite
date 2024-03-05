@@ -32,6 +32,42 @@
         .custom-card {
             margin-left: 250px; /* Adjust the value as needed */
         }
+        
+.menu-options {
+    position: absolute;
+    top: 100%; /* Position below the menu icon */
+    right: 0; /* Align with the right side of the menu icon */
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 5px 10px;
+    list-style: none;
+    display: none; /* Initially hide the menu options */
+}
+
+.menu-options li {
+    margin-bottom: 5px;
+}
+
+.menu-options li a {
+    color: #333;
+    text-decoration: none;
+}
+
+.menu-options li a:hover {
+    color: #007bff;
+}
+
+.profile-widget:hover .menu-icon {
+    display: block; /* Show the menu icon when profile widget is hovered */
+}
+
+.profile-widget:hover .menu-options {
+    display: block; /* Show the menu options when profile widget is hovered */
+}
+
+
       </style>
 </head> 
 
@@ -116,20 +152,50 @@
                     </div>
                 </div>
                     <div class="page-wrapper">
-                        <div class="content">
+                        <div class="content"> 
                             <div class="row">
                                 <div class="col-sm-4 col-3">
-                                    <h4 class="page-title">EVENT FORM</h4>
+                                    <h4 class="page-title">CONTENTS</h4>
+                                    
                                 </div>
-                                
-                            </div>
-                         
-                            <div class="row">
-                                <div class="col-md-12">
-                                  
+                                <div class="col-sm-8 col-7">
+                                  <button type="button" class="btn btn-primary" onclick="location.href='{% url 'company_event_form' %}'">Add New Event</button>
+                        
                                 </div>
-                            </div>
-                        </div>
+                            </div><bR><bR>
+                            
+                                <div class="row">
+                                    {% for event in events %}
+                                        <div class="col-md-4 col-sm-4 col-lg-3">
+                                            <div class="profile-widget box-effect d-flex flex-column">
+                                                
+                                                
+                                                <div class="doctor-img position-relative">
+                                                    <img class="avatar" src="{{ event.image.url }}" alt="Cover Image" name="cover_image" id="cover_image" width="100" height="80">
+                                                   
+                                                </div>
+                                                <div class="menu-icon position-absolute top-0 start-100 translate-middle-y">
+                                                    <i class="fas fa-bars"></i>
+                                                    <ul class="menu-options">
+                                                        <li><a href="{% url 'edit_company_event' event.id %}"><i class="fa-solid fa-pen"></i></a></li>
+                                                        {% comment %} <li><a href="#" class="delete-event" data-toggle="modal" data-target="#deleteConfirmationModal" data-alumni-id="{{ event.alumni.id }}" data-event-id="{{ event.id }}">Remove</a></li> {% endcomment %}
+                                                    </ul>
+                                                </div>
+                                                <div style="text-align: left;">
+                                                    <center><p class="card-text"><b> {{ event.title }}</b></p></center><br>
+                                                    <p class="card-text"> {{ event.description }}</p>
+                                                    
+                                                    <time datetime="{{ event.date }}">
+                                                        <i class="fas fa-calendar-alt mr-2"></i>{{ event.date|date:"D, M d Y" }}
+                                                    </time>
+                                                    <i class="fas fa-tag mr-2"></i>{{ event.event_type }}</li>
+                                                    <a href="{{ event.link }}"><i class="fas fa-play mr-2"></i>Link</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                    </div>
     </div>
 
 

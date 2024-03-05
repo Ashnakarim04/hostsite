@@ -129,11 +129,11 @@
                                     <div class="container-fluid px-1 py-5 mx-auto">
                                         <div class="row d-flex justify-content-center">
                                             <div class="col-xl-7 col-lg-8 col-md-9 col-11 text-center">
-                                                {% comment %} <h3>Request a Demo</h3>
-                                                <p class="blue-text">Just answer a few questions<br> so that we can personalize the right experience for you.</p> {% endcomment %}
-                                                <div class="card">
+                                               <div class="card">
+                                                {% comment %} <button type="button" class="btn btn-primary" onclick="location.href='{% url 'ceventlist' %}'">Add New Event</button> {% endcomment %}
+
                                                     <h5 class="text-center mb-4">Add Events</h5>
-                                                    <form class="form-card" method="post" enctype="multipart/form-data" action="{% url 'company_event_form' company_id=company_id %}">
+                                                    <form class="form-card" method="post" enctype="multipart/form-data" action="{% url 'company_event_form'  %}">
                                                         {% csrf_token %}
                                                         <input type="hidden" name="company_id" value="{{ company_id }}">
                                                         <div class="row justify-content-between text-left">

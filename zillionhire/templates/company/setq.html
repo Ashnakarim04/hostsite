@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Exam</title>
+</head>
+<body>
+    <h1>Online Exam</h1>
+    <form action="{% url 'save_and_next' %}" method="post">
+        {% csrf_token %}
+        <label for="question">{{ question.title }}</label><br>
+        <input type="radio" name="option" value="1" id="option1">
+        <label for="option1">{{ question.option1 }}</label><br>
+        <input type="radio" name="option" value="2" id="option2">
+        <label for="option2">{{ question.option2 }}</label><br>
+        <input type="radio" name="option" value="3" id="option3">
+        <label for="option3">{{ question.option3 }}</label><br>
+        <input type="radio" name="option" value="4" id="option4">
+        <label for="option4">{{ question.option4 }}</label><br>
+        <button type="submit">Save and Next</button>
+    </form>
+</body>
+</html>

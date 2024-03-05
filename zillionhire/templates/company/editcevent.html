@@ -103,70 +103,84 @@
                                 <li class>
                                   <a href="{%url 'postjob'%}"><i class="fa-solid fa-desktop"></i> <span>JOBS</span></a>
                               </li>
-                              <li class="active">
-                                <a href="{%url 'appliedstudents'%}"><i class="fas fa-user"></i> <span>APPLICANTS</span></a>
+                              <li class>
+                                <a href="{%url 'appliedstudents'%}"><i class="fas fa-user"></i> <span>APPLIED CANDIDATES</span></a>
                               </li>
                               <li class>
-                                <a href="{%url 'cfirstround'%}"><i class="fas fa-user"></i> <span>SHORT LIST </span></a>
+                                <a href="{%url 'cfirstround'%}"><i class="fas fa-user"></i> <span>SHORT LISTED CANDIDATES </span></a>
                               </li>
                               
-                              <li class>
-                                <a href="{%url 'quiz_form'%}"><i class="fas fa-user"></i> <span>SET QUESTIONS </span></a>
-                              </li>
-                              <li class>
-                                <a href="{%url 'exam_view'%}"><i class="fas fa-user"></i> <span>SET Q2 </span></a>
-                              </li>
+                                
                             </ul>
                         </div>
                     </div>
                 </div>
                     <div class="page-wrapper">
                         <div class="content">
-                          <div class="row">
-                            <div class="col-sm-4 col-3">
-                                <h4 class="page-title">SET APTITUDE QUESTIONS </h4>
-                            </div>
-                     
-                        </div>
-                            </div>
-                      
-                            
-                            
                             <div class="row">
-                                <div class="col-md-12">
-                                    <div class="card">
-                                        <div class="card-body">
-                                           
-                                            <h2>Create new test</h2>
-
-                                            <form method="post" action="">
-                                    
-                                                {% csrf_token %}                               
-                                                <div class="form-group">
-                                                    <label for="exam_schedule">Exam Schedule:</label>
-                                                    <select class="form-control" id="exam_schedule" name="exam_schedule">
-                                                        {% for schedule in exam_schedules %}
-                                                        <option value="{{ schedule.id }}">{{ schedule }}</option>
-                                                        {% endfor %}
-                                                    </select>
-                                                </div>
-                                    
-                                                <div id="questions-container">
-                                                    <!-- Dynamic questions will be added here -->
-                                                </div>
-                                    
-                                                <button type="button" class="btn btn-primary mb-2" onclick="addQuestion()">Add Question</button>
-                                                <button type="button" class="btn btn-secondary mb-2" onclick="removeQuestion()">Remove Question</button>
-                                                <button type="button" class="btn btn-warning mb-2" onclick="resetQuestions()">Reset Questions</button>
-                                                <input type="hidden" name="question_count" id="question_count" value="0">
-                                    
-                                                <button type="submit" class="btn btn-primary">save</button>
-                                            </form>
-                                            
-                                        </div>
-                                    </div>
+                                <div class="col-sm-4 col-3">
+                                    <h4 class="page-title">EVENT FORM</h4>
                                 </div>
                                 
+                            </div>
+                         
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="container-fluid px-1 py-5 mx-auto">
+                                        <div class="row d-flex justify-content-center">
+                                            <div class="col-xl-7 col-lg-8 col-md-9 col-11 text-center">
+                                               <div class="card">
+                                                {% comment %} <button type="button" class="btn btn-primary" onclick="location.href='{% url 'ceventlist' %}'">Add New Event</button> {% endcomment %}
+
+                                                    <h5 class="text-center mb-4">Add Events</h5>
+                                                    <form class="form-card" method="post" enctype="multipart/form-data">
+                                                        {% csrf_token %}
+                                                        <input type="hidden" name="company_id" value="{{ company_id }}">
+                                                        <div class="row justify-content-between text-left">
+                                                            <div class="form-group col-sm-6 flex-column d-flex">
+                                                                <label class="form-control-label px-3">Title<span class="text-danger"> *</span></label>
+                                                                <input type="text" id="title" name="title" placeholder="Enter event title" value="{{ event.title }}">                                                            </div>
+                                                            <div class="form-group col-sm-6 flex-column d-flex">
+                                                                <label class="form-control-label px-3">Description<span class="text-danger"> *</span></label>
+                                                                <input type="text" id="description" name="description" placeholder="Enter event description" onblur="validate(2)">
+                                                            </div>
+                                                        </div>
+                                                        <div class="row justify-content-between text-left">
+                                                            <div class="form-group col-sm-6 flex-column d-flex">
+                                                                <label class="form-control-label px-3">Date<span class="text-danger"> *</span></label>
+                                                                <input type="date" id="date" name="date">
+                                                            </div>
+                                                            <div class="form-group col-sm-6 flex-column d-flex">
+                                                                <label class="form-control-label px-3">Upload Image<span class="text-danger"> *</span></label>
+                                                                <input type="file" id="image" name="image">
+                                                            </div>
+                                                        </div>
+                                                        <div class="row justify-content-between text-left">
+                                                            <div class="form-group col-sm-6 flex-column d-flex">
+                                                                <label class="form-control-label px-3">Event Type<span class="text-danger"> *</span></label>
+                                                                <select id="event_type" name="event_type">
+                                                                    <option value="offline">Offline</option>
+                                                                    <option value="online">Online</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="form-group col-sm-6 flex-column d-flex">
+                                                                <label class="form-control-label px-3">Link<span class="text-danger"> *</span></label>
+                                                                <input type="text" id="link" name="link" placeholder="Enter event link" onblur="validate(2)">
+                                                            </div>
+                                                        </div>
+                                                        <div class="row justify-content-end">
+                                                            <div class="form-group col-sm-6">
+                                                                <button type="submit" class="btn-block btn-primary">Submit</button>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
                             </div>
                         </div>
     </div>
@@ -185,74 +199,6 @@
 <script src="{% static 'ssets/js/moment.min.js' %}"></script>
 <script src="{% static 'assets/js/bootstrap-datetimepicker.min.js' %}"></script>
 <script src="{% static 'assets/js/app.js' %}"></script>
-
-<script>
-    function addQuestion() {
-        var container = document.getElementById("questions-container");
-        var questionNumber = container.childElementCount + 1;
-
-        var questionDiv = document.createElement("div");
-        questionDiv.className = "form-group";
-
-        var questionLabel = document.createElement("label");
-        questionLabel.textContent = "Question " + questionNumber + " :";
-        questionDiv.appendChild(questionLabel);
-
-        var questionInput = document.createElement("input");
-        questionInput.type = "text";
-        questionInput.className = "form-control mb-2";  // Added Bootstrap classes for styling
-        questionInput.name = "question" + questionNumber;
-        questionInput.placeholder = "question";
-        questionDiv.appendChild(questionInput);
-
-        for (var i = 1; i <= 4; i++) {
-            var optionInput = document.createElement("input");
-            optionInput.type = "text";
-            optionInput.className = "form-control mb-2";  // Added Bootstrap classes for styling
-            optionInput.name = "question" + questionNumber + "_option" + i;
-            optionInput.placeholder = "Option " + i;
-            questionDiv.appendChild(optionInput);
-        }
-
-        var answerLabel = document.createElement("label");
-        answerLabel.textContent = "Correct Answer for Question " + questionNumber + ":";
-        questionDiv.appendChild(answerLabel);
-
-        var answerSelect = document.createElement("select");
-        answerSelect.className = "form-control mb-2";  // Added Bootstrap classes for styling
-        answerSelect.name = "question" + questionNumber + "_answer";
-        answerSelect.required = true;
-
-        for (var j = 1; j <= 4; j++) {
-            var option = document.createElement("option");
-            option.value = j;
-            option.textContent = "Option " + j;
-            answerSelect.appendChild(option);
-        }
-
-        questionDiv.appendChild(answerSelect);
-
-        container.appendChild(questionDiv);
-        document.getElementById('question_count').value = container.childElementCount;
-    }
-
-    function removeQuestion() {
-        var container = document.getElementById("questions-container");
-        var questionCount = container.childElementCount;
-
-        if (questionCount > 0) {
-            container.removeChild(container.lastChild);
-        }
-        
-        document.getElementById('question_count').value = container.childElementCount;
-    }
-
-    function resetQuestions() {
-        var container = document.getElementById("questions-container");
-        container.innerHTML = "";
-    }
-</script>
-
 
                     
                   </body>

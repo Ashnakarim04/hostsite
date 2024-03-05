@@ -770,3 +770,19 @@ class Option3(models.Model):
     question = models.ForeignKey(Question3, on_delete=models.CASCADE)
     text = models.CharField(max_length=255)
     is_correct = models.BooleanField(default=False)
+
+
+class Questionn(models.Model):
+    question_id = models.IntegerField(primary_key=True, default=1)    
+    exam_title = models.CharField(max_length=255, default='Aptitude')
+    company_name = models.CharField(max_length=255)
+    question = models.CharField(max_length=255, default='question')  # Renamed from 'title' to 'question'
+    option1 = models.CharField(max_length=255)
+    option2 = models.CharField(max_length=255)
+    option3 = models.CharField(max_length=255)
+    option4 = models.CharField(max_length=255)
+    correct_option = models.IntegerField(choices=((1, 'Option 1'), (2, 'Option 2'), (3, 'Option 3'), (4, 'Option 4')))
+    status = models.BooleanField(default=True)  # Added status field with True or False values
+
+    def __str__(self):
+        return self.question

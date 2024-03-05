@@ -229,7 +229,11 @@ urlpatterns = [
     path('sevent/<int:studentprofile_id>/', views.sevent, name='sevent'),    
     path('quiz_form/', views.quiz_form, name='quiz_form'),    
     path('error/',error,name='error'),
-    path('company_event_form/<int:company_id>/', company_event_form, name='company_event_form'),
+    path('company_event_form/', company_event_form, name='company_event_form'),
+    path('ceventlist/', ceventlist, name='ceventlist'),
+    path('edit_company_event/<int:event_id>/', views.edit_company_event, name='edit_company_event'),
+    path('exam_view/', exam_view, name='exam_view'),
+    path('save-and-next/', save_and_next, name='save_and_next'),
     # path('deleteevent/<int:alumni_id>/<int:event_id>/', views.deleteevent, name='deleteevent'),
     ]
 if settings.DEBUG:

@@ -2326,65 +2326,7 @@ def apt_notification(request, studentprofile_id):
 
 from .forms import AptitudeTestForm  # Create a form for conducting aptitude tests
 
-# def conduct_aptitude_test(request):
-#     if request.method == 'POST':
-#         # Extract form data from request.POST
-#         title = request.POST.get('title')
-#         description = request.POST.get('description')
-#         date_and_time = request.POST.get('date_and_time')
-#         duration_minutes = request.POST.get('duration_minutes')
 
-#         # Create a new AptitudeTest object
-#         aptitude_test = AptitudeTest.objects.create(
-#             title=title,
-#             description=description,
-#             date_and_time=date_and_time,
-#             duration_minutes=duration_minutes
-#         )
-
-#         # Redirect after successful form submission
-#         return redirect('conduct_aptitude_test')
-    
-#     return render(request, 'company/create_apt.html')
-
-# def conduct_aptitude_test(request):
-#     if request.method == 'POST':
-#         # Process the aptitude test details
-#         aptitude_test = AptitudeTest.objects.create(
-#             title=request.POST.get('title'),
-#             description=request.POST.get('description'),
-#             date_and_time=request.POST.get('date_and_time'),
-#             duration_minutes=request.POST.get('duration_minutes')
-#         )
-
-#         # Process the questions dynamically added
-#         question_count = int(request.POST.get('question_count', 0))
-#         for i in range(1, question_count + 1):
-#             question_text = request.POST.get(f'question{i}')
-#             answer_type = request.POST.get(f'answer-type{i}')
-#             options = []
-
-#             # Retrieve options based on answer type
-#             if answer_type == 'radio' or answer_type == 'checkbox':
-#                 for j in range(4):  # Assuming there are 4 options
-#                     option_text = request.POST.get(f'option{i}_{j}_name')
-#                     options.append(option_text)
-#             elif answer_type == 'text':
-#                 options.append(request.POST.get(f'text-answer{i}'))
-
-#             # Create question instance and save
-#             question = Question.objects.create(
-#                 aptitude_test=aptitude_test,
-#                 question_text=question_text,
-#                 answer_type=answer_type,
-#                 options=options
-#             )
-
-#         # Redirect to a success page
-#         return redirect('cfirstround')
-#     else:
-#         # Handle GET request (render the form)
-#         return render(request, 'company/create_apt.html')
 
 from django.shortcuts import render, redirect
 from django.http import HttpResponseNotFound
@@ -2420,10 +2362,6 @@ import json
 
 @csrf_exempt
 def quiz_form(request):
-    # try:
-    #     course = CourseDetail.objects.get(pk=course_id)
-    # except CourseDetail.DoesNotExist:
-    #     return render(request, 'tutor_template/error.html', {'error_message': 'Course not found'})
     
     if request.method == 'POST':
         try:
@@ -2749,7 +2687,11 @@ def eventform(request, alumni_id):
     else:
         return render(request, 'admin/alumni/eventform.html', {'alumni_instance': alumni_instance})
 
-def company_event_form(request, company_id):
+
+from django.contrib.auth.decorators import login_required
+
+@login_required
+def company_event_form(request):
     if request.method == 'POST':
         # Process the form data here
         title = request.POST.get('title')
@@ -2759,7 +2701,10 @@ def company_event_form(request, company_id):
         event_type = request.POST.get('event_type')
         link = request.POST.get('link')
         
-        # Create a new CompanyEvent object and set its status to True
+        # Retrieve the CompanyProfile associated with the logged-in user
+        company_profile = request.user.companyprofile
+        
+        # Create a new CompanyEvent object associated with the CompanyProfile
         event = CompanyEvent(
             title=title,
             description=description,
@@ -2767,15 +2712,15 @@ def company_event_form(request, company_id):
             image=image,
             event_type=event_type,
             link=link,
-            status=True,  # Set the status to True
-            company_id=company_id  # Associate the event with the corresponding company
+            company=company_profile  # Associate the CompanyProfile with the CompanyEvent
         )
         event.save()
         
         # Redirect to a success page or wherever you want
-        return redirect(reverse('company_event_form', kwargs={'company_id': company_id}))        
+        return redirect(reverse('company_event_form'))  # Replace 'event_list' with the URL name of your event list page        
     else:
         return render(request, 'company/ceventform.html')
+
 
 from .models import Event
 
@@ -2823,6 +2768,38 @@ def editevent(request, alumni_id, event_id):
     
     return render(request, 'admin/alumni/editevent.html', {'alumni_instance': alumni_instance, 'event': event})
 
+
+def edit_company_event(request, event_id):
+    # Fetch the event object
+    event = get_object_or_404(CompanyEvent, pk=event_id)
+
+    if request.method == 'POST':
+        # Process the form data here
+        title = request.POST.get('title')
+        description = request.POST.get('description')
+        date = request.POST.get('date')
+        image = request.FILES.get('image')
+        event_type = request.POST.get('event_type')
+        link = request.POST.get('link')
+        
+        # Update the event object with new data
+        event.title = title
+        event.description = description
+        event.date = date
+        if image:
+            event.image = image
+        event.event_type = event_type
+        event.link = link
+        event.save()
+        
+        # Redirect to a success page or wherever you want
+        return redirect('company_event_form')  # Assuming 'company_event_form' is the URL name of your form page
+    else:
+        # Render the edit form with the event data pre-filled
+        return render(request, 'company/editcevent.html', {'event': event})
+def ceventlist(request):
+    events = CompanyEvent.objects.filter(status=True)
+    return render(request,'company/ceventlist.html',{'events': events})
 
 from datetime import datetime
 
@@ -2954,3 +2931,19 @@ def import_excel_data_view(request):
                 print(e)
 
     return render(request, 'exceldata.html', {'data_list': data_list})
+
+from django.shortcuts import render, redirect
+from .models import Question
+
+def exam_view(request):
+    question = Questionn.objects.first()  # Get the first question for now, you can implement logic to fetch random questions
+    return render(request, 'company/setq.html', {'question': question})
+
+def save_and_next(request):
+    if request.method == 'POST':
+        question_id = request.POST.get('question_id')
+        selected_option = request.POST.get('option')
+        # Save the answer to the database or perform any other necessary actions
+        # For demonstration purpose, let's assume you save it to the session
+        request.session[f'question_{question_id}_answer'] = selected_option
+    return redirect('exam')
