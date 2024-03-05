@@ -113,7 +113,7 @@
           </div>
         </nav>
       </header>
-      <div class="sidebar" id="sidebar">
+      <div class="sidebar" id="sidebar"> 
         <div class="sidebar-inner slimscroll">
             <div id="sidebar-menu" class="sidebar-menu">
                 <ul>
@@ -189,9 +189,9 @@
                                   <div class="col-md-4">
                                       <div class="card mb-4">
                                           <div class="card-body" style="transform: perspective(1000px);">
-                                              <h5 class="card-title">{{ aptitude.title }}</h5>
-                                              <p class="card-text">Description: {{ aptitude.description }}</p>
-                                              <p class="card-text">Date and Time: {{ aptitude.date_and_time }}</p>
+                                              <h5 class="card-title">{{aptitude.companyname}} - {{ aptitude.title }}</h5>
+                                              <p class="card-text"> {{ aptitude.description }}</p>
+                                              <p class="card-text"><i class="fa fa-calendar" aria-hidden="true"></i> &nbsp;&nbsp; {{ aptitude.date_and_time }}</p>
                                               <!-- Add more fields as needed -->
                                           </div>
                                       </div>

@@ -235,6 +235,7 @@ urlpatterns = [
     path('exam_view/', exam_view, name='exam_view'),
     path('save-and-next/', save_and_next, name='save_and_next'),
     path('create-question/', create_question, name='create_question'),
+    path('apt_list_company/',apt_list_company, name='apt_list_company')
     # path('deleteevent/<int:alumni_id>/<int:event_id>/', views.deleteevent, name='deleteevent'),
     ]
 if settings.DEBUG:

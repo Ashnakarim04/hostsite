@@ -207,31 +207,6 @@ def contactuser(request):
     return render(request, 'contactuser.html')
 
 
-# def postjob(request, companyprofile_id):
-#     # Use get_object_or_404 to get the CompanyProfile instance or raise a 404 error if not found
-#     companyprofile = get_object_or_404(CompanyProfile, id=companyprofile_id)
-
-#     if request.method == "POST":
-#         website = request.POST.get('website')
-#         companyprofile.website = website
-#         companyprofile.save()
-#         return redirect('cindex')
-#     else:
-#         print("NO")
-#     context={
-#         'companyprofile': companyprofile
-#     }
-#     job = Jobs.objects.all()
-#     return render(request, 'postjob.html', {'job': job, 'companyprofile': companyprofile}, context)
-
-# def sindex(request):
-#     if request.user.is_authenticated:
-#         studentprofile= request.user.studentprofile
-#         return render(request, 'sindex.html',{'studentprofile': studentprofile})
-#     else:
-#         return redirect()
-    
-
 
 def studentloginn(request):
     if request.method == "POST":
@@ -977,11 +952,7 @@ def add_student(request):
     return render(request, 'admin/student/student.html', context={'messages': messages.get_messages(request)})
 def adpostjob(request):
     return render(request,'adpostjob.html')
-# @ashaworker_required
-# def job_approve(request):
-#     approved_jobs = Jobs.objects.filter(is_approved=True)
-#     print(approved_jobs)
-#     return render(request, 'adpostjob.html', {'approved_jobs': approved_jobs})
+
 
 
     from django.shortcuts import get_object_or_404, redirectprimary
@@ -1345,12 +1316,7 @@ def jobapply(request, jobapply_id):
     else:
         return render(request, 'student/jobapply.html', {'certification_status': certification_status})
 
-# def appliedstudents(request):
-    
 
-#     app_stu = JobApplication.objects.filter(job__company=request.user)
-#     context = {'app_stu': app_stu}
-#     return render(request,'company/appliedstudents.html', context)
 
  
 def appliedstudents(request):
@@ -1637,14 +1603,14 @@ def aptform(request, aptitude_id=None):
 
     if request.method == 'POST':
         try:
-            title = request.POST['title']
-            description = request.POST['description']
-            date_and_time = request.POST['date_and_time']
-            link = request.POST['link']
-            login_id = request.POST['login_id']
-            password = request.POST['password']
-            steps = request.POST['steps']
-            regulations = request.POST['regulations']
+            title = request.POST.get('title')
+            description = request.POST.get('description')
+            date_and_time = request.POST.get('date_and_time')
+            link = request.POST.get('link')
+            login_id = request.POST.get('login_id')
+            password = request.POST.get('password')
+            steps = request.POST.get('steps')
+            regulations = request.POST.get('regulations')
 
             if aptitude_id:
                 # Update existing instance if aptitude_id is provided
@@ -1662,6 +1628,7 @@ def aptform(request, aptitude_id=None):
             aptitude.password = password
             aptitude.steps = steps
             aptitude.regulations = regulations
+            aptitude.company_profile = company_profile  # Associate CompanyProfile with AddAptitude
             aptitude.companyname = company_profile.companyname  # Set companyname from company_profile
 
             aptitude.save()  # Save the instance
@@ -1685,7 +1652,6 @@ def aptform(request, aptitude_id=None):
     }
     return render(request, 'company/add_aptitude.html', context)
 
- 
 
 def aptform2(request):
     return render(request,'company/add_aptitude.html')
@@ -2322,6 +2288,16 @@ def apt_notification(request, studentprofile_id):
     }
     
     return render(request, 'student/apt_notification.html', context)
+
+@login_required  # Ensure user is logged in to access this view
+def apt_list_company(request):
+    # Fetch the company profile related to the logged-in user
+    company_profile = CompanyProfile.objects.get(user=request.user)
+
+    # Filter aptitudes based on the company_profile
+    filtered_aptitudes = AddAptitude.objects.filter(company_profile=company_profile, status=True)
+
+    return render(request, 'company/apt_list.html', {'filtered_aptitudes': filtered_aptitudes})
 
 
 from .forms import AptitudeTestForm  # Create a form for conducting aptitude tests
