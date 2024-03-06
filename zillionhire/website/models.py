@@ -680,6 +680,7 @@ class CompanyEvent(models.Model):
     
 class AddAptitude(models.Model):
     aptitude = models.AutoField(primary_key=True)
+    # jobb = models.ForeignKey(Jobs, on_delete=models.CASCADE, null=True)
     company_profile = models.ForeignKey(CompanyProfile, on_delete=models.CASCADE, default=None)
     companyname = models.CharField(max_length=100, default="")
     title = models.CharField(max_length=100)
@@ -690,10 +691,11 @@ class AddAptitude(models.Model):
     password = models.CharField(max_length=100)
     steps = models.TextField()
     regulations = models.TextField()
-    status = models.BooleanField(default=True)  # New field for status
+    status = models.BooleanField(default=True)
 
     def __str__(self):
         return self.title
+
 
 class AptitudeTest(models.Model):
     title = models.CharField(max_length=100)

@@ -2288,6 +2288,11 @@ def apt_notification(request, studentprofile_id):
     }
     
     return render(request, 'student/apt_notification.html', context)
+from .models import JobApplication
+
+  
+
+
 
 @login_required  # Ensure user is logged in to access this view
 def apt_list_company(request):
@@ -2346,8 +2351,9 @@ from .models import Questionn
 
 def create_question(request):
     if request.method == 'POST':
+
         exam_title = request.POST.get('exam_title')
-        # company_name = request.POST.get('company_name')
+        company_name = request.POST.get('company_name')
         question = request.POST.get('question')
         option1 = request.POST.get('option1')
         option2 = request.POST.get('option2')
@@ -2359,7 +2365,7 @@ def create_question(request):
         # Create a new Questionn instance
         questionn = Questionn.objects.create(
             exam_title=exam_title,
-            # company_name=company_name,
+            company_name=company_name,
             question=question,
             option1=option1,
             option2=option2,
