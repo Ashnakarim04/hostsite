@@ -20,6 +20,82 @@
     <link rel="stylesheet" href="{% static 'assets/css/fontawesome.css' %}">
     <link rel="stylesheet" href="{% static  'assets/css/style.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/owl.css' %}">
+    <style>
+      /* Google Translate Widget Styling */
+    
+      /* Make the "Translate" button inline */
+      #google_translate_element .skiptranslate {
+        display: inline !important;
+      }
+    
+      /* Hide Google Translate logo */
+      .goog-te-gadget {
+        color: transparent !important;
+      }
+    
+      /* Dark Theme for the select dropdown */
+      .goog-te-combo {
+        padding: 8px;
+        /* Add padding for spacing */
+        font-size: 14px;
+        /* Set font size */
+        border: 1px solid #666;
+        /* Dark border */
+        border-radius: 4px;
+        /* Add rounded corners */
+        background-color: #222;
+        /* Dark background color */
+        color: #fff;
+        /* Light text color */
+      }
+    
+      /* Style the select dropdown when it's hovered */
+      .goog-te-combo:hover {
+        border-color: #999;
+        /* Darker border color on hover */
+      }
+    
+      /* Style the select dropdown when it's focused (clicked) */
+      .goog-te-combo:focus {
+        outline: none;
+        /* Remove the default focus outline */
+        border-color: #007bff;
+        /* Change border color on focus */
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        /* Add a shadow on focus */
+      }
+    
+      /* Style the dropdown arrow */
+      .goog-te-combo-arrow {
+        font-size: 12px;
+        /* Adjust arrow size */
+        color: #fff;
+        /* Light arrow color */
+      }
+    
+      /* Style the dropdown options */
+      .goog-te-menu-value {
+        font-size: 14px;
+        /* Set font size for options */
+        color: #fff;
+        /* Light text color for options */
+        background-color: #333;
+        /* Dark background color for options */
+      }
+    
+      /* Style the dropdown options on hover */
+      .goog-te-menu-value:hover {
+        background-color: #007bff;
+        /* Change background color on hover */
+        color: #fff;
+        /* Light text color on hover */
+      }
+    
+      /* Hide the translation preview iframe */
+      iframe#\:1.container {
+        display: hidden;
+      }
+    </style>
   </head>
 
   <body>
@@ -89,6 +165,14 @@
               </li>
               <li class="nav-item"> 
                 <a class="nav-link" href="{% url 'contactuser' %}">Contact Us</a>
+              </li>
+              <li class="nav-item"> 
+                <div style="position: relative;">
+                  <span style="color: #fff;">Select Language: </span>
+                  <div style="margin-left: 85%; position: absolute; top: 0; bottom: 0; left: 25px;"
+                    id="google_translate_element">
+                  </div>
+                </div>
               </li>
               <li class="nav-item">
                 {% if companyprofile.is_approved %}
@@ -519,7 +603,30 @@
     <script src="{% static 'assets/js/custom.js' %}"></script>
     <script src="{% static 'assets/js/owl.js' %}"></script>
     <script src="{% static 'assets/js/accordions.js' %}"></script>
+    <script type="text/javascript"
+  src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+<script type="text/javascript">
+  function googleTranslateElementInit() {
+    new google.translate.TranslateElement({ pageLanguage: 'en' }, 'google_translate_element');
+  }
+</script>
+<script>
+  // Define the function to hide the iframe
+  function hideIframe() {
+    // Get the iframe element
+    var iframe = document.getElementById(':1.container');
 
+    // Check if the iframe element exists
+    if (iframe) {
+      // Change the visibility to hidden
+      iframe.style.visibility = 'hidden';
+    }
+  }
+
+  // Call the function every 5 seconds (5000 milliseconds)
+  setInterval(hideIframe, 100);
+
+</script>
     <script language = "text/Javascript"> 
       cleared[0] = cleared[1] = cleared[2] = 0; //set a cleared flag for each field
       function clearField(t){                   //declaring the array outside of the
