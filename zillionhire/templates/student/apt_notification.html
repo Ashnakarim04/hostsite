@@ -164,9 +164,16 @@
                     <li class>
                         <a href="{%url 'gen_resume'  %}"><i class="fas fa-user-check"></i> <span>RESUME</span></a>
                       </li>
-                    <li class="active">
+                    <li>
                         <a href="{%url 'alumni_blog' studentprofile_id=studentprofile.id  %}"><i class="fas fa-user-check"></i> <span>ALUMNI NOTES</span></a>
                       </li>
+                      <li class>
+                        <a href="{%url 'sevent' studentprofile_id=studentprofile.id  %}"><i class="fas fa-user-check"></i> <span> EVENTS</span></a>
+                      </li>
+                      <li class="active">
+                        <a href="{%url 'apt_notification' studentprofile_id=studentprofile.id  %}"><i class="fas fa-user-check"></i> <span>APTITUDE NOTF</span></a>
+                      </li>
+                   
                         
                     
                 </ul>
