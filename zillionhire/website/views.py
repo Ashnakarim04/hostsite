@@ -78,8 +78,7 @@ def ad_cprofile(request):
 def srequest(request):
     admin_student = request.user.student_profile
     return render(request, 'student/srequest.html',{'admin_student':admin_student})
-# def addjob(request):
-#     return render(request, 'addjob.html')
+
 def loginn(request):
     if request.method == "POST":
         username=request.POST['email']
