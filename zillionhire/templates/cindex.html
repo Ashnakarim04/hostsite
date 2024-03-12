@@ -166,14 +166,15 @@
               <li class="nav-item"> 
                 <a class="nav-link" href="{% url 'contactuser' %}">Contact Us</a>
               </li>
-              <li class="nav-item"> 
+              {% comment %} <li class="nav-item"> 
                 <div style="position: relative;">
                   <span style="color: #fff;">Select Language: </span>
                   <div style="margin-left: 85%; position: absolute; top: 0; bottom: 0; left: 25px;"
                     id="google_translate_element">
                   </div>
                 </div>
-              </li>
+              </li> {% endcomment %}
+
               <li class="nav-item">
                 {% if companyprofile.is_approved %}
 
@@ -194,7 +195,6 @@
                <p>Are you </p>      
               {% endif %}
 
-                {% comment %} <a class="nav-link" href="{% url 'postjob' %}">Post Job</a> {% endcomment %}
               </li>
               
             </ul>
@@ -265,7 +265,7 @@
         <div class="row">
           <div class="col-md-8">
             <h4>Request a call back right now ?</h4>
-            {% comment %} <span>Mauris ut dapibus velit cras interdum nisl ac urna tempor mollis.</span> {% endcomment %}
+            {% comment %} <span>Mauris ut dapibus velit cras interdum nisl ac urna tempor mollis.</span> {% endcomment %} 
           </div>
           <div class="col-md-4">
             <a href="{% url 'contactuser' %}" class="border-button">Contact Us</a>
