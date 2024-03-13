@@ -8,20 +8,8 @@ from .models import AdminStudent, Jobs, CompanyProfile
 from .models import Students,StudentProfile,CompanyApprove,JobApplication,internship,classdetails,videolibrary,ccontent, LikedContent, Alumni
 from .models import resumeadmin, LikedContent1, ResumeBuilder, Review, Event, ExcelData, AddAptitude, AptitudeTest,Question, Option, ExamSchedule
 from .models import *
-# from .forms import StudentForm 
 from django.shortcuts import render, get_object_or_404, redirect
-# from .models import  CustomUser
-# from django.contrib.auth import get_user_model 
-# from django.contrib.auth import get_user_model
-# Create your views here.
- 
-# def sample(request):
-#     return render(request, 'sample.html')
-# def loginn(request):
-#     return render(request, 'login.html')
-# def reg(request):
-#     return render(request, 'registration.html')
-# User=get_user_model()
+
 def index(request):
     return render(request, 'index.html')
 def jobs(request):
@@ -36,8 +24,7 @@ def blog(request):
     return render(request, 'blog.html')
 def postjob(request):
     return render(request, 'postjob.html')
-# def admin_index(request):
-#     return render(request, 'admin/index.html')
+
 def admin_index2(request):
     stu=Students.objects.filter(is_active = True)
     stu_count=stu.count()
@@ -62,19 +49,15 @@ def admin_profile(request):
     return render(request, 'admin/profile.html')
 def admin_editprofile(request):
     return render(request, 'admin/edit-profile.html')
-# def admin_students(request):
-#     return render(request, 'admin/students.html')
+
 def admin_company(request):
     return render(request, 'admin/company.html')
-# def admin_addstudent(request):
-#     return render(request, 'admin/addstudent.html')
+
 def admin_studentadd(request):
     return render(request,'admin/student_add.html')
 def ad_cprofile(request):
     return render(request, 'admin/ad_cprofile.html')
 
-# def sprofile(request):
-#     return render(request, 'student/sprofile.html')
 def srequest(request):
     admin_student = request.user.student_profile
     return render(request, 'student/srequest.html',{'admin_student':admin_student})
@@ -138,37 +121,6 @@ def reg(request):
         return render(request, 'registration.html')
     
 
-# from django.shortcuts import render, redirect
-# from django.contrib.auth.models import User
-# from .models import CompanyApprove
-
-# def reg(request):
-#     if request.method == "POST":
-#         companyname = request.POST.get('companyname')
-#         email = request.POST.get('email')
-#         password = request.POST.get('password')
-#         confirmPassword = request.POST.get('confirmPassword')
-
-#         if password == confirmPassword:
-#             # Check if the email already exists
-#             if User.objects.filter(email=email).exists():
-#                 messages.info(request, 'Email already exists')
-#                 return redirect('reg')
-#             else:
-#                 # Create the User instance
-#                 user = User.objects.create_user(username=email, password=password, email=email)
-
-#                 # Create the CompanyApprove instance
-#                 company_approve = CompanyApprove(companyname=companyname, email=email, user=user)
-#                 company_approve.save()
-
-#                 messages.success(request, 'Registration successful! You can Login now..')
-#                 return redirect('loginn')
-#         else:
-#             messages.error(request, 'Password confirmation does not match')
-#             return redirect('reg')
-#     else:
-#         return render(request, 'registration.html')
 
 def loggout(request):
     print('Logged Out')
@@ -177,12 +129,7 @@ def loggout(request):
 
 def sample2(request):
     return render(request, 'sample2.html')
-# def cindex(request):
-#     if request.user.is_authenticated:
-#         companyprofile = request.user.companyprofile
-#         return render(request, 'cindex.html', {'companyprofile': companyprofile})
-#     else:
-#         return redirect('loginn')
+
 
 from django.shortcuts import get_object_or_404
 
@@ -322,10 +269,7 @@ def edit_job(request, job_id):
         job.responsibilities = request.POST.get('responsibilities')
         job.preferred_skills = request.POST.get('preferred_skills')
         job.qualifications = request.POST.get('qualifications')
-        # job.criteria = request.POST.FILES['criteria'] if 'criteria' in request.FILES else None
-        # if criteriafile:
-        #     job.criteria = criteriafile
-        # job.criteria = request.POST.get('criteria')
+       
         job.save()
         # Redirect to a success page or back to the job listing page
         return redirect('postjob')  # Change 'job_listing' to the appropriate URL name
@@ -336,15 +280,6 @@ def edit_job(request, job_id):
 from django.shortcuts import render, redirect
 from .models import Jobs
 
-# def delete_job(request, job_id):
-#     try:
-#         job = Jobs.objects.get(id=job_id)
-#         job.delete()
-#         # Redirect to a different page (e.g., job list or any other appropriate page)
-#         return redirect('postjob')  # Replace 'job_list' with the appropriate URL name
-#     except Jobs.DoesNotExist:
-#         # Handle the case where the job does not exist (you can show an error message or redirect to an error page)
-#         return redirect('postjob')  # Redirect to the job list page or an error page as needed
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Jobs
 
@@ -390,12 +325,7 @@ def jobslist(request):
     context = {'job_list': job_list}
     return render(request, 'admin/admin_jobtable.html', context)
 
-# def job_list(request):
-#     # Retrieve data from the Jobs model
-#     joblist = Jobs.objects.all()
-    
-#     # Pass the data to the template
-#     return render(request, 'job_list.html', {'joblist': joblist})
+
 
 from django.shortcuts import render
 from .models import CompanyProfile
@@ -436,13 +366,6 @@ def addstudents(request):
 
 
 
-
-
-
-
-
-
-
 def profc(request):
     return render(request,'admin/profc.html')
 def admin_poststudent(request):
@@ -479,15 +402,7 @@ def search_course(request):
     students = Students.objects.filter(email__icontains=semail)
     
     return render(request, 'admin/admin_poststudent.html', {'stus': students})
-# def adsearch_company(request):
-#     if 'companyname' in request.GET:
-#         companyname = request.GET['companyname']
-#         # Perform the company name search, for example:
-#         job_list = CompanyProfile.objects.filter(companyname__icontains=companyname)
-#     else:
-#         job_list = CompanyProfile.objects.all()  # Display all company profiles if no search query
 
-#     return render(request, 'admin/admin_jobtable.html', {'job_list': job_list})
 from django.utils.datastructures import MultiValueDictKeyError
 from django.shortcuts import render
 from .models import CompanyProfile
@@ -522,25 +437,7 @@ def search_job(request):
     return render(request, 'admin/admin_jobtable.html', {'job_list': job_list})
 
 
-# from django.shortcuts import render
-# from django.contrib.auth.decorators import login_required
 
-# @login_required  # Ensure the user is logged in to access this view
-# def search_jobs(request):
-#     company_name = request.GET.get('companyName', '')
-#     job_name = request.GET.get('jobName', '')
-
-#     # Filter jobs based on the search criteria
-#     jobs = Jobs.objects.filter(
-#         cname__icontains=company_name,
-#         jname__icontains=job_name,
-#         is_active=True
-#     )
-
-#     # Assuming you have a StudentProfile associated with the current user
-#     student_profile = request.user.studentprofile
-
-#     return render(request, 'adpostjob.html', {'jobs': jobs, 'studentprofile_id': student_profile.id})
 
 
 def edit_student(request):
@@ -614,20 +511,6 @@ class download_criteria(View):
                 return response
         else:
             raise Http404("File not found")
-
-# def addelete_job(request, jobb_id):
-#     # Get the job object by id
-#     jobb = get_object_or_404(Jobs, id=jobb_id)
-    
-#     if request.method == 'POST':
-#         # Set the is_active field to False
-#         jobb.is_active = False
-#         jobb.save()  # Save the updated job object with is_active=False
-#         return redirect('jobslist')  # Redirect to a suitable page after deletion
-
-#     return render(request, 'delete_job.html', {'jobb': jobb})
-
-
 
 
 
@@ -1019,13 +902,7 @@ from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from website.models import StudentProfile
 
-# @login_required
-# def sindex(request):
-#     if request.user.is_authenticated:
-#         studentprofile = request.user.studentprofile
-#         return render(request, 'sindex.html', {'studentprofile': studentprofile})
-#     else:
-#         return redirect('loginn')
+
 
 @login_required
 def sindex(request):
@@ -1383,11 +1260,6 @@ def s_shortlist(request, studentprofile_id):
 
 
 
-# def studentprofileapp(request, studentprofile_id):
-#     app_stu = get_object_or_404(JobApplication, user=request.user)
-#     context = {'app_stu': app_stu, 'studentprofile_id': studentprofile_id }
-    
-#     return render(request,'company/studentprofileapp.html',context)
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
 
