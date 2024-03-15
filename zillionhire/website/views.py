@@ -2208,14 +2208,24 @@ from django.http import HttpResponseNotFound
 #         exam_schedules = ExamSchedule.objects.all()
 #         return render(request, 'company/create_apt.html', {'exam_schedules': exam_schedules})
 
-def conduct_aptitude_test(request):
-    # if request.method == 'POST':
-    #     ques = request.POST.get('exam_schedule')
+# def conduct_aptitude_test(request):
+#     return render(request, 'company/create_apt.html')
 
-    # else:
-        # Fetch all exam schedules to populate the dropdown
-    exam_schedules = ExamSchedule.objects.all()
-    return render(request, 'company/create_apt.html')
+def conduct_aptitude_test(request):
+    # Retrieve CompanyProfile data
+    company_profiles = CompanyProfile.objects.all()  # You can filter this queryset as needed
+
+    # Pass CompanyProfile data to the template context
+    context = {
+        'company_profiles': company_profiles,
+    }
+
+    return render(request, 'company/create_apt.html', context)
+
+
+def q_preview(request):
+    return render(request,'company/q_preview.html')
+
 
 from django.shortcuts import render, redirect
 from .models import Questionn

@@ -116,7 +116,7 @@
                                 <a href="{%url 'apt_list_company'%}"><i class="fas fa-user"></i> <span>TEST NOTIFICATION</span></a>
                               </li>
                               <li class>
-                                <a href="{%url 'q_preview'%}"><i class="fas fa-user"></i> <span>PREVIEW</span></a>
+                                <a href="{%url 'ceventlist'%}"><i class="fas fa-user"></i> <span>PREVIEW</span></a>
                               </li>
                               <li class>
                                 <a href="{%url 'ceventlist'%}"><i class="fas fa-user"></i> <span>EVENTS</span></a>
@@ -148,31 +148,8 @@
                                     <div class="card">
                                         <div class="card-body">
                                            
-                                            <h2>Create new test</h2>
-                                            {% comment %} <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeFgVN2I99eCRaQkF4TW9l55n-vKhCQjOnoF53VAxxjBokqGw/viewform?embedded=true" width="640" height="942" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe> {% endcomment %}
-                                            {% comment %} <form method="post" action="">
-                                    
-                                                {% csrf_token %}                               
-                                                <div class="form-group">
-                                                    <label for="exam_schedule">Exam Schedule:</label>
-                                                    <select class="form-control" id="exam_schedule" name="exam_schedule">
-                                                        {% for schedule in exam_schedules %}
-                                                        <option value="{{ schedule.id }}">{{ schedule }}</option>
-                                                        {% endfor %}
-                                                    </select>
-                                                </div>
-                                    
-                                                <div id="questions-container">
-                                                    <!-- Dynamic questions will be added here -->
-                                                </div>
-                                    
-                                                <button type="button" class="btn btn-primary mb-2" onclick="addQuestion()">Add Question</button>
-                                                <button type="button" class="btn btn-secondary mb-2" onclick="removeQuestion()">Remove Question</button>
-                                                <button type="button" class="btn btn-warning mb-2" onclick="resetQuestions()">Reset Questions</button>
-                                                <input type="hidden" name="question_count" id="question_count" value="0">
-                                    
-                                                <button type="submit" class="btn btn-primary">save</button>
-                                            </form> {% endcomment %}
+                                            <h2>Questions Preview </h2>
+                                            
                                             <form method="post" action="{% url 'create_question'%}">
                                               {% csrf_token %}
                                               <div class="form-group">
