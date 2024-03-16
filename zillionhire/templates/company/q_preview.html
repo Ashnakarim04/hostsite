@@ -15,7 +15,12 @@
     <link rel="stylesheet" type="text/css" href="{% static 'assets2/css/select2.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'assets2/css/bootstrap-datetimepicker.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'assets2/css/style.css' %}">
-   
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+<!-- Bootstrap JavaScript (optional) -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
         <script src="{% static 'assets2/js/html5shiv.min.js' %}"></script>
         <script src="{% static 'assets2/js/respond.min.js' %}"></script>
        
@@ -145,61 +150,32 @@
                             
                             <div class="row">
                                 <div class="col-md-12">
-                                    <div class="card">
-                                        <div class="card-body">
-                                           
-                                            <h2>Questions Preview </h2>
-                                            
-                                            <form method="post" action="{% url 'create_question'%}">
-                                              {% csrf_token %}
-                                              <div class="form-group">
-                                                  <label for="exam_title">Exam Title</label>
-                                                  <input type="text" class="form-control" id="exam_title" name="exam_title" value="{{ questionn.exam_title }}" required>
-                                              </div>
-                                              <div class="form-group">
-                                                  <label for="company_name">Company Name</label>
-                                                  <input type="text" class="form-control" id="company_name" name="company_name" value="{{ questionn.company_name }}" required>
-                                              </div>
-                                              <div class="form-group">
-                                                  <label for="question">Question</label>
-                                                  <input type="text" class="form-control" id="question" name="question" value="{{ questionn.question }}" required>
-                                              </div>
-                                              <div class="form-group">
-                                                  <label for="option1">Option 1</label>
-                                                  <input type="text" class="form-control" id="option1" name="option1" value="{{ questionn.option1 }}" required>
-                                              </div>
-                                              <div class="form-group">
-                                                  <label for="option2">Option 2</label>
-                                                  <input type="text" class="form-control" id="option2" name="option2" value="{{ questionn.option2 }}" required>
-                                              </div>
-                                              <div class="form-group">
-                                                  <label for="option3">Option 3</label>
-                                                  <input type="text" class="form-control" id="option3" name="option3" value="{{ questionn.option3 }}" required>
-                                              </div>
-                                              <div class="form-group">
-                                                  <label for="option4">Option 4</label>
-                                                  <input type="text" class="form-control" id="option4" name="option4" value="{{ questionn.option4 }}" required>
-                                              </div>
-                                              <div class="form-group">
-                                                  <label for="correct_option">Correct Option</label>
-                                                  <select class="form-control" id="correct_option" name="correct_option" required>
-                                                      <option value="1" {% if questionn.correct_option == 1 %} selected {% endif %}>Option 1</option>
-                                                      <option value="2" {% if questionn.correct_option == 2 %} selected {% endif %}>Option 2</option>
-                                                      <option value="3" {% if questionn.correct_option == 3 %} selected {% endif %}>Option 3</option>
-                                                      <option value="4" {% if questionn.correct_option == 4 %} selected {% endif %}>Option 4</option>
-                                                  </select>
-                                              </div>
-                                              {% comment %} <div class="form-group form-check">
-                                                  <input type="checkbox" class="form-check-input" id="status" name="status" {% if questionn.status %} checked {% endif %}>
-                                                  <label class="form-check-label" for="status">Status</label>
-                                              </div> {% endcomment %}
-                                              <button type="submit" class="btn btn-primary">Submit</button>
-                                          </form>
-                                  
-                                            
-                                        </div>
-                                    </div>
-                                </div>
+    <div class="card">
+        <div class="card-body">
+            <h2>Questions Preview</h2>
+            <ol>
+              {% for question in questions %}
+                  <li>
+                      {% comment %} <strong>Question ID:</strong> {{ question.question_id }}<br>
+                      <strong>Exam Title:</strong> {{ question.exam_title }}<br>
+                      <strong>Company Name:</strong> {{ question.company_name }}<br> {% endcomment %}
+                      <strong>Question:</strong> {{ question.question }}<br>
+                      <strong>Option 1:</strong> {{ question.option1 }}<br>
+                      <strong>Option 2:</strong> {{ question.option2 }}<br>
+                      <strong>Option 3:</strong> {{ question.option3 }}<br>
+                      <strong>Option 4:</strong> {{ question.option4 }}<br>
+                      <strong>Correct Option:</strong> Option {{ question.correct_option }}<br>
+                      <a href="/edit/{{ question.question_id }}">Edit</a> | <a href="/delete/{{ question.question_id }}">Delete</a>
+
+
+              {% endfor %}
+          </ol>
+          
+        </div>
+    </div>
+    
+</div>
+
                                 
                             </div>
                         </div>

@@ -2224,8 +2224,32 @@ def conduct_aptitude_test(request):
 
 
 def q_preview(request):
-    return render(request,'company/q_preview.html')
+    questions = Questionn.objects.filter(status=1)
+    return render(request, 'company/q_preview.html', {'questions': questions})
 
+def edit_question(request, question_id):
+    question = get_object_or_404(Questionn, pk=question_id)
+    if request.method == 'POST':
+        # Update the question fields with the submitted data
+        question.exam_title = request.POST.get('exam_title')
+        question.company_name = request.POST.get('company_name')
+        question.question = request.POST.get('question')
+        question.option1 = request.POST.get('option1')
+        question.option2 = request.POST.get('option2')
+        question.option3 = request.POST.get('option3')
+        question.option4 = request.POST.get('option4')
+        question.correct_option = request.POST.get('correct_option')
+        question.save()
+        return redirect('q_preview')  # Redirect to the question list page
+    return render(request, 'company/edit_question.html', {'question': question})
+
+
+def delete_question(request, question_id):
+    question = get_object_or_404(Questionn, pk=question_id)
+    # Update the status of the question
+    question.status = False  # Set status to False to indicate it's not active
+    question.save()
+    return redirect('q_preview')
 
 from django.shortcuts import render, redirect
 from .models import Questionn

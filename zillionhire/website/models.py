@@ -680,6 +680,7 @@ class CompanyEvent(models.Model):
     
 class AddAptitude(models.Model):
     aptitude = models.AutoField(primary_key=True)
+    job_id=models.CharField(max_length=100,default="hi")
     company_profile = models.ForeignKey(CompanyProfile, on_delete=models.CASCADE, default=None)
     companyname = models.CharField(max_length=100, default="")
     title = models.CharField(max_length=100)
