@@ -180,9 +180,13 @@
                                                   <input type="text" class="form-control" id="exam_title" name="exam_title" value="{{ questionn.exam_title }}" required>
                                               </div>
                                               <div class="form-group">
+                                                <label for="company_profile_id">Company Profile ID</label>
+                                                <input type="text" class="form-control" id="company_profile_id" name="company_profile_id" value="{{ questionn.company_profile_id }}" readonly>
+                                            </div>
+                                              {% comment %} <div class="form-group">
                                                   <label for="company_name">Company Name</label>
                                                   <input type="text" class="form-control" id="company_name" name="company_name" value="{{ questionn.company_name }}" required>
-                                              </div>
+                                              </div> {% endcomment %}
                                               <div class="form-group">
                                                   <label for="question">Question</label>
                                                   <input type="text" class="form-control" id="question" name="question" value="{{ questionn.question }}" required>

@@ -774,11 +774,12 @@ class Option3(models.Model):
     text = models.CharField(max_length=255)
     is_correct = models.BooleanField(default=False)
 
-
 class Questionn(models.Model):
     question_id = models.AutoField(primary_key=True)    
     exam_title = models.CharField(max_length=255, default='Aptitude')
-    company_name = models.CharField(max_length=255)
+    company_profile = models.ForeignKey(CompanyProfile, on_delete=models.CASCADE,null=True)
+
+    # company_name = models.CharField(max_length=255)
     question = models.CharField(max_length=255, default='question')  # Renamed from 'title' to 'question'
     option1 = models.CharField(max_length=255)
     option2 = models.CharField(max_length=255)
@@ -789,3 +790,4 @@ class Questionn(models.Model):
 
     def __str__(self):
         return self.question
+ 

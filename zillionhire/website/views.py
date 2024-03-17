@@ -2232,7 +2232,7 @@ def edit_question(request, question_id):
     if request.method == 'POST':
         # Update the question fields with the submitted data
         question.exam_title = request.POST.get('exam_title')
-        question.company_name = request.POST.get('company_name')
+        # question.company_name = request.POST.get('company_name')
         question.question = request.POST.get('question')
         question.option1 = request.POST.get('option1')
         question.option2 = request.POST.get('option2')
@@ -2254,11 +2254,11 @@ def delete_question(request, question_id):
 from django.shortcuts import render, redirect
 from .models import Questionn
 
-def create_question(request):
+def create_question(request, companyprofile_id):
     if request.method == 'POST':
 
         exam_title = request.POST.get('exam_title')
-        company_name = request.POST.get('company_name')
+       
         question = request.POST.get('question')
         option1 = request.POST.get('option1')
         option2 = request.POST.get('option2')
@@ -2270,13 +2270,14 @@ def create_question(request):
         # Create a new Questionn instance
         questionn = Questionn.objects.create(
             exam_title=exam_title,
-            company_name=company_name,
+           
             question=question,
             option1=option1,
             option2=option2,
             option3=option3,
             option4=option4,
             correct_option=correct_option,
+            company_profile_id=companyprofile_id
             # status=status
         )
 
