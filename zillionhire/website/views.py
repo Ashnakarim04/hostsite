@@ -897,6 +897,7 @@ def cprofile(request, companyprofile_id):
         
     }
     return render(request, 'cprofile.html', context)
+
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
@@ -2222,11 +2223,27 @@ def conduct_aptitude_test(request):
 
     return render(request, 'company/create_apt.html', context)
 
+from django.contrib.auth.decorators import login_required
 
+@login_required
 def q_preview(request):
-    questions = Questionn.objects.filter(status=1)
+    # Retrieve the company profile associated with the logged-in user
+    company_profile = request.user.companyprofile
+
+    # Print out the company profile for debugging
+    print("Company Profile:", company_profile)
+
+    # Retrieve questions associated with the company profile
+    questions = Questionn.objects.filter(company_profile=company_profile, status=True)
+
+    # Print out the questions for debugging
+    print("Questions:", questions)
+
     return render(request, 'company/q_preview.html', {'questions': questions})
 
+
+
+@login_required
 def edit_question(request, question_id):
     question = get_object_or_404(Questionn, pk=question_id)
     if request.method == 'POST':
@@ -2239,6 +2256,7 @@ def edit_question(request, question_id):
         question.option3 = request.POST.get('option3')
         question.option4 = request.POST.get('option4')
         question.correct_option = request.POST.get('correct_option')
+        question.marks = request.POST.get('marks')  # Update marks value
         question.save()
         return redirect('q_preview')  # Redirect to the question list page
     return render(request, 'company/edit_question.html', {'question': question})
@@ -2254,31 +2272,65 @@ def delete_question(request, question_id):
 from django.shortcuts import render, redirect
 from .models import Questionn
 
-def create_question(request, companyprofile_id):
-    if request.method == 'POST':
+# def create_question(request):
+#     if request.method == 'POST':
 
-        exam_title = request.POST.get('exam_title')
+#         exam_title = request.POST.get('exam_title')
        
-        question = request.POST.get('question')
+#         question = request.POST.get('question')
+#         option1 = request.POST.get('option1')
+#         option2 = request.POST.get('option2')
+#         option3 = request.POST.get('option3')
+#         option4 = request.POST.get('option4')
+#         correct_option = request.POST.get('correct_option')
+#         # status = request.POST.get('status') == 'on'  # Convert checkbox value to boolean
+
+#         # Create a new Questionn instance
+#         questionn = Questionn.objects.create(
+#             exam_title=exam_title,
+           
+#             question=question,
+#             option1=option1,
+#             option2=option2,
+#             option3=option3,
+#             option4=option4,
+#             correct_option=correct_option,
+#             # company_profile_id=companyprofile_id
+#             # status=status
+#         )
+
+#         # Redirect to a success page or any other page
+#         return redirect('conduct_aptitude_test')
+#     else:
+#         # Render the form template
+#         return redirect('conduct_aptitude_test')
+@login_required
+def create_question(request):
+    if request.method == 'POST':
+        # Retrieve the company profile associated with the logged-in user
+        company_profile = request.user.companyprofile
+        
+        # Retrieve form data including marks
+        exam_title = request.POST.get('exam_title')
+        question_text = request.POST.get('question')
         option1 = request.POST.get('option1')
         option2 = request.POST.get('option2')
         option3 = request.POST.get('option3')
         option4 = request.POST.get('option4')
         correct_option = request.POST.get('correct_option')
-        # status = request.POST.get('status') == 'on'  # Convert checkbox value to boolean
+        marks = request.POST.get('marks')  # Retrieve marks from the form
 
-        # Create a new Questionn instance
-        questionn = Questionn.objects.create(
+        # Create a new Question instance associated with the company profile
+        question = Questionn.objects.create(
             exam_title=exam_title,
-           
-            question=question,
+            company_profile=company_profile,  # Associate with the logged-in company profile
+            question=question_text,
             option1=option1,
             option2=option2,
             option3=option3,
             option4=option4,
             correct_option=correct_option,
-            company_profile_id=companyprofile_id
-            # status=status
+            marks=marks,  # Save marks along with the question
         )
 
         # Redirect to a success page or any other page
@@ -2287,7 +2339,26 @@ def create_question(request, companyprofile_id):
         # Render the form template
         return redirect('conduct_aptitude_test')
 
+@login_required
+def attend_exam(request, studentprofile_id):
+    try:
+        # Fetch the student profile
+        student_profile = StudentProfile.objects.get(id=studentprofile_id)
 
+        # Fetch the company profile associated with the student profile
+        company_profile_id = student_profile.company_profile.id
+
+        # Get the company's aptitude IDs
+        company_aptitude_ids = AddAptitude.objects.filter(company_profile_id=company_profile_id).values_list('id', flat=True)
+
+        # Fetch questions associated with the company profile
+        questions = Questionn.objects.filter(company_profile_id__in=company_aptitude_ids, status=True)
+
+        return render(request, 'student/attend_test.html', {'questions': questions, 'studentprofile_id': studentprofile_id})
+    except Questionn.DoesNotExist:
+        questions = None
+        return render(request, 'attend_exam.html', {'questions': questions, 'studentprofile_id': studentprofile_id})
+    
 from django.core.serializers import serialize
 import json
 
@@ -2623,6 +2694,7 @@ from django.contrib.auth.decorators import login_required
 
 @login_required
 def company_event_form(request):
+    company_profile = CompanyProfile.objects.get(user=request.user)
     if request.method == 'POST':
         # Process the form data here
         title = request.POST.get('title')
@@ -2729,8 +2801,9 @@ def edit_company_event(request, event_id):
         # Render the edit form with the event data pre-filled
         return render(request, 'company/editcevent.html', {'event': event})
 def ceventlist(request):
+    company_profile = CompanyProfile.objects.get(user=request.user)
     events = CompanyEvent.objects.filter(status=True)
-    return render(request,'company/ceventlist.html',{'events': events})
+    return render(request,'company/ceventlist.html',{'events': events,'company_profile':company_profile})
 
 from datetime import datetime
 

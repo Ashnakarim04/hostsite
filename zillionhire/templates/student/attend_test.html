@@ -174,7 +174,7 @@
                         <a href="{%url 'apt_notification' studentprofile_id=studentprofile.id  %}"><i class="fas fa-user-check"></i> <span>APTITUDE NOTF</span></a>
                       </li>
                       <li class="active">
-                        <a href="{%url 'attend_exam' studentprofile_id=studentprofile.id  %}"><i class="fas fa-user-check"></i> <span>ATTEND TEST</span></a>
+                        <a href="{%url 'apt_notification' studentprofile_id=studentprofile.id  %}"><i class="fas fa-user-check"></i> <span>ATTEND TEST</span></a>
                       </li>
                       
                     
@@ -186,40 +186,37 @@
                         <div class="content"> 
                             <div class="row">
                                 <div class="col-sm-4 col-3">
-                                    <h4 class="page-title">APTITUDE NOTIFICATIONS</h4>
+                                    <h4 class="page-title">ATTEND TEST</h4>
                                     
                                 </div>
                                      
                             </div>
                             
                             
-                            <div class="table-responsive">
-                              <table class="table">
-                                  <thead>
-                                      <tr>
-                                          <th>Company Name</th>
-                                          <th>Title</th>
-                                          <th>Description</th>
-                                          <th>Date and Time</th>
-                                          <th>More info</th> <!-- More button column -->
-                                          <th>Attend</th> <!-- Attend button column -->
-                                      </tr>
-                                  </thead>
-                                  <tbody>
-                                      {% for aptitude in filtered_aptitudes %}
-                                          <tr>
-                                              <td>{{ aptitude.companyname }}</td>
-                                              <td>{{ aptitude.title }}</td>
-                                              <td>{{ aptitude.description }}</td>
-                                              <td>{{ aptitude.date_and_time }}</td>
-                                              <td><button class="btn btn-info">More</button></td> <!-- More button column -->
-                                              <td><button class="btn btn-primary">Attend</button></td> <!-- Attend button column -->
-                                          </tr>
-                                      {% endfor %}
-                                  </tbody>
-                              </table>
+                            <div class="row">
+                                <h1>Attend Exam</h1>
+                                <p>Below are the questions for the exam:</p>
+                            
+                                {% if questions %}
+                                    {% for question in questions %}
+                                        <div class="question">
+                                            <h3>{{ question.question }}</h3>
+                                            <form action="{% url 'submit_exam' %}" method="POST">
+                                                <input type="hidden" name="question_id" value="{{ question.question_id }}">
+                                                <p>Option 1: {{ question.option1 }}</p>
+                                                <p>Option 2: {{ question.option2 }}</p>
+                                                <p>Option 3: {{ question.option3 }}</p>
+                                                <p>Option 4: {{ question.option4 }}</p>
+                                                <!-- Add radio buttons or input fields for answer selection -->
+                                                <!-- Add a submit button for each question -->
+                                                <input type="submit" value="Submit">
+                                            </form>
+                                        </div>
+                                    {% endfor %}
+                                {% else %}
+                                    <p>No questions available.</p>
+                                {% endif %}
                           </div>
-                          
                           
                           
                             

@@ -786,6 +786,7 @@ class Questionn(models.Model):
     option3 = models.CharField(max_length=255)
     option4 = models.CharField(max_length=255)
     correct_option = models.IntegerField(choices=((1, 'Option 1'), (2, 'Option 2'), (3, 'Option 3'), (4, 'Option 4')))
+    marks = models.DecimalField(max_digits=5, decimal_places=2, default=1.0)
     status = models.BooleanField(default=True)  # Added status field with True or False values
 
     def __str__(self):
