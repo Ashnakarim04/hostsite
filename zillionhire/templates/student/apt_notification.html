@@ -212,8 +212,12 @@
                                               <td>{{ aptitude.date_and_time }}</td>
                                               <td><button class="btn btn-info">More</button></td> <!-- More button column -->
                                               {% comment %} <td><button class="btn btn-primary">Attend</button></td> <!-- Attend button column --> {% endcomment %}
-                                              <td><a href="{%url 'attend_exam' studentprofile_id=studentprofile.id company_profile_id=aptitude.company_profile.id %}"><span>Attend</span></a></td>
-                                            
+                                              <td>
+                                                <a href="{% url 'attend_exam' studentprofile_id=studentprofile.id company_profile_id=aptitude.company_profile.id %}" class="btn btn-primary">
+                                                    <span>Attend</span>
+                                                </a>
+                                            </td>
+                                                                                        
                                             </tr>
                                       {% endfor %}
                                   </tbody>

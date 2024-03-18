@@ -2387,7 +2387,7 @@ def submit_exam(request):
         )
 
         # Redirect to the same page to continue the exam or any other page
-        return redirect('attend_exam', studentprofile_id=student.id, company_profile_id=question.company_profile_id)        
+        return redirect('apt_notification', studentprofile_id=student.id)        
     else:
         # Handle GET requests or other HTTP methods
         return redirect('error')

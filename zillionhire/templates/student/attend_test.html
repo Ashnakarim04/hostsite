@@ -198,7 +198,7 @@
                                 {% if questions %}
                                     {% for question in questions %}
                                         <div class="question">
-                                            <p><b>Question {{ forloop.counter }}:</b> {{ question.question }}</p>
+                                            <p><b> {{ forloop.counter }}: {{ question.question }}</b> [Marks : {{ question.marks }}]</p>
                                             <form action="{% url 'submit_exam'  %}" method="POST">
                                                 {% csrf_token %}
                                                 <input type="hidden" name="question_id" value="{{ question.question_id }}">
