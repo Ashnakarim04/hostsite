@@ -262,6 +262,7 @@ class StudentProfile(models.Model):
     
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
     adminstu = models.OneToOneField(AdminStudent, on_delete=models.CASCADE, null=True)
+    company_profile = models.ForeignKey(CompanyProfile, on_delete=models.CASCADE, null=True)
     admission_no = models.CharField(max_length=20,blank= True,null=True)
     is_alumni = models.BooleanField(default=False) 
     first_name = models.CharField(max_length=50,blank= True,null=True)
@@ -679,8 +680,11 @@ class CompanyEvent(models.Model):
         return self.title
     
 class AddAptitude(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+    job = models.ForeignKey(JobApplication, on_delete=models.CASCADE, null=True)
+
     aptitude = models.AutoField(primary_key=True)
-    job_id=models.CharField(max_length=100,default="hi")
+    # job_id=models.CharField(max_length=100,default="hi")
     company_profile = models.ForeignKey(CompanyProfile, on_delete=models.CASCADE, default=None)
     companyname = models.CharField(max_length=100, default="")
     title = models.CharField(max_length=100)
@@ -791,4 +795,10 @@ class Questionn(models.Model):
 
     def __str__(self):
         return self.question
+    
+
+class ExamResponse(models.Model):
+    student = models.ForeignKey(StudentProfile, on_delete=models.CASCADE)
+    question = models.ForeignKey(Questionn, on_delete=models.CASCADE) # Assuming you have a Question model
+    selected_option = models.CharField(max_length=1, choices=[('1', 'Option 1'), ('2', 'Option 2'), ('3', 'Option 3'), ('4', 'Option 4')])
  

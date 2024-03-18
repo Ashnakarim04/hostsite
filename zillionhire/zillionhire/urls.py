@@ -239,7 +239,8 @@ urlpatterns = [
     path('q_preview/',q_preview, name='q_preview'),
     path('edit/<int:question_id>/', views.edit_question, name='edit_question'),
     path('delete/<int:question_id>/', views.delete_question, name='delete_question'),    
-    path('attend_exam//<int:studentprofile_id>/', attend_exam, name='attend_exam'),
+    path('attend_exam/<int:studentprofile_id>/<int:company_profile_id>/', attend_exam, name='attend_exam'),
+    path('submit_exam', views.submit_exam, name='submit_exam'),
     # path('deleteevent/<int:alumni_id>/<int:event_id>/', views.deleteevent, name='deleteevent'),
     ]
 if settings.DEBUG:

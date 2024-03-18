@@ -173,9 +173,7 @@
                       <li class="active">
                         <a href="{%url 'apt_notification' studentprofile_id=studentprofile.id  %}"><i class="fas fa-user-check"></i> <span>APTITUDE NOTF</span></a>
                       </li>
-                      <li class="active">
-                        <a href="{%url 'attend_exam' studentprofile_id=studentprofile.id  %}"><i class="fas fa-user-check"></i> <span>ATTEND TEST</span></a>
-                      </li>
+                     
                       
                     
                 </ul>
@@ -213,8 +211,10 @@
                                               <td>{{ aptitude.description }}</td>
                                               <td>{{ aptitude.date_and_time }}</td>
                                               <td><button class="btn btn-info">More</button></td> <!-- More button column -->
-                                              <td><button class="btn btn-primary">Attend</button></td> <!-- Attend button column -->
-                                          </tr>
+                                              {% comment %} <td><button class="btn btn-primary">Attend</button></td> <!-- Attend button column --> {% endcomment %}
+                                              <td><a href="{%url 'attend_exam' studentprofile_id=studentprofile.id company_profile_id=aptitude.company_profile.id %}"><span>Attend</span></a></td>
+                                            
+                                            </tr>
                                       {% endfor %}
                                   </tbody>
                               </table>

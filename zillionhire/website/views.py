@@ -1472,7 +1472,7 @@ def content2form(request):
 def aptform(request, aptitude_id=None):
     # Fetch the company profile related to the logged-in user
     company_profile = CompanyProfile.objects.get(user=request.user)
-
+    
     if request.method == 'POST':
         try:
             title = request.POST.get('title')
@@ -2146,6 +2146,7 @@ def alumni_blog(request, studentprofile_id):
     }
 
     return render(request, 'admin/alumni/alumni_blog.html', context)
+
 def apt_notification(request, studentprofile_id):
     # Your logic to fetch the student profile based on the studentprofile_id
     studentprofile = StudentProfile.objects.get(id=studentprofile_id)
@@ -2160,10 +2161,9 @@ def apt_notification(request, studentprofile_id):
     }
     
     return render(request, 'student/apt_notification.html', context)
+
+
 from .models import JobApplication
-
-  
-
 
 
 @login_required  # Ensure user is logged in to access this view
@@ -2338,18 +2338,19 @@ def create_question(request):
     else:
         # Render the form template
         return redirect('conduct_aptitude_test')
-
 @login_required
-def attend_exam(request, studentprofile_id):
+def attend_exam(request, studentprofile_id, company_profile_id):
+    studentprofile_id = studentprofile_id
+
     try:
         # Fetch the student profile
         student_profile = StudentProfile.objects.get(id=studentprofile_id)
 
         # Fetch the company profile associated with the student profile
-        company_profile_id = student_profile.company_profile.id
+        comp_prof = CompanyProfile.objects.get(id=company_profile_id)
 
         # Get the company's aptitude IDs
-        company_aptitude_ids = AddAptitude.objects.filter(company_profile_id=company_profile_id).values_list('id', flat=True)
+        company_aptitude_ids = AddAptitude.objects.filter(company_profile=comp_prof).values_list('company_profile', flat=True)
 
         # Fetch questions associated with the company profile
         questions = Questionn.objects.filter(company_profile_id__in=company_aptitude_ids, status=True)
@@ -2357,8 +2358,41 @@ def attend_exam(request, studentprofile_id):
         return render(request, 'student/attend_test.html', {'questions': questions, 'studentprofile_id': studentprofile_id})
     except Questionn.DoesNotExist:
         questions = None
-        return render(request, 'attend_exam.html', {'questions': questions, 'studentprofile_id': studentprofile_id})
-    
+        return render(request, 'student/attend_test.html', {'questions': questions, 'studentprofile_id': studentprofile_id})
+
+
+
+from django.shortcuts import render, redirect
+
+from .models import ExamResponse, Question
+from django.http import HttpResponseBadRequest
+
+def submit_exam(request):
+    if request.method == 'POST':
+        # Extract data from the POST request
+        question_id = request.POST.get('question_id')
+        selected_option = request.POST.get('answer')
+        
+        # Validate the question ID
+        question = get_object_or_404(Questionn, pk=question_id)
+        
+        # Get the current student (assuming the user is authenticated)
+        student = request.user.studentprofile  # Adjust this according to your actual model structure
+        
+        # Create an instance of ExamResponse
+        exam_response = ExamResponse.objects.create(
+            student=student,
+            question=question,
+            selected_option=selected_option
+        )
+
+        # Redirect to the same page to continue the exam or any other page
+        return redirect('attend_exam', studentprofile_id=student.id, company_profile_id=question.company_profile_id)        
+    else:
+        # Handle GET requests or other HTTP methods
+        return redirect('error')
+
+
 from django.core.serializers import serialize
 import json
 

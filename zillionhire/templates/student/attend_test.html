@@ -122,7 +122,7 @@
                         <a href="{% url 'index-2' %}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
                     </li> {% endcomment %}
                     <li class>
-                      <a href="{% url 'sprofile' studentprofile_id=studentprofile.id %}">
+                      <a href="{% url 'sprofile' studentprofile_id=studentprofile_id %}">
     
                           <i class="fas fa-id-card"></i>
                           <span>PROFILE</span>
@@ -130,14 +130,14 @@
                   </li>
                   
                     <li class>
-                        <a href="{%url 'job_approve' studentprofile_id=studentprofile.id %}"><i class="fa-solid fa-desktop"></i> <span>JOBS</span></a>
+                        <a href="{%url 'job_approve' studentprofile_id=studentprofile_id %}"><i class="fa-solid fa-desktop"></i> <span>JOBS</span></a>
                         
                       </li>
                       <li>
-                      <a href="{%url 'sappliedjobs' studentprofile_id=studentprofile.id%}"><i class="fa-solid fa-clipboard-check"></i></i> <span>APPLIED JOBS</span></a>
+                      <a href="{%url 'sappliedjobs' studentprofile_id=studentprofile_id%}"><i class="fa-solid fa-clipboard-check"></i></i> <span>APPLIED JOBS</span></a>
                     </li>
                     <li class>
-                      <a href="{% url 's_shortlist' studentprofile_id=studentprofile.id %}">
+                      <a href="{% url 's_shortlist' studentprofile_id=studentprofile_id %}">
                         <i class="fas fa-user-check"></i> <span>SHORT LISTED JOBS</span></a>
                     </li>
                     <li  class="submenu" >
@@ -148,13 +148,13 @@
                         </a>
                         <ul style="display: none;" id="studySubMenu">
                             <li>
-                                <a href="{% url 'scontent1list' studentprofile_id=studentprofile.id %}">
+                                <a href="{% url 'scontent1list' studentprofile_id=studentprofile_id %}">
                                     <i class="t"></i> Content 1
                                 </a>
-                                <a href="{% url 'svideolist' studentprofile_id=studentprofile.id %}">
+                                <a href="{% url 'svideolist' studentprofile_id=studentprofile_id %}">
                                   <i class=""></i> Video Library
                               </a>
-                              <a href="{% url 'scontent2list' studentprofile_id=studentprofile.id %}">
+                              <a href="{% url 'scontent2list' studentprofile_id=studentprofile_id %}">
                                 <i class=""></i> Content2
                             </a>
                             </li>
@@ -165,16 +165,16 @@
                         <a href="{%url 'gen_resume'  %}"><i class="fas fa-user-check"></i> <span>RESUME</span></a>
                       </li>
                     <li>
-                        <a href="{%url 'alumni_blog' studentprofile_id=studentprofile.id  %}"><i class="fas fa-user-check"></i> <span>ALUMNI NOTES</span></a>
+                        <a href="{%url 'alumni_blog' studentprofile_id=studentprofile_id  %}"><i class="fas fa-user-check"></i> <span>ALUMNI NOTES</span></a>
                       </li>
                       <li class>
-                        <a href="{%url 'sevent' studentprofile_id=studentprofile.id  %}"><i class="fas fa-user-check"></i> <span> EVENTS</span></a>
+                        <a href="{%url 'sevent' studentprofile_id=studentprofile_id  %}"><i class="fas fa-user-check"></i> <span> EVENTS</span></a>
                       </li>
                       <li class="active">
-                        <a href="{%url 'apt_notification' studentprofile_id=studentprofile.id  %}"><i class="fas fa-user-check"></i> <span>APTITUDE NOTF</span></a>
+                        <a href="{%url 'apt_notification' studentprofile_id=studentprofile_id  %}"><i class="fas fa-user-check"></i> <span>APTITUDE NOTF</span></a>
                       </li>
                       <li class="active">
-                        <a href="{%url 'apt_notification' studentprofile_id=studentprofile.id  %}"><i class="fas fa-user-check"></i> <span>ATTEND TEST</span></a>
+                        <a href="{%url 'apt_notification' studentprofile_id=studentprofile_id  %}"><i class="fas fa-user-check"></i> <span>ATTEND TEST</span></a>
                       </li>
                       
                     
@@ -194,20 +194,39 @@
                             
                             
                             <div class="row">
-                                <h1>Attend Exam</h1>
-                                <p>Below are the questions for the exam:</p>
                             
                                 {% if questions %}
                                     {% for question in questions %}
                                         <div class="question">
-                                            <h3>{{ question.question }}</h3>
-                                            <form action="{% url 'submit_exam' %}" method="POST">
+                                            <p><b>Question {{ forloop.counter }}:</b> {{ question.question }}</p>
+                                            <form action="{% url 'submit_exam'  %}" method="POST">
+                                                {% csrf_token %}
                                                 <input type="hidden" name="question_id" value="{{ question.question_id }}">
-                                                <p>Option 1: {{ question.option1 }}</p>
-                                                <p>Option 2: {{ question.option2 }}</p>
-                                                <p>Option 3: {{ question.option3 }}</p>
-                                                <p>Option 4: {{ question.option4 }}</p>
-                                                <!-- Add radio buttons or input fields for answer selection -->
+                                                
+                                                <!-- Option 1 as radio button -->
+                                                <label>
+                                                    <input type="radio" name="answer" value="1">
+                                                    {{ question.option1 }}
+                                                </label><br>
+
+                                                <!-- Option 2 as radio button -->
+                                                <label>
+                                                    <input type="radio" name="answer" value="2">
+                                                    {{ question.option2 }}
+                                                </label><br>
+
+                                                <!-- Option 3 as radio button -->
+                                                <label>
+                                                    <input type="radio" name="answer" value="3">
+                                                    {{ question.option3 }}
+                                                </label><br>
+
+                                                <!-- Option 4 as radio button -->
+                                                <label>
+                                                    <input type="radio" name="answer" value="4">
+                                                    {{ question.option4 }}
+                                                </label><br>
+                                                
                                                 <!-- Add a submit button for each question -->
                                                 <input type="submit" value="Submit">
                                             </form>
@@ -215,9 +234,8 @@
                                     {% endfor %}
                                 {% else %}
                                     <p>No questions available.</p>
-                                {% endif %}
-                          </div>
-                          
+                            {% endif %}
+
                           
                             
                             
