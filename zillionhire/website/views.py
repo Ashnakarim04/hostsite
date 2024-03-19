@@ -2224,22 +2224,22 @@ def conduct_aptitude_test(request):
     return render(request, 'company/create_apt.html', context)
 
 from django.contrib.auth.decorators import login_required
-
+from django.db.models import Sum
 @login_required
 def q_preview(request):
     # Retrieve the company profile associated with the logged-in user
     company_profile = request.user.companyprofile
 
-    # Print out the company profile for debugging
-    print("Company Profile:", company_profile)
-
     # Retrieve questions associated with the company profile
     questions = Questionn.objects.filter(company_profile=company_profile, status=True)
 
-    # Print out the questions for debugging
-    print("Questions:", questions)
+    # Calculate the sum of marks of the questions
+    total_marks = questions.aggregate(total_marks=Sum('marks'))['total_marks']
 
-    return render(request, 'company/q_preview.html', {'questions': questions})
+    # Print out the total marks for debugging
+    print("Total Marks:", total_marks)
+
+    return render(request, 'company/q_preview.html', {'questions': questions, 'total_marks': total_marks})
 
 
 
@@ -2339,9 +2339,27 @@ def create_question(request):
         # Render the form template
         return redirect('conduct_aptitude_test')
 @login_required
-def attend_exam(request, studentprofile_id, company_profile_id):
-    studentprofile_id = studentprofile_id
+# def attend_exam(request, studentprofile_id, company_profile_id):
+#     studentprofile_id = studentprofile_id
 
+#     try:
+#         # Fetch the student profile
+#         student_profile = StudentProfile.objects.get(id=studentprofile_id)
+
+#         # Fetch the company profile associated with the student profile
+#         comp_prof = CompanyProfile.objects.get(id=company_profile_id)
+
+#         # Get the company's aptitude IDs
+#         company_aptitude_ids = AddAptitude.objects.filter(company_profile=comp_prof).values_list('company_profile', flat=True)
+
+#         # Fetch questions associated with the company profile
+#         questions = Questionn.objects.filter(company_profile_id__in=company_aptitude_ids, status=True)
+
+#         return render(request, 'student/attend_test.html', {'questions': questions, 'studentprofile_id': studentprofile_id})
+#     except Questionn.DoesNotExist:
+#         questions = None
+#         return render(request, 'student/attend_test.html', {'questions': questions, 'studentprofile_id': studentprofile_id})
+def attend_exam(request, studentprofile_id, company_profile_id):
     try:
         # Fetch the student profile
         student_profile = StudentProfile.objects.get(id=studentprofile_id)
@@ -2355,10 +2373,10 @@ def attend_exam(request, studentprofile_id, company_profile_id):
         # Fetch questions associated with the company profile
         questions = Questionn.objects.filter(company_profile_id__in=company_aptitude_ids, status=True)
 
-        return render(request, 'student/attend_test.html', {'questions': questions, 'studentprofile_id': studentprofile_id})
+        return render(request, 'student/attend_test.html', {'questions': questions, 'studentprofile_id': studentprofile_id, 'company_profile_id': company_profile_id, 'company_profile': comp_prof})
     except Questionn.DoesNotExist:
         questions = None
-        return render(request, 'student/attend_test.html', {'questions': questions, 'studentprofile_id': studentprofile_id})
+        return render(request, 'student/attend_test.html', {'questions': questions, 'studentprofile_id': studentprofile_id, 'company_profile_id': company_profile_id})
 
 
 
@@ -2367,12 +2385,15 @@ from django.shortcuts import render, redirect
 from .models import ExamResponse, Question
 from django.http import HttpResponseBadRequest
 
+from .models import ExamResponse
+
 def submit_exam(request):
     if request.method == 'POST':
         # Extract data from the POST request
         question_id = request.POST.get('question_id')
         selected_option = request.POST.get('answer')
-        
+        company_profile_id = request.POST.get('company_profile_id')
+
         # Validate the question ID
         question = get_object_or_404(Questionn, pk=question_id)
         
@@ -2383,14 +2404,44 @@ def submit_exam(request):
         exam_response = ExamResponse.objects.create(
             student=student,
             question=question,
+            company_id=company_profile_id,
             selected_option=selected_option
         )
 
         # Redirect to the same page to continue the exam or any other page
-        return redirect('apt_notification', studentprofile_id=student.id)        
+        return redirect('attend_exam', studentprofile_id=student.id, company_profile_id=company_profile_id)
+        
     else:
         # Handle GET requests or other HTTP methods
         return redirect('error')
+
+
+# def submit_exam(request):
+#     if request.method == 'POST':
+#         # Extract data from the POST request
+#         question_id = request.POST.get('question_id')
+#         selected_option = request.POST.get('answer')
+#         company_profile_id = request.POST.get('company_profile_id')
+
+#         # Validate the question ID
+#         question = get_object_or_404(Questionn, pk=question_id)
+        
+#         # Get the current student (assuming the user is authenticated)
+#         student = request.user.studentprofile  # Adjust this according to your actual model structure
+        
+#         # Create an instance of ExamResponse
+#         exam_response = ExamResponse.objects.create(
+#             student=student,
+#             question=question,
+#             selected_option=selected_option
+#         )
+
+#         # Redirect to the same page to continue the exam or any other page
+#         return redirect('attend_exam', studentprofile_id=student.id, company_profile_id=company_profile_id)
+        
+#     else:
+#         # Handle GET requests or other HTTP methods
+#         return redirect('error')
 
 
 from django.core.serializers import serialize
@@ -3010,3 +3061,18 @@ def approved_alumnijob(request, blog_id):
     alumnijob.is_approved = True
     alumnijob.save()
     return redirect('alumni_job_approve')
+
+from .models import ExamResponse
+
+def test_response(request):
+    # Retrieve the company ID associated with the logged-in user or pass it in some other way
+    company_id = request.user.companyprofile.id  # Adjust this according to your authentication and company profile structure
+
+    # Retrieve exam responses related to the specific company
+    exam_responses = ExamResponse.objects.filter(company_id=company_id)
+    
+    # Pass exam responses to the template context
+    context = {'exam_responses': exam_responses}
+    
+    # Render the template with the provided context
+    return render(request, 'company/test_response.html', context)

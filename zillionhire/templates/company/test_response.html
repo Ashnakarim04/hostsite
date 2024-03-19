@@ -15,12 +15,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'assets2/css/select2.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'assets2/css/bootstrap-datetimepicker.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'assets2/css/style.css' %}">
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-
-<!-- Bootstrap JavaScript (optional) -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
+   
         <script src="{% static 'assets2/js/html5shiv.min.js' %}"></script>
         <script src="{% static 'assets2/js/respond.min.js' %}"></script>
        
@@ -121,10 +116,13 @@
                                 <a href="{%url 'apt_list_company'%}"><i class="fas fa-user"></i> <span>TEST NOTIFICATION</span></a>
                               </li>
                               <li class>
-                                <a href="{%url 'ceventlist'%}"><i class="fas fa-user"></i> <span>PREVIEW</span></a>
+                                <a href="{%url 'q_preview'%}"><i class="fas fa-user"></i> <span>PREVIEW</span></a>
                               </li>
                               <li class>
                                 <a href="{%url 'ceventlist'%}"><i class="fas fa-user"></i> <span>EVENTS</span></a>
+                              </li>
+                              <li class>
+                                <a href="{%url 'ceventlist'%}"><i class="fas fa-user"></i> <span>TEST RESPONSE</span></a>
                               </li>
                               {% comment %} <li class>
                                 <a href="{%url 'quiz_form'%}"><i class="fas fa-user"></i> <span>SET QUESTIONS </span></a>
@@ -140,7 +138,7 @@
                         <div class="content">
                           <div class="row">
                             <div class="col-sm-4 col-3">
-                                <h4 class="page-title">SET APTITUDE QUESTIONS </h4>
+                                <h4 class="page-title">TEST RESPONSE</h4>
                             </div>
                      
                         </div>
@@ -150,37 +148,31 @@
                             
                             <div class="row">
                                 <div class="col-md-12">
-    <div class="card">
-        <div class="card-body">
-            <h2>Questions Preview</h2>
-            <ol>
-              <p>Total Marks: {{ total_marks }}</p>
-              {% for question in questions %}
-                  <li>
-                      {% comment %} <strong>Question ID:</strong> {{ question.question_id }}<br>
-                      <strong>Exam Title:</strong> {{ question.exam_title }}<br>
-                      <strong>Company Name:</strong> {{ question.company_name }}<br> {% endcomment %}
-                      <strong>Question:</strong> {{ question.question }}<br>
-                      <strong>Option 1:</strong> {{ question.option1 }}<br>
-                      <strong>Option 2:</strong> {{ question.option2 }}<br>
-                      <strong>Option 3:</strong> {{ question.option3 }}<br>
-                      <strong>Option 4:</strong> {{ question.option4 }}<br>
-                      <strong>Correct Option:</strong> Option {{ question.correct_option }}<br>
-                      <strong>Mark :</strong> {{ question.marks }}<br>
-
-                      <a href="/edit/{{ question.question_id }}">Edit</a> | <a href="/delete/{{ question.question_id }}">Delete</a>
-
-
-              {% endfor %}
-          </ol>
-          
-        </div>
-    </div>
-    
-</div>
-
-                                
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Student</th>
+                                                        <th>Question</th>
+                                                        <th>Selected Option</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% for response in exam_responses %}
+                                                    <tr>
+                                                        <td>{{ response.student }}</td>
+                                                        <td>{{ response.question }}</td>
+                                                        <td>{{ response.get_selected_option_display }}</td>
+                                                    </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
+                            
                         </div>
     </div>
 

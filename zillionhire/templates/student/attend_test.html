@@ -193,34 +193,36 @@
                             </div>
                             
                             
-                            <div class="row">
-                            
+                            <div class="column">
                                 {% if questions %}
                                     {% for question in questions %}
                                         <div class="question">
-                                            <p><b> {{ forloop.counter }}: {{ question.question }}</b> [Marks : {{ question.marks }}]</p>
-                                            <form action="{% url 'submit_exam'  %}" method="POST">
+                                            <p><b>{{ forloop.counter }}: {{ question.question }}</b> [Marks : {{ question.marks }}]</p>
+                                            <form action="{% url 'submit_exam' %}" method="POST">
                                                 {% csrf_token %}
                                                 <input type="hidden" name="question_id" value="{{ question.question_id }}">
+                                                
+                                                <!-- Include hidden input field to store company_profile_id -->
+                                                <input type="hidden" name="company_profile_id" value="{{ question.company_profile_id }}">
                                                 
                                                 <!-- Option 1 as radio button -->
                                                 <label>
                                                     <input type="radio" name="answer" value="1">
                                                     {{ question.option1 }}
                                                 </label><br>
-
+                            
                                                 <!-- Option 2 as radio button -->
                                                 <label>
                                                     <input type="radio" name="answer" value="2">
                                                     {{ question.option2 }}
                                                 </label><br>
-
+                            
                                                 <!-- Option 3 as radio button -->
                                                 <label>
                                                     <input type="radio" name="answer" value="3">
                                                     {{ question.option3 }}
                                                 </label><br>
-
+                            
                                                 <!-- Option 4 as radio button -->
                                                 <label>
                                                     <input type="radio" name="answer" value="4">
@@ -234,14 +236,9 @@
                                     {% endfor %}
                                 {% else %}
                                     <p>No questions available.</p>
-                            {% endif %}
-
-                          
+                                {% endif %}          
+                            </div>
                             
-                            
-                            
-                            
-                        </div>
                     </div>
     </div>
 

@@ -245,7 +245,7 @@ urlpatterns = [
     path('apt_approve', views.apt_approve, name='apt_approve'),
     path('alumni_job_approve', views.alumni_job_approve, name='alumni_job_approve'),
     path('approved_alumnijob/<int:blog_id>/', views.approved_alumnijob, name='approved_alumnijob'),
-    # path('deleteevent/<int:alumni_id>/<int:event_id>/', views.deleteevent, name='deleteevent'),
+    path('test-response/', views.test_response, name='test_response'),    # path('deleteevent/<int:alumni_id>/<int:event_id>/', views.deleteevent, name='deleteevent'),
     ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

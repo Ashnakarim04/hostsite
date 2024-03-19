@@ -828,5 +828,6 @@ class Questionn(models.Model):
 class ExamResponse(models.Model):
     student = models.ForeignKey(StudentProfile, on_delete=models.CASCADE)
     question = models.ForeignKey(Questionn, on_delete=models.CASCADE) # Assuming you have a Question model
+    company = models.ForeignKey(CompanyProfile, on_delete=models.CASCADE, null=True)
     selected_option = models.CharField(max_length=1, choices=[('1', 'Option 1'), ('2', 'Option 2'), ('3', 'Option 3'), ('4', 'Option 4')])
  
