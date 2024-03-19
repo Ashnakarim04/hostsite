@@ -2127,7 +2127,7 @@ from .models import BlogContent, StudentProfile
 
 def alumni_blog(request, studentprofile_id):
     # Fetch data from BlogContent and StudentProfile models
-    blog_contents = BlogContent.objects.all()
+    blog_contents = BlogContent.objects.filter(is_approved=True)
     studentprofile = get_object_or_404(StudentProfile, id=studentprofile_id)
     
     user = studentprofile.user
@@ -2999,3 +2999,14 @@ def approved_aptitude(request, aptitude_id):
     aptitude.save()       
         # Redirect back to the list of approved appointments
     return redirect('apt_approve')
+
+def alumni_job_approve(request):
+    jobopen = BlogContent.objects.all()
+    context = {'jobopen': jobopen}
+    return render(request, 'admin/alumni/alumni_job_approve.html', context)
+
+def approved_alumnijob(request, blog_id):
+    alumnijob = get_object_or_404(BlogContent, id=blog_id)
+    alumnijob.is_approved = True
+    alumnijob.save()
+    return redirect('alumni_job_approve')

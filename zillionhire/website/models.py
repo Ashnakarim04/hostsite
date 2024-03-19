@@ -608,10 +608,24 @@ class ResumeBuilder(models.Model):
     
 class BlogContent(models.Model):
     title = models.CharField(max_length=255)
+    APPROVED = 'approved'
+    REJECTED = 'rejected'
+    PENDING = 'pending'
+    
+    APPROVAL_CHOICES = [
+        (APPROVED, 'Approved'),
+        (REJECTED, 'Rejected'),
+        (PENDING, 'Pending'),
+    ]
     content = models.TextField()
     image = models.ImageField(upload_to='blog_images/', null=True, blank=True)
     alumni = models.ForeignKey('Alumni', on_delete=models.CASCADE, null=True, blank=True)
-    date_time = models.DateTimeField(default=datetime.now)        
+    date_time = models.DateTimeField(default=datetime.now) 
+    is_approved = models.CharField(
+        max_length=10,
+        choices=APPROVAL_CHOICES,
+        default=PENDING,
+    )       
     def __str__(self):
         return self.title
     

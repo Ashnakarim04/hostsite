@@ -243,6 +243,8 @@ urlpatterns = [
     path('submit_exam', views.submit_exam, name='submit_exam'),
     path('approved_aptitude/<int:aptitude_id>/', views.approved_aptitude, name='approved_aptitude'),
     path('apt_approve', views.apt_approve, name='apt_approve'),
+    path('alumni_job_approve', views.alumni_job_approve, name='alumni_job_approve'),
+    path('approved_alumnijob/<int:blog_id>/', views.approved_alumnijob, name='approved_alumnijob'),
     # path('deleteevent/<int:alumni_id>/<int:event_id>/', views.deleteevent, name='deleteevent'),
     ]
 if settings.DEBUG:
