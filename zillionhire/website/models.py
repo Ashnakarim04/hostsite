@@ -830,4 +830,21 @@ class ExamResponse(models.Model):
     question = models.ForeignKey(Questionn, on_delete=models.CASCADE) # Assuming you have a Question model
     company = models.ForeignKey(CompanyProfile, on_delete=models.CASCADE, null=True)
     selected_option = models.CharField(max_length=1, choices=[('1', 'Option 1'), ('2', 'Option 2'), ('3', 'Option 3'), ('4', 'Option 4')])
- 
+    marks = models.DecimalField(max_digits=5, decimal_places=2, default=0.0)
+
+
+class TestResult(models.Model):
+    student = models.ForeignKey(StudentProfile, on_delete=models.CASCADE)
+    company = models.ForeignKey(CompanyProfile, on_delete=models.CASCADE)
+    aptitude = models.ForeignKey(AddAptitude, on_delete=models.CASCADE)
+    question = models.ForeignKey(Questionn, on_delete=models.CASCADE)
+    response = models.ForeignKey(ExamResponse, on_delete=models.CASCADE)
+    
+    student_name = models.CharField(max_length=255)
+    student_email = models.EmailField()
+    student_batch = models.CharField(max_length=50)
+    student_phone = models.CharField(max_length=20)
+    
+    total_marks = models.DecimalField(max_digits=5, decimal_places=2)
+    marks_obtained = models.DecimalField(max_digits=5, decimal_places=2)
+    company_name = models.CharField(max_length=255)

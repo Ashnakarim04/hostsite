@@ -2387,35 +2387,6 @@ from django.http import HttpResponseBadRequest
 
 from .models import ExamResponse
 
-def submit_exam(request):
-    if request.method == 'POST':
-        # Extract data from the POST request
-        question_id = request.POST.get('question_id')
-        selected_option = request.POST.get('answer')
-        company_profile_id = request.POST.get('company_profile_id')
-
-        # Validate the question ID
-        question = get_object_or_404(Questionn, pk=question_id)
-        
-        # Get the current student (assuming the user is authenticated)
-        student = request.user.studentprofile  # Adjust this according to your actual model structure
-        
-        # Create an instance of ExamResponse
-        exam_response = ExamResponse.objects.create(
-            student=student,
-            question=question,
-            company_id=company_profile_id,
-            selected_option=selected_option
-        )
-
-        # Redirect to the same page to continue the exam or any other page
-        return redirect('attend_exam', studentprofile_id=student.id, company_profile_id=company_profile_id)
-        
-    else:
-        # Handle GET requests or other HTTP methods
-        return redirect('error')
-
-
 # def submit_exam(request):
 #     if request.method == 'POST':
 #         # Extract data from the POST request
@@ -2433,6 +2404,7 @@ def submit_exam(request):
 #         exam_response = ExamResponse.objects.create(
 #             student=student,
 #             question=question,
+#             company_id=company_profile_id,
 #             selected_option=selected_option
 #         )
 
@@ -2442,6 +2414,49 @@ def submit_exam(request):
 #     else:
 #         # Handle GET requests or other HTTP methods
 #         return redirect('error')
+from django.shortcuts import redirect
+from .models import ExamResponse, Questionn
+
+
+
+def submit_exam(request):
+    if request.method == 'POST':
+        # Extract data from the POST request
+        question_id = request.POST.get('question_id')
+        selected_option = request.POST.get('answer')
+        student_profile_id = request.POST.get('studentprofile_id')
+        company_profile_id = request.POST.get('company_profile_id')
+
+        # Validate the question ID
+        question = Questionn.objects.get(pk=question_id)
+        
+        # Calculate marks based on the correctness of the selected option
+        if selected_option == str(question.correct_option):
+            marks = question.marks
+        else:
+            marks = 0.0  # Set marks to 0 if the selected option is incorrect
+
+        # Get the current student (assuming the user is authenticated)
+        student = request.user.studentprofile  # Adjust this according to your actual model structure
+        
+        # Create an instance of ExamResponse
+        exam_response = ExamResponse.objects.create(
+            student=student,
+            question=question,
+            company_id=company_profile_id,
+            selected_option=selected_option,
+            marks=marks  # Store the calculated marks
+        )
+
+        # Redirect to the confirmation page or any other page
+        return redirect('attend_exam', studentprofile_id=student.id, company_profile_id=company_profile_id)
+        
+    else:
+        # Handle GET requests or other HTTP methods
+        return redirect('error')
+
+
+
 
 
 from django.core.serializers import serialize
@@ -3076,3 +3091,7 @@ def test_response(request):
     
     # Render the template with the provided context
     return render(request, 'company/test_response.html', context)
+
+
+def test_result(request):
+    return render(request,'company/test_result.html')

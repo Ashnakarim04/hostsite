@@ -246,6 +246,8 @@ urlpatterns = [
     path('alumni_job_approve', views.alumni_job_approve, name='alumni_job_approve'),
     path('approved_alumnijob/<int:blog_id>/', views.approved_alumnijob, name='approved_alumnijob'),
     path('test-response/', views.test_response, name='test_response'),    # path('deleteevent/<int:alumni_id>/<int:event_id>/', views.deleteevent, name='deleteevent'),
+    path('test_result', views.test_result, name='test_result'),
+
     ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
