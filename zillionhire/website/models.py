@@ -681,6 +681,16 @@ class CompanyEvent(models.Model):
     
 class AddAptitude(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+    APPROVED = 'approved'
+    REJECTED = 'rejected'
+    PENDING = 'pending'
+    
+    APPROVAL_CHOICES = [
+        (APPROVED, 'Approved'),
+        (REJECTED, 'Rejected'),
+        (PENDING, 'Pending'),
+    ]
+
     job = models.ForeignKey(JobApplication, on_delete=models.CASCADE, null=True)
 
     aptitude = models.AutoField(primary_key=True)
@@ -696,7 +706,11 @@ class AddAptitude(models.Model):
     steps = models.TextField()
     regulations = models.TextField()
     status = models.BooleanField(default=True)
-
+    is_approved = models.CharField(
+        max_length=10,
+        choices=APPROVAL_CHOICES,
+        default=PENDING,
+    )
     def __str__(self):
         return self.title
 

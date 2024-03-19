@@ -2152,7 +2152,7 @@ def apt_notification(request, studentprofile_id):
     studentprofile = StudentProfile.objects.get(id=studentprofile_id)
     
     # Retrieve instances of AddAptitude where status is True
-    filtered_aptitudes = AddAptitude.objects.filter(status=True)
+    filtered_aptitudes = AddAptitude.objects.filter(is_approved=True)
     
     # Pass the studentprofile and filtered_aptitudes to the template context
     context = {
@@ -2985,3 +2985,17 @@ def save_and_next(request):
         # For demonstration purpose, let's assume you save it to the session
         request.session[f'question_{question_id}_answer'] = selected_option
     return redirect('exam')
+
+def apt_approve(request):
+    aptitudes = AddAptitude.objects.all()
+    context = {'aptitudes': aptitudes}
+    print(context)  # Add this line for debugging
+    return render(request, 'admin/alumni/apt_approve.html', context)
+
+def approved_aptitude(request, aptitude_id):
+    # approveapt = get_object_or_404(AddAptitude, id=aptitude_id)
+    aptitude = get_object_or_404(AddAptitude, aptitude=aptitude_id)
+    aptitude.is_approved = True
+    aptitude.save()       
+        # Redirect back to the list of approved appointments
+    return redirect('apt_approve')

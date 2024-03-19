@@ -127,11 +127,11 @@
                         <div class="content">
                             <div class="row">
                                 <div class="col-sm-4 col-3">
-                                    <h4 class="page-title">JOBS</h4>
+                                    <h4 class="page-title">APPROVE APTITUDE</h4>
                                 </div>
                                  
                             </div>
-                            <div class="row"> 
+                            {% comment %} <div class="row"> 
                                 <div class="col-md-12">
                                     <form id="search-form" method="GET" action="{% url 'search_job' %}">
                                         <div class="input-group">
@@ -144,7 +144,7 @@
                                     </form>
                                     
                                 </div>
-                            </div><br><br>
+                            </div><br><br> {% endcomment %}
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="table-responsive">
@@ -152,44 +152,31 @@
                                             <thead>
                                                 <tr>
                                                     <th>Company</th>
-                                                    <th>Job</th>
-                                                    <th>Salary</th>
-                                                    <th>Email</th>
-                                                    <th>Appl.Start Date</th>
-                                                    <th>Appl.End Date</th>
-                                                    <th>Link</th>
-                                                    <th>Active</th>
+                                                    <th>Title</th>
+                                                    <th>Description</th>
+                                                    <th>Date and Time</th>
                                                     <th class="text-right">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tbody>
-                                                    {% for job in job_list %}
-
+                                                {% for aptitude in aptitudes %}
                                                     <tr>
-                                                        <td>{{ job.cname }}</td>
-                                                        <td>{{ job.jname }}</td>
-                                                        <td>{{ job.salary }}</td>
-                                                        <td>{{ job.email }}</td>
-                                                        <td>{{ job.sdate }}</td>
-                                                        <td>{{ job.edate }}</td>
-                                                        <td>{{ job.link }}</td>
-                                                        <td>{{ job.is_active }}</td>
-                                                       
-                                                        
-                                                        </td>
+                                                        <td>{{ aptitude.company_profile }}</td>
+                                                        <td>{{ aptitude.title }}</td>
+                                                        <td>{{ aptitude.description }}</td>
+                                                        <td>{{ aptitude.date_and_time }}</td>
                                                         <td>
-                                                            {% if job.is_approved == 'pending' %}
+                                                            {% if aptitude.is_approved == 'pending' %}
                                                             <span class="not-approved">Not Approved</span>
                                                             {% else %}
                                                             <span class="approved">Approved</span>
                                                             {% endif %}
                                                           </td>
                                                         
-                                                        </td>
+                                                        </td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                         <td>
-                                                            {% if job.is_approved == 'pending' %}
-                                                            <form method="post" action="{% url 'approved_jobs' job.id %}">
+                                                            {% if aptitude.is_approved == 'pending' %}
+                                                            <form method="post" action="{% url 'approved_aptitude' aptitude.aptitude %}">
                                                                 {% csrf_token %}
                                                                 <button type="submit" class="btn btn-success">Approve</button>
                                                             </form>
@@ -198,14 +185,16 @@
                                                             {% endif %}
                                                         </td>
                                                     </tr>
-                                                    {% endfor %}
-                                                </tbody>
-                                                
+                                                {% endfor %}
                                             </tbody>
                                         </table>
+                                       
+
+
                                     </div>
                                 </div>
                             </div>
+                            
                         </div>
     </div>
 
