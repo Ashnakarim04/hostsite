@@ -423,7 +423,7 @@ class JobApplication(models.Model):
     dtoc=models.CharField(max_length=100,blank= True,null=True)
     doc=models.CharField(max_length=100,blank= True,null=True)
     nature=models.CharField(max_length=100,blank= True,null=True)
-
+    status=models.BooleanField('status', default=True) 
     resume=models.FileField(upload_to='images/',blank= True,null=True)
 
 

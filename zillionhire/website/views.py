@@ -2147,20 +2147,50 @@ def alumni_blog(request, studentprofile_id):
 
     return render(request, 'admin/alumni/alumni_blog.html', context)
 
+# def apt_notification(request, studentprofile_id):
+#     # Your logic to fetch the student profile based on the studentprofile_id
+#     studentprofile = StudentProfile.objects.get(id=studentprofile_id)
+    
+#     # Retrieve instances of AddAptitude where status is True
+#     filtered_aptitudes = AddAptitude.objects.filter(is_approved=True)
+    
+#     # Pass the studentprofile and filtered_aptitudes to the template context
+#     context = {
+#         'studentprofile': studentprofile,
+#         'filtered_aptitudes': filtered_aptitudes,
+        
+#     } 
+#     return render(request, 'student/apt_notification.html', context)
+
+from django.shortcuts import get_object_or_404
+
 def apt_notification(request, studentprofile_id):
-    # Your logic to fetch the student profile based on the studentprofile_id
-    studentprofile = StudentProfile.objects.get(id=studentprofile_id)
-    
-    # Retrieve instances of AddAptitude where status is True
-    filtered_aptitudes = AddAptitude.objects.filter(is_approved=True)
-    
-    # Pass the studentprofile and filtered_aptitudes to the template context
-    context = {
-        'studentprofile': studentprofile,
-        'filtered_aptitudes': filtered_aptitudes,
-    }
-    
-    return render(request, 'student/apt_notification.html', context)
+    try:
+        # Fetch the student profile based on the studentprofile_id
+        studentprofile = get_object_or_404(StudentProfile, id=studentprofile_id)
+        
+        # Check if the student has any job applications
+        job_applications = JobApplication.objects.filter(stuprof=studentprofile)
+        
+        if job_applications.exists():
+            # Retrieve the job IDs for which the student has applied
+            job_ids = job_applications.values_list('job_id', flat=True)
+            
+            # Retrieve aptitude notifications related to the jobs applied by the student
+            # filtered_aptitudes = AddAptitude.objects.filter(job__id__in=job_ids, is_approved=True)
+            filtered_aptitudes = AddAptitude.objects.filter(is_approved=True)
+            # Pass the student profile and filtered aptitudes to the template context
+            context = {
+                'studentprofile': studentprofile,
+                'filtered_aptitudes': filtered_aptitudes,
+            } 
+            return render(request, 'student/apt_notification.html', context)
+        else:
+            # Handle the case where the student has not applied for any jobs
+            return HttpResponse("You haven't applied for any jobs yet.")
+    except StudentProfile.DoesNotExist:
+        # Handle the case where the student profile does not exist
+        return HttpResponse("Student profile does not exist.")
 
 
 from .models import JobApplication
