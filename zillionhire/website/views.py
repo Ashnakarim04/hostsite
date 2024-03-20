@@ -2234,12 +2234,37 @@ def q_preview(request):
     questions = Questionn.objects.filter(company_profile=company_profile, status=True)
 
     # Calculate the sum of marks of the questions
-    total_marks = questions.aggregate(total_marks=Sum('marks'))['total_marks']
+    total_question_marks = questions.aggregate(total_marks=Sum('marks'))['total_marks'] or 0
+
+    # Determine the appropriate ExamResponse instance to associate with the ResponseNew object
+    # For demonstration purposes, I'll assume you want to use the first ExamResponse instance
+    exam_response_instance = ExamResponse.objects.first()
+
+    # Save data to ResponseNew model
+    response_new = ResponseNew.objects.create(
+       
+        total_question_marks=total_question_marks
+    )
 
     # Print out the total marks for debugging
-    print("Total Marks:", total_marks)
+    print("Total Question Marks:", total_question_marks)
 
-    return render(request, 'company/q_preview.html', {'questions': questions, 'total_marks': total_marks})
+    return render(request, 'company/q_preview.html', {'questions': questions, 'total_marks': total_question_marks})
+
+# def q_preview(request):
+#     # Retrieve the company profile associated with the logged-in user
+#     company_profile = request.user.companyprofile
+
+#     # Retrieve questions associated with the company profile
+#     questions = Questionn.objects.filter(company_profile=company_profile, status=True)
+
+#     # Calculate the sum of marks of the questions
+#     total_marks = questions.aggregate(total_marks=Sum('marks'))['total_marks']
+
+#     # Print out the total marks for debugging
+#     print("Total Marks:", total_marks)
+
+#     return render(request, 'company/q_preview.html', {'questions': questions, 'total_marks': total_marks})
 
 
 
@@ -2339,26 +2364,6 @@ def create_question(request):
         # Render the form template
         return redirect('conduct_aptitude_test')
 @login_required
-# def attend_exam(request, studentprofile_id, company_profile_id):
-#     studentprofile_id = studentprofile_id
-
-#     try:
-#         # Fetch the student profile
-#         student_profile = StudentProfile.objects.get(id=studentprofile_id)
-
-#         # Fetch the company profile associated with the student profile
-#         comp_prof = CompanyProfile.objects.get(id=company_profile_id)
-
-#         # Get the company's aptitude IDs
-#         company_aptitude_ids = AddAptitude.objects.filter(company_profile=comp_prof).values_list('company_profile', flat=True)
-
-#         # Fetch questions associated with the company profile
-#         questions = Questionn.objects.filter(company_profile_id__in=company_aptitude_ids, status=True)
-
-#         return render(request, 'student/attend_test.html', {'questions': questions, 'studentprofile_id': studentprofile_id})
-#     except Questionn.DoesNotExist:
-#         questions = None
-#         return render(request, 'student/attend_test.html', {'questions': questions, 'studentprofile_id': studentprofile_id})
 def attend_exam(request, studentprofile_id, company_profile_id):
     try:
         # Fetch the student profile
@@ -2373,11 +2378,47 @@ def attend_exam(request, studentprofile_id, company_profile_id):
         # Fetch questions associated with the company profile
         questions = Questionn.objects.filter(company_profile_id__in=company_aptitude_ids, status=True)
 
-        return render(request, 'student/attend_test.html', {'questions': questions, 'studentprofile_id': studentprofile_id, 'company_profile_id': company_profile_id, 'company_profile': comp_prof})
-    except Questionn.DoesNotExist:
+        # Calculate total marks obtained by the student
+        total_student_marks = ExamResponse.objects.filter(student=student_profile, company=comp_prof).aggregate(total_marks=Sum('marks'))['total_marks'] or 0
+
+        # Calculate total marks of all questions
+        total_question_marks = questions.aggregate(total_marks=Sum('marks'))['total_marks'] or 0
+
+        # Save data to ResponseNew model
+        response_new = ResponseNew.objects.create(
+           
+            total_student_marks=total_student_marks,
+            total_question_marks=total_question_marks
+        )
+
+        return render(request, 'student/attend_test.html', {'questions': questions, 'studentprofile_id': studentprofile_id, 'company_profile_id': company_profile_id, 'company_profile': comp_prof, 'total_marks': total_student_marks})
+    except (Questionn.DoesNotExist, CompanyProfile.DoesNotExist):
         questions = None
         return render(request, 'student/attend_test.html', {'questions': questions, 'studentprofile_id': studentprofile_id, 'company_profile_id': company_profile_id})
 
+
+
+# def attend_exam(request, studentprofile_id, company_profile_id):
+#     try:
+#         # Fetch the student profile
+#         student_profile = StudentProfile.objects.get(id=studentprofile_id)
+
+#         # Fetch the company profile associated with the student profile
+#         comp_prof = CompanyProfile.objects.get(id=company_profile_id)
+
+#         # Get the company's aptitude IDs
+#         company_aptitude_ids = AddAptitude.objects.filter(company_profile=comp_prof).values_list('company_profile', flat=True)
+
+#         # Fetch questions associated with the company profile
+#         questions = Questionn.objects.filter(company_profile_id__in=company_aptitude_ids, status=True)
+
+#         # Calculate total marks obtained by the student
+#         total_marks = ExamResponse.objects.filter(student=student_profile, company=comp_prof).aggregate(total_marks=Sum('marks'))['total_marks'] or 0
+
+#         return render(request, 'student/attend_test.html', {'questions': questions, 'studentprofile_id': studentprofile_id, 'company_profile_id': company_profile_id, 'company_profile': comp_prof, 'total_marks': total_marks})
+#     except (Questionn.DoesNotExist, CompanyProfile.DoesNotExist):
+#         questions = None
+#         return render(request, 'student/attend_test.html', {'questions': questions, 'studentprofile_id': studentprofile_id, 'company_profile_id': company_profile_id})
 
 
 from django.shortcuts import render, redirect

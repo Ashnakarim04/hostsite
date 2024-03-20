@@ -194,6 +194,10 @@
                             
                             
                             <div class="column">
+                               
+                                {% if total_marks %}
+                                    <p>Total Marks Obtained: {{ total_marks }}</p>
+                                {% endif %}
                                 {% if questions %}
                                     {% for question in questions %}
                                         <div class="question">
@@ -361,9 +365,18 @@
 
       // Perform actions with selected values (e.g., redirect to a URL with filters)
       console.log("Selected languages:", selectedValues);
+
+
+      
   }
 </script>
 
+{% comment %} <script>
+    window.onload = function() {
+        alert("Sorry, you are not allowed to view the total marks.");
+        // Or any other action you want to take to prevent the student from viewing the total marks
+    };
+</script> {% endcomment %}
 
 
 

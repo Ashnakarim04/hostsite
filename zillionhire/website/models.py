@@ -848,3 +848,10 @@ class TestResult(models.Model):
     total_marks = models.DecimalField(max_digits=5, decimal_places=2)
     marks_obtained = models.DecimalField(max_digits=5, decimal_places=2)
     company_name = models.CharField(max_length=255)
+
+class ResponseNew(models.Model):
+    
+    total_student_marks = models.DecimalField(max_digits=5, decimal_places=2, default=0.0)
+    total_question_marks = models.DecimalField(max_digits=5, decimal_places=2, default=0.0)
+
+    
