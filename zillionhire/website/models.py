@@ -833,25 +833,28 @@ class ExamResponse(models.Model):
     marks = models.DecimalField(max_digits=5, decimal_places=2, default=0.0)
 
 
-class TestResult(models.Model):
-    student = models.ForeignKey(StudentProfile, on_delete=models.CASCADE)
-    company = models.ForeignKey(CompanyProfile, on_delete=models.CASCADE)
-    aptitude = models.ForeignKey(AddAptitude, on_delete=models.CASCADE)
-    question = models.ForeignKey(Questionn, on_delete=models.CASCADE)
-    response = models.ForeignKey(ExamResponse, on_delete=models.CASCADE)
+# class TestResult(models.Model):
+#     student = models.ForeignKey(StudentProfile, on_delete=models.CASCADE)
+#     company = models.ForeignKey(CompanyProfile, on_delete=models.CASCADE)
+#     aptitude = models.ForeignKey(AddAptitude, on_delete=models.CASCADE)
+#     question = models.ForeignKey(Questionn, on_delete=models.CASCADE)
+#     response = models.ForeignKey(ExamResponse, on_delete=models.CASCADE)
     
-    student_name = models.CharField(max_length=255)
-    student_email = models.EmailField()
-    student_batch = models.CharField(max_length=50)
-    student_phone = models.CharField(max_length=20)
+#     student_name = models.CharField(max_length=255)
+#     student_email = models.EmailField()
+#     student_batch = models.CharField(max_length=50)
+#     student_phone = models.CharField(max_length=20)
     
-    total_marks = models.DecimalField(max_digits=5, decimal_places=2)
-    marks_obtained = models.DecimalField(max_digits=5, decimal_places=2)
-    company_name = models.CharField(max_length=255)
+#     total_marks = models.DecimalField(max_digits=5, decimal_places=2)
+#     marks_obtained = models.DecimalField(max_digits=5, decimal_places=2)
+#     company_name = models.CharField(max_length=255)
 
 class ResponseNew(models.Model):
     
     total_student_marks = models.DecimalField(max_digits=5, decimal_places=2, default=0.0)
     total_question_marks = models.DecimalField(max_digits=5, decimal_places=2, default=0.0)
 
-    
+class TestResult(models.Model):
+    student = models.ForeignKey(StudentProfile, on_delete=models.CASCADE)
+    company = models.ForeignKey(CompanyProfile, on_delete=models.CASCADE)
+    total_marks = models.DecimalField(max_digits=5, decimal_places=2)

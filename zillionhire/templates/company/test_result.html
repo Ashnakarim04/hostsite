@@ -150,28 +150,77 @@
                                 <div class="col-md-12">
                                     <div class="card">
                                         <div class="card-body">
-                                            <table class="table">
-                                                <thead>
-                                                    <tr>
-                                                        <th>No.</th>
-                                                        <th>Student Name</th>
-                                                        <th>Email</th>
-                                                        <th>Department</th>
-                                                        <th>Phone</th>
-                                                        <th>Total Mark</th>
-                                                        <th>Mark Got</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    {% for response in exam_responses %}
-                                                    <tr>
-                                                        <td>{{ response.student }}</td>
-                                                        <td>{{ response.question }}</td>
-                                                        <td>{{ response.get_selected_option_display }}</td>
-                                                    </tr>
-                                                    {% endfor %}
-                                                </tbody>
-                                            </table>
+                                          {% comment %} <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>No.</th>
+                                                    <th>Student Name</th>
+                                                    <th>Email</th>
+                                                    <th>Department</th>
+                                                    <th>Phone</th>
+                                                    <th>Total Mark</th>
+                                                    <th>Mark Got</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for response in exam_responses %}
+                                                <tr>
+                                                    <td>{{ forloop.counter }}</td>
+                                                    <td>{{ response.student.user.first_name }} {{ response.student.user.last_name }}</td>
+                                                    <td>{{ response.student.user.email }}</td>
+                                                    <td>{{ response.student.department }}</td>
+                                                    <td>{{ response.student.phone }}</td>
+                                                    <td>{{ response.total_marks }}</td>
+                                                    <td>{{ response.marks }}</td>
+                                                </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                        <table class="table">
+                                          <thead>
+                                              <tr>
+                                                  <th>No.</th>
+                                                 
+                                                  <th>Mark Got</th>
+                                              </tr>
+                                          </thead>
+                                          <tbody>
+                                            {% for record in total_marks_by_student %}
+                                            <tr>
+                                                <td>{{ forloop.counter }}</td>
+                                                
+                                                <td>{{ record.total_marks }}</td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                      </table> {% endcomment %}
+                                      <div class="card-body">
+                                        <table class="table">
+                                          <thead>
+                                              <tr>
+                                                  <th>No.</th>
+                                                  <th>Student Name</th>
+                                                  <th>Email</th>
+                                                  <th>Department</th>
+                                                  <th>Phone</th>
+                                                  <th>Total Mark</th>
+                                              </tr>
+                                          </thead>
+                                          <tbody>
+                                              {% for record in total_marks_by_student %}
+                                              <tr>
+                                                  <td>{{ forloop.counter }}</td>
+                                                  <td>{{ record.student__user__first_name }} {{ record.student__user__last_name }}</td>
+                                                  <td>{{ record.student__user__email }}</td>
+                                                  <td>{{ record.student__department }}</td>
+                                                  <td>{{ record.student__phone }}</td>
+                                                  <td>{{ record.total_marks }}</td>
+                                              </tr>
+                                              {% endfor %}
+                                          </tbody>
+                                      </table>
+                                    </div>
+                                    
                                         </div>
                                     </div>
                                 </div>
