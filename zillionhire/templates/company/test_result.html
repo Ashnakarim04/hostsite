@@ -148,9 +148,70 @@
                             
                             <div class="row">
                                 <div class="col-md-12">
+                                  <div class="card">
+                                    <div class="card-body">
+                                        <form method="GET" action=""> <!-- Assuming the same URL handles the filtering, adjust as necessary -->
+                                            <div class="form-group">
+                                                <label for="cutoffMark">Enter Cutoff Mark:</label>
+                                                <input type="number" class="form-control" id="cutoffMark" name="cutoff_mark" placeholder="Enter Cutoff Mark">
+                                            </div>
+                                            <button type="submit" class="btn btn-primary">Filter</button>
+                                        </form>
+                                    </div>
+                                </div>
                                     <div class="card">
                                         <div class="card-body">
-                                          {% comment %} <table class="table">
+                                         
+                                      <div class="card-body">
+                                        <table class="table">
+                                          <thead>
+                                              <tr>
+                                                  <th>No.</th>
+                                                  <th>Student Name</th>
+                                                  <th>Email</th>
+                                                  <th>Department</th>
+                                                  <th>Phone</th>
+                                                  <th>Total Mark</th>
+                                              </tr>
+                                          </thead>
+                                          {% comment %} <tbody>
+                                              {% for record in total_marks_by_student %}
+                                              <tr>
+                                                  <td>{{ forloop.counter }}</td>
+                                                  <td>{{ record.student__user__first_name }} {{ record.student__user__last_name }}</td>
+                                                  <td>{{ record.student__user__email }}</td>
+                                                  <td>{{ record.student__department }}</td>
+                                                  <td>{{ record.student__phone }}</td>
+                                                  <td>{{ record.total_marks }}</td>
+                                              </tr>
+                                              {% endfor %}
+                                          </tbody> {% endcomment %}
+                                          <tbody>
+                                            {% for record in total_marks_by_student %}
+                                            {% if record.total_marks >= cutoff_mark %}
+                                            <tr>
+                                                <td>{{ forloop.counter }}</td>
+                                                <td>{{ record.student__user__first_name }} {{ record.student__user__last_name }}</td>
+                                                <td>{{ record.student__user__email }}</td>
+                                                <td>{{ record.student__department }}</td>
+                                                <td>{{ record.student__phone }}</td>
+                                                <td>{{ record.total_marks }}</td>
+                                            </tr>
+                                            {% endif %}
+                                            {% endfor %}
+                                        </tbody>
+                                      </table>
+                                    </div>
+                                    
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+    </div>
+
+ {% comment %} <table class="table">
                                             <thead>
                                                 <tr>
                                                     <th>No.</th>
@@ -194,42 +255,6 @@
                                             {% endfor %}
                                         </tbody>
                                       </table> {% endcomment %}
-                                      <div class="card-body">
-                                        <table class="table">
-                                          <thead>
-                                              <tr>
-                                                  <th>No.</th>
-                                                  <th>Student Name</th>
-                                                  <th>Email</th>
-                                                  <th>Department</th>
-                                                  <th>Phone</th>
-                                                  <th>Total Mark</th>
-                                              </tr>
-                                          </thead>
-                                          <tbody>
-                                              {% for record in total_marks_by_student %}
-                                              <tr>
-                                                  <td>{{ forloop.counter }}</td>
-                                                  <td>{{ record.student__user__first_name }} {{ record.student__user__last_name }}</td>
-                                                  <td>{{ record.student__user__email }}</td>
-                                                  <td>{{ record.student__department }}</td>
-                                                  <td>{{ record.student__phone }}</td>
-                                                  <td>{{ record.total_marks }}</td>
-                                              </tr>
-                                              {% endfor %}
-                                          </tbody>
-                                      </table>
-                                    </div>
-                                    
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                        </div>
-    </div>
-
-
 
 
 

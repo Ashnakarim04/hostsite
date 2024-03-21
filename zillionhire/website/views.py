@@ -3124,13 +3124,41 @@ def test_response(request):
     # Render the template with the provided context
     return render(request, 'company/test_response.html', context)
 
-def test_result(request):
-    # Assuming you have calculated total_marks correctly in your view
-    total_marks = 7  # Replace this with the actual calculation of total marks
+# def test_result(request):
+#     # Assuming you have calculated total_marks correctly in your view
+#     total_marks = 7  # Replace this with the actual calculation of total marks
     
-    # Assuming you have retrieved exam_responses from the database
-    exam_responses = ExamResponse.objects.all()  # Replace this with your actual queryset
-    total_marks_by_student = exam_responses.values('student__user__first_name', 'student__user__last_name', 'student__user__email', 'student__department', 'student__phone').annotate(total_marks=Sum('marks'))
+#     # Assuming you have retrieved exam_responses from the database
+#     exam_responses = ExamResponse.objects.all()  # Replace this with your actual queryset
+#     total_marks_by_student = exam_responses.values('student__user__first_name', 'student__user__last_name', 'student__user__email', 'student__department', 'student__phone').annotate(total_marks=Sum('marks'))
 
-    return render(request, 'company/test_result.html', {'total_marks_by_student': total_marks_by_student})
+#     return render(request, 'company/test_result.html', {'total_marks_by_student': total_marks_by_student})
 
+from django.db.models import Sum
+from django.shortcuts import render
+
+def test_result(request):
+    # Retrieve the cutoff mark from the GET request; default to None if not provided
+    cutoff_mark = request.GET.get('cutoff_mark', None)
+    try:
+        cutoff_mark = float(cutoff_mark) if cutoff_mark is not None else None
+    except ValueError:
+        cutoff_mark = None  # In case of invalid input, ignore the cutoff
+
+    # Assuming exam_responses are retrieved as before
+    exam_responses_query = ExamResponse.objects.values(
+        'student__user__first_name',
+        'student__user__last_name',
+        'student__user__email',
+        'student__department',
+        'student__phone'
+    ).annotate(total_marks=Sum('marks'))
+    
+    # If a valid cutoff mark is provided, filter the queryset accordingly
+    if cutoff_mark is not None:
+        exam_responses_query = exam_responses_query.filter(total_marks__gte=cutoff_mark)
+
+    return render(request, 'company/test_result.html', {
+        'total_marks_by_student': exam_responses_query,
+        'cutoff_mark': cutoff_mark  # Pass the cutoff mark to the template, even if it's None
+    })
