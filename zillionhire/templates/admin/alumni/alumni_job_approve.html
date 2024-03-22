@@ -127,7 +127,7 @@
                         <div class="content">
                             <div class="row">
                                 <div class="col-sm-4 col-3">
-                                    <h4 class="page-title">APPROVE ALUMNI OPENING</h4>
+                                    <h4 class="page-title" id="aao">APPROVE ALUMNI OPENING</h4>
                                 </div>
                                  
                             </div>
@@ -179,7 +179,7 @@
                                                         {% if blog_content.is_approved == 'pending' %}
                                                         <form method="post" action="{% url 'approved_alumnijob' blog_content.id %}">
                                                             {% csrf_token %}
-                                                            <button type="submit" class="btn btn-success">Approve</button>
+                                                            <button type="submit" id="approvebtn" class="btn btn-success">Approve</button>
                                                         </form>
                                                         
                                                         {% else %}

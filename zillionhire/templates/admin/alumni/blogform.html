@@ -162,7 +162,7 @@
                     </li> {% endcomment %}
                     
                     <li>
-                      <a href="{% url 'display_blog_content' alumni_id=request.user.alumni.id %}">
+                      <a href="{% url 'display_blog_content' alumni_id=request.user.alumni.id %}" id="opening2">
                           <i class="fas fa-id-card"></i>
                           <span>OPENINGS</span>
                       </a>
@@ -206,7 +206,7 @@
 
     <!-- Add more fields as needed -->
 
-    <button type="submit">Submit</button>
+    <button type="submit" id="alumnisubmit" >Submit</button>
 </form>
 </div>
         

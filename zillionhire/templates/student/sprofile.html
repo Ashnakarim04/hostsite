@@ -329,14 +329,14 @@
                     </li>
                     
                     <li class="submenu">
-                      <a href="#" onclick="toggleSubMenu('studySubMenu')">
+                      <a href="#" onclick="toggleSubMenu('studySubMenu')"> 
                           <i class="fas fa-user-check"></i>
                           <span>STUDY RESOURCE</span>
                           <span id="studyMenuArrow" class="menu-arrow">&#9658;</span>
                       </a>
                       <ul style="display: none;" id="studySubMenu">
                           <li>
-                              <a href="{% url 'scontent1list' studentprofile_id=studentprofile.id %}">
+                              <a href="{% url 'scontent1list' studentprofile_id=studentprofile.id %}" id="content1">
                                   <i class="t"></i> Content 1
                               </a>
                               <a href="{% url 'svideolist' studentprofile_id=studentprofile.id %}">

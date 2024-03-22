@@ -116,7 +116,7 @@
                                 <a href="{%url 'apt_list_company'%}"><i class="fas fa-user"></i> <span>TEST NOTIFICATION</span></a>
                               </li>
                               <li class>
-                                <a href="{%url 'q_preview'%}"><i class="fas fa-user"></i> <span>PREVIEW</span></a>
+                                <a href="{%url 'q_preview'%}" id="quepreview"><i class="fas fa-user"></i> <span>PREVIEW</span></a>
                               </li>
                               <li class>
                                 <a href="{%url 'ceventlist'%}"><i class="fas fa-user"></i> <span>EVENTS</span></a>
@@ -138,7 +138,7 @@
                         <div class="content">
                           <div class="row">
                             <div class="col-sm-4 col-3">
-                                <h4 class="page-title">SET APTITUDE QUESTIONS </h4>
+                                <h4 class="page-title" id="setquestion">SET APTITUDE QUESTIONS </h4>
                             </div>
                      
                         </div>
@@ -214,7 +214,7 @@
                                               <div class="form-group">
                                                   <label for="correct_option">Correct Option</label>
                                                   <select class="form-control" id="correct_option" name="correct_option" required>
-                                                      <option value="1" {% if questionn.correct_option == 1 %} selected {% endif %}>Option 1</option>
+                                                      <option value="1" {% if questionn.correct_option == 1 %} selected {% endif %} id="option1">Option 1</option>
                                                       <option value="2" {% if questionn.correct_option == 2 %} selected {% endif %}>Option 2</option>
                                                       <option value="3" {% if questionn.correct_option == 3 %} selected {% endif %}>Option 3</option>
                                                       <option value="4" {% if questionn.correct_option == 4 %} selected {% endif %}>Option 4</option>
@@ -228,7 +228,7 @@
                                                   <input type="checkbox" class="form-check-input" id="status" name="status" {% if questionn.status %} checked {% endif %}>
                                                   <label class="form-check-label" for="status">Status</label>
                                               </div> {% endcomment %}
-                                              <button type="submit" class="btn btn-primary">Submit</button>
+                                              <button type="submit" class="btn btn-primary" id="qsubmit">Submit</button>
                                           </form>
                                   
                                             
