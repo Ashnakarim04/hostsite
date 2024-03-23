@@ -2389,6 +2389,7 @@ def create_question(request):
 #     except Questionn.DoesNotExist:
 #         questions = None
 #         return render(request, 'student/attend_test.html', {'questions': questions, 'studentprofile_id': studentprofile_id})
+
 def attend_exam(request, studentprofile_id, company_profile_id):
     try:
         # Fetch the student profile
@@ -3162,3 +3163,108 @@ def test_result(request):
         'total_marks_by_student': exam_responses_query,
         'cutoff_mark': cutoff_mark  # Pass the cutoff mark to the template, even if it's None
     })
+
+# views.py
+
+from django.shortcuts import render
+
+
+
+from django.http import JsonResponse
+from .models import ShortlistedStudent
+
+import json
+
+from django.http import JsonResponse
+from .models import ShortlistedStudent
+
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from .models import ShortlistedStudent
+
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from .models import ShortlistedStudent
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
+@csrf_exempt
+def shortlist_selected_students(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body.decode('utf-8'))
+            selected_students = data.get('selected_students', [])
+
+            print('Received selected student IDs:', selected_students)  # Print selected student IDs
+
+            # Process the selected students
+            for student_id in selected_students:
+                # Your logic to create ShortlistedStudent objects here
+                print(f'Shortlisting student with ID {student_id}')
+
+            return JsonResponse({'message': 'Selected students shortlisted successfully'}, status=200)
+        except Exception as e:
+            print('Error processing request:', str(e))
+            return JsonResponse({'error': 'Error processing request'}, status=500)
+
+    return JsonResponse({'error': 'Invalid request'}, status=400)
+
+
+# def webscrap(request, studentprofile_id):
+#     studentprofile = StudentProfile.objects.get(id=studentprofile_id)
+#     return render(request,'admin/student/webscrap.html',{'studentprofile':studentprofile})
+
+from django.shortcuts import render
+import requests
+from bs4 import BeautifulSoup
+
+# Import necessary modules
+from django.shortcuts import render
+from .models import StudentProfile
+import requests
+from bs4 import BeautifulSoup
+
+# views.py
+
+# def webscrap(request, studentprofile_id):
+#     studentprofile = StudentProfile.objects.get(id=studentprofile_id)
+#     # URL of the website you want to scrape
+#     url = 'https://www.techopedia.com/top-in-demand-tech-jobs'
+
+#     # Send a GET request to the URL
+#     response = requests.get(url)
+
+#     # Parse the HTML content of the page
+#     soup = BeautifulSoup(response.text, 'html.parser')
+#     sections = soup.find_all('section', class_='ddo-section focus-section')
+
+#     data = []
+#     for section in sections:
+#         # Extract headline
+#         headline = section.find('h3', class_='card-title').text.strip()
+
+#         # Extract content
+#         content = section.find('div', class_='card-text').text.strip()
+
+#         data.append({'headline': headline, 'content': content})
+
+#     # Pass the scraped data to the template
+#     return render(request, 'admin/student/webscrap.html', {'data': data,'studentprofile':studentprofile})
+
+def webscrap(request, studentprofile_id):
+    studentprofile = StudentProfile.objects.get(id=studentprofile_id)
+    # URL of the website you want to scrape
+    url = 'https://www.cio.com/article/230935/hiring-the-most-in-demand-tech-jobs-for-2021.html'
+    response = requests.get(url)
+    
+    # Parse the HTML content of the page
+    soup = BeautifulSoup(response.content, 'html.parser')
+    
+    # Find all <div> elements
+    paragraphs = soup.find_all('p')
+    
+    # Extract the text content of each <div> element
+    paragraph_texts = [p.get_text() for p in paragraphs]    
+    # Pass the extracted information to the template
+    return render(request, 'admin/student/webscrap.html', {'paragraph_texts': paragraph_texts,'studentprofile':studentprofile})

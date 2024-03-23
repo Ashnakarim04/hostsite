@@ -8,6 +8,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="shortcut icon" type="image/x-icon" href="{% static 'assets2/img/logo.png' %}">
     <title>ZillionHire - Company Dashboard</title>
     <link rel="stylesheet" type="text/css" href="{% static 'assets2/css/bootstrap.min.css' %}">
@@ -146,7 +147,7 @@
                       
                             
                             
-                            <div class="row">
+                            {% comment %} <div class="row">
                                 <div class="col-md-12">
                                   <div class="card">
                                     <div class="card-body">
@@ -174,18 +175,7 @@
                                                   <th>Total Mark</th>
                                               </tr>
                                           </thead>
-                                          {% comment %} <tbody>
-                                              {% for record in total_marks_by_student %}
-                                              <tr>
-                                                  <td>{{ forloop.counter }}</td>
-                                                  <td>{{ record.student__user__first_name }} {{ record.student__user__last_name }}</td>
-                                                  <td>{{ record.student__user__email }}</td>
-                                                  <td>{{ record.student__department }}</td>
-                                                  <td>{{ record.student__phone }}</td>
-                                                  <td>{{ record.total_marks }}</td>
-                                              </tr>
-                                              {% endfor %}
-                                          </tbody> {% endcomment %}
+                                         
                                           <tbody>
                                             {% for record in total_marks_by_student %}
                                             {% if record.total_marks >= cutoff_mark %}
@@ -207,7 +197,137 @@
                                     </div>
                                 </div>
                             </div>
-                            
+                             {% endcomment %}
+                             <div class="row">
+                              <div class="col-md-12">
+                                  <div class="card">
+                                      <div class="card-body">
+                                          <form method="GET" action=""> <!-- Assuming the same URL handles the filtering, adjust as necessary -->
+                                              <div class="form-group">
+                                                  <label for="cutoffMark">Enter Cutoff Mark:</label>
+                                                  <input type="number" class="form-control" id="cutoffMark" name="cutoff_mark" placeholder="Enter Cutoff Mark">
+                                              </div>
+                                              <button type="submit" class="btn btn-primary">Filter</button>
+                                          </form>
+                                      </div>
+                                  </div>
+                                  <div class="card">
+                                      <div class="card-body">
+                                          <div class="card-body">
+                                              <table class="table">
+                                                  <thead>
+                                                      <tr>
+                                                          <th>No.</th>
+                                                          <th>Student Name</th>
+                                                          <th>Email</th>
+                                                          <th>Department</th>
+                                                          <th>Phone</th>
+                                                          <th>Total Mark</th>
+                                                          <th>Select</th>
+                                                      </tr>
+                                                  </thead>
+                                                  <tbody>
+                                                      {% for record in total_marks_by_student %}
+                                                      {% if record.total_marks >= cutoff_mark %}
+                                                      <tr class="filtered-student-row">
+                                                          <td>{{ forloop.counter }}</td>
+                                                          <td>{{ record.student__user__first_name }} {{ record.student__user__last_name }}</td>
+                                                          <td>{{ record.student__user__email }}</td>
+                                                          <td>{{ record.student__department }}</td>
+                                                          <td>{{ record.student__phone }}</td>
+                                                          <td>{{ record.total_marks }}</td>
+                                                          <td><input type="checkbox" class="student-checkbox" data-student-id="{{ record.student_id }}"></td>
+                                                      </tr>
+                                                      {% endif %}
+                                                      {% endfor %}
+                                                  </tbody>
+                                              </table>
+                                              <button type="button" onclick="selectAllFiltered()">Select All Filtered</button>
+                                              <button type="button" onclick="deSelectAll()">Deselect All</button>
+                                              <button type="button" class="btn btn-primary" id="shortlist-btn" onclick="shortlistSelectedStudents()">Shortlist Selected Students</button>
+                                            </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+                              {% comment %} <script>
+                                function shortlistSelectedStudents() {
+                                  var selectedStudents = [];
+                                  $('.student-checkbox:checked').each(function() {
+                                      var studentId = $(this).data('student_id');
+                                      var studentName = $(this).closest('tr').find('td:eq(1)').text();
+                                      var studentEmail = $(this).closest('tr').find('td:eq(2)').text();
+                                      var studentDepartment = $(this).closest('tr').find('td:eq(3)').text();
+                                      var studentPhone = $(this).closest('tr').find('td:eq(4)').text();
+                                      var totalMarks = $(this).closest('tr').find('td:eq(5)').text();
+                                      
+                                      var studentData = {
+                                          'student_id': studentId,
+                                          'name': studentName,
+                                          'email': studentEmail,
+                                          'department': studentDepartment,
+                                          'phone': studentPhone,
+                                          'marks': totalMarks
+                                      };
+                                      selectedStudents.push(studentData);
+                                  });
+                              
+                                  console.log(selectedStudents); // Log selectedStudents array for debugging
+                              
+                                  $.ajax({
+                                      url: '{% url "shortlist_selected_students" %}',
+                                      type: 'POST',
+                                      data: {
+                                          'selected_students[]': JSON.stringify(selectedStudents), // Convert to JSON string
+                                          csrfmiddlewaretoken: '{{ csrf_token }}'
+                                      },
+                                      dataType: 'json',
+                                      success: function(response) {
+                                          if (response.success) {
+                                              // Handle success
+                                              console.log('Selected students shortlisted successfully.');
+                                          } else {
+                                              // Handle error
+                                              console.error('Error shortlisting students:', response.error);
+                                          }
+                                      },
+                                      error: function(xhr, status, error) {
+                                          console.error('Error:', error);
+                                      }
+                                  });
+                              }
+                              
+                              </script>
+                               {% endcomment %}
+                              
+                              <div class="row">
+                                <div class="col-md-12">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Shortlist</h5>
+                                            <div class="table-responsive">
+                                                <table class="table" id="shortlist-table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>No.</th>
+                                                            <th>Student Name</th>
+                                                            <th>Email</th>
+                                                            <th>Department</th>
+                                                            <th>Phone</th>
+                                                            <th>Total Mark</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="shortlist-body">
+                                                        <!-- Shortlisted students will be displayed here -->
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                          </div>
+                          
                         </div>
     </div>
 
@@ -335,6 +455,93 @@
         container.innerHTML = "";
     }
 </script>
+<!-- Add this script section in your HTML -->
+<script>
+  function selectAllFiltered() {
+      var checkboxes = document.getElementsByClassName('student-checkbox');
+      for (var i = 0; i < checkboxes.length; i++) {
+          checkboxes[i].checked = true;
+      }
+  }
+
+  function deSelectAll() {
+      var checkboxes = document.getElementsByClassName('student-checkbox');
+      for (var i = 0; i < checkboxes.length; i++) {
+          checkboxes[i].checked = false;
+      }
+  }
+  
+
+
+
+  
+</script>
+<script>
+  function shortlistSelectedStudents() {
+    var selectedStudents = [];
+    var checkboxes = document.getElementsByClassName('student-checkbox');
+    for (var i = 0; i < checkboxes.length; i++) {
+        if (checkboxes[i].checked) {
+            selectedStudents.push(checkboxes[i].getAttribute('data-student-id'));
+        }
+    }
+
+    console.log(selectedStudents); // Log selected student IDs
+
+    // Send selected students to the server to be shortlisted
+    fetch('/shortlist_selected_students/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCookie('csrftoken')
+        },
+        body: JSON.stringify({ selected_students: selectedStudents })
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Handle response from the server
+        console.log(data);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
+</script>
+
+
+{% comment %} <script>
+  $(document).ready(function() {
+      // Function to handle shortlisting of selected students
+      $("#shortlist-btn").click(function() {
+          var selectedStudents = [];
+          // Collect selected students' IDs
+          $(".student-checkbox:checked").each(function() {
+              var studentId = $(this).data('student-id');
+              selectedStudents.push(studentId);
+          });
+
+          // AJAX request to send selected students' IDs to the server
+          $.ajax({
+              url: "{% url 'shortlist_students' %}",  // Change 'shortlist_students' to your actual URL name
+              method: "POST",
+              data: {
+                  'selected_students': selectedStudents,
+                  csrfmiddlewaretoken: '{{ csrf_token }}'
+              },
+              success: function(response) {
+                  // Handle success response here, if needed
+                  // For example, you can display a success message
+                  alert("Selected students have been successfully shortlisted.");
+              },
+              error: function(xhr, errmsg, err) {
+                  // Handle error response here, if needed
+                  console.log(xhr.status + ": " + xhr.responseText); // Log any errors to the console
+              }
+          });
+      });
+  });
+</script> {% endcomment %}
 
 
                     

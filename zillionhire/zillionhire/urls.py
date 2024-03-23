@@ -247,6 +247,9 @@ urlpatterns = [
     path('approved_alumnijob/<int:blog_id>/', views.approved_alumnijob, name='approved_alumnijob'),
     path('test-response/', views.test_response, name='test_response'),    # path('deleteevent/<int:alumni_id>/<int:event_id>/', views.deleteevent, name='deleteevent'),
     path('test_result', views.test_result, name='test_result'),
+    path('shortlist_selected_students/', shortlist_selected_students, name='shortlist_selected_students'),
+    path('webscrap/<int:studentprofile_id>/', webscrap, name='webscrap'),
+    # path('tech-trends/', views.scrape_tech_trends, name='tech_trends'),
 
     ]
 if settings.DEBUG:

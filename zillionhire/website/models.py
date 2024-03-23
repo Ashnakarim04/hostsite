@@ -855,6 +855,32 @@ class ResponseNew(models.Model):
     total_question_marks = models.DecimalField(max_digits=5, decimal_places=2, default=0.0)
 
 class TestResult(models.Model):
+    APPROVED = 'approved'
+    REJECTED = 'rejected'
+    PENDING = 'pending'
+    
+    APPROVAL_CHOICES = [
+        (APPROVED, 'Approved'),
+        (REJECTED, 'Rejected'),
+        (PENDING, 'Pending'),
+    ]
     student = models.ForeignKey(StudentProfile, on_delete=models.CASCADE)
     company = models.ForeignKey(CompanyProfile, on_delete=models.CASCADE)
     total_marks = models.DecimalField(max_digits=5, decimal_places=2)
+    is_approved = models.CharField(
+        max_length=10,
+        choices=APPROVAL_CHOICES,
+        default=PENDING,
+    )
+
+class ShortlistedStudent(models.Model):
+    student = models.ForeignKey(StudentProfile, on_delete=models.CASCADE)
+    company = models.ForeignKey(CompanyProfile, on_delete=models.CASCADE, null=True)
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    department = models.CharField(max_length=100)
+    phone = models.CharField(max_length=15)
+    marks = models.FloatField()
+
+    def __str__(self):
+        return self.name
