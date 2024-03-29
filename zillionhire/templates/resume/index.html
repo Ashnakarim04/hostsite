@@ -85,7 +85,7 @@
 <body> 
     <h1>Resume Builder</h1> 
 
-    <form action="{% url 'gen_resume' %}" method="post" class="form-container"> 
+    <form action="{% url 'gen_resume' %}" method="post" class="form-container" enctype="multipart/form-data"> 
         {% csrf_token %} 
 
         <!-- ===================PERSONAL INFORMATION====================== -->
@@ -95,13 +95,15 @@
             <input type="text" id="name" name="name"> 
         </div> 
         <div class="form-group"> 
+            <label for="image">Choose Image:</label> 
+            <input type="file" id="image" name="image"> 
+        </div>
+      
+        <div class="form-group"> 
             <label for="about">About:</label> 
             <input type="text" id="about" name="about"> 
         </div> 
-        <div class="form-group"> 
-            <label for="age">Age:</label> 
-            <input type="text" id="age" name="age"> 
-        </div> 
+       
         <div class="form-group"> 
             <label for="email">Email:</label> 
             <input type="text" id="email" name="email"> 
@@ -111,7 +113,27 @@
             <input type="text" id="phone" name="phone"> 
         </div> 
         <div class="form-group"> 
-            <label for="skills">Skills:</label> 
+            <label for="career_objective">Career Objective:</label> 
+            <textarea id="career_objective" name="career_objective"></textarea>
+        </div> 
+        <div class="form-group"> 
+            <label for="address">Address:</label> 
+            <input type="text" id="address" name="address"> 
+        </div> 
+        <div class="form-group"> 
+            <label for="linkedin_profile">LinkedIn Profile:</label> 
+            <input type="text" id="linkedin_profile" name="linkedin_profile"> 
+        </div> 
+        <div class="form-group"> 
+            <label for="git_profile">Git Profile:</label> 
+            <input type="text" id="git_profile" name="git_profile"> 
+        </div> 
+        <div class="form-group"> 
+            <label for="soft_skills">Soft Skills:</label> 
+            <input type="text" id="soft_skills" name="soft_skills"> 
+        </div> 
+        <div class="form-group"> 
+            <label for="skills">Technical Skills:</label> 
             <div class="om"> 
                 <input type="text" id="skill1" name="skill1"> 
                 <input type="text" id="skill2" name="skill2"> 
@@ -140,6 +162,10 @@
                 <label for="year1">Year :</label> 
                 <input type="text" id="year1" name="year1"> 
             </div> 
+            <div class="form-group"> 
+                <label for="cgpa1">CGPA :</label> 
+                <input type="text" id="cgpa1" name="cgpa1"> 
+            </div> 
         </div> 
 
         <!-- -----EDUCATION 2----- -->
@@ -158,6 +184,10 @@
             <div class="form-group"> 
                 <label for="year2">Year:</label> 
                 <input type="text" id="year2" name="year2"> 
+            </div> 
+            <div class="form-group"> 
+                <label for="cgpa2">CGPA :</label> 
+                <input type="text" id="cgpa2" name="cgpa2"> 
             </div> 
         </div> 
 
@@ -178,8 +208,37 @@
                 <label for="year3">Year:</label> 
                 <input type="text" id="year3" name="year3"> 
             </div> 
+            <div class="form-group"> 
+                <label for="cgpa3">CGPA :</label> 
+                <input type="text" id="cgpa3" name="cgpa3"> 
+            </div> 
         </div> 
+        <div class="form-group"> 
 
+            <label for="internship1">Internship 1:</label> 
+            <input type="text" id="internship1" name="internship1"> 
+        </div> 
+        <div class="form-group"> 
+            <label for="internship2">Internship 2:</label> 
+            <input type="text" id="internship2" name="internship2"> 
+        </div> 
+        <div class="form-group"> 
+            <label for="internship3">Internship 3:</label> 
+            <input type="text" id="internship3" name="internship3"> 
+        </div> 
+        <h2>Certifications</h2> 
+        <div class="form-group"> 
+            <label for="certification1">Certification 1:</label> 
+            <input type="text" id="certification1" name="certification1"> 
+        </div> 
+        <div class="form-group"> 
+            <label for="certification2">Certification 2:</label> 
+            <input type="text" id="certification2" name="certification2"> 
+        </div> 
+        <div class="form-group"> 
+            <label for="certification3">Certification 3:</label> 
+            <input type="text" id="certification3" name="certification3"> 
+        </div> 
         <!-- ================LANGUAGES======================= -->
 
         <div class="form-group"> 

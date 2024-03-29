@@ -1843,6 +1843,11 @@ def gen_resume(request):
         age = request.POST.get('age', '')
         email = request.POST.get('email', '')
         phone = request.POST.get('phone', '')
+        career_objective = request.POST.get('career_objective', '')
+        address = request.POST.get('address', '')
+        linkedin_profile = request.POST.get('linkedin_profile', '')
+        git_profile = request.POST.get('git_profile', '')
+        soft_skills = request.POST.get('soft_skills', '')
         skill1 = request.POST.get('skill1', '')
         skill2 = request.POST.get('skill2', '')
         skill3 = request.POST.get('skill3', '')
@@ -1850,13 +1855,15 @@ def gen_resume(request):
         skill5 = request.POST.get('skill5', '')
         degree1 = request.POST.get('degree1', '')
         college1 = request.POST.get('college1', '')
+        cgpa1 = request.POST.get('cgpa1', '')
         year1 = request.POST.get('year1', '')
         degree2 = request.POST.get('degree2', '')
         college2 = request.POST.get('college2', '')
+        cgpa2 = request.POST.get('cgpa2', '')
         year2 = request.POST.get('year2', '')
         college3 = request.POST.get('college3', '')
+        cgpa3 = request.POST.get('cgpa3', '')
         year3 = request.POST.get('year3', '')
-        degree3 = request.POST.get('degree3', '')
         lang1 = request.POST.get('lang1', '')
         lang2 = request.POST.get('lang2', '')
         lang3 = request.POST.get('lang3', '')
@@ -1877,7 +1884,14 @@ def gen_resume(request):
         ach1 = request.POST.get('ach1', '')
         ach2 = request.POST.get('ach2', '')
         ach3 = request.POST.get('ach3', '')
-
+        internship1 = request.POST.get('internship1', '')
+        internship2 = request.POST.get('internship2', '')
+        internship3 = request.POST.get('internship3', '')
+        certification1 = request.POST.get('certification1', '')
+        certification2 = request.POST.get('certification2', '')
+        certification3 = request.POST.get('certification3', '')
+        image = request.FILES.get('image') 
+        
         # Create an instance of the Resume model
         resume_instance = ResumeBuilder(
             name=name,
@@ -1885,6 +1899,11 @@ def gen_resume(request):
             age=age,
             email=email,
             phone=phone,
+            career_objective=career_objective,
+            address=address,
+            linkedin_profile=linkedin_profile,
+            git_profile=git_profile,
+            soft_skills=soft_skills,
             skill1=skill1,
             skill2=skill2,
             skill3=skill3,
@@ -1892,13 +1911,15 @@ def gen_resume(request):
             skill5=skill5,
             degree1=degree1,
             college1=college1,
+            cgpa1=cgpa1,
             year1=year1,
             degree2=degree2,
             college2=college2,
+            cgpa2=cgpa2,
             year2=year2,
             college3=college3,
+            cgpa3=cgpa3,
             year3=year3,
-            degree3=degree3,
             lang1=lang1,
             lang2=lang2,
             lang3=lang3,
@@ -1918,7 +1939,14 @@ def gen_resume(request):
             lin21=lin21,
             ach1=ach1,
             ach2=ach2,
-            ach3=ach3
+            ach3=ach3,
+            internship1=internship1,
+            internship2=internship2,
+            internship3=internship3,
+            certification1=certification1,
+            certification2=certification2,
+            certification3=certification3,
+            image=image 
         )
 
         # Save the instance to the database
@@ -1928,6 +1956,7 @@ def gen_resume(request):
         return render(request, 'resume/resume.html', {'resume_instance': resume_instance})
 
     return render(request, 'resume/index.html')
+
 
 def editcontent1(request, adcont_id):
     adcont = get_object_or_404(internship, pk=adcont_id)

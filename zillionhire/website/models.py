@@ -602,10 +602,23 @@ class ResumeBuilder(models.Model):
     ach1 = models.CharField(max_length=255)
     ach2 = models.CharField(max_length=255)
     ach3 = models.CharField(max_length=255)
-
+    career_objective = models.CharField(max_length=255,null=True) # New field
+    address = models.CharField(max_length=255,null=True)  # New field
+    linkedin_profile = models.CharField(max_length=255,null=True) # New field
+    git_profile = models.CharField(max_length=255,null=True)# New field
+    soft_skills = models.CharField(max_length=255,null=True)  # New field
+    internship1 = models.CharField(max_length=255,null=True)  # New field
+    internship2 = models.CharField(max_length=255,null=True) # New field
+    internship3 = models.CharField(max_length=255,null=True)  # New field
+    certification1 =models.CharField(max_length=255,null=True)  # New field
+    certification2 = models.CharField(max_length=255,null=True)  # New field
+    certification3 = models.CharField(max_length=255,null=True)  # New field
+    cgpa1 = models.CharField(max_length=10,null=True)  # New field
+    cgpa2 = models.CharField(max_length=10,null=True)  # New field
+    cgpa3 = models.CharField(max_length=10,null=True)  # New field
+    image = models.ImageField(upload_to='resume_images/', null=True, blank=True)
     def __str__(self):
         return self.name
-    
 class BlogContent(models.Model):
     title = models.CharField(max_length=255)
     APPROVED = 'approved'
