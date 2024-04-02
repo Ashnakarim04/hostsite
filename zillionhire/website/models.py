@@ -733,6 +733,7 @@ class AddAptitude(models.Model):
     steps = models.TextField()
     regulations = models.TextField()
     status = models.BooleanField(default=True)
+    document = models.FileField(upload_to='aptitude_documents/', null=True, blank=True)
     is_approved = models.CharField(
         max_length=10,
         choices=APPROVAL_CHOICES,
@@ -860,6 +861,7 @@ class ExamResponse(models.Model):
     )
 
 class AptdResult(models.Model):
+    student_id = models.CharField(max_length=100,null=True)
     student_first_name = models.CharField(max_length=100)
     student_last_name = models.CharField(max_length=100)
     student_email = models.EmailField()
@@ -932,3 +934,19 @@ class ShortlistedStudent(models.Model):
 
     def __str__(self):
         return self.name
+    
+class Interview(models.Model):
+    company = models.ForeignKey(CompanyProfile, on_delete=models.CASCADE, null=True)
+    shortlist = models.ForeignKey(AptdResult,on_delete=models.CASCADE, null=True)
+    interview_date = models.DateField()
+    interview_time = models.TimeField()
+    ampm = models.CharField(max_length=2, choices=(('AM', 'AM'), ('PM', 'PM')))
+    interview_type = models.CharField(max_length=50)
+    interview_mode = models.CharField(max_length=10, choices=(('Online', 'Online'), ('Offline', 'Offline')))
+    interview_link_location = models.CharField(max_length=255)
+    interview_duration = models.IntegerField()
+    interviewer_info = models.TextField()
+    instruction_requirements = models.FileField(upload_to='instruction_requirements/', null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.interview_type} on {self.interview_date} at {self.interview_time}"

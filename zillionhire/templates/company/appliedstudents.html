@@ -159,7 +159,7 @@
                                                     
                                                    
                                                     <th>profile</th>
-                                                    <th class="text-right">Action</th>
+                                                    {% comment %} <th class="text-right">Action</th> {% endcomment %}
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -193,7 +193,7 @@
                                                      
                                                         
                                                         </td>
-                                                        <td>
+                                                        {% comment %} <td>
                                                             {% if appstu.is_approved == 'pending' %}
                                                             <form method="post" action="{% url 'approve_shortlist' appstu.id %}">
                                                                 {% csrf_token %}
@@ -208,7 +208,7 @@
                                                             {% else  %}
                                                             <button disabled="" type="button" class="btn btn-danger">Rejected</button>
                                                             {% endif  %}
-                                                        </td>  
+                                                        </td>   {% endcomment %}
                                                     </tr>
                                                     {% endfor %}
                                                 </tbody>

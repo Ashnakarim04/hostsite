@@ -1483,7 +1483,7 @@ def aptform(request, aptitude_id=None):
             password = request.POST.get('password')
             steps = request.POST.get('steps')
             regulations = request.POST.get('regulations')
-
+            
             if aptitude_id:
                 # Update existing instance if aptitude_id is provided
                 aptitude = AddAptitude.objects.get(pk=aptitude_id)
@@ -3213,6 +3213,119 @@ def shortlist2(request):
     company_id = request.user.companyprofile.id  # Assuming you can access the company profile associated with the logged-in user
     aptd_results = AptdResult.objects.filter(company_id=company_id, status=True)
     return render(request, 'company/shortlist2.html', {'aptd_results': aptd_results})
+
+from datetime import datetime
+
+from .models import ShortlistedStudent
+
+from django.http import HttpResponseNotFound
+
+from django.shortcuts import redirect, HttpResponse
+from django.contrib import messages
+from .models import AptdResult
+
+from django.shortcuts import redirect, HttpResponse
+from django.contrib import messages
+from .models import AptdResult
+
+from django.shortcuts import render, redirect
+from django.http import HttpResponse
+from django.contrib import messages
+from .models import AptdResult, Interview
+
+def schedule_interview(request):
+    if request.method == 'POST':
+        # Extract form data
+        student_id = request.POST.get('student_id')
+        interview_date = request.POST.get('interview_date')
+        interview_time = request.POST.get('interview_time')
+        ampm = request.POST.get('ampm')
+        interview_type = request.POST.get('interview_type')
+        interview_mode = request.POST.get('interview_mode')
+        interview_link_location = request.POST.get('interview_link_location')
+        interview_duration = request.POST.get('interview_duration')
+        interviewer_info = request.POST.get('interviewer_info')
+        instruction_requirements = request.FILES.get('instruction_requirements')
+        
+        try:
+            # Get the student object with the provided ID
+            student = AptdResult.objects.get(id=student_id)
+            
+            # Get the company profile
+            company = request.user.companyprofile
+
+            # Create the Interview object and associate it with the student
+            interview = Interview.objects.create(
+                # student=student,  # Use the AptdResult object directly
+                shortlist=AptdResult.objects.get(id=student_id),
+                company=company,
+                interview_date=interview_date,
+                interview_time=interview_time,
+                ampm=ampm,
+                interview_type=interview_type,
+                interview_mode=interview_mode,
+                interview_link_location=interview_link_location,
+                interview_duration=int(interview_duration),
+                interviewer_info=interviewer_info,
+                instruction_requirements=instruction_requirements
+            )
+
+            # Optionally, you can add a success message
+            messages.success(request, 'Interview scheduled successfully.')
+
+            # Redirect to a success page or the same page
+            return redirect('shortlist2')  # Redirect to the interview list page
+        
+        except AptdResult.DoesNotExist:
+            # Handle the case where the AptdResult object does not exist
+            return HttpResponse("The specified student does not exist.")
+
+    else:
+        # Handle GET requests if needed
+        pass
+
+
+from django.shortcuts import render
+from .models import Interview
+
+from django.shortcuts import render
+from .models import Interview
+
+def get_interview_details(request):
+    if request.method == 'GET':
+        student_id = request.GET.get('student_id')
+        try:
+            interview_details = Interview.objects.get(shortlist_id=student_id)
+        except Interview.DoesNotExist:
+            interview_details = None
+        
+        return render(request, 'company/shortlist2.html', {'interview_details': interview_details})
+
+
+
+
+
+
+def get_student_profile(user):
+    try:
+        return StudentProfile.objects.get(user=user)
+    except StudentProfile.DoesNotExist:
+        # Handle the case where the student profile does not exist for the user
+        return None
+    
+# Import necessary modules if required
+from .models import CompanyProfile  # Import your CompanyProfile model if needed
+
+# Define the get_company_profile function
+def get_company_profile(company_id):
+    try:
+        # Retrieve the company profile based on the provided company_id
+        company = CompanyProfile.objects.get(id=company_id)
+        return company
+    except CompanyProfile.DoesNotExist:
+        # Handle the case where the company profile does not exist
+        return None
+
 
 
 def delete_aptd_result(request, result_id):

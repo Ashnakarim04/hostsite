@@ -165,11 +165,10 @@
                                                           <th>No.</th>
                                                           <th>Student Name</th>
                                                           <th>Email</th>
-                                                          {% comment %} <th>Department</th>
-                                                          <th>Phone</th>
-                                                          <th>Total Mark</th> {% endcomment %}
+                                                         
                                                           <th></th>
                                                           <th>Interview</th>
+                                                          <th>View</th>
                                                       </tr>
                                                   </thead>
                                                   <tbody>
@@ -191,40 +190,130 @@
                                                         <!-- Add other table data as needed -->
                                                         <td>
                                                             <!-- Add button to trigger modal -->
-                                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#scheduleModal{{ result.id }}">Schedule Interview</button>
+                                                            <button id="scheduleButton{{ result.id }}" type="button" class="btn btn-primary" data-toggle="modal" data-target="#scheduleModal{{ result.id }}">Schedule Interview</button>
                                                             <!-- Modal -->
-                                                            <div class="modal fade" id="scheduleModal{{ result.id }}" tabindex="-1" role="dialog" aria-labelledby="scheduleModalLabel{{ result.id }}" aria-hidden="true">
-                                                                <div class="modal-dialog" role="document">
-                                                                    <div class="modal-content">
-                                                                        <div class="modal-header">
-                                                                            <h5 class="modal-title" id="scheduleModalLabel{{ result.id }}">Schedule Interview for {{ result.student_first_name }} {{ result.student_last_name }}</h5>
-                                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                                <span aria-hidden="true">&times;</span>
-                                                                            </button>
-                                                                        </div>
-                                                                        <div class="modal-body">
-                                                                            <!-- Add date and time input fields here -->
-                                                                            <label for="interview_date">Interview Date:</label>
-                                                                            <input type="date" id="interview_date{{ result.id }}" name="interview_date">
-                                                                            <label for="interview_time">Interview Time:</label>
-                                                                            <input type="time" id="interview_time{{ result.id }}" name="interview_time">
-                                                                            <div class="form-group">
-                                                                                <label for="ampm">AM/PM:</label>
-                                                                                <select class="form-control" id="ampm" name="ampm" style="width: 80px;"> <!-- Adjust the width as needed -->
-                                                                                    <option value="AM">AM</option>
-                                                                                    <option value="PM">PM</option>
-                                                                                </select>
+                                                            <form action="{% url 'schedule_interview' %}" method="post">
+                                                                {% csrf_token %}
+                                                                <input type="hidden" name="student_id" value="{{ result.id }}">
+                                                                <div class="modal fade" id="scheduleModal{{ result.id }}" tabindex="-1" role="dialog" aria-labelledby="scheduleModalLabel{{ result.id }}" aria-hidden="true">
+                                                                    <div class="modal-dialog" role="document">
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-header">
+                                                                                <h5 class="modal-title" id="scheduleModalLabel{{ result.id }}">Schedule Interview for {{ result.student_first_name }} {{ result.student_last_name }}</h5>
+                                                                                <p>Student ID: {{ result.id }}</p>
+                                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                    <span aria-hidden="true">&times;</span>
+                                                                                </button>
                                                                             </div>
+                                                                            <div class="modal-body">
+                                                                                <label for="interview_date">Interview Date:</label>
+                                                                                        <input type="date" id="interview_date{{ result.id }}" name="interview_date">
+
+                                                                                        <label for="interview_time">Interview Time:</label>
+                                                                                        <input type="time" id="interview_time{{ result.id }}" name="interview_time">
+
+                                                                                        <div class="form-group">
+                                                                                            <label for="ampm">AM/PM:</label>
+                                                                                            <select class="form-control" id="ampm" name="ampm" style="width: 80px;">
+                                                                                                <option value="AM">AM</option>
+                                                                                                <option value="PM">PM</option>
+                                                                                            </select>
+                                                                                        </div>
+
+                                                                                        <div class="form-group">
+                                                                                            <label for="interview_type">Interview Type:</label>
+                                                                                            <select class="form-control" id="interview_type" name="interview_type">
+                                                                                                <option value="HR Interview">HR Interview</option>
+                                                                                                <option value="Technical Interview 1">Technical Interview 1</option>
+                                                                                                <option value="Technical Interview 2">Technical Interview 2</option>
+                                                                                                <option value="Technical Interview 3">Technical Interview 3</option>
+                                                                                                <option value="Group Discussion">Group Discussion</option>
+                                                                                            </select>
+                                                                                        </div>
+
+                                                                                        <div class="form-group">
+                                                                                            <label for="interview_mode">Interview Mode:</label>
+                                                                                            <select class="form-control" id="interview_mode" name="interview_mode">
+                                                                                                <option value="Online">Online</option>
+                                                                                                <option value="Offline">Offline</option>
+                                                                                            </select>
+                                                                                        </div>
+
+                                                                                        <label for="interview_link_location">Interview Link/Location:</label>
+                                                                                        <input type="text" id="interview_link_location" name="interview_link_location" class="form-control">
+
+                                                                                        <label for="interview_duration">Interview Duration (in minutes):</label>
+                                                                                        <input type="number" id="interview_duration" name="interview_duration" class="form-control">
+
+                                                                                        <label for="interviewer_info">Interviewer Information:</label>
+                                                                                        <textarea id="interviewer_info" name="interviewer_info" class="form-control" rows="3"></textarea>
+
+                                                                                        <label for="instruction_requirements">Instructions/Requirements (PDF):</label>
+                                                                                        <input type="file" id="instruction_requirements" name="instruction_requirements" accept=".pdf">
+
+
                                                                             
-                                                                        </div>
-                                                                        <div class="modal-footer">
-                                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                                            <button type="button" class="btn btn-primary" onclick="scheduleInterview({{ result.id }})">Schedule</button>
+                                                                            </div>
+                                                                            <div class="modal-footer">
+                                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                                                <button type="submit" class="btn btn-primary" id="scheduleSubmitButton{{ result.id }}">Schedule</button>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
+                                                            </form>
                                                         </td>
+                                                        
+                                                        {% comment %} <script>
+                                                            // Get the Schedule button by ID
+                                                            var scheduleButton = document.getElementById('scheduleButton{{ result.id }}');
+                                                            var scheduleSubmitButton = document.getElementById('scheduleSubmitButton{{ result.id }}');
+                                                        
+                                                            // Add a click event listener to the Schedule button
+                                                            scheduleButton.addEventListener('click', function() {
+                                                                // Change the button color to green
+                                                                scheduleButton.style.backgroundColor = 'green';
+                                                            });
+                                                        
+                                                            // Add a click event listener to the Schedule submit button
+                                                            scheduleSubmitButton.addEventListener('click', function() {
+                                                                // Change the Schedule button color to green
+                                                                scheduleButton.style.backgroundColor = 'green';
+                                                            });
+                                                        </script> {% endcomment %}
+                                                        
+                                                        <!-- HTML code for "View" button and modal -->
+<td>
+    {% comment %} <button type="button" class="btn btn-primary view-interview" data-student-id="{{ result.id }}" data-toggle="modal" data-target="#interviewModal">View</button> {% endcomment %}
+</td>
+
+<!-- Modal -->
+<div class="modal fade" id="interviewModal" tabindex="-1" role="dialog" aria-labelledby="interviewModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="interviewModalLabel">Interview Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Interview details will be rendered here -->
+                {% if interview_details %}
+                    <p>Interview Date: {{ interview_details.interview_date }}</p>
+                    <p>Interview Time: {{ interview_details.interview_time }}</p>
+                    <!-- Add more interview details as needed -->
+                {% else %}
+                    <p>No interview details found.</p>
+                {% endif %}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
                                                     </tr>
                                                     {% endfor %}
                                                   </tbody>
@@ -236,10 +325,15 @@
                                       </div>
                                   </div>
                               </div>
+                              
+                            
                               <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
                               <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
                                     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
                                     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+                                    <!-- Add Bootstrap CSS -->
+                                  
+
                               {% comment %} <script>
                                 function shortlistSelectedStudents() {
                                   var selectedStudents = [];
