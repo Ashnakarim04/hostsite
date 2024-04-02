@@ -2138,18 +2138,21 @@ from django.shortcuts import render, get_object_or_404
 from .models import BlogContent, Alumni
 
 def display_blog_content(request, alumni_id):
-    try:
-        # Get the alumni instance based on the provided ID or return 404 if not found
-        alumni_instance = get_object_or_404(Alumni, id=alumni_id)
-        # Ensure the alumni_instance contains the profile_photo attribute
-        if not hasattr(alumni_instance, 'profile_photo'):
-            raise AttributeError("Alumni instance does not have 'profile_photo' attribute.")
-        # Filter blog contents based on the retrieved alumni instance
-        blog_contents = BlogContent.objects.filter(alumni=alumni_instance)
-        return render(request, 'admin/alumni/bloglist.html', {'alumni_instance': alumni_instance, 'blog_contents': blog_contents})
-    except Alumni.DoesNotExist:
-        messages.error(request, 'Alumni profile not found.')
-        return redirect(reverse('admin_index'))
+    if request.user.is_authenticated:
+        try:
+            # Get the alumni instance based on the provided ID or return 404 if not found
+            alumni_instance = get_object_or_404(Alumni, id=alumni_id)
+            # Ensure the alumni_instance contains the profile_photo attribute
+            if not hasattr(alumni_instance, 'profile_photo'):
+                raise AttributeError("Alumni instance does not have 'profile_photo' attribute.")
+            # Filter blog contents based on the retrieved alumni instance
+            blog_contents = BlogContent.objects.filter(alumni=alumni_instance)
+            return render(request, 'admin/alumni/bloglist.html', {'alumni_instance': alumni_instance, 'blog_contents': blog_contents})
+        except Alumni.DoesNotExist:
+            messages.error(request, 'Alumni profile not found.')
+            return redirect(reverse('admin_index'))
+    else:
+        return redirect('loginn')
     
 from django.shortcuts import render, get_object_or_404
 from .models import BlogContent, StudentProfile
@@ -2398,26 +2401,6 @@ def create_question(request):
         # Render the form template
         return redirect('conduct_aptitude_test')
 @login_required
-# def attend_exam(request, studentprofile_id, company_profile_id):
-#     studentprofile_id = studentprofile_id
-
-#     try:
-#         # Fetch the student profile
-#         student_profile = StudentProfile.objects.get(id=studentprofile_id)
-
-#         # Fetch the company profile associated with the student profile
-#         comp_prof = CompanyProfile.objects.get(id=company_profile_id)
-
-#         # Get the company's aptitude IDs
-#         company_aptitude_ids = AddAptitude.objects.filter(company_profile=comp_prof).values_list('company_profile', flat=True)
-
-#         # Fetch questions associated with the company profile
-#         questions = Questionn.objects.filter(company_profile_id__in=company_aptitude_ids, status=True)
-
-#         return render(request, 'student/attend_test.html', {'questions': questions, 'studentprofile_id': studentprofile_id})
-#     except Questionn.DoesNotExist:
-#         questions = None
-#         return render(request, 'student/attend_test.html', {'questions': questions, 'studentprofile_id': studentprofile_id})
 
 def attend_exam(request, studentprofile_id, company_profile_id):
     try:
@@ -2440,6 +2423,11 @@ def attend_exam(request, studentprofile_id, company_profile_id):
     except (Questionn.DoesNotExist, CompanyProfile.DoesNotExist):
         questions = None
         return render(request, 'student/attend_test.html', {'questions': questions, 'studentprofile_id': studentprofile_id, 'company_profile_id': company_profile_id})
+
+from .models import ResultAptitude
+
+def store_result(student_profile, comp_prof, total_marks):
+    ResultAptitude.objects.create(student=student_profile, company=comp_prof, total_marks=total_marks)
 
 
 from django.shortcuts import render, redirect
@@ -3142,16 +3130,12 @@ def approved_alumnijob(request, blog_id):
 from .models import ExamResponse
 
 def test_response(request):
-    # Retrieve the company ID associated with the logged-in user or pass it in some other way
-    company_id = request.user.companyprofile.id  # Adjust this according to your authentication and company profile structure
+    company_id = request.user.companyprofile.id  
 
-    # Retrieve exam responses related to the specific company
     exam_responses = ExamResponse.objects.filter(company_id=company_id)
     
-    # Pass exam responses to the template context
     context = {'exam_responses': exam_responses}
     
-    # Render the template with the provided context
     return render(request, 'company/test_response.html', context)
 
 # def test_result(request):
@@ -3174,9 +3158,9 @@ def test_result(request):
         cutoff_mark = float(cutoff_mark) if cutoff_mark is not None else None
     except ValueError:
         cutoff_mark = None  # In case of invalid input, ignore the cutoff
-
+    company_id = request.user.companyprofile
     # Assuming exam_responses are retrieved as before
-    exam_responses_query = ExamResponse.objects.values(
+    exam_responses_query = ExamResponse.objects.filter(company_id=company_id).values(
         'student__user__first_name',
         'student__user__last_name',
         'student__user__email',
@@ -3187,31 +3171,64 @@ def test_result(request):
     # If a valid cutoff mark is provided, filter the queryset accordingly
     if cutoff_mark is not None:
         exam_responses_query = exam_responses_query.filter(total_marks__gte=cutoff_mark)
+    for response in exam_responses_query:
+        student_first_name = response['student__user__first_name']
+        student_last_name = response['student__user__last_name']
+        student_email = response['student__user__email']
+        student_department = response['student__department']
+        student_phone = response['student__phone']
+        total_marks = response['total_marks']
+
+        # Check if the entry already exists
+        existing_entry = AptdResult.objects.filter(
+            student_first_name=student_first_name,
+            student_last_name=student_last_name,
+            student_email=student_email,
+            student_department=student_department,
+            student_phone=student_phone,
+            total_marks=total_marks,
+            company_id=company_id
+        ).exists()
+
+        if not existing_entry:
+            # Create AptdResult instance
+            AptdResult.objects.create(
+                student_first_name=student_first_name,
+                student_last_name=student_last_name,
+                student_email=student_email,
+                student_department=student_department,
+                student_phone=student_phone,
+                total_marks=total_marks,
+                company_id=company_id
+            )
 
     return render(request, 'company/test_result.html', {
         'total_marks_by_student': exam_responses_query,
-        'cutoff_mark': cutoff_mark  # Pass the cutoff mark to the template, even if it's None
+        'cutoff_mark': cutoff_mark,  # Pass the cutoff mark to the template, even if it's None
+        'company_id': company_id, 
     })
+
+
+def shortlist2(request):
+    company_id = request.user.companyprofile.id  # Assuming you can access the company profile associated with the logged-in user
+    aptd_results = AptdResult.objects.filter(company_id=company_id, status=True)
+    return render(request, 'company/shortlist2.html', {'aptd_results': aptd_results})
+
+
+def delete_aptd_result(request, result_id):
+    aptd_result = get_object_or_404(AptdResult, id=result_id)
+    aptd_result.status = False
+    aptd_result.save()
+    return redirect('shortlist2')
 
 # views.py
 
 from django.shortcuts import render
 
 
-
-from django.http import JsonResponse
-from .models import ShortlistedStudent
-
 import json
 
-from django.http import JsonResponse
-from .models import ShortlistedStudent
 
-from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
-from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
-from .models import ShortlistedStudent
 
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt

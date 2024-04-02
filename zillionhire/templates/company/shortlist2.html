@@ -19,8 +19,13 @@
    
         <script src="{% static 'assets2/js/html5shiv.min.js' %}"></script>
         <script src="{% static 'assets2/js/respond.min.js' %}"></script>
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
        
     <style>
+        /* Custom CSS to adjust modal positioning */
+        .modal-dialog {
+            margin-top: 100px; /* Adjust this value as needed */
+        }
         .approved {
           font-weight: bold;
           color: green;
@@ -125,9 +130,6 @@
                               <li class>
                                 <a href="{%url 'ceventlist'%}"><i class="fas fa-user"></i> <span>TEST RESPONSE</span></a>
                               </li>
-                              <li class>
-                                <a href="{%url 'shortlist2'%}"><i class="fas fa-user"></i> <span>SHORTLIST</span></a>
-                              </li>
                               {% comment %} <li class>
                                 <a href="{%url 'quiz_form'%}"><i class="fas fa-user"></i> <span>SET QUESTIONS </span></a>
                               </li>
@@ -142,7 +144,7 @@
                         <div class="content">
                           <div class="row">
                             <div class="col-sm-4 col-3">
-                                <h4 class="page-title">TEST RESPONSE</h4>
+                                <h4 class="page-title">SHORT LIST</h4>
                             </div>
                      
                         </div>
@@ -150,70 +152,10 @@
                       
                             
                             
-                            {% comment %} <div class="row">
-                                <div class="col-md-12">
-                                  <div class="card">
-                                    <div class="card-body">
-                                        <form method="GET" action=""> <!-- Assuming the same URL handles the filtering, adjust as necessary -->
-                                            <div class="form-group">
-                                                <label for="cutoffMark">Enter Cutoff Mark:</label>
-                                                <input type="number" class="form-control" id="cutoffMark" name="cutoff_mark" placeholder="Enter Cutoff Mark">
-                                            </div>
-                                            <button type="submit" class="btn btn-primary">Filter</button>
-                                        </form>
-                                    </div>
-                                </div>
-                                    <div class="card">
-                                        <div class="card-body">
-                                         
-                                      <div class="card-body">
-                                        <table class="table">
-                                          <thead>
-                                              <tr>
-                                                  <th>No.</th>
-                                                  <th>Student Name</th>
-                                                  <th>Email</th>
-                                                  <th>Department</th>
-                                                  <th>Phone</th>
-                                                  <th>Total Mark</th>
-                                              </tr>
-                                          </thead>
-                                         
-                                          <tbody>
-                                            {% for record in total_marks_by_student %}
-                                            {% if record.total_marks >= cutoff_mark %}
-                                            <tr>
-                                                <td>{{ forloop.counter }}</td>
-                                                <td>{{ record.student__user__first_name }} {{ record.student__user__last_name }}</td>
-                                                <td>{{ record.student__user__email }}</td>
-                                                <td>{{ record.student__department }}</td>
-                                                <td>{{ record.student__phone }}</td>
-                                                <td>{{ record.total_marks }}</td>
-                                            </tr>
-                                            {% endif %}
-                                            {% endfor %}
-                                        </tbody>
-                                      </table>
-                                    </div>
-                                    
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                             {% endcomment %}
+                           
                              <div class="row">
                               <div class="col-md-12">
-                                  <div class="card">
-                                      <div class="card-body">
-                                          <form method="GET" action=""> <!-- Assuming the same URL handles the filtering, adjust as necessary -->
-                                              <div class="form-group">
-                                                  <label for="cutoffMark">Enter Cutoff Mark:</label>
-                                                  <input type="number" class="form-control" id="cutoffMark" name="cutoff_mark" placeholder="Enter Cutoff Mark">
-                                              </div>
-                                              <button type="submit" class="btn btn-primary">Filter</button>
-                                          </form>
-                                      </div>
-                                  </div>
+                                  
                                   <div class="card">
                                       <div class="card-body">
                                           <div class="card-body">
@@ -223,27 +165,68 @@
                                                           <th>No.</th>
                                                           <th>Student Name</th>
                                                           <th>Email</th>
-                                                          <th>Department</th>
+                                                          {% comment %} <th>Department</th>
                                                           <th>Phone</th>
-                                                          <th>Total Mark</th>
-                                                          {% comment %} <th>Select</th> {% endcomment %}
+                                                          <th>Total Mark</th> {% endcomment %}
+                                                          <th></th>
+                                                          <th>Interview</th>
                                                       </tr>
                                                   </thead>
                                                   <tbody>
-                                                      {% for record in total_marks_by_student %}
-                                                      {% if record.total_marks >= cutoff_mark %}
-                                                      <tr class="filtered-student-row">
-                                                          <td>{{ forloop.counter }}</td>
-                                                          <td>{{ record.student__user__first_name }} {{ record.student__user__last_name }}</td>
-                                                          <td>{{ record.student__user__email }}</td>
-                                                          <td>{{ record.student__department }}</td>
-                                                          <td>{{ record.student__phone }}</td>
-                                                          <td>{{ record.total_marks }}</td>
-                                                          
-                                                          {% comment %} <td><input type="checkbox" class="student-checkbox" data-student-id="{{ record.student_id }}"></td> {% endcomment %}
-                                                      </tr>
-                                                      {% endif %}
-                                                      {% endfor %}
+                                                    {% for result in aptd_results %}
+                                                    <tr>
+                                                        <td>{{ forloop.counter }}</td>
+                                                        <td>{{ result.student_first_name }} {{ result.student_last_name }}</td>
+                                                        <td>{{ result.student_email }}</td>
+                                                        {% comment %} <td>{{ result.student_department }}</td>
+                                                        <td>{{ result.student_phone }}</td>
+                                                        <td>{{ result.total_marks }}</td> {% endcomment %}
+                                                        <td>
+                                                            <form action="{% url 'delete_aptd_result' result.id %}" method="post">
+                                                                {% csrf_token %}
+                                                                <button type="submit">Delete</button>
+                                                            </form>
+                                                            
+                                                        </td>
+                                                        <!-- Add other table data as needed -->
+                                                        <td>
+                                                            <!-- Add button to trigger modal -->
+                                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#scheduleModal{{ result.id }}">Schedule Interview</button>
+                                                            <!-- Modal -->
+                                                            <div class="modal fade" id="scheduleModal{{ result.id }}" tabindex="-1" role="dialog" aria-labelledby="scheduleModalLabel{{ result.id }}" aria-hidden="true">
+                                                                <div class="modal-dialog" role="document">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h5 class="modal-title" id="scheduleModalLabel{{ result.id }}">Schedule Interview for {{ result.student_first_name }} {{ result.student_last_name }}</h5>
+                                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                <span aria-hidden="true">&times;</span>
+                                                                            </button>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            <!-- Add date and time input fields here -->
+                                                                            <label for="interview_date">Interview Date:</label>
+                                                                            <input type="date" id="interview_date{{ result.id }}" name="interview_date">
+                                                                            <label for="interview_time">Interview Time:</label>
+                                                                            <input type="time" id="interview_time{{ result.id }}" name="interview_time">
+                                                                            <div class="form-group">
+                                                                                <label for="ampm">AM/PM:</label>
+                                                                                <select class="form-control" id="ampm" name="ampm" style="width: 80px;"> <!-- Adjust the width as needed -->
+                                                                                    <option value="AM">AM</option>
+                                                                                    <option value="PM">PM</option>
+                                                                                </select>
+                                                                            </div>
+                                                                            
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                                            <button type="button" class="btn btn-primary" onclick="scheduleInterview({{ result.id }})">Schedule</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    {% endfor %}
                                                   </tbody>
                                               </table>
                                               {% comment %} <button type="button" onclick="selectAllFiltered()">Select All Filtered</button>
@@ -254,6 +237,9 @@
                                   </div>
                               </div>
                               <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+                              <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+                                    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+                                    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
                               {% comment %} <script>
                                 function shortlistSelectedStudents() {
                                   var selectedStudents = [];

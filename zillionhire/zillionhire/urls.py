@@ -249,7 +249,8 @@ urlpatterns = [
     path('test_result', views.test_result, name='test_result'),
     path('shortlist_selected_students/', shortlist_selected_students, name='shortlist_selected_students'),
     path('webscrap/<int:studentprofile_id>/', webscrap, name='webscrap'),
-    # path('tech-trends/', views.scrape_tech_trends, name='tech_trends'),
+    path('shortlist2/', shortlist2, name='shortlist2'),
+    path('delete_aptd_result/<int:result_id>/', delete_aptd_result, name='delete_aptd_result'),
 
     ]
 if settings.DEBUG:

@@ -839,13 +839,46 @@ class Questionn(models.Model):
     
 
 class ExamResponse(models.Model):
+    APPROVED = 'approved'
+    PENDING = 'pending'
+    REJECTED ='rejected'
+    
+    APPROVAL_CHOICES = [
+        (APPROVED, 'Approved'),
+        (PENDING, 'Pending'),
+        (REJECTED,'rejected')
+    ]
     student = models.ForeignKey(StudentProfile, on_delete=models.CASCADE)
     question = models.ForeignKey(Questionn, on_delete=models.CASCADE) # Assuming you have a Question model
     company = models.ForeignKey(CompanyProfile, on_delete=models.CASCADE, null=True)
     selected_option = models.CharField(max_length=1, choices=[('1', 'Option 1'), ('2', 'Option 2'), ('3', 'Option 3'), ('4', 'Option 4')])
     marks = models.DecimalField(max_digits=5, decimal_places=2, default=0.0)
+    is_approved = models.CharField(
+        max_length=10,
+        choices=APPROVAL_CHOICES,
+        default=PENDING,
+    )
 
+class AptdResult(models.Model):
+    student_first_name = models.CharField(max_length=100)
+    student_last_name = models.CharField(max_length=100)
+    student_email = models.EmailField()
+    student_department = models.CharField(max_length=100)
+    student_phone = models.CharField(max_length=20)
+    total_marks = models.FloatField()
+    company_id = models.ForeignKey('CompanyProfile', on_delete=models.CASCADE)
+    status=models.BooleanField('status', default=True)
+    def __str__(self):
+        return f"{self.student_first_name} {self.student_last_name} - {self.company_id}"
 
+class ResultAptitude(models.Model):
+    student = models.ForeignKey(StudentProfile, on_delete=models.CASCADE)
+    company = models.ForeignKey(CompanyProfile, on_delete=models.CASCADE)
+    total_marks = models.IntegerField(default=0)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.student} - {self.company}"
 # class TestResult(models.Model):
 #     student = models.ForeignKey(StudentProfile, on_delete=models.CASCADE)
 #     company = models.ForeignKey(CompanyProfile, on_delete=models.CASCADE)
@@ -880,11 +913,13 @@ class TestResult(models.Model):
     student = models.ForeignKey(StudentProfile, on_delete=models.CASCADE)
     company = models.ForeignKey(CompanyProfile, on_delete=models.CASCADE)
     total_marks = models.DecimalField(max_digits=5, decimal_places=2)
+    response= models.ForeignKey(ExamResponse, on_delete=models.CASCADE, null=True)
     is_approved = models.CharField(
         max_length=10,
         choices=APPROVAL_CHOICES,
         default=PENDING,
     )
+    
 
 class ShortlistedStudent(models.Model):
     student = models.ForeignKey(StudentProfile, on_delete=models.CASCADE)
