@@ -253,6 +253,7 @@ urlpatterns = [
     path('delete_aptd_result/<int:result_id>/', delete_aptd_result, name='delete_aptd_result'),
      path('schedule-interview/', schedule_interview, name='schedule_interview'),
      path('get_interview_details/', get_interview_details, name='get_interview_details'),
+    path('sinter/<int:studentprofile_id>/', views.sinter, name='sinter'),
     ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -2179,6 +2179,42 @@ def alumni_blog(request, studentprofile_id):
 
     return render(request, 'admin/alumni/alumni_blog.html', context)
 
+
+
+from .models import Interview  # Import the Interview model
+
+from django.contrib.auth.decorators import login_required
+
+@login_required
+def sinter(request, studentprofile_id):
+    try:
+        studentprofile = StudentProfile.objects.get(id=studentprofile_id)
+    except StudentProfile.DoesNotExist:
+        return HttpResponse("Student profile does not exist", status=404)
+
+    # Retrieve AptdResult details related to the studentprofile_id
+    aptd_results = AptdResult.objects.filter(student_id=studentprofile_id)
+
+    # Retrieve interviews related to the AptdResult objects
+    interviews = Interview.objects.filter(shortlist__in=aptd_results)
+
+    if aptd_results.exists():
+        company_profile = aptd_results.first().company_id
+    else:
+        # Handle the case where no AptdResult objects are found
+        company_profile = None
+
+    context = {
+        'studentprofile': studentprofile,
+        'aptd_results': aptd_results,
+        'company_profile': company_profile,
+        'interviews': interviews,  # Pass the interviews to the template context
+    }
+    return render(request, 'student/interview.html', context)
+
+
+
+
 # def apt_notification(request, studentprofile_id):
 #     # Your logic to fetch the student profile based on the studentprofile_id
 #     studentprofile = StudentProfile.objects.get(id=studentprofile_id)
@@ -2437,33 +2473,6 @@ from django.http import HttpResponseBadRequest
 
 from .models import ExamResponse
 
-# def submit_exam(request):
-#     if request.method == 'POST':
-#         # Extract data from the POST request
-#         question_id = request.POST.get('question_id')
-#         selected_option = request.POST.get('answer')
-#         company_profile_id = request.POST.get('company_profile_id')
-
-#         # Validate the question ID
-#         question = get_object_or_404(Questionn, pk=question_id)
-        
-#         # Get the current student (assuming the user is authenticated)
-#         student = request.user.studentprofile  # Adjust this according to your actual model structure
-        
-#         # Create an instance of ExamResponse
-#         exam_response = ExamResponse.objects.create(
-#             student=student,
-#             question=question,
-#             company_id=company_profile_id,
-#             selected_option=selected_option
-#         )
-
-#         # Redirect to the same page to continue the exam or any other page
-#         return redirect('attend_exam', studentprofile_id=student.id, company_profile_id=company_profile_id)
-        
-#     else:
-#         # Handle GET requests or other HTTP methods
-#         return redirect('error')
 from django.shortcuts import redirect
 from .models import ExamResponse, Questionn
 
@@ -3161,6 +3170,7 @@ def test_result(request):
     company_id = request.user.companyprofile
     # Assuming exam_responses are retrieved as before
     exam_responses_query = ExamResponse.objects.filter(company_id=company_id).values(
+        'student_id',
         'student__user__first_name',
         'student__user__last_name',
         'student__user__email',
@@ -3172,6 +3182,7 @@ def test_result(request):
     if cutoff_mark is not None:
         exam_responses_query = exam_responses_query.filter(total_marks__gte=cutoff_mark)
     for response in exam_responses_query:
+        student_id = response['student_id']
         student_first_name = response['student__user__first_name']
         student_last_name = response['student__user__last_name']
         student_email = response['student__user__email']
@@ -3181,6 +3192,7 @@ def test_result(request):
 
         # Check if the entry already exists
         existing_entry = AptdResult.objects.filter(
+            student_id=student_id,
             student_first_name=student_first_name,
             student_last_name=student_last_name,
             student_email=student_email,
@@ -3191,8 +3203,10 @@ def test_result(request):
         ).exists()
 
         if not existing_entry:
+            student_profile = StudentProfile.objects.get(id=student_id)
             # Create AptdResult instance
             AptdResult.objects.create(
+                student_id=student_profile,
                 student_first_name=student_first_name,
                 student_last_name=student_last_name,
                 student_email=student_email,
@@ -3233,6 +3247,57 @@ from django.http import HttpResponse
 from django.contrib import messages
 from .models import AptdResult, Interview
 
+# def schedule_interview(request):
+#     if request.method == 'POST':
+#         # Extract form data
+#         student_id = request.POST.get('student_id')
+#         interview_date = request.POST.get('interview_date')
+#         interview_time = request.POST.get('interview_time')
+#         ampm = request.POST.get('ampm')
+#         interview_type = request.POST.get('interview_type')
+#         interview_mode = request.POST.get('interview_mode')
+#         interview_link_location = request.POST.get('interview_link_location')
+#         interview_duration = request.POST.get('interview_duration')
+#         interviewer_info = request.POST.get('interviewer_info')
+#         instruction_requirements = request.FILES.get('instruction_requirements')
+        
+#         try:
+#             # Get the student object with the provided ID
+#             student = AptdResult.objects.get(id=student_id)
+            
+#             # Get the company profile
+#             company = request.user.companyprofile
+
+#             # Create the Interview object and associate it with the student
+#             interview = Interview.objects.create(
+#                 # student=student,  # Use the AptdResult object directly
+#                 shortlist=AptdResult.objects.get(id=student_id),
+#                 company=company,
+#                 interview_date=interview_date,
+#                 interview_time=interview_time,
+#                 ampm=ampm,
+#                 interview_type=interview_type,
+#                 interview_mode=interview_mode,
+#                 interview_link_location=interview_link_location,
+#                 interview_duration=int(interview_duration),
+#                 interviewer_info=interviewer_info,
+#                 instruction_requirements=instruction_requirements
+#             )
+
+#             # Optionally, you can add a success message
+#             messages.success(request, 'Interview scheduled successfully.')
+
+#             # Redirect to a success page or the same page
+#             return redirect('shortlist2')  # Redirect to the interview list page
+        
+#         except AptdResult.DoesNotExist:
+#             # Handle the case where the AptdResult object does not exist
+#             return HttpResponse("The specified student does not exist.")
+
+#     else:
+#         # Handle GET requests if needed
+#         pass
+
 def schedule_interview(request):
     if request.method == 'POST':
         # Extract form data
@@ -3248,16 +3313,15 @@ def schedule_interview(request):
         instruction_requirements = request.FILES.get('instruction_requirements')
         
         try:
-            # Get the student object with the provided ID
-            student = AptdResult.objects.get(id=student_id)
+            # Get the AptdResult object with the provided ID
+            aptd_result = AptdResult.objects.get(id=student_id)
             
             # Get the company profile
             company = request.user.companyprofile
 
-            # Create the Interview object and associate it with the student
+            # Create the Interview object and associate it with the AptdResult object
             interview = Interview.objects.create(
-                # student=student,  # Use the AptdResult object directly
-                shortlist=AptdResult.objects.get(id=student_id),
+                shortlist=aptd_result,  # Associate it directly with the AptdResult object
                 company=company,
                 interview_date=interview_date,
                 interview_time=interview_time,
@@ -3288,8 +3352,6 @@ def schedule_interview(request):
 from django.shortcuts import render
 from .models import Interview
 
-from django.shortcuts import render
-from .models import Interview
 
 def get_interview_details(request):
     if request.method == 'GET':
