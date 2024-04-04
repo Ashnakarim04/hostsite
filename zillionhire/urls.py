@@ -208,7 +208,7 @@ urlpatterns = [
 
 
     path('paymenthandler/', views.paymenthandler, name='paymenthandler'),
-    path('submit_review/', views.submit_review, name='submit_review'),
+    # path('submit_review/', views.submit_review, name='submit_review'),
     path('create_blog_content/<int:alumni_id>/', create_blog_content, name='create_blog_content'),
     path('display_blog_content/<int:alumni_id>/', display_blog_content, name='display_blog_content'),
     path('alumni_blog/<int:studentprofile_id>/', views.alumni_blog, name='alumni_blog'),
