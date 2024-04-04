@@ -62,7 +62,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'allauth.account.middleware.AccountMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    # 'whitenoise.middleware.WhiteNoiseMiddleware',
     ]
 
 ROOT_URLCONF = 'zillionhire.urls'
@@ -105,16 +105,16 @@ WSGI_APPLICATION = 'zillionhire.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
 DATABASES = {
-    'default': dj_database_url.parse("postgres://zillionhire_user:ZEd0DEVHITmjTagtyGJd09sOS0YQxnEB@dpg-co6d7oi0si5c73cdr180-a.singapore-postgres.render.com/zillionhire")
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
 }
+
+# DATABASES = {
+#     'default': dj_database_url.parse("postgres://zillionhire_user:ZEd0DEVHITmjTagtyGJd09sOS0YQxnEB@dpg-co6d7oi0si5c73cdr180-a.singapore-postgres.render.com/zillionhire")
+# }
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
