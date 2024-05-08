@@ -243,7 +243,7 @@ from .models import Jobs
 
 
 
-
+# bccgfcg
 
 
 
@@ -2956,33 +2956,33 @@ def content_details(request):
     return render(request, 'contentmore.html', {'content': content, 'reviews': reviews})
 
 from .models import Review
-import nltk
-nltk.download('vader_lexicon')
-from nltk.sentiment import SentimentIntensityAnalyzer
-def submit_review(request):
-    if request.method == 'POST':
-        prod = request.POST.get('content_id')
-        print(prod)
-        prod = ccontent.objects.get(id=prod)
-        description = request.POST.get('comment')
-        sentiment_analyzer = SentimentIntensityAnalyzer()
-        sentiment_score = sentiment_analyzer.polarity_scores(description)['compound']
-        print("Sentiment Score:", sentiment_score)
-        # studentprofile = request.user.studentprofile
-        # Calculate the rating based on the number of stars selected
-        rating = int(request.POST.get('rating', 0))
+# import nltk
+# nltk.download('vader_lexicon')
+# from nltk.sentiment import SentimentIntensityAnalyzer
+# def submit_review(request):
+#     if request.method == 'POST':
+#         prod = request.POST.get('content_id')
+#         print(prod)
+#         prod = ccontent.objects.get(id=prod)
+#         description = request.POST.get('comment')
+#         sentiment_analyzer = SentimentIntensityAnalyzer()
+#         sentiment_score = sentiment_analyzer.polarity_scores(description)['compound']
+#         print("Sentiment Score:", sentiment_score)
+#         # studentprofile = request.user.studentprofile
+#         # Calculate the rating based on the number of stars selected
+#         rating = int(request.POST.get('rating', 0))
 
-        # Create a new review associated with the product and the authenticated user
-        Review.objects.create(
-            user=request.user,
-            description=description,
-            sentiment_score=sentiment_score,
-            prod=prod,
-            # studentprofile=studentprofile,
-        )
+#         # Create a new review associated with the product and the authenticated user
+#         Review.objects.create(
+#             user=request.user,
+#             description=description,
+#             sentiment_score=sentiment_score,
+#             prod=prod,
+#             # studentprofile=studentprofile,
+#         )
         
-        # Redirect to a success page or the product detail page
-        return redirect('content_details')
+#         # Redirect to a success page or the product detail page
+#         return redirect('content_details')
     
 def bloglist2(request, alumni_id):
     alumni_instance = get_object_or_404(Alumni, id=alumni_id)

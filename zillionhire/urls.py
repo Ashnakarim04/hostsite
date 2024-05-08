@@ -211,7 +211,7 @@ urlpatterns = [
 
 
     path('paymenthandler/', views.paymenthandler, name='paymenthandler'),
-    path('submit_review/', views.submit_review, name='submit_review'),
+    # path('submit_review/', views.submit_review, name='submit_review'),
     path('create_blog_content/<int:alumni_id>/', create_blog_content, name='create_blog_content'),
     path('display_blog_content/<int:alumni_id>/', display_blog_content, name='display_blog_content'),
     path('alumni_blog/<int:studentprofile_id>/', views.alumni_blog, name='alumni_blog'),
@@ -258,8 +258,11 @@ urlpatterns = [
      path('schedule-interview/', schedule_interview, name='schedule_interview'),
      path('get_interview_details/', get_interview_details, name='get_interview_details'),
     path('sinter/<int:studentprofile_id>/', views.sinter, name='sinter'),
+<<<<<<< HEAD:zillionhire/zillionhire/urls.py
     path('department-wise-placements/', department_wise_placements, name='department-wise-placements'),   
     path('admin_cevent', views.admin_cevent, name='admin_cevent'), 
+=======
+>>>>>>> 20df51b452a1e4e86df8a3cfd7cb2fa6da05e795:zillionhire/urls.py
     ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

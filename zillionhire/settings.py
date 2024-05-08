@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
-
+import dj_database_url
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-w^($-#zr1iq-px6z#8uf_8^cfba2jug7$y6pprq85+xdh2!$)%
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -62,7 +62,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'allauth.account.middleware.AccountMiddleware',
-]
+    # 'whitenoise.middleware.WhiteNoiseMiddleware',
+    ]
 
 ROOT_URLCONF = 'zillionhire.urls'
 AUTHENTICATION_BACKENDS = (
@@ -111,7 +112,9 @@ DATABASES = {
     }
 }
 
-
+# DATABASES = {
+#     'default': dj_database_url.parse("postgres://zillionhire_user:ZEd0DEVHITmjTagtyGJd09sOS0YQxnEB@dpg-co6d7oi0si5c73cdr180-a.singapore-postgres.render.com/zillionhire")
+# }
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 

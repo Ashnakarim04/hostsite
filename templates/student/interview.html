@@ -9,7 +9,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
     <link rel="shortcut icon" type="image/x-icon" href="{% static 'assets2/img/logo.png' %}">
+<<<<<<< HEAD:zillionhire/templates/student/interview.html
     <title>ZillionHire - Student Dashboard - Notifications</title>
+=======
+    <title>ZillionHire - Student Dashboard</title>
+>>>>>>> 20df51b452a1e4e86df8a3cfd7cb2fa6da05e795:templates/student/interview.html
     <link rel="stylesheet" type="text/css" href="{% static 'assets2/css/bootstrap.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'assets2/css/font-awesome.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'assets2/css/select2.min.css' %}">
@@ -65,12 +69,20 @@
             <div class="collapse navbar-collapse" id="navbarResponsive">
               <ul class="navbar-nav ml-auto">
                 <li class="nav-item ">
+<<<<<<< HEAD:zillionhire/templates/student/interview.html
                   <a class="nav-link" href="{% url 'sindex' %}">Home
+=======
+                  <a class="nav-link" href="{% url 'cindex' %}">Home
+>>>>>>> 20df51b452a1e4e86df8a3cfd7cb2fa6da05e795:templates/student/interview.html
                     {% comment %} <span class="sr-only">(current)</span> {% endcomment %}
                   </a>
                 </li>
                 <li class="nav-item">
+<<<<<<< HEAD:zillionhire/templates/student/interview.html
                   <a class="nav-link" href="{% url 'sabout' %}">About Us</a>
+=======
+                  <a class="nav-link" href="{% url 'aboutuser' %}">About Us</a>
+>>>>>>> 20df51b452a1e4e86df8a3cfd7cb2fa6da05e795:templates/student/interview.html
                 </li>
                 {% comment %} <li>
                   <a class="dropdown-toggle nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Others</a>
@@ -100,6 +112,7 @@
                 </li> 
                 
                 <li class="nav-item">
+<<<<<<< HEAD:zillionhire/templates/student/interview.html
                   <a class="nav-link" href="{% url 'scontact' %}">Contact Us</a>
                 </li>
               
@@ -108,6 +121,14 @@
                         <span class="nav-link">Hi, {{ request.user.email }}</span>
                     </li>
                 {% endif %}
+=======
+                  <a class="nav-link" href="{% url 'contactuser' %}">Contact Us</a>
+                </li>
+                <li class="nav-item active">
+                  <a class="nav-link" href="{% url 'postjob' %}">Post Job</a>
+                  <span class="sr-only">(current)</span>
+                </li>
+>>>>>>> 20df51b452a1e4e86df8a3cfd7cb2fa6da05e795:templates/student/interview.html
               </ul>
             </div>
           </div>
@@ -121,6 +142,7 @@
                     {% comment %} <li>
                         <a href="{% url 'index-2' %}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
                     </li> {% endcomment %}
+<<<<<<< HEAD:zillionhire/templates/student/interview.html
                     <li>
                       <a href="{% url 'sprofile' studentprofile_id=studentprofile.id %}">
                           <i class="fas fa-id-card"></i>
@@ -179,6 +201,63 @@
                   <li class>
                     <a href="{%url 'webscrap' studentprofile_id=studentprofile.id  %}"><i class="fa-solid fa-arrow-trend-up"></i> <span>TECH TRENDS</span></a>
                   </li>
+=======
+                    <li class>
+                      <a href="{% url 'sprofile' studentprofile_id=studentprofile.id %}">
+    
+                          <i class="fas fa-id-card"></i>
+                          <span>PROFILE</span>
+                      </a> 
+                  </li>
+                  
+                    <li class>
+                        <a href="{%url 'job_approve' studentprofile_id=studentprofile.id %}"><i class="fa-solid fa-desktop"></i> <span>JOBS</span></a>
+                        
+                      </li>
+                      <li>
+                      <a href="{%url 'sappliedjobs' studentprofile_id=studentprofile.id%}"><i class="fa-solid fa-clipboard-check"></i></i> <span>APPLIED JOBS</span></a>
+                    </li>
+                    <li class>
+                      <a href="{% url 's_shortlist' studentprofile_id=studentprofile.id %}">
+                        <i class="fas fa-user-check"></i> <span>SHORT LISTED JOBS</span></a>
+                    </li>
+                    <li  class="submenu" >
+                        <a href="#" onclick="toggleSubMenu('studySubMenu')">
+                            <i class="fas fa-user-check"></i>
+                            <span>STUDY RESOURCE</span>
+                            <span id="studyMenuArrow" class="menu-arrow">&#9658;</span>
+                        </a>
+                        <ul style="display: none;" id="studySubMenu">
+                            <li>
+                                <a href="{% url 'scontent1list' studentprofile_id=studentprofile.id %}">
+                                    <i class="t"></i> Content 1
+                                </a>
+                                <a href="{% url 'svideolist' studentprofile_id=studentprofile.id %}">
+                                  <i class=""></i> Video Library
+                              </a>
+                              <a href="{% url 'scontent2list' studentprofile_id=studentprofile.id %}">
+                                <i class=""></i> Content2
+                            </a>
+                            </li>
+                            <!-- Add more submenu items as needed -->
+                        </ul>
+                    </li>
+                   
+                    <li class="active">
+                        <a href="{%url 'alumni_blog' studentprofile_id=studentprofile.id  %}"><i class="fas fa-user-check"></i> <span>ALUMNI NOTES</span></a>
+                      </li>
+                      <li class>
+                        <a href="{%url 'sevent' studentprofile_id=studentprofile.id  %}"><i class="fas fa-user-check"></i> <span> EVENTS</span></a>
+                      </li>
+                      <li class>
+                        <a href="{%url 'apt_notification' studentprofile_id=studentprofile.id  %}"><i class="fas fa-user-check"></i> <span>APTITUDE NOTF</span></a>
+                      </li>
+                      <li class>
+                        <a href="{%url 'gen_resume'  %}"><i class="fas fa-user-check"></i> <span>RESUME</span></a>
+                      </li>
+                        
+                    
+>>>>>>> 20df51b452a1e4e86df8a3cfd7cb2fa6da05e795:templates/student/interview.html
                 </ul>
             </div>
         </div>
