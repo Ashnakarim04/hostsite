@@ -58,19 +58,19 @@
 						<span>Admin</span>
                     </a>
 					<div class="dropdown-menu">
-						<a class="dropdown-item" href="{% url 'admin_profile' %}">My Profile</a>
-						<a class="dropdown-item" href="{% url 'admin_editprofile' %}">Edit Profile</a>
+						{% comment %} <a class="dropdown-item" href="{% url 'admin_profile' %}">My Profile</a>
+						<a class="dropdown-item" href="{% url 'admin_editprofile' %}">Edit Profile</a> {% endcomment %}
 
-						<a class="dropdown-item" href="{% url 'index' %}">Logout</a>
+						<a class="dropdown-item" href="{% url 'loginn' %}">Logout</a>
 					</div>
                 </li>
             </ul>
             <div class="dropdown mobile-user-menu float-right">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
                 <div class="dropdown-menu dropdown-menu-right">
-                    <a class="dropdown-item" href="{% url 'admin_profile' %}">My Profile</a>
+                    {% comment %} <a class="dropdown-item" href="{% url 'admin_profile' %}">My Profile</a>
                     <a class="dropdown-item" href="{% url 'admin_editprofile' %}">Edit Profile</a>
-                    
+                     {% endcomment %}
                     <a class="dropdown-item" href="{% url 'admin_login' %}">Logout</a>
                 </div>
             </div>
@@ -82,6 +82,9 @@
                         <li class="menu-title">Main</li>
                         <li class="active">
                             <a href="{% url 'admin_index2' %}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
+                        </li>
+                        <li >
+                            <a href="{% url 'admin_index2' %}"><i class="fa fa-dashboard"></i> <span>Add Graph</span></a>
                         </li>
 						{% comment %} <li>
                             <a href="{% url 'admin_poststudent' %}"><i class="fa-solid fa-user-graduate"></i> <span>Students</span></a>
@@ -99,6 +102,7 @@
                                 <li><a href="{% url 'companyapprove' %}">Approve Company</a></li>
                                 <li><a id="companyprofilelist" href="{% url 'companyprofilelist' %}">Company List</a></li>
                                 <li><a href="{% url 'jobslist' %}">Jobs</a></li>
+                                <li><a href="{% url 'admin_cevent' %}">Events</a></li>
                                 {% comment %} <li><a href="{% url 'admin_company' %}">Applied Students</a></li>
                                 <li><a href="{% url 'admin_company' %}">Short Listed Students</a></li> {% endcomment %}
                                 
@@ -123,9 +127,9 @@
                                 
                             </ul>
                         </li> 
-                        <li>
+                        {% comment %} <li>
                             <a href="{% url 'resumeform' %}"><i class="fa-solid fa-award"></i> <span>Resume Content</span></a>
-                        </li>
+                        </li> {% endcomment %}
                         <li>
                             <a href="{% url 'ad_alumniblog' %}"><i class="fa-solid fa-award"></i> <span>Alumni Notes</span></a>
                         </li>
@@ -186,7 +190,7 @@
                    
                 </div>
 				<div class="row">
-					<div class="col-12 col-md-6 col-lg-6 col-xl-6">
+					{% comment %} <div class="col-12 col-md-6 col-lg-6 col-xl-6">
 						<div class="card">
 							<div class="card-body">
 								<div class="chart-title">
@@ -196,16 +200,17 @@
 								<canvas id="linegraph"></canvas>
 							</div>
 						</div>
-					</div>
+					</div> {% endcomment %}
 					<div class="col-12 col-md-6 col-lg-6 col-xl-6">
 						<div class="card">
 							<div class="card-body">
 								<div class="chart-title">
-									<h4>Course Wise</h4>
+									<h4>Department Wise</h4>
 									<div class="float-right">
 										<ul class="chat-user-total">
 											<li><i class="fa fa-circle current-users" aria-hidden="true"></i>B.Tech</li>
 											<li><i class="fa fa-circle old-users" aria-hidden="true"></i> MCA</li>
+                                            
 										</ul>
 									</div>
 								</div>	
@@ -213,6 +218,17 @@
 							</div>
 						</div>
 					</div>
+                    {% comment %} <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="chart-title">
+                                    <h4>Department Wise Placements</h4>
+                                </div>
+                                <img src="{% static 'department_wise_placements.png' %}" alt="Department Wise Placements Graph">
+                            </div>
+                        </div>
+                    </div> {% endcomment %}
+                    
 				</div>
                 </div>
             </div>

@@ -73,7 +73,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'aboutuser' %}">About Us</a>
+                <a class="nav-link" href="{% url 'sabout' %}">About Us</a>
               </li>
               <li class="nav-item dropdown">
                 {% if user.is_authenticated %}
@@ -92,7 +92,7 @@
                 {% endif %}
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'contactuser' %}">Contact Us</a>
+                <a class="nav-link" href="{% url 'scontact' %}">Contact Us</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'sprofile' studentprofile_id=studentprofile.id %}" id="sindex">Profile</a>

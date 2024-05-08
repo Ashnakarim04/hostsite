@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
     <link rel="shortcut icon" type="image/x-icon" href="{% static 'assets2/img/logo.png' %}">
-    <title>ZillionHire - Company Dashboard</title>
+    <title>ZillionHire - Student Dashboard - Alumni notes</title>
     <link rel="stylesheet" type="text/css" href="{% static 'assets2/css/bootstrap.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'assets2/css/font-awesome.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'assets2/css/select2.min.css' %}">
@@ -34,13 +34,9 @@
         }
         .profile-widget {
             /* Add the provided CSS styles here */
-            transform: rotate3d(.5,-.866,0,15deg) rotate(1deg);
-            box-shadow: 2em 4em 6em -2em rgba(0,0,0,.5), 1em 2em 3.5em -2.5em rgba(0,0,0,.5);
-            transition: transform .4s ease, box-shadow .4s ease;
             border-radius: .5em;
         }
         .profile-widget:hover {
-            transform: rotate3d(0,0,0,0deg) rotate(0deg);
         }
     
        
@@ -58,12 +54,12 @@
             <div class="collapse navbar-collapse" id="navbarResponsive">
               <ul class="navbar-nav ml-auto">
                 <li class="nav-item ">
-                  <a class="nav-link" href="{% url 'cindex' %}">Home
+                  <a class="nav-link" href="{% url 'sindex' %}">Home
                     {% comment %} <span class="sr-only">(current)</span> {% endcomment %}
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="{% url 'aboutuser' %}">About Us</a>
+                  <a class="nav-link" href="{% url 'sabout' %}">About Us</a>
                 </li>
                 {% comment %} <li>
                   <a class="dropdown-toggle nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Others</a>
@@ -93,12 +89,13 @@
                 </li> 
                 
                 <li class="nav-item">
-                  <a class="nav-link" href="{% url 'contactuser' %}">Contact Us</a>
+                  <a class="nav-link" href="{% url 'scontact' %}">Contact Us</a>
                 </li>
-                <li class="nav-item active">
-                  <a class="nav-link" href="{% url 'postjob' %}">Post Job</a>
-                  <span class="sr-only">(current)</span>
+                {% if request.user.is_authenticated %}
+                <li class="nav-item">
+                    <span class="nav-link">Hi, {{ request.user.email }}</span>
                 </li>
+            {% endif %}
               </ul>
             </div>
           </div>
@@ -112,60 +109,64 @@
                     {% comment %} <li>
                         <a href="{% url 'index-2' %}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
                     </li> {% endcomment %}
-                    <li class>
+                    <li>
                       <a href="{% url 'sprofile' studentprofile_id=studentprofile.id %}">
-    
                           <i class="fas fa-id-card"></i>
                           <span>PROFILE</span>
                       </a> 
-                  </li>
-                  
+                  </li> 
+                    
                     <li class>
                         <a href="{%url 'job_approve' studentprofile_id=studentprofile.id %}"><i class="fa-solid fa-desktop"></i> <span>JOBS</span></a>
-                        
                       </li>
-                      <li>
-                      <a href="{%url 'sappliedjobs' studentprofile_id=studentprofile.id%}"><i class="fa-solid fa-clipboard-check"></i></i> <span>APPLIED JOBS</span></a>
-                    </li>
                     <li class>
-                      <a href="{% url 's_shortlist' studentprofile_id=studentprofile.id %}">
-                        <i class="fas fa-user-check"></i> <span>SHORT LISTED JOBS</span></a>
+                      <a href="{%url 'sappliedjobs' studentprofile_id=studentprofile.id %}"><i class="fa-solid fa-clipboard-check"></i></i> <span>APPLIED JOBS</span></a>
                     </li>
-                    <li  class="submenu" >
-                        <a href="#" onclick="toggleSubMenu('studySubMenu')">
-                            <i class="fas fa-user-check"></i>
-                            <span>STUDY RESOURCE</span>
-                            <span id="studyMenuArrow" class="menu-arrow">&#9658;</span>
-                        </a>
-                        <ul style="display: none;" id="studySubMenu">
-                            <li>
-                                <a href="{% url 'scontent1list' studentprofile_id=studentprofile.id %}">
-                                    <i class="t"></i> Content 1
-                                </a>
-                                <a href="{% url 'svideolist' studentprofile_id=studentprofile.id %}">
-                                  <i class=""></i> Video Library
+                  
+                    <li class>
+                      <a href="{%url 'sinter' studentprofile_id=studentprofile.id  %}"><i class="far fa-bell"></i> <span>NOTIFICATION</span></a>
+                    </li>
+                    
+                    <li class="submenu">
+                      <a href="#" onclick="toggleSubMenu('studySubMenu')"> 
+                        <i class="fa-solid fa-book"></i></i>
+                          <span>STUDY RESOURCE</span>
+                          <span id="studyMenuArrow" class="menu-arrow">&#9658;</span>
+                      </a>
+                      <ul style="display: none;" id="studySubMenu">
+                          <li>
+                              <a href="{% url 'scontent1list' studentprofile_id=studentprofile.id %}" id="content1">
+                                  <i class="t"></i> Content 1
                               </a>
-                              <a href="{% url 'scontent2list' studentprofile_id=studentprofile.id %}">
-                                <i class=""></i> Content2
+                              <a href="{% url 'svideolist' studentprofile_id=studentprofile.id %}">
+                                <i class=""></i> Video Library
                             </a>
-                            </li>
-                            <!-- Add more submenu items as needed -->
-                        </ul>
-                    </li>
-                   
-                    <li class="active">
-                        <a href="{%url 'alumni_blog' studentprofile_id=studentprofile.id  %}"><i class="fas fa-user-check"></i> <span>ALUMNI NOTES</span></a>
-                      </li>
-                      <li class>
-                        <a href="{%url 'sevent' studentprofile_id=studentprofile.id  %}"><i class="fas fa-user-check"></i> <span> EVENTS</span></a>
-                      </li>
-                      <li class>
-                        <a href="{%url 'apt_notification' studentprofile_id=studentprofile.id  %}"><i class="fas fa-user-check"></i> <span>APTITUDE NOTF</span></a>
-                      </li>
-                      <li class>
-                        <a href="{%url 'gen_resume'  %}"><i class="fas fa-user-check"></i> <span>RESUME</span></a>
-                      </li>
-                        
+                            <a href="{% url 'scontent2list' studentprofile_id=studentprofile.id %}">
+                              <i class=""></i> Content 2
+                          </a>
+                          </li>
+                          <!-- Add more submenu items as needed -->
+                      </ul>
+                  </li>
+                  
+                  <li class="active">
+                    <a href="{%url 'alumni_blog' studentprofile_id=studentprofile.id  %}"><i class="far fa-envelope-open"></i></i> <span>ALUMNI NOTES</span></a>
+                  </li>
+                  <li class>
+                    <a href="{%url 'sevent' studentprofile_id=studentprofile.id  %}"><i class="far fa-calendar-alt"></i> <span> ALUMNI EVENTS</span></a>
+                  </li>
+                  <li class>
+                    <a href="{%url 'scevent' studentprofile_id=studentprofile.id  %}"><i class="fa fa-calendar"></i> <span> COMPANY EVENTS</span></a>
+                  </li>
+                  <li class>
+                    <a href="{%url 'apt_notification' studentprofile_id=studentprofile.id  %}"><i class="fa fa-clock-o"></i> <span>TEST </span></a>
+                  </li>
+                  <li class>
+                    <a href="{%url 'gen_resume'  %}"><i class="fa fa-file-pdf-o"></i> <span>RESUME</span></a>
+                  </li>
+                  <li class>
+                    <a href="{%url 'webscrap' studentprofile_id=studentprofile.id  %}"><i class="fa-solid fa-arrow-trend-up"></i> <span>TECH TRENDS</span></a>
+                  </li>
                     
                 </ul>
             </div>
@@ -180,59 +181,13 @@
                                 </div>
                                      
                             </div>
-                            {% comment %} <div class="row">
-                              <form method="get" action="{% url 'scontent1list' studentprofile_id=studentprofile.id %}">
-                                <div class="row">
-                                    <div class="col-12">
-                                        <label>Filter by Programming Language:</label>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" name="cpp" value="cpp" id="cppCheckbox">
-                                            <label class="form-check-label" for="cppCheckbox">C++</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" name="java" value="java" id="javaCheckbox">
-                                            <label class="form-check-label" for="javaCheckbox">Java</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" name="python" value="python" id="pythonCheckbox">
-                                            <label class="form-check-label" for="pythonCheckbox">Python</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" name="php" value="php" id="phpCheckbox">
-                                            <label class="form-check-label" for="phpCheckbox">PHP</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <button type="submit" class="btn btn-primary">Apply Filter</button>
-                            </form>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            
-                            <div class="row">
-                              <div> {% endcomment %}
-                                {% comment %} <form method="GET" action="{% url 'search_content1' studentprofile_id=studentprofile.id %}">
-                                      <div class="input-group">
-                                          <input type="text" class="form-control" placeholder="Search.." name="search" value="{{ search_query }}">
-                                          <div class="input-group-append">
-                                              <button class="btn btn-primary" type="submit">Search</button>
-                                          </div>
-                                      </div>
-                                  </form> {% endcomment %}
-                                {% comment %} </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <div>
-                                  <a href="{% url 'likedcontent2' studentprofile_id=studentprofile.id%}">
-                                      <button class="btn btn-primary">Liked Contents</button>
-                                  </a>
-                              </div>
-                              </div>
-                          </div><br><br> {% endcomment %}
+                           
                             
                             <div class="row">
                                 {% for content in blog_contents %}
                                     <div class="col-md-4 col-sm-4 col-lg-3">
                                         <div class="profile-widget box-effect d-flex flex-column">
-                                            {% comment %} <div class="doctor-img">
-                                                <img class="avatar" src="{% if content.img %}{{ content.img.url }}{% else %}path_to_default_image{% endif %}" alt="Cover Image" name="cover_image" id="cover_image" width="100" height="80">
-                                                <i class="fas fa-heart like-icon" style="color: {% if content.id in liked_content_ids %}red{% else %}blue{% endif %}" data-adcon-id="{{ content.id }}" data-status="{{ content.status }}"></i>
-                                            </div> {% endcomment %}
+                                          
                                             
                                             <div style="text-align: left;">
                                                 <h4 class="alumni-name" style="color: #468C3E">
@@ -240,11 +195,8 @@
                                                         {{ content.alumni.first_name }} {{ content.alumni.last_name }}
                                                    
                                                 </h4>
-                                                {% comment %} <p>{{ content.alumni.first_name }}</p> {% endcomment %}
                                                 <p class="card-text"><b> {{ content.title }}</b></p>
                                                 <p class="card-text"> {{ content.content }}</p>
-                                                {% comment %} <p class="card-text"> {{ content.caption }}</p> {% endcomment %}
-                                                {% comment %} <p class="card-text"><b>Uploaded by:</b> {{ content.stdate }}</p> {% endcomment %}
                                                 
                                                
                                             </div>

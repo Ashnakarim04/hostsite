@@ -294,10 +294,11 @@
                 <li class="nav-item">
                   <a class="nav-link" href="{% url 'contactuser' %}">Contact Us</a>
                 </li>
-                <li class="nav-item active">
-                  <a class="nav-link" href="{% url 'postjob' %}">Post Job</a>
-                  <span class="sr-only">(current)</span>
+                {% if request.user.is_authenticated %}
+                <li class="nav-item">
+                    <span class="nav-link">Hi, {{ request.user.email }}</span>
                 </li>
+        {% endif %}
               </ul>
             </div>
           </div>
@@ -321,14 +322,14 @@
                 
                 <li>
                   <a href="{% url 'display_blog_content' alumni_id=alumni_profile.id %}" id="openings">
-                      <i class="fas fa-id-card"></i>
+                      <i class="fa fa-edit"></i>
                       <span>OPENINGS</span>
                   </a>
               </li>
            
             <li>
               <a href="{% url 'eventlist' alumni_id=alumni_profile.id %}">
-                  <i class="fas fa-id-card"></i>
+                  <i class="fa fa-calendar"></i>
                   <span>EVENTS</span>
               </a>
           </li>

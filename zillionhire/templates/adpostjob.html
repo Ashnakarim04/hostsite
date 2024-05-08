@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
     <link rel="shortcut icon" type="image/x-icon" href="{% static 'assets2/img/logo.png' %}">
-    <title>ZillionHire - Company Dashboard</title>
+    <title>ZillionHire - Student Dashboard - Jobs</title>
     <link rel="stylesheet" type="text/css" href="{% static 'assets2/css/bootstrap.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'assets2/css/font-awesome.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'assets2/css/select2.min.css' %}">
@@ -38,12 +38,12 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item ">
-              <a class="nav-link" href="{% url 'cindex' %}">Home
+              <a class="nav-link" href="{% url 'sindex' %}">Home
                 {% comment %} <span class="sr-only">(current)</span> {% endcomment %}
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{% url 'aboutuser' %}">About Us</a>
+              <a class="nav-link" href="{% url 'sabout' %}">About Us</a>
             </li>
             
             <li class="nav-item dropdown">
@@ -61,12 +61,16 @@
             </li> 
             
             <li class="nav-item">
-              <a class="nav-link" href="{% url 'contactuser' %}">Contact Us</a>
+              <a class="nav-link" href="{% url 'scontact' %}">Contact Us</a>
             </li>
-            <li class="nav-item active">
-              <a class="nav-link" href="{% url 'postjob' %}">Post Job</a>
-              <span class="sr-only">(current)</span>
-            </li>
+            {% comment %} <li class="nav-item">
+              <a class="nav-link" href="{% url 'sprofile' studentprofile_id=studentprofile.id %}" id="sindex">Profile</a>
+          </li> {% endcomment %}
+          {% if request.user.is_authenticated %}
+                    <li class="nav-item">
+                        <span class="nav-link">Hi, {{ request.user.email }}</span>
+                    </li>
+                {% endif %}
           </ul>
         </div>
       </div>
@@ -81,25 +85,64 @@
                 {% comment %} <li>
                     <a href="{% url 'index-2' %}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
                 </li> {% endcomment %}
-                <li class>
-                  <a href="{% url 'sprofile' studentprofile_id=studentprofile_id %}">
-
+                <li>
+                  <a href="{% url 'sprofile' studentprofile_id=studentprofile.id %}">
                       <i class="fas fa-id-card"></i>
                       <span>PROFILE</span>
                   </a> 
-              </li>
-              
-              <li class="active">
-                    <a href="{%url 'job_approve' studentprofile_id=studentprofile_id %}"><i class="fa-solid fa-desktop"></i> <span>JOBS</span></a>
-                    
+              </li> 
+                
+                <li class="active">
+                    <a href="{%url 'job_approve' studentprofile_id=studentprofile.id %}"><i class="fa-solid fa-desktop"></i> <span>JOBS</span></a>
                   </li>
                 <li class>
-                  <a href="{%url 'sappliedjobs' studentprofile_id=studentprofile_id %}"><i class="fa-solid fa-clipboard-check"></i></i> <span>APPLIED JOBS</span></a>
+                  <a href="{%url 'sappliedjobs' studentprofile_id=studentprofile.id %}"><i class="fa-solid fa-clipboard-check"></i></i> <span>APPLIED JOBS</span></a>
                 </li>
-               
+              
                 <li class>
-                  <a href="{%url 's_shortlist' studentprofile_id=studentprofile_id %}"><i class="fas fa-user-check"></i> <span>SHORT LISTED JOBS</span></a>
+                  <a href="{%url 'sinter' studentprofile_id=studentprofile.id  %}"><i class="far fa-bell"></i> <span>NOTIFICATION</span></a>
                 </li>
+                
+                <li class="submenu">
+                  <a href="#" onclick="toggleSubMenu('studySubMenu')"> 
+                    <i class="fa-solid fa-book"></i></i>
+                      <span>STUDY RESOURCE</span>
+                      <span id="studyMenuArrow" class="menu-arrow">&#9658;</span>
+                  </a>
+                  <ul style="display: none;" id="studySubMenu">
+                      <li>
+                          <a href="{% url 'scontent1list' studentprofile_id=studentprofile.id %}" id="content1">
+                              <i class="t"></i> Content 1
+                          </a>
+                          <a href="{% url 'svideolist' studentprofile_id=studentprofile.id %}">
+                            <i class=""></i> Video Library
+                        </a>
+                        <a href="{% url 'scontent2list' studentprofile_id=studentprofile.id %}">
+                          <i class=""></i> Content 2
+                      </a>
+                      </li>
+                      <!-- Add more submenu items as needed -->
+                  </ul>
+              </li>
+              
+              <li class>
+                <a href="{%url 'alumni_blog' studentprofile_id=studentprofile.id  %}"><i class="far fa-envelope-open"></i></i> <span>ALUMNI NOTES</span></a>
+              </li>
+              <li class>
+                <a href="{%url 'sevent' studentprofile_id=studentprofile.id  %}"><i class="far fa-calendar-alt"></i> <span> ALUMNI EVENTS</span></a>
+              </li>
+              <li class>
+                <a href="{%url 'scevent' studentprofile_id=studentprofile.id  %}"><i class="fa fa-calendar"></i> <span> COMPANY EVENTS</span></a>
+              </li>
+              <li class>
+                <a href="{%url 'apt_notification' studentprofile_id=studentprofile.id  %}"><i class="fa fa-clock-o"></i> <span>TEST </span></a>
+              </li>
+              <li class>
+                <a href="{%url 'gen_resume'  %}"><i class="fa fa-file-pdf-o"></i> <span>RESUME</span></a>
+              </li>
+              <li class>
+                <a href="{%url 'webscrap' studentprofile_id=studentprofile.id  %}"><i class="fa-solid fa-arrow-trend-up"></i> <span>TECH TRENDS</span></a>
+              </li>
                 
             </ul>
         </div>
@@ -128,40 +171,32 @@
   {% comment %} {% if admjobs.required_backlog <= studentprofile.c_backlog %}  {% endcomment %}
  
   <div class="col-md-4 custom-card">
-      <div class="card">
-          <div class="card-body"> 
-              
-
-              <h5 class="card-title"><b>{{ admjobs.cname }} - {{ admjobs.jname }} </b></h5></b>
-              <p class="card-text"><b>JOB :</b><br> {{ admjobs.job_descriptions }}</p>
-              <p class="card-text"><b>RESPONSIBILITIES :</b><br> {{ admjobs.responsibilities }}</p>
-              <p class="card-text"><b>PREFERRED SKILLS :</b><br> {{ admjobs.preferred_skills }}</p>
-              <p class="card-text"><b>ELIGIBILITY :</b><br> {{ admjobs.qualifications }}</p>
-              <h6 class="card-text"><b>TENTH  CGPA :</b>{{ admjobs.required_tenth_cgpa }}</h6>
-              <h6 class="card-text"><b>TWELFTH CGPA :</b>{{ admjobs.required_twelfth_cgpa }}</h6>
-              <h6 class="card-text"><b>BACKLOGS :</b>{{ admjobs.required_backlog }}</h6>
-              <h6 class="card-text"><b>CURRENT CGPA :</b>{{ admjobs.required_current_cgpa }}</h6>
-              <p class="card-text"><b>EMAIL :</b> {{ admjobs.email }}</p>
-              <p class="card-text"><b>SALARY: </b>{{ admjobs.salary }}</p>
-              <p class="card-text"><b>APPLICATION START DATE:</b> {{ admjobs.sdate }}</p>
-              <p class="card-text"><b>APPLICATION END DATE:</b> {{ admjobs.edate }}</p>
-              <p class="card-text"><b>For more visit, </b>{{ admjobs.link }}</p>
-             
-              {% comment %} {{ studentprofile_id }} {% endcomment %}
-              <br>
-              
-              {% comment %} <a href="{% url 'jobapply' admjobs.id %}" class="btn btn-primary custom-btn">Apply Job</a> {% endcomment %}
-              <a href="{% url 'jobapply' admjobs.id %}" class="btn btn-primary custom-btn">Apply Job</a>
-              
-
-              {% comment %} <a href="{% url 'jobapply' jobapply_id=admjobs.id %}" class="btn btn-primary custom-btn">Apply Job</a> {% endcomment %}
-
+    <div class="card" style="border: 1px solid #ABA7A7;">
+      <div class="card-body" style="text-align: justify;">  
             
+
+            <h5 class="card-title" style="background-color: black; color: white; text-align: center;"><b>{{ admjobs.cname }} - {{ admjobs.jname }}</b></h5>
+            <p class="card-text"><b>RESPONSIBILITIES:</b><br> {{ admjobs.responsibilities }}</p>
+            <p class="card-text"><b>PREFERRED SKILLS:</b><br> {{ admjobs.preferred_skills }}</p>
+            <p class="card-text"><b>ELIGIBILITY:</b><br> {{ admjobs.qualifications }}</p>
+            <h6 class="card-text"><b>TENTH CGPA:</b>{{ admjobs.required_tenth_cgpa }}</h6>
+            <h6 class="card-text"><b>TWELFTH CGPA:</b>{{ admjobs.required_twelfth_cgpa }}</h6>
+            <h6 class="card-text"><b>BACKLOGS:</b>{{ admjobs.required_backlog }}</h6>
+            <h6 class="card-text"><b>CURRENT CGPA:</b>{{ admjobs.required_current_cgpa }}</h6>
+            <p class="card-text"><b>EMAIL:</b> {{ admjobs.email }}</p>
+            <p class="card-text"><b>APPLICATION START DATE:</b> {{ admjobs.sdate }}</p>
+            <p class="card-text"><b>APPLICATION END DATE:</b> {{ admjobs.edate }}</p>
+            <p class="card-text"><b>For more visit, </b>{{ admjobs.link }}</p>
             
-             
-          </div>
-      </div>
-  </div>
+            <br>
+            
+            <a href="{% url 'jobapply' admjobs.id %}" class="btn btn-primary custom-btn">Apply Job</a>
+           
+           
+        </div>
+    </div>
+</div>
+
 {% endif %}
     {% endif %}
   {% endif %}  

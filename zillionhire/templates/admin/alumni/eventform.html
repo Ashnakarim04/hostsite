@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
     <link rel="shortcut icon" type="image/x-icon" href="{% static 'assets2/img/logo.png' %}">
-    <title>ZillionHire - Company Dashboard</title>
+    <title>ZillionHire - Alumni Dashboard</title>
     <link rel="stylesheet" type="text/css" href="{% static 'assets2/css/bootstrap.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'assets2/css/font-awesome.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'assets2/css/select2.min.css' %}">
@@ -317,10 +317,11 @@ body{color: #000;overflow-x: hidden;height: 100%;background-image: url("https://
             <li class="nav-item">
               <a class="nav-link" href="{% url 'contactuser' %}">Contact Us</a>
             </li>
-            <li class="nav-item active">
-              <a class="nav-link" href="{% url 'postjob' %}">Post Job</a>
-              <span class="sr-only">(current)</span>
-            </li>
+            {% if request.user.is_authenticated %}
+                    <li class="nav-item">
+                        <span class="nav-link">Hi, {{ request.user.email }}</span>
+                    </li>
+            {% endif %}
           </ul>
         </div>
       </div>
@@ -334,7 +335,7 @@ body{color: #000;overflow-x: hidden;height: 100%;background-image: url("https://
                 {% comment %} <li>
                     <a href="{% url 'index-2' %}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
                 </li> {% endcomment %}
-                <li class="active">
+                <li>
                   <a href="{% url 'alumni_profile' alumni_id=request.user.alumni.id %}">
                       <i class="fas fa-id-card"></i>
                       <span>PROFILE</span>
@@ -345,13 +346,13 @@ body{color: #000;overflow-x: hidden;height: 100%;background-image: url("https://
             
             <li>
                 <a href="{% url 'display_blog_content' alumni_id=alumni_instance.id %}">
-                    <i class="fas fa-id-card"></i>
+                    <i class="fa fa-edit"></i>
                     <span>OPENINGS</span>
                 </a>
             </li>
-            <li>
+            <li class="active">
               <a href="{% url 'display_blog_content' alumni_id=alumni_instance.id %}">
-                  <i class="fas fa-id-card"></i>
+                  <i class="fa fa-calendar"></i>
                   <span>EVENTS</span>
               </a>
           </li>
@@ -364,13 +365,13 @@ body{color: #000;overflow-x: hidden;height: 100%;background-image: url("https://
     <div class="content">
         <div class="row">
           <div class="col-sm-4 col-3">
-            <h4 class="page-title">CONTENTS</h4>
+            <h4 class="page-title">EVENTS</h4>
           </div>
      
         </div>
         
         
-<bR><br>
+
   {% comment %} <div class="container2"> {% endcomment %}
     <div class="container-fluid px-1 py-5 mx-auto">
         <div class="row d-flex justify-content-center">

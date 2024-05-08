@@ -131,10 +131,11 @@
                     <li class="nav-item">
                       <a class="nav-link" href="{% url 'contactuser' %}">Contact Us</a>
                     </li>
-                    <li class="nav-item active">
-                      <a class="nav-link" href="{% url 'postjob' %}">Post Job</a>
-                      <span class="sr-only">(current)</span>
+                    {% if request.user.is_authenticated %}
+                    <li class="nav-item">
+                        <span class="nav-link">Hi, {{ request.user.email }}</span>
                     </li>
+            {% endif %}
                   </ul>
                 </div>
               </div>
@@ -148,7 +149,7 @@
                         {% comment %} <li>
                             <a href="{% url 'index-2' %}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
                         </li> {% endcomment %}
-                        <li class="active">
+                        <li>
                           <a href="{% url 'alumni_profile' alumni_id=request.user.alumni.id %}">
                               <i class="fas fa-id-card"></i>
                               <span>PROFILE</span>
@@ -161,15 +162,15 @@
                         </a>
                     </li> {% endcomment %}
                     
-                    <li>
+                    <li class="active">
                       <a href="{% url 'display_blog_content' alumni_id=request.user.alumni.id %}" id="opening2">
-                          <i class="fas fa-id-card"></i>
+                          <i class="fa fa-edit"></i>
                           <span>OPENINGS</span>
                       </a>
                   </li>
                   <li>
                     <a href="{% url 'bloglist2' alumni_id=request.user.alumni.id %}">
-                        <i class="fas fa-id-card"></i>
+                        <i class="fa fa-calendar"></i>
                         <span>EVENTS</span>
                     </a>
                 </li>

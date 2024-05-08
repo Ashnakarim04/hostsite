@@ -12,11 +12,11 @@
       <input type="text" class="form-control" id="jname" name="jname" value="{{ job.jname }}" onkeyup="validateJname()">
       <span id="jnameError" style="color: red;"></span>
     </div>
-    <div class="form-group">
+    {% comment %} <div class="form-group">
       <label for="job_descriptions">ABOUT COMPANY :</label>
       <input type="text" class="form-control" id="job_descriptions" name="job_descriptions" value="{{ job.job_descriptions }}">
       
-    </div>
+    </div> {% endcomment %}
     <div class="form-groupp">
       <label for="responsibilities">RESPONSIBILITIES :</label>
       <input type="text" class="form-controll" id="responsibilities" name="responsibilities" value="{{ job.responsibilities }}">

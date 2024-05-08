@@ -100,14 +100,23 @@
                                 {% comment %} <li>
                                     <a href="{% url 'index-2' %}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
                                 </li> {% endcomment %}
-                                <li class>
+                                <li >
                                   <a href="{%url 'postjob'%}"><i class="fa-solid fa-desktop"></i> <span>JOBS</span></a>
                               </li>
                               <li class>
-                                <a href="{%url 'appliedstudents'%}"><i class="fas fa-user"></i> <span>APPLIED CANDIDATES</span></a>
+                                <a id="appstu"href="{%url 'appliedstudents'%}"><i class="fa fa-users" aria-hidden="true"></i> <span>APPLICANTS</span></a>
                               </li>
                               <li class>
-                                <a href="{%url 'cfirstround'%}"><i class="fas fa-user"></i> <span>SHORT LISTED CANDIDATES </span></a>
+                                <a href="{%url 'shortlist2'%}"><i class="fa-solid fa-user-check"></i> <span>SHORT LIST </span></a>
+                              </li>
+                              <li class>
+                                <a href="{%url 'conduct_aptitude_test'%}" id="addquestion"><i class="far fa-edit"></i> <span>APTITUDE TEST </span></a>
+                              </li>
+                              <li class>
+                                <a href="{%url 'apt_list_company'%}"><i class="	far fa-bell"></i> <span>TEST NOTIFICATION</span></a>
+                              </li>
+                              <li class="active">
+                                <a href="{%url 'ceventlist'%}"><i class="fa fa-calendar" aria-hidden="true"></i> <span>EVENTS</span></a>
                               </li>
                               
                                 

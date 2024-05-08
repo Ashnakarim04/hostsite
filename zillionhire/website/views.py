@@ -26,7 +26,7 @@ def postjob(request):
     return render(request, 'postjob.html')
 
 def admin_index2(request):
-    stu=Students.objects.filter(is_active = True)
+    stu=StudentProfile.objects.filter(is_alumni = False)
     stu_count=stu.count()
     comp=CompanyProfile.objects.filter(is_approved = 'approved')
     comp_count=comp.count()
@@ -846,7 +846,7 @@ def approved_jobs(request, job_id):
     approvejob.save()       
         # Redirect back to the list of approved appointments
     return redirect('jobslist')
-
+ 
 
 def job_approve(request, studentprofile_id):
     admjob = Jobs.objects.filter(is_approved=True)
@@ -915,6 +915,31 @@ def sindex(request):
         return redirect(reverse('sprofile', kwargs={'studentprofile_id': studentprofile.id}))
 
 
+
+#student
+@login_required
+def sabout(request):
+    try:
+        studentprofile = request.user.studentprofile
+        return render(request, 'sabout.html', {'studentprofile': studentprofile})
+    except StudentProfile.DoesNotExist:
+        studentprofile = StudentProfile.objects.create(user=request.user)
+        return redirect(reverse('sprofile', kwargs={'studentprofile_id': studentprofile.id}))
+
+
+@login_required
+def scontact(request):
+    try:
+        studentprofile = request.user.studentprofile
+        return render(request, 'scontact.html', {'studentprofile': studentprofile})
+    except StudentProfile.DoesNotExist:
+        studentprofile = StudentProfile.objects.create(user=request.user)
+        return redirect(reverse('sprofile', kwargs={'studentprofile_id': studentprofile.id}))
+
+
+@login_required
+def shome(request):
+    return render(request, 'shome.html')
 
 from django.contrib.auth import update_session_auth_hash  # Add this import
 @login_required
@@ -1035,12 +1060,167 @@ def sprofile(request, studentprofile_id):
     }
     return render(request, 'student/sprofile.html', context)
 
-# def jobapply(request):
-#     return render(request, 'student/jobapply.html')
+
+# def jobapply(request, jobapply_id):
+
+#     stuprof = get_object_or_404(StudentProfile, user=request.user)
+    
+#     job = get_object_or_404(Jobs, id=jobapply_id)
+#     existing_certification = JobApplication.objects.filter(user=request.user,job=job).first()
+
+#     if existing_certification:
+#         certification_status = existing_certification.is_approved
+#     else:
+#         certification_status = 'pending'  # Set a default value if no certification exists
+#     print(existing_certification)
+
+#     if certification_status == 'pending':
+#         if request.method == "POST":
+            
+#             # jobapply = JobApplication(stuprof=stuprof)
+
+#             cname=request.POST.get('cname')
+#             jname=request.POST.get('jname')
+#             first_name = request.POST.get('first_name')
+#             last_name = request.POST.get('last_name')
+#             dob = request.POST.get('dob')
+#             nationality = request.POST.get('nationality')
+#             profile_photo = request.FILES.get('profile_photo')
+#             gender = request.POST.get('gender')
+#             email = request.POST.get('email')
+#             phone = request.POST.get('phone')
+#             present_address = request.POST.get('present_address')
+#             permanent_address = request.POST.get('permanent_address')
+#             area_code = request.POST.get('area_code')
+
+#             c_course = request.POST.get('c_course')
+#             c_institution = request.POST.get('c_institution')
+#             c_university = request.POST.get('c_university')
+#             academic_year = request.POST.get('academic_year')
+#             c_backlog = request.POST.get('c_backlog')
+#             c_cgpa = request.POST.get('c_cgpa')
+
+#             twelfth_institution = request.POST.get('twelfth_institution')
+#             twelfth_cgpa = request.POST.get('twelfth_cgpa')
+#             twelfth_board = request.POST.get('twelfth_board')
+#             twelfth_certificate_upload = request.FILES.get('twelfth_certificate_upload')
+
+#             tenth_institution = request.POST.get('tenth_institution')
+#             tenth_cgpa = request.POST.get('tenth_cgpa')
+#             tenth_board = request.POST.get('tenth_board')
+#             tenth_certificate_upload = request.FILES.get('tenth_certificate_upload')
+
+#             ug_course = request.POST.get('ug_course')
+#             ug_institution = request.POST.get('ug_institution')
+#             ug_cgpa = request.POST.get('ug_cgpa')
+#             ug_university = request.POST.get('ug_university')
+#             ug_certificate_upload = request.FILES.get('ug_certificate_upload')
+
+#             skills=request.POST.get('skills')
+#             newcourse=request.POST.get('newcourse')
+#             newcert=request.FILES.get('newcert')
+
+#             workexperience=request.POST.get('workexperience')
+#             jobresp=request.POST.get('jobresp')
+#             period=request.POST.get('period')
+#             companydetails=request.POST.get('companydetails')
+
+#             crime=request.POST.get('crime')
+#             dtoc=request.POST.get('dtoc')
+#             doc=request.POST.get('doc')
+#             nature=request.POST.get('nature')
+
+#             resume = request.FILES.get('resume')
+
+#             # jobapply = get_object_or_404(JobApplication, stuprof=stuprof)
+
+#             jobapply = JobApplication.objects.create(
+#                     user=request.user,
+#                     job=job,
+#                     stuprof=stuprof,
+#                     cname = cname,
+#                     jname = jname,
+#                     first_name = first_name,
+#                     last_name = last_name,
+#                     gender = gender,
+#                     dob = dob,
+#                     nationality = nationality,
+#                     area_code = area_code,
+#                     profile_photo=profile_photo,
+        
+#                     email = email,
+#                     phone = phone,
+#                     present_address = present_address,
+#                     permanent_address = permanent_address,
+
+#                     c_course = c_course,
+#                     c_institution = c_institution,
+#                     c_university = c_university,
+#                     academic_year = academic_year,
+#                     c_backlog = c_backlog,
+#                     c_cgpa = c_cgpa,
+
+#                     twelfth_institution = twelfth_institution,
+#                     twelfth_cgpa = twelfth_cgpa,
+#                     twelfth_board = twelfth_board,
+        
+#                     twelfth_certificate_upload = twelfth_certificate_upload,
+#             # studentprofile.twelfth_certificate_upload = twelfth_certificate_upload
+
+#                     tenth_institution = tenth_institution,
+#                     tenth_board = tenth_board,
+#                     tenth_cgpa = tenth_cgpa,
+#                     tenth_certificate_upload = tenth_certificate_upload,
+#             # studentprofile.tenth_certificate_upload = tenth_certificate_upload
+
+#                     ug_institution = ug_institution,
+#                     ug_university= ug_university,
+#                     ug_course = ug_course,
+#                     ug_cgpa = ug_cgpa,
+#                     ug_certificate_upload = ug_certificate_upload,
+#             # studentprofile.ug_certificate_upload = ug_certificate_upload
+
+#                     skills=skills,
+#                     newcourse=newcourse,
+#                     newcert=newcert,
+
+#                     workexperience=workexperience,
+#                     jobresp=jobresp,
+#                     period=period,
+#                     companydetails=companydetails,
+
+#                     crime=crime,
+#                     dtoc=dtoc,
+#                     doc=doc,
+#                     nature=nature,
+#                     resume = resume
+#                 )
+
+#             jobapply.save()
+#             messages.success(request, 'Job submitted successfully.')
+#             print("Job Apply ID:", jobapply_id)
+
+#             return redirect('jobapply', jobapply_id=jobapply_id)  # Use job.id instead of jobapply.id
+
+
+
+#         context = {
+#             # 'jobapply': jobapply,
+#             # 'admin_student':admin_student,
+#             'sprof':stuprof,
+#             'jobapply_id': jobapply_id,
+#             'job':job,
+#             'certification_status': certification_status
+#         }
+#         return render(request, 'student/jobapply.html', context)
+    
+#     else:
+#         return render(request, 'student/jobapply.html', {'certification_status': certification_status})
+
 def jobapply(request, jobapply_id):
 
     stuprof = get_object_or_404(StudentProfile, user=request.user)
-    
+    # company_profile = CompanyProfile.objects.get(user=request.user)
     job = get_object_or_404(Jobs, id=jobapply_id)
     existing_certification = JobApplication.objects.filter(user=request.user,job=job).first()
 
@@ -1186,12 +1366,15 @@ def jobapply(request, jobapply_id):
             'sprof':stuprof,
             'jobapply_id': jobapply_id,
             'job':job,
-            'certification_status': certification_status
+            'certification_status': certification_status,
+            # 'company_profile': company_profile 
         }
         return render(request, 'student/jobapply.html', context)
     
     else:
         return render(request, 'student/jobapply.html', {'certification_status': certification_status})
+
+
 
 
 
@@ -2179,6 +2362,42 @@ def alumni_blog(request, studentprofile_id):
 
     return render(request, 'admin/alumni/alumni_blog.html', context)
 
+
+
+from .models import Interview  # Import the Interview model
+
+from django.contrib.auth.decorators import login_required
+
+@login_required
+def sinter(request, studentprofile_id):
+    try:
+        studentprofile = StudentProfile.objects.get(id=studentprofile_id)
+    except StudentProfile.DoesNotExist:
+        return HttpResponse("Student profile does not exist", status=404)
+
+    # Retrieve AptdResult details related to the studentprofile_id
+    aptd_results = AptdResult.objects.filter(student_id=studentprofile_id)
+
+    # Retrieve interviews related to the AptdResult objects
+    interviews = Interview.objects.filter(shortlist__in=aptd_results)
+
+    if aptd_results.exists():
+        company_profile = aptd_results.first().company_id
+    else:
+        # Handle the case where no AptdResult objects are found
+        company_profile = None
+
+    context = {
+        'studentprofile': studentprofile,
+        'aptd_results': aptd_results,
+        'company_profile': company_profile,
+        'interviews': interviews,  # Pass the interviews to the template context
+    }
+    return render(request, 'student/interview.html', context)
+
+
+
+
 # def apt_notification(request, studentprofile_id):
 #     # Your logic to fetch the student profile based on the studentprofile_id
 #     studentprofile = StudentProfile.objects.get(id=studentprofile_id)
@@ -2437,33 +2656,6 @@ from django.http import HttpResponseBadRequest
 
 from .models import ExamResponse
 
-# def submit_exam(request):
-#     if request.method == 'POST':
-#         # Extract data from the POST request
-#         question_id = request.POST.get('question_id')
-#         selected_option = request.POST.get('answer')
-#         company_profile_id = request.POST.get('company_profile_id')
-
-#         # Validate the question ID
-#         question = get_object_or_404(Questionn, pk=question_id)
-        
-#         # Get the current student (assuming the user is authenticated)
-#         student = request.user.studentprofile  # Adjust this according to your actual model structure
-        
-#         # Create an instance of ExamResponse
-#         exam_response = ExamResponse.objects.create(
-#             student=student,
-#             question=question,
-#             company_id=company_profile_id,
-#             selected_option=selected_option
-#         )
-
-#         # Redirect to the same page to continue the exam or any other page
-#         return redirect('attend_exam', studentprofile_id=student.id, company_profile_id=company_profile_id)
-        
-#     else:
-#         # Handle GET requests or other HTTP methods
-#         return redirect('error')
 from django.shortcuts import redirect
 from .models import ExamResponse, Questionn
 
@@ -2886,6 +3078,15 @@ def sevent(request, studentprofile_id):
     return render(request, 'admin/student/alumni_events.html', {'studentprofile': studentprofile, 'events': events})
 
 
+def scevent(request, studentprofile_id):
+    studentprofile = get_object_or_404(StudentProfile, id=studentprofile_id)
+    
+    # Fetch events associated with the student profile and with status=True
+    events = CompanyEvent.objects.filter(status=True)
+    
+    return render(request, 'student/companyevents.html', {'studentprofile': studentprofile, 'events': events})
+
+
 # 
 from datetime import date
 
@@ -3116,6 +3317,13 @@ def approved_aptitude(request, aptitude_id):
         # Redirect back to the list of approved appointments
     return redirect('apt_approve')
 
+
+def admin_cevent(request):
+    cevent = CompanyEvent.objects.all()
+    context = {'cevent': cevent}
+    return render(request, 'admin/companyevents.html', context)
+
+
 def alumni_job_approve(request):
     jobopen = BlogContent.objects.all()
     context = {'jobopen': jobopen}
@@ -3161,6 +3369,7 @@ def test_result(request):
     company_id = request.user.companyprofile
     # Assuming exam_responses are retrieved as before
     exam_responses_query = ExamResponse.objects.filter(company_id=company_id).values(
+        'student_id',
         'student__user__first_name',
         'student__user__last_name',
         'student__user__email',
@@ -3172,6 +3381,7 @@ def test_result(request):
     if cutoff_mark is not None:
         exam_responses_query = exam_responses_query.filter(total_marks__gte=cutoff_mark)
     for response in exam_responses_query:
+        student_id = response['student_id']
         student_first_name = response['student__user__first_name']
         student_last_name = response['student__user__last_name']
         student_email = response['student__user__email']
@@ -3181,6 +3391,7 @@ def test_result(request):
 
         # Check if the entry already exists
         existing_entry = AptdResult.objects.filter(
+            student_id=student_id,
             student_first_name=student_first_name,
             student_last_name=student_last_name,
             student_email=student_email,
@@ -3191,8 +3402,10 @@ def test_result(request):
         ).exists()
 
         if not existing_entry:
+            student_profile = StudentProfile.objects.get(id=student_id)
             # Create AptdResult instance
             AptdResult.objects.create(
+                student_id=student_profile,
                 student_first_name=student_first_name,
                 student_last_name=student_last_name,
                 student_email=student_email,
@@ -3233,6 +3446,57 @@ from django.http import HttpResponse
 from django.contrib import messages
 from .models import AptdResult, Interview
 
+# def schedule_interview(request):
+#     if request.method == 'POST':
+#         # Extract form data
+#         student_id = request.POST.get('student_id')
+#         interview_date = request.POST.get('interview_date')
+#         interview_time = request.POST.get('interview_time')
+#         ampm = request.POST.get('ampm')
+#         interview_type = request.POST.get('interview_type')
+#         interview_mode = request.POST.get('interview_mode')
+#         interview_link_location = request.POST.get('interview_link_location')
+#         interview_duration = request.POST.get('interview_duration')
+#         interviewer_info = request.POST.get('interviewer_info')
+#         instruction_requirements = request.FILES.get('instruction_requirements')
+        
+#         try:
+#             # Get the student object with the provided ID
+#             student = AptdResult.objects.get(id=student_id)
+            
+#             # Get the company profile
+#             company = request.user.companyprofile
+
+#             # Create the Interview object and associate it with the student
+#             interview = Interview.objects.create(
+#                 # student=student,  # Use the AptdResult object directly
+#                 shortlist=AptdResult.objects.get(id=student_id),
+#                 company=company,
+#                 interview_date=interview_date,
+#                 interview_time=interview_time,
+#                 ampm=ampm,
+#                 interview_type=interview_type,
+#                 interview_mode=interview_mode,
+#                 interview_link_location=interview_link_location,
+#                 interview_duration=int(interview_duration),
+#                 interviewer_info=interviewer_info,
+#                 instruction_requirements=instruction_requirements
+#             )
+
+#             # Optionally, you can add a success message
+#             messages.success(request, 'Interview scheduled successfully.')
+
+#             # Redirect to a success page or the same page
+#             return redirect('shortlist2')  # Redirect to the interview list page
+        
+#         except AptdResult.DoesNotExist:
+#             # Handle the case where the AptdResult object does not exist
+#             return HttpResponse("The specified student does not exist.")
+
+#     else:
+#         # Handle GET requests if needed
+#         pass
+
 def schedule_interview(request):
     if request.method == 'POST':
         # Extract form data
@@ -3248,16 +3512,15 @@ def schedule_interview(request):
         instruction_requirements = request.FILES.get('instruction_requirements')
         
         try:
-            # Get the student object with the provided ID
-            student = AptdResult.objects.get(id=student_id)
+            # Get the AptdResult object with the provided ID
+            aptd_result = AptdResult.objects.get(id=student_id)
             
             # Get the company profile
             company = request.user.companyprofile
 
-            # Create the Interview object and associate it with the student
+            # Create the Interview object and associate it with the AptdResult object
             interview = Interview.objects.create(
-                # student=student,  # Use the AptdResult object directly
-                shortlist=AptdResult.objects.get(id=student_id),
+                shortlist=aptd_result,  # Associate it directly with the AptdResult object
                 company=company,
                 interview_date=interview_date,
                 interview_time=interview_time,
@@ -3288,8 +3551,6 @@ def schedule_interview(request):
 from django.shortcuts import render
 from .models import Interview
 
-from django.shortcuts import render
-from .models import Interview
 
 def get_interview_details(request):
     if request.method == 'GET':
@@ -3427,3 +3688,29 @@ def webscrap(request, studentprofile_id):
     paragraph_texts = [p.get_text() for p in paragraphs]    
     # Pass the extracted information to the template
     return render(request, 'admin/student/webscrap.html', {'paragraph_texts': paragraph_texts,'studentprofile':studentprofile})
+
+import matplotlib.pyplot as plt
+from django.shortcuts import render
+from .models import PlacementRecord
+
+def department_wise_placements(request):
+    departments = ['CS', 'IT', 'ECE', 'MCA']
+    years = ['2019', '2020', '2021', '2022', '2023']
+    placement_data = {}
+
+    for department in departments:
+        placement_data[department] = [PlacementRecord.objects.filter(department=department, year=year).count() for year in years]
+
+    # Generate bar graph
+    plt.figure(figsize=(10, 6))
+    for department in departments:
+        plt.bar(years, placement_data[department], label=department)
+    plt.xlabel('Year')
+    plt.ylabel('Number of Placements')
+    plt.title('Department Wise Placements')
+    plt.legend()
+    plt.savefig('media/department_wise_placements.png')  # Save the plot as an image file
+    plt.close()
+
+    return render(request, 'admin/index-2.html')
+

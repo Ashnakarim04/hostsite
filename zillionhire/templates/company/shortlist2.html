@@ -89,6 +89,11 @@
                 <li class="nav-item">
                   <a class="nav-link" href="{% url 'contactuser' %}">Contact Us</a>
                 </li>
+                {% if request.user.is_authenticated %}
+                    <li class="nav-item">
+                        <span class="nav-link">Hi, {{ request.user.email }}</span>
+                    </li>
+            {% endif %}
                 <li class="nav-item active">
                   <a class="nav-link" href="{% url 'postjob' %}">Post Job</a>
                   <span class="sr-only">(current)</span>
@@ -106,30 +111,27 @@
                                 {% comment %} <li>
                                     <a href="{% url 'index-2' %}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
                                 </li> {% endcomment %}
+                                <li >
+                                    <a href="{%url 'postjob'%}"><i class="fa-solid fa-desktop"></i> <span>JOBS</span></a>
+                                </li>
                                 <li class>
-                                  <a href="{%url 'postjob'%}"><i class="fa-solid fa-desktop"></i> <span>JOBS</span></a>
-                              </li>
-                              <li class>
-                                <a href="{%url 'appliedstudents'%}"><i class="fas fa-user"></i> <span>APPLICANTS</span></a>
-                              </li>
-                              <li class>
-                                <a href="{%url 'cfirstround'%}"><i class="fas fa-user"></i> <span>SHORT LIST </span></a>
-                              </li>
-                              <li class="active">
-                                <a href="{%url 'conduct_aptitude_test'%}"><i class="fas fa-user"></i> <span>APTITUDE TEST </span></a>
-                              </li>
-                              <li class>
-                                <a href="{%url 'apt_list_company'%}"><i class="fas fa-user"></i> <span>TEST NOTIFICATION</span></a>
-                              </li>
-                              <li class>
-                                <a href="{%url 'q_preview'%}"><i class="fas fa-user"></i> <span>PREVIEW</span></a>
-                              </li>
-                              <li class>
-                                <a href="{%url 'ceventlist'%}"><i class="fas fa-user"></i> <span>EVENTS</span></a>
-                              </li>
-                              <li class>
-                                <a href="{%url 'ceventlist'%}"><i class="fas fa-user"></i> <span>TEST RESPONSE</span></a>
-                              </li>
+                                  <a id="appstu"href="{%url 'appliedstudents'%}"><i class="fa fa-users" aria-hidden="true"></i> <span>APPLICANTS</span></a>
+                                </li>
+                                <li class="active">
+                                  <a href="{%url 'shortlist2'%}"><i class="fa-solid fa-user-check"></i> <span>SHORT LIST </span></a>
+                                </li>
+                                <li class>
+                                  <a href="{%url 'conduct_aptitude_test'%}" id="addquestion"><i class="far fa-edit"></i> <span>APTITUDE TEST </span></a>
+                                </li>
+                                <li class>
+                                  <a href="{%url 'apt_list_company'%}"><i class="	far fa-bell"></i> <span>TEST NOTIFICATION</span></a>
+                                </li>
+                                <li class>
+                                  <a href="{%url 'ceventlist'%}"><i class="fa fa-calendar" aria-hidden="true"></i> <span>EVENTS</span></a>
+                                </li>
+                                
+                               
+                              
                               {% comment %} <li class>
                                 <a href="{%url 'quiz_form'%}"><i class="fas fa-user"></i> <span>SET QUESTIONS </span></a>
                               </li>
@@ -168,7 +170,7 @@
                                                          
                                                           <th></th>
                                                           <th>Interview</th>
-                                                          <th>View</th>
+                                                          {% comment %} <th>View</th> {% endcomment %}
                                                       </tr>
                                                   </thead>
                                                   <tbody>

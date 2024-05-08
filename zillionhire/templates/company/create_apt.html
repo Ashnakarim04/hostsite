@@ -83,6 +83,11 @@
                 <li class="nav-item">
                   <a class="nav-link" href="{% url 'contactuser' %}">Contact Us</a>
                 </li>
+                {% if request.user.is_authenticated %}
+                    <li class="nav-item">
+                        <span class="nav-link">Hi, {{ request.user.email }}</span>
+                    </li>
+            {% endif %}
                 <li class="nav-item active">
                   <a class="nav-link" href="{% url 'postjob' %}">Post Job</a>
                   <span class="sr-only">(current)</span>
@@ -100,29 +105,31 @@
                                 {% comment %} <li>
                                     <a href="{% url 'index-2' %}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
                                 </li> {% endcomment %}
-                                <li class>
+                                <li >
                                   <a href="{%url 'postjob'%}"><i class="fa-solid fa-desktop"></i> <span>JOBS</span></a>
                               </li>
                               <li class>
-                                <a href="{%url 'appliedstudents'%}"><i class="fas fa-user"></i> <span>APPLICANTS</span></a>
+                                <a id="appstu"href="{%url 'appliedstudents'%}"><i class="fa fa-users" aria-hidden="true"></i> <span>APPLICANTS</span></a>
                               </li>
                               <li class>
-                                <a href="{%url 'cfirstround'%}"><i class="fas fa-user"></i> <span>SHORT LIST </span></a>
+                                <a href="{%url 'shortlist2'%}"><i class="fa-solid fa-user-check"></i> <span>SHORT LIST </span></a>
                               </li>
                               <li class="active">
-                                <a href="{%url 'conduct_aptitude_test'%}"><i class="fas fa-user"></i> <span>APTITUDE TEST </span></a>
+                                <a href="{%url 'conduct_aptitude_test'%}" id="addquestion"><i class="far fa-edit"></i> <span>APTITUDE TEST </span></a>
                               </li>
                               <li class>
-                                <a href="{%url 'apt_list_company'%}"><i class="fas fa-user"></i> <span>TEST NOTIFICATION</span></a>
+                                <a href="{%url 'apt_list_company'%}"><i class="	far fa-bell"></i> <span>TEST NOTIFICATION</span></a>
                               </li>
                               <li class>
-                                <a href="{%url 'q_preview'%}" id="quepreview"><i class="fas fa-user"></i> <span>PREVIEW</span></a>
+                                <a href="{%url 'ceventlist'%}"><i class="fa fa-calendar" aria-hidden="true"></i> <span>EVENTS</span></a>
                               </li>
+                              
                               <li class>
-                                <a href="{%url 'ceventlist'%}"><i class="fas fa-user"></i> <span>EVENTS</span></a>
+                                <a href="{%url 'q_preview'%}" id="quepreview"><i class="fa fa-eye" aria-hidden="true"></i> <span>PREVIEW</span></a>
                               </li>
+                              
                               <li class>
-                                <a href="{%url 'test_response'%}"><i class="fas fa-user"></i> <span>TEST RESPONSE</span></a>
+                                <a href="{%url 'test_result'%}"><i class="fa fa-list-alt" aria-hidden="true"></i><span>TEST RESPONSE</span></a>
                               </li>
                               {% comment %} <li class>
                                 <a href="{%url 'quiz_form'%}"><i class="fas fa-user"></i> <span>SET QUESTIONS </span></a>
@@ -151,7 +158,7 @@
                                     <div class="card">
                                         <div class="card-body">
                                            
-                                            <h2>Create new test</h2>
+                                            {% comment %} <h4>Create new test</h4> {% endcomment %}
                                             {% comment %} <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeFgVN2I99eCRaQkF4TW9l55n-vKhCQjOnoF53VAxxjBokqGw/viewform?embedded=true" width="640" height="942" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe> {% endcomment %}
                                             {% comment %} <form method="post" action="">
                                     
@@ -182,10 +189,10 @@
                                                   <label for="exam_title">Exam Title</label>
                                                   <input type="text" class="form-control" id="exam_title" name="exam_title" value="{{ questionn.exam_title }}" required>
                                               </div>
-                                              <div class="form-group">
+                                              {% comment %} <div class="form-group">
                                                 <label for="company_profile_id">Company Profile ID</label>
                                                 <input type="text" class="form-control" id="company_profile_id" name="company_profile_id" value="{{ questionn.company_profile_id }}" readonly>
-                                            </div>
+                                            </div> {% endcomment %}
                                               {% comment %} <div class="form-group">
                                                   <label for="company_name">Company Name</label>
                                                   <input type="text" class="form-control" id="company_name" name="company_name" value="{{ questionn.company_name }}" required>

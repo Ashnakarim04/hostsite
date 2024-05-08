@@ -167,7 +167,7 @@ class CompanyProfile(models.Model):
     is_active= models.BooleanField(default=True)
     def __str__(self):
         return self.companyname
-    
+     
     # password = models.CharField(max_length=50)
 
     # def set_password(self, password):
@@ -357,6 +357,7 @@ class JobApplication(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     job = models.ForeignKey(Jobs, on_delete=models.CASCADE, null=True)
     stuprof = models.ForeignKey(StudentProfile, on_delete=models.CASCADE, null=True)
+    company_profile = models.ForeignKey(CompanyProfile, on_delete=models.CASCADE, null=True, blank=True)
     is_approved = models.CharField(
         max_length=10,
         choices=APPROVAL_CHOICES,
@@ -719,7 +720,7 @@ class AddAptitude(models.Model):
     ]
 
     job = models.ForeignKey(JobApplication, on_delete=models.CASCADE, null=True)
-
+    jobs =  models.ForeignKey(Jobs,on_delete=models.CASCADE, null=True)
     aptitude = models.AutoField(primary_key=True)
     # job_id=models.CharField(max_length=100,default="hi")
     company_profile = models.ForeignKey(CompanyProfile, on_delete=models.CASCADE, default=None)
@@ -860,8 +861,18 @@ class ExamResponse(models.Model):
         default=PENDING,
     )
 
+
+class PlacementRecord(models.Model):
+    department = models.CharField(max_length=100)
+    year = models.IntegerField()
+    # Add other fields as needed
+
+    def __str__(self):
+        return f"{self.department} - {self.year}"
+
+
 class AptdResult(models.Model):
-    student_id = models.CharField(max_length=100,null=True)
+    student_id = models.ForeignKey('StudentProfile', on_delete=models.CASCADE, null=True)
     student_first_name = models.CharField(max_length=100)
     student_last_name = models.CharField(max_length=100)
     student_email = models.EmailField()
@@ -869,6 +880,7 @@ class AptdResult(models.Model):
     student_phone = models.CharField(max_length=20)
     total_marks = models.FloatField()
     company_id = models.ForeignKey('CompanyProfile', on_delete=models.CASCADE)
+    response =  models.ForeignKey('ExamResponse', on_delete=models.CASCADE, null=True)
     status=models.BooleanField('status', default=True)
     def __str__(self):
         return f"{self.student_first_name} {self.student_last_name} - {self.company_id}"
@@ -938,6 +950,7 @@ class ShortlistedStudent(models.Model):
 class Interview(models.Model):
     company = models.ForeignKey(CompanyProfile, on_delete=models.CASCADE, null=True)
     shortlist = models.ForeignKey(AptdResult,on_delete=models.CASCADE, null=True)
+    student = models.ForeignKey(StudentProfile, on_delete=models.CASCADE, related_name='interviews', null=True)
     interview_date = models.DateField()
     interview_time = models.TimeField()
     ampm = models.CharField(max_length=2, choices=(('AM', 'AM'), ('PM', 'PM')))

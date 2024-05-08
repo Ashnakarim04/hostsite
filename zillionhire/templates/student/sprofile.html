@@ -269,12 +269,12 @@
             <div class="collapse navbar-collapse" id="navbarResponsive">
               <ul class="navbar-nav ml-auto">
                 <li class="nav-item ">
-                  <a class="nav-link" href="{% url 'cindex' %}">Home
+                  <a class="nav-link" href="{% url 'sindex' %}">Home
                     {% comment %} <span class="sr-only">(current)</span> {% endcomment %}
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="{% url 'aboutuser' %}">About Us</a>
+                  <a class="nav-link" href="{% url 'sabout' %}">About Us</a>
                 </li>
           
                 <li class="nav-item dropdown">
@@ -292,12 +292,17 @@
                 </li> 
                 
                 <li class="nav-item">
-                  <a class="nav-link" href="{% url 'contactuser' %}">Contact Us</a>
+                  <a class="nav-link" href="{% url 'scontact' %}">Contact Us</a>
                 </li>
-                <li class="nav-item active">
+                {% comment %} <li class="nav-item active">
                   <a class="nav-link" href="{% url 'postjob' %}">Post Job</a>
                   <span class="sr-only">(current)</span>
-                </li>
+                </li> {% endcomment %}
+                {% if request.user.is_authenticated %}
+                    <li class="nav-item">
+                        <span class="nav-link">Hi, {{ request.user.email }}</span>
+                    </li>
+                {% endif %}
               </ul>
             </div>
           </div>
@@ -324,16 +329,14 @@
                     <li class>
                       <a href="{%url 'sappliedjobs' studentprofile_id=studentprofile.id %}"><i class="fa-solid fa-clipboard-check"></i></i> <span>APPLIED JOBS</span></a>
                     </li>
+                  
                     <li class>
-                      <a href="{%url 's_shortlist' studentprofile_id=studentprofile.id %}"><i class="fas fa-user-check"></i> <span>SHORT LISTED JOBS</span></a>
-                    </li>
-                    <li class>
-                      <a href="{%url 'webscrap' studentprofile_id=studentprofile.id  %}"><i class="fas fa-user-check"></i> <span>NOTIFICATION</span></a>
+                      <a href="{%url 'sinter' studentprofile_id=studentprofile.id  %}"><i class="far fa-bell"></i> <span>NOTIFICATION</span></a>
                     </li>
                     
                     <li class="submenu">
                       <a href="#" onclick="toggleSubMenu('studySubMenu')"> 
-                          <i class="fas fa-user-check"></i>
+                        <i class="fa-solid fa-book"></i></i>
                           <span>STUDY RESOURCE</span>
                           <span id="studyMenuArrow" class="menu-arrow">&#9658;</span>
                       </a>
@@ -346,7 +349,7 @@
                                 <i class=""></i> Video Library
                             </a>
                             <a href="{% url 'scontent2list' studentprofile_id=studentprofile.id %}">
-                              <i class=""></i> Content2
+                              <i class=""></i> Content 2
                           </a>
                           </li>
                           <!-- Add more submenu items as needed -->
@@ -354,19 +357,22 @@
                   </li>
                   
                   <li class>
-                    <a href="{%url 'alumni_blog' studentprofile_id=studentprofile.id  %}"><i class="fas fa-user-check"></i> <span>ALUMNI NOTES</span></a>
+                    <a href="{%url 'alumni_blog' studentprofile_id=studentprofile.id  %}"><i class="far fa-envelope-open"></i></i> <span>ALUMNI NOTES</span></a>
                   </li>
                   <li class>
-                    <a href="{%url 'sevent' studentprofile_id=studentprofile.id  %}"><i class="fas fa-user-check"></i> <span> EVENTS</span></a>
+                    <a href="{%url 'sevent' studentprofile_id=studentprofile.id  %}"><i class="far fa-calendar-alt"></i> <span> ALUMNI EVENTS</span></a>
                   </li>
                   <li class>
-                    <a href="{%url 'apt_notification' studentprofile_id=studentprofile.id  %}"><i class="fas fa-user-check"></i> <span>APTITUDE NOTF</span></a>
+                    <a href="{%url 'scevent' studentprofile_id=studentprofile.id  %}"><i class="fa fa-calendar"></i> <span> COMPANY EVENTS</span></a>
                   </li>
                   <li class>
-                    <a href="{%url 'gen_resume'  %}"><i class="fas fa-user-check"></i> <span>RESUME</span></a>
+                    <a href="{%url 'apt_notification' studentprofile_id=studentprofile.id  %}"><i class="fa fa-clock-o"></i> <span>TEST </span></a>
                   </li>
                   <li class>
-                    <a href="{%url 'webscrap' studentprofile_id=studentprofile.id  %}"><i class="fas fa-user-check"></i> <span>TECH TRENDS</span></a>
+                    <a href="{%url 'gen_resume'  %}"><i class="fa fa-file-pdf-o"></i> <span>RESUME</span></a>
+                  </li>
+                  <li class>
+                    <a href="{%url 'webscrap' studentprofile_id=studentprofile.id  %}"><i class="fa-solid fa-arrow-trend-up"></i> <span>TECH TRENDS</span></a>
                   </li>
                 </ul>
             </div>
@@ -535,9 +541,7 @@
 
                     
                     <center><button type="submit" id="save-button">Save</button></center>&ensp;
-                    <div class="section edit-profile-button">
-                      <a href="{% url 'srequest' %}">Request Edit</a>
-                  </div>
+                    
 
                 </div>
 

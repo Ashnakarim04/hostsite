@@ -83,10 +83,16 @@
             <li class="nav-item">
               <a class="nav-link" href="{% url 'contactuser' %}">Contact Us</a>
             </li>
+            {% if request.user.is_authenticated %}
+                    <li class="nav-item">
+                        <span class="nav-link">Hi, {{ request.user.email }}</span>
+                    </li>
+            {% endif %}
             <li class="nav-item active">
               <a class="nav-link" href="{% url 'postjob' %}">Post Job</a>
               <span class="sr-only">(current)</span>
             </li>
+            
           </ul>
         </div>
       </div>
@@ -105,19 +111,19 @@
                             <a href="{%url 'postjob'%}"><i class="fa-solid fa-desktop"></i> <span>JOBS</span></a>
                         </li>
                         <li class>
-                          <a id="appstu"href="{%url 'appliedstudents'%}"><i class="fas fa-user"></i> <span>APPLICANTS</span></a>
+                          <a id="appstu"href="{%url 'appliedstudents'%}"><i class="fa fa-users" aria-hidden="true"></i> <span>APPLICANTS</span></a>
                         </li>
                         <li class>
-                          <a href="{%url 'cfirstround'%}"><i class="fas fa-user"></i> <span>SHORT LIST </span></a>
+                          <a href="{%url 'shortlist2'%}"><i class="fa-solid fa-user-check"></i> <span>SHORT LIST </span></a>
                         </li>
                         <li class>
-                          <a href="{%url 'conduct_aptitude_test'%}" id="addquestion"><i class="fas fa-user"></i> <span>APTITUDE TEST </span></a>
+                          <a href="{%url 'conduct_aptitude_test'%}" id="addquestion"><i class="far fa-edit"></i> <span>APTITUDE TEST </span></a>
                         </li>
                         <li class>
-                          <a href="{%url 'apt_list_company'%}"><i class="fas fa-user"></i> <span>TEST NOTIFICATION</span></a>
+                          <a href="{%url 'apt_list_company'%}"><i class="	far fa-bell"></i> <span>TEST NOTIFICATION</span></a>
                         </li>
                         <li class>
-                          <a href="{%url 'ceventlist'%}"><i class="fas fa-user"></i> <span>EVENTS</span></a>
+                          <a href="{%url 'ceventlist'%}"><i class="fa fa-calendar" aria-hidden="true"></i> <span>EVENTS</span></a>
                         </li>
                         
                         
@@ -146,7 +152,7 @@
                   <div class="card">
                     <div class="card-body"> 
                       <h5 class="card-title"><b>{{ obj.cname }} - {{ obj.jname }} </b></h5></b>
-                      <p class="card-text"><b>JOB :</b><br> {{ obj.job_descriptions }}</p>
+                      {% comment %} <p class="card-text"><b>JOB :</b><br> {{ obj.job_descriptions }}</p> {% endcomment %}
                       <p class="card-text"><b>RESPONSIBILITIES :</b><br> {{ obj.responsibilities }}</p>
                       <p class="card-text"><b>PREFERRED SKILLS :</b><br> {{ obj.preferred_skills }}</p>
                       <p class="card-text"><b>ELIGIBILITY :</b><br> {{ obj.qualifications }}</p>
@@ -155,7 +161,7 @@
                       <h6 class="card-text"><b>CURRENT CGPA :</b>{{ obj.required_current_cgpa }}</h6>
                       <h6 class="card-text"><b>BACKLOGS :</b>{{ obj.required_backlog }}</h6>
                       <p class="card-text"><b>EMAIL :</b> {{ obj.email }}</p>
-                      <p class="card-text"><b>SALARY : </b>{{ obj.salary }}</p>
+                      {% comment %} <p class="card-text"><b>SALARY : </b>{{ obj.salary }}</p> {% endcomment %}
                       <p class="card-text"><b>APPLICATION START DATE:</b> {{ obj.sdate }}</p> 
                       <p class="card-text"><b>APPLICATION END DATE:</b> {{ obj.edate }}</p>
                       <p class="card-text"><b>For more visit, </b>{{ obj.link }}</p>

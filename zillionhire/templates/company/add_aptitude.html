@@ -83,6 +83,11 @@
                 <li class="nav-item">
                   <a class="nav-link" href="{% url 'contactuser' %}">Contact Us</a>
                 </li>
+                {% if request.user.is_authenticated %}
+                    <li class="nav-item">
+                        <span class="nav-link">Hi, {{ request.user.email }}</span>
+                    </li>
+            {% endif %}
                 <li class="nav-item active">
                   <a class="nav-link" href="{% url 'postjob' %}">Post Job</a>
                   <span class="sr-only">(current)</span>
@@ -100,24 +105,23 @@
                                 {% comment %} <li>
                                     <a href="{% url 'index-2' %}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
                                 </li> {% endcomment %}
-                                <li class>
+                                <li >
                                   <a href="{%url 'postjob'%}"><i class="fa-solid fa-desktop"></i> <span>JOBS</span></a>
                               </li>
+                              <li class>
+                                <a id="appstu"href="{%url 'appliedstudents'%}"><i class="fa fa-users" aria-hidden="true"></i> <span>APPLICANTS</span></a>
+                              </li>
+                              <li class>
+                                <a href="{%url 'shortlist2'%}"><i class="fa-solid fa-user-check"></i> <span>SHORT LIST </span></a>
+                              </li>
                               <li class="active">
-                                <a href="{%url 'appliedstudents'%}"><i class="fas fa-user"></i> <span>APPLICANTS</span></a>
+                                <a href="{%url 'conduct_aptitude_test'%}" id="addquestion"><i class="far fa-edit"></i> <span>APTITUDE TEST </span></a>
                               </li>
                               <li class>
-                                <a href="{%url 'cfirstround'%}"><i class="fas fa-user"></i> <span>SHORT LIST </span></a>
-                              </li>
-                              
-                              <li class>
-                                <a href="{%url 'conduct_aptitude_test'%}"><i class="fas fa-user"></i> <span>APTITUDE TEST </span></a>
+                                <a href="{%url 'apt_list_company'%}"><i class="	far fa-bell"></i> <span>TEST NOTIFICATION</span></a>
                               </li>
                               <li class>
-                                <a href="{%url 'apt_list_company'%}"><i class="fas fa-user"></i> <span>TEST NOTIFICATION</span></a>
-                              </li>
-                              <li class>
-                                <a href="{%url 'ceventlist'%}"><i class="fas fa-user"></i> <span>EVENTS</span></a>
+                                <a href="{%url 'ceventlist'%}"><i class="fa fa-calendar" aria-hidden="true"></i> <span>EVENTS</span></a>
                               </li>
                             </ul>
                         </div>
@@ -142,11 +146,11 @@
                                         {% csrf_token %}
                                         <div class="form-group">
                                             <label for="companyname">Company Name</label>
-                                            <input type="text" class="form-control" id="companyname" name="companyname" value="{{ company_profile.companyname }}">
+                                            <input type="text" class="form-control" id="companyname" name="companyname" value="{{ company_profile.companyname }}"required>
                                           </div>
                                         <div class="form-group">
                                           <label for="title">Title</label>
-                                          <input type="text" class="form-control" id="title" name="title" value="{{ aptitude.title }}">
+                                          <input type="text" class="form-control" id="title" name="title" value="{{ aptitude.title }}"required>
                                         </div>
                                         <div class="form-group">
                                           <label for="description">Description</label>
@@ -154,19 +158,19 @@
                                         </div>
                                         <div class="form-group">
                                           <label for="date_and_time">Date and Time</label>
-                                          <input type="datetime-local" class="form-control" id="date_and_time" name="date_and_time" value="{{ aptitude.date_and_time|date:'Y-m-d\TH:i' }}">
+                                          <input type="datetime-local" class="form-control" id="date_and_time" name="date_and_time" value="{{ aptitude.date_and_time|date:'Y-m-d\TH:i' }}"required>
                                         </div>
-                                        <div class="form-group">
+                                        {% comment %} <div class="form-group">
                                           <label for="link">Link</label>
-                                          <input type="url" class="form-control" id="link" name="link" value="{{ aptitude.link }}">
-                                        </div>
-                                        <div class="form-group">
+                                          <input type="url" class="form-control" id="link" name="link" value="{{ aptitude.link }}"required>
+                                        </div> {% endcomment %}
+                                        {% comment %} <div class="form-group">
                                           <label for="login_id">Login ID</label>
-                                          <input type="text" class="form-control" id="login_id" name="login_id" value="{{ aptitude.login_id }}">
+                                          <input type="text" class="form-control" id="login_id" name="login_id" value="{{ aptitude.login_id }}"required>
                                         </div>
                                         <div class="form-group">
                                           <label for="password">Password</label>
-                                          <input type="password" class="form-control" id="password" name="password" value="{{ aptitude.password }}">
+                                          <input type="password" class="form-control" id="password" name="password" value="{{ aptitude.password }}"required>
                                         </div>
                                         <div class="form-group">
                                           <label for="steps">Steps</label>
@@ -175,7 +179,7 @@
                                         <div class="form-group">
                                           <label for="regulations">Regulations</label>
                                           <textarea class="form-control" id="regulations" name="regulations">{{ aptitude.regulations }}</textarea>
-                                        </div>
+                                        </div> {% endcomment %}
                                         <button type="submit" class="btn btn-primary">Submit</button>
                                       </form>
                                       

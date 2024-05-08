@@ -37,6 +37,7 @@ urlpatterns = [
     path('jobs',views.jobs, name="jobs"),
     path('about',views.about, name="about"),
     path('contact',views.contact, name="contact"),
+    path('shome',views.shome, name="shome"),
     # path('blog',views.blog, name="blog"),
     path('sample2', sample2, name='sample2'),
     path('studentloginn', studentloginn, name='studentloginn'),
@@ -55,6 +56,8 @@ urlpatterns = [
     path('addjob', addjob, name='addjob'),
     # path('addjob/<int:obj_id>/', views.addjob, name='addjob'),
     path('sindex', sindex, name='sindex'),
+    path('sabout',views.sabout, name="sabout"),
+    path('scontact',views.scontact, name="scontact"),
     path('password_reset/', auth_views.PasswordResetView.as_view(), name='password_reset'),
     path('password_reset/done/', auth_views.PasswordResetDoneView.as_view(), name='password_reset_done'),
     path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
@@ -226,7 +229,8 @@ urlpatterns = [
     path('apt_notification/<int:studentprofile_id>/', views.apt_notification, name='apt_notification'),
 
     path('conduct-aptitude-test/', conduct_aptitude_test, name='conduct_aptitude_test'),
-    path('sevent/<int:studentprofile_id>/', views.sevent, name='sevent'),    
+    path('sevent/<int:studentprofile_id>/', views.sevent, name='sevent'),  
+    path('company-event/<int:studentprofile_id>/', views.scevent, name='scevent'),  
     path('quiz_form/', views.quiz_form, name='quiz_form'),    
     path('error/',error,name='error'),
     path('company_event_form/', company_event_form, name='company_event_form'),
@@ -253,6 +257,9 @@ urlpatterns = [
     path('delete_aptd_result/<int:result_id>/', delete_aptd_result, name='delete_aptd_result'),
      path('schedule-interview/', schedule_interview, name='schedule_interview'),
      path('get_interview_details/', get_interview_details, name='get_interview_details'),
+    path('sinter/<int:studentprofile_id>/', views.sinter, name='sinter'),
+    path('department-wise-placements/', department_wise_placements, name='department-wise-placements'),   
+    path('admin_cevent', views.admin_cevent, name='admin_cevent'), 
     ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
