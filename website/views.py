@@ -2217,6 +2217,36 @@ def alumni_index(request):
             messages.error(request, 'Alumni profile creation failed. Please contact admin.')
             return redirect(reverse('admin_index'))  # Redirect to home or any appropriate URL
 
+
+@login_required
+def acontact(request):
+    try:
+        alumni_profile = request.user.alumni
+        return render(request, 'admin/alumni/acontact.html', {'alumni_profile': alumni_profile})
+    except Alumni.DoesNotExist:
+        try:
+            admin_student = request.user.adminstudent
+            alumni_profile = Alumni.objects.create(user=request.user, adminstu=admin_student)
+            return redirect(reverse('alumni_profile', kwargs={'alumni_id': alumni_profile.id}))
+        except AdminStudent.DoesNotExist:
+            messages.error(request, 'Alumni profile creation failed. Please contact admin.')
+            return redirect(reverse('admin_index'))  # Redirect to home or any appropriate URL
+        
+
+@login_required
+def aabout(request):
+    try:
+        alumni_profile = request.user.alumni
+        return render(request, 'admin/alumni/aabout.html', {'alumni_profile': alumni_profile})
+    except Alumni.DoesNotExist:
+        try:
+            admin_student = request.user.adminstudent
+            alumni_profile = Alumni.objects.create(user=request.user, adminstu=admin_student)
+            return redirect(reverse('alumni_profile', kwargs={'alumni_id': alumni_profile.id}))
+        except AdminStudent.DoesNotExist:
+            messages.error(request, 'Alumni profile creation failed. Please contact admin.')
+            return redirect(reverse('admin_index'))  # Redirect to home or any appropriate URL
+
 # Add a view for the alumni profile if it doesn't exist
 @login_required
 def alumni_profile(request, alumni_id):

@@ -39,22 +39,11 @@
 			<a id="toggle_btn" href="javascript:void(0);"><i class="fa fa-bars"></i></a>
             <a id="mobile_btn" class="mobile_btn float-left" href="#sidebar"><i class="fa fa-bars"></i></a>
             <ul class="nav user-menu float-right">
-                <li class="nav-item dropdown d-none d-sm-block">
-                    <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown"><i class="fa fa-bell-o"></i> <span class="badge badge-pill bg-danger float-right">3</span></a>
-                    <div class="dropdown-menu notifications">
-                        <div class="topnav-dropdown-header">
-                            <span>Notifications</span>
-                        </div>
-                        
-                    </div>
-                </li>
+                
                 
                 <li class="nav-item dropdown has-arrow">
                     <a href="#" class="dropdown-toggle nav-link user-link" data-toggle="dropdown">
-                        <span class="user-img">
-							<img class="rounded-circle" src="{% static 'assets_admin/img/user.jpg' %}" width="24" alt="Admin">
-							<span class="status online"></span>
-						</span>
+                        
 						<span>Admin</span>
                     </a>
 					<div class="dropdown-menu">
@@ -79,21 +68,16 @@
             <div class="sidebar-inner slimscroll">
                 <div id="sidebar-menu" class="sidebar-menu">
                     <ul>
-                        <li class="menu-title">Main</li>
+                        <li class="menu-title">Admin Dashboard</li>
                         <li class="active">
                             <a href="{% url 'admin_index2' %}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
                         </li>
-                        <li >
-                            <a href="{% url 'admin_index2' %}"><i class="fa fa-dashboard"></i> <span>Add Graph</span></a>
-                        </li>
-						{% comment %} <li>
-                            <a href="{% url 'admin_poststudent' %}"><i class="fa-solid fa-user-graduate"></i> <span>Students</span></a>
-                        </li> {% endcomment %}
+                      
                         <li>
-                            <a href="{% url 'ad_studentlist' %}"><i class="fa-solid fa-award"></i> <span> Students List</span></a>
+                            <a href="{% url 'ad_studentlist' %}"><i class="fa fa-list"></i> <span> Students List</span></a>
                         </li>
                         <li id="studentindex">
-                            <a href="{% url 'admin_addstudents' %}"><i class="fa-solid fa-award"></i> <span>Add student</span></a>
+                            <a href="{% url 'admin_addstudents' %}"><i class="fa fa-plus"></i> <span>Add student</span></a>
                         </li>
                         
                         <li class="submenu">
@@ -103,52 +87,36 @@
                                 <li><a id="companyprofilelist" href="{% url 'companyprofilelist' %}">Company List</a></li>
                                 <li><a href="{% url 'jobslist' %}">Jobs</a></li>
                                 <li><a href="{% url 'admin_cevent' %}">Events</a></li>
-                                {% comment %} <li><a href="{% url 'admin_company' %}">Applied Students</a></li>
-                                <li><a href="{% url 'admin_company' %}">Short Listed Students</a></li> {% endcomment %}
+                              
                                 
                             </ul>
                         </li>
                         <li>
                             <a href="{% url 'adminappstudents' %}"><i class="fa-solid fa-user-check"></i> <span>Applied Students</span></a>
                         </li>
-                        <li>
-                            <a href="{% url 'adminappstudents' %}"><i class="fa-solid fa-award"></i> <span>Short Listed Students</span></a>
-                        </li>
-                        {% comment %} <li>
-                            <a href="{% url 'admincontent' %}"><i class="fa-solid fa-award"></i> <span>Study Resources</span></a>
-                        </li> {% endcomment %}
+                     
                         <li class="submenu">
-                            <a href="#"><i class="fas fa-user-tie"></i> <span> Study Resources </span> <span id="menuarrow"class="menu-arrow"></span></a>
+                            <a href="#"><i class="fa fa-book"></i> <span> Study Resources </span> <span id="menuarrow"class="menu-arrow"></span></a>
                             <ul style="display: none;">
                                 <li><a href="{% url 'contentlist' %}">Content</a></li>
                                 <li><a id="videolist" href="{% url 'videolist' %}">Video Library</a></li>
                                 <li><a href="{% url 'content2list' %}">Content2</a></li>
-                                <li><a href="{% url 'videolist' %}">Aptitude Tests</a></li>
+                               
                                 
                             </ul>
                         </li> 
-                        {% comment %} <li>
-                            <a href="{% url 'resumeform' %}"><i class="fa-solid fa-award"></i> <span>Resume Content</span></a>
-                        </li> {% endcomment %}
+                      
                         <li>
-                            <a href="{% url 'ad_alumniblog' %}"><i class="fa-solid fa-award"></i> <span>Alumni Notes</span></a>
+                            <a href="{% url 'ad_alumniblog' %}"><i class="fa fa-sticky-note-o"></i> <span>Alumni Events</span></a>
                         </li>
                         <li>
-                            <a href="{% url 'apt_approve' %}"><i class="fa-solid fa-award"></i> <span>Apt Notf</span></a>
+                            <a href="{% url 'alumni_job_approve' %}" id="alumnijob"><i class="fa fa-bullhorn"></i> <span>Alumni Opening</span></a>
                         </li>
                         <li>
-                            <a href="{% url 'alumni_job_approve' %}" id="alumnijob"><i class="fa-solid fa-award"></i> <span>Alumni Opening</span></a>
+                            <a href="{% url 'apt_approve' %}"><i class="fa fa-calendar-o"></i> <span>Test Notification</span></a>
                         </li>
-                        {% comment %} <li class="submenu">
-                            <a href="#"><i class="fas fa-user-tie"></i> <span> Resume-CV Content </span> <span id="menuarrow"class="menu-arrow"></span></a>
-                            <ul style="display: none;">
-                                <li><a href="{% url 'contentlist' %}">Resume Tips</a></li>
-                                <li><a id="videolist" href="{% url 'videolist' %}">Resume Tutorial</a></li>
-                                <li><a href="{% url 'content2list' %}">CV Content</a></li>
-                                <li><a href="{% url 'videolist' %}">Resume Creator</a></li>
-                                
-                            </ul>
-                        </li> {% endcomment %}
+                       
+                       
                        
                         
                     </ul>
@@ -166,7 +134,7 @@
 								<span class="widget-title1">Students<i class="fa fa-check" aria-hidden="true"></i></span>
 							</div>
                         </div>
-                    </div>
+                    </div><br><br>
                     <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
                         <div class="dash-widget">
                             <span class="dash-widget-bg2"><i class="fas fa-user-tie"></i></span>
@@ -176,7 +144,7 @@
                             </div>
                         </div>
                     </div>
-                   
+                   <br><br>
                     
                     <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
                         <div class="dash-widget">
@@ -201,7 +169,9 @@
 							</div>
 						</div>
 					</div> {% endcomment %}
-					<div class="col-12 col-md-6 col-lg-6 col-xl-6">
+
+
+					{% comment %} <div class="col-12 col-md-6 col-lg-6 col-xl-6">
 						<div class="card">
 							<div class="card-body">
 								<div class="chart-title">
@@ -217,7 +187,7 @@
 								<canvas id="bargraph"></canvas>
 							</div>
 						</div>
-					</div>
+					</div> {% endcomment %}
                     {% comment %} <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="card">
                             <div class="card-body">

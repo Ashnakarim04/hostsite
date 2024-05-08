@@ -10,7 +10,7 @@
     <meta name="author" content="">
     <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
 
-    <title>ZillionHire- Home Page</title>
+    <title>ZillionHire- Alumni Home Page</title>
 
     <!-- Bootstrap core CSS -->
     <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
@@ -67,12 +67,12 @@
           <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
               <li class="nav-item active">
-                <a class="nav-link" href="{% url 'cindex' %}">Home
+                <a class="nav-link" href="{% url 'alumni_index' %}">Home
                   <span class="sr-only">(current)</span>
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'aboutuser' %}">About Us</a>
+                <a class="nav-link" href="{% url 'aabout' %}">About Us</a>
               </li>
               <li class="nav-item dropdown">
                 {% if user.is_authenticated %}
@@ -91,7 +91,7 @@
                 {% endif %}
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'contactuser' %}">Contact Us</a>
+                <a class="nav-link" href="{% url 'acontact' %}">Contact Us</a>
               </li>
 			  <li class="nav-item">
 				<a class="nav-link" href="{% url 'alumni_profile' alumni_id=request.user.alumni.id %}" id="alumniprofile">Profile</a>

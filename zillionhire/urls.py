@@ -258,11 +258,10 @@ urlpatterns = [
      path('schedule-interview/', schedule_interview, name='schedule_interview'),
      path('get_interview_details/', get_interview_details, name='get_interview_details'),
     path('sinter/<int:studentprofile_id>/', views.sinter, name='sinter'),
-<<<<<<< HEAD:zillionhire/zillionhire/urls.py
     path('department-wise-placements/', department_wise_placements, name='department-wise-placements'),   
     path('admin_cevent', views.admin_cevent, name='admin_cevent'), 
-=======
->>>>>>> 20df51b452a1e4e86df8a3cfd7cb2fa6da05e795:zillionhire/urls.py
+    path('acontact', views.acontact,name='acontact'),
+    path('aabout', views.aabout, name='aabout'),
     ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
